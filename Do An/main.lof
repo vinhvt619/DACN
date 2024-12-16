@@ -1,0 +1,48 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces So sánh giữa DOM ảo (Virtual DOM) và DOM thật (Real DOM)}}{7}{}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Cách vận hành của NodeJS}}{18}{}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Luồng thực thi của ExpressJS}}{20}{}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Các thành phần trong MongoDB}}{22}{}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces So sánh giữa MongoDB và MySQL}}{25}{}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Khi không có RSC}}{27}{}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Khi có RSC}}{27}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Lược đồ usecase chung}}{37}{}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Lược đồ usecase về Hệ thống tài khoản và xác thực}}{38}{}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Lược đồ usecase về Hệ thống giao tiếp và quản lý thông tin}}{39}{}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Lược đồ usecase về Hệ thống truy xuất dữ liệu}}{40}{}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Lược đồ usecase tổng quát}}{41}{}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Lược đồ hoạt động về Đăng ký tài khoản}}{49}{}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Lược đồ hoạt động về Đăng nhập tài khoản}}{50}{}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Lược đồ hoạt động về Ứng tuyển công việc}}{52}{}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Lược đồ hoạt động về Đăng bài tuyển dụng/tin tức}}{54}{}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Lược đồ hoạt động về Gửi tin nhắn}}{55}{}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Mô hình một kiến trúc phân lớp tiêu chuẩn}}{57}{}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Quy trình làm việc của Broker Topology}}{58}{}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Quy trình làm việc của Mediator Topology}}{59}{}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Cấu trúc về kiến trúc vi nhân}}{59}{}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Cấu trúc về kiến trúc Microservice}}{60}{}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Quy trình làm việc của mô hình MVCs}}{61}{}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Kiến trúc hệ thống của trang web}}{65}{}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Lược lớp của hệ thống}}{67}{}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Lớp điều khiển của lược đồ lớp}}{68}{}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Lớp dịch vụ của lược đồ lớp}}{68}{}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Lớp dữ liệu của lược đồ lớp}}{69}{}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Lược đồ tuần tự cho Đăng ký tài khoản}}{70}{}%
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Lược đồ tuần tự cho Đăng nhập tài khoản}}{71}{}%
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Lược đồ tuần tự cho Quản lý CV}}{72}{}%
+\contentsline {figure}{\numberline {3.25}{\ignorespaces Lược đồ tuần tự cho Ứng tuyển công việc}}{74}{}%
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Sơ đồ thực thể (ERD)}}{76}{}%
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Lược đồ quan hệ}}{78}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Giao diện của Trang chào mừng}}{79}{}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Giao diện của Trang đăng nhập}}{80}{}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Giao diện Trang đăng ký}}{82}{}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Giao diện của Trang chủ}}{84}{}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Giao diện của Trang tìm kiếm công việc}}{86}{}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Giao diện của Trang quản lý CV}}{87}{}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Giao diện của Trang quản lý tài khoản}}{89}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Kế hoạch cho Giai đoạn 1 của Đồ án chuyên ngành}}{92}{}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Kế hoạch cho Giai đoạn 2 của Đồ án tốt nghiệp}}{93}{}%
