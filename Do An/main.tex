@@ -1,0 +1,165 @@
+% this package is designed by: thanhhungqb@gmail.com
+% more information and update: 
+%   https://github.com/thanhhungqb/thesis-template
+\documentclass[12pt,a4paper,oneside]{book} % twoside for draft
+
+%\usepackage{babel}
+\usepackage[utf8]{vietnam}
+%\usepackage{times}
+%\usepackage{graphicx}
+\usepackage{array} % required for text wrapping in tables
+\usepackage{underscore}
+\usepackage{mathptmx}	% same Time New Roma
+%\renewcommand{\rmdefault}{phv} % Arial
+%\renewcommand{\sfdefault}{phv} % Arial
+
+\usepackage{fancyhdr}
+\usepackage{algorithm2e}
+\usepackage{bkthesis}
+
+
+\usepackage{float}
+\usepackage{flafter}
+\restylefloat{table}
+\usepackage{stfloats}
+
+%\csdeptname{KHOA ĐIỆN ĐIỆN TỬ}
+%\crname{BÁO CÁO THỰC TẬP TỐT NGHIỆP}
+% \crname{BÁO CÁO TIỂU LUẬN}
+\title{TRANG WEB HỖ TRỢ VIẾT CV VÀ TÌM KIẾM VIỆC LÀM}
+\cstuname{SVTH: Nguyễn Thành Vinh -  2053592}
+
+\csCouncil{Khoa học máy tính}
+\csSupervise{ThS. Mai Đức Trung}
+\csReviewer{KS. Nguyễn Minh Tâm}
+\cttime{12/2024}
+
+\thesislayout
+
+\begin{document}
+%-	Bìa cứng - màu xanh dương, chữ mạ vàng (xem mẫu đính kèm)
+%-	Trang tên (tờ lót): chất liệu giấy, nội dung giống như bìa LV
+%-	Ở gáy LV: in nhan đề LV (có thể in tóm tắt nếu nhan đề quá dài), size 15 – 17
+%-	Phiếu Nhiệm vụ LV, chấm điểm Hướng dẫn & Phản biện (đã ký): nhận từ GVHD & GVPB sau khi bảo vệ (theo lịch hẹn).
+%-	Lời cam đoan
+%-	Lời cảm ơn/ Lời ngỏ
+%-	Tóm tắt LV
+%-	Mục lục
+%-	Danh mục, bảng biểu, hình ảnh, ... (nếu có)
+%-	Nội dung LV
+%-	Danh mục TL tham khảo
+%-	Phụ lục (nếu có)
+
+\coverpage
+
+\frontmatter
+
+
+
+% \begin{signature}
+% ~\\\\\\\\
+
+
+% _____________________________________________Date:___________________\\
+
+% ThS. Mai Đức Trung\\
+
+% Khoa Khoa học và kỹ thuật máy tính
+
+% \end{signature}
+
+\section*{\LARGE Chữ ký của GVHD}
+\thispagestyle{empty}
+\fontsize{15}{25}\selectfont
+
+% \begin{figure}[htp!]
+%     \includegraphics[scale=0.35]{Chữ ký Mai Đức Trung.png}
+%     \label{fig:signature}
+% \end{figure}
+
+% \vspace*{-1.15cm}
+\vspace{2.25cm}
+\noindent \underline{\hspace{10cm}} Ngày: _______________\\
+ThS. Mai Đức Trung\\
+Khoa Khoa học và Kỹ thuật máy tính
+
+
+% add content here
+%-	Lời cam đoan
+\begin{declaration}
+Tôi xin cam đoan đây là công trình nghiên cứu của riêng tôi dưới sự hướng dẫn của Ths. Mai Đức Trung. Nội dung nghiên cứu và các kết quả đều là trung thực và chưa từng được công bố trước đây. Các số liệu được sử dụng cho quá trình phân tích, nhận xét được chính tôi thu thập từ nhiều nguồn khác nhau và sẽ được ghi rõ trong phần tài liệu tham khảo.
+
+Ngoài ra, tôi cũng có sử dụng một số nhận xét, đánh giá và số liệu của các tác giả khác, cơ quan tổ chức khác. Tất cả đều có trích dẫn và chú thích nguồn gốc.
+
+Nếu phát hiện có bất kì sự gian lận nào, tôi xin hoàn toàn chịu trách nhiệm về nội dung thực tập tốt nghiệp của mình. Trường Đại học Bách Khoa Thành phố Hồ Chí Minh không liên quan đến những vi phạm tác quyền, bản quyền do tôi gây ra trong quá trình thực hiện.
+
+\begin{flushright}
+\textit{Tp. Hồ Chí Minh, ngày ____ tháng ____ năm 2024\\}
+\textit{Sinh viên\\}
+\textit{Nguyễn Thành Vinh}
+
+\end{flushright}
+\end{declaration}
+
+
+
+%-	Lời cảm ơn/ Lời ngỏ
+\begin{acknowledgments}
+Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian quý báu của mình để hướng dẫn tận tình, quan tâm, định hướng và động viên tôi trong suốt quá trình làm báo cáo Đồ án chuyên ngành.
+
+Tôi cũng xin bày tỏ lòng biết ơn sâu sắc đến Ban giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh, các thầy cô giảng viên trong Khoa Khoa học và Kỹ thuật Máy tính đã truyền đạt cho tôi những kiến thức nền tảng đầy đủ và là cơ sở giúp tôi có thể hoàn thành báo cáo Đồ án chuyên ngành này.
+
+Đặc biệt, tôi xin cảm ơn gia đình và các bạn học đã luôn hỗ trợ và cổ vũ tôi trong suốt quá trình học tập tại trường Đại học Bách Khoa. Sự tận tuỵ và khổ cực của cha mẹ chính là những động lực không bao giờ dứt để cho tôi có thể làm việc chăm chỉ hơn và hoàn thiện bài báo cáo Đồ án chuyên ngành một cách hoàn thiện và trọn vẹn nhất.
+\begin{flushright}
+\textit{Tp. Hồ Chí Minh, ngày ____ tháng ____ năm 2024\\}
+\textit{Sinh viên\\}
+\textit{Nguyễn Thành Vinh}
+\end{flushright}
+\end{acknowledgments}
+
+%-	Tóm tắt LV
+\begin{abstract}
+Trong bối cảnh thị trường lao động ngày càng cạnh tranh, việc sở hữu một bản CV ấn tượng và khả năng tìm kiếm việc làm hiệu quả là vô cùng quan trọng. Đề tài luận án này tập trung phát triển một trang web hỗ trợ người dùng trong việc viết CV và tìm kiếm việc làm.
+
+Ngày nay, với hiện trạng nhiều sinh viên bị thất nghiệp sau khi tốt nghiệp, CV là thành phần đóng vai trò quan trọng trong việc giúp cho sinh viên có thể thể hiện được những năng lực bản thân cho các nhà tuyển dụng có thể thấy được. Với mong muốn giúp đỡ các sinh viên trong việc tìm kiếm các công việc làm, một trang web 2 trong 1 vừa hỗ trợ sinh viên trong việc hoàn thiện 1 bản CV cho riêng mình vừa giúp đỡ sinh viên tìm kiếm các công việc phù hợp với minh.
+
+Chức năng viết CV chính là chức năng chính và trung tâm cho trang web. Hệ thống sẽ cung cấp nhiều mẫu CV phong phú, đáp ứng cho nhiều lĩnh vực nghề nghiệp khác nhau, từ kinh doanh đến công nghệ thông tin. Mỗi mẫu CV sẽ được thiết kế với một bố cục hợp lý và tính thẩm mỹ cao. Đồng thời, người dùng cũng có thể chỉnh sửa, thiết kế lại CV trên bản mẫu của CV đó theo phong cách riêng của mình. Đồng thời, người dùng cũng có thể tham khảo các bản CV được những người sử dụng khác chia sẻ và từ đó bổ sung, chỉnh sửa và cải thiện CV của mình để hoàn thiện hơn. Trang web cũng sẽ cung cấp các mẹo viết CV, cách tạo điểm nhấn, làm nổi bật kỹ năng và kinh nghiệm của người dùng, giúp người dùng ghi điểm với nhà tuyển dụng.
+
+Bên cạnh đó, việc tìm kiếm việc làm cũng là một yếu tố quan trọng mà em hướng tới. Trang web sẽ tích hợp các công cụ tìm kiếm việc làm dựa trên nhiều tiêu chí khác nhau như địa điểm, vị trí công việc, ngành nghề, mức lương,.. Điều này sẽ giúp người dùng có thể tiếp cận với những cơ hội việc làm dễ dàng và phù hợp với khả năng của họ nhất. Ngoài ra, trang web còn có chức năng chia sẻ CV mình với các nhà tuyển dụng và các người dùng khác. Điều này, sẽ giúp người dùng có thể dễ dàng nhận được những offer từ nhiều công ty khác nhau từ đó chọn ra công ty phù hợp nhất với mình. Chức năng này cũng giúp các nhà tuyển dụng có thể tìm kiếm được những nhân tài xuất sắc, phù hợp với công ty của mình.
+\end{abstract}	
+	
+\tableofcontents
+%\listofsymbols
+\listoftables
+\listoffigures
+%\listofalgorithms
+
+
+\mainmatter
+
+\fancyhead{}  % Clears all page headers and footers
+%\rhead{\thepage}  % Sets the right side header to show the page number
+%\lhead{}  % Clears the left side page header
+%\fancyfoot[positions]{footer}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\input{Chapter/C1-overview}
+\input{Chapter/C2-technology}
+\input{Chapter/C3-systemdesign}
+\input{Chapter/C4-systemImplementation}
+\input{Chapter/C5-FuturePlan}
+%\input{Chapter3.tex}
+
+%-	Danh mục TL tham khảo
+%-	Phụ lục (nếu có)
+
+% comment two lines and use manually.bbl bellow if manually
+\bibliographystyle{plain} % ieeetr
+\bibliography{refs} 
+
+% un-comment this line to use manually
+\input{manually.bbl}
+
+\end{document}
