@@ -1,53 +1,63 @@
 % !TEX root = ../main.tex
-\chapter{Giới thiệu đề tài}
-\section{Mở đầu}
-Ngày nay sự phát triển không ngừng của công nghệ thông tin và truyền thông thông tin, điện thoại di động đã trở thành vật dụng không thể thiếu của hầu như tất cả mọi người.
+\chapter{Tổng quan đề tài}
 
-Việc tìm kiếm công việc giờ đây không phải làm một cách thủ công như ngày xưa nữa. Không cần những thông tin đa chiều từ nhiều nguồn khác nhau hay phải xe giấy, đánh dấu những tờ báo tuyển việc. Giờ đây, chỉ với một chiếc điện thoại, mọi người đều có thể tìm cho mình nhiều công việc với những lĩnh vực khác nhau. Thế nhưng, với thực trạng sinh viên vừa tốt nghiệp bị thất nghiệp ngày càng tăng. CV là một thứ không thể thiếu khi một ứng viên ứng tuyển vào công ty. CV chính là một chiếc cầu nối giúp kết nối ứng viên với các nhà tuyển dụng. Với một CV chỉnh chu, hoàn thiện, nó sẽ truyền tải đầy đủ thông tin của ứng viên đến với nhà tuyển dụng.
+\section{Bối cảnh và lý do chọn đề tài}
 
-Đặc biệt với những ứng viên là những sinh viên vừa mới ra trường, việc CV thiếu sót là một điều không thể tránh khỏi. Vì vậy, trang web hướng tới mục tiêu giúp đỡ các sinh viên cách viết một bản CV hoàn chỉnh một cách nhanh chóng. Đồng thời, đưa ra những lời khuyên cho sinh viên chỉnh sửa CV mình sao cho chuyên nghiệp và dễ dàng tạo ấn tượng cho các nhà tuyển dụng. Trang web sẽ cung cấp các mẫu CV chuyên nghiệp, các công cụ hỗ trợ tự động gợi ý nội dung dựa trên vị trí ứng tuyển và cho phép người dùng tuỳ chỉnh thông tin theo phong cách cá nhân. Hơn nữa, hệ thống cũng tích hợp chức năng tìm kiếm việc làm dựa trên nhiều tiêu chí khác nhau như: địa điểm, vị trí công việc, mức lương, kinh nghiệm. Ngoài ra, người dùng có thể chia sẻ CV đã được hoàn thiện của mình để các nhà tuyển dụng có thể tìm đến mình và cũng như chia sẻ kinh nghiệm CV của bản thân mình cho những người đến sau. 
+Quá trình tìm việc ngày càng diễn ra trên môi trường số. Người tìm việc phải đồng thời chuẩn bị một CV có cấu trúc rõ ràng, theo dõi nhiều nguồn tin, lưu các vị trí quan tâm, nộp đúng phiên bản hồ sơ và cập nhật trạng thái xử lý. Với sinh viên mới tốt nghiệp, khó khăn không chỉ nằm ở việc thiếu kinh nghiệm mà còn ở cách trình bày năng lực và duy trì một quy trình ứng tuyển có tổ chức.
 
-Với tính năng thân thiện, dễ sử dụng, và tối ưu hóa trên đa nền tảng, trang web không chỉ giúp người dùng nhanh chóng có được CV ấn tượng mà còn tạo ra sự kết nối hiệu quả với nhà tuyển dụng. Đề tài không chỉ có giá trị thực tiễn cao, mà còn góp phần nâng cao trải nghiệm tìm việc, thúc đẩy khả năng ứng dụng công nghệ vào quá trình tìm kiếm cơ hội nghề nghiệp, đáp ứng nhu cầu cấp thiết của thị trường lao động hiện nay.
+Từ phía doanh nghiệp, việc tiếp nhận hồ sơ qua nhiều kênh tạo ra chi phí tổng hợp và trao đổi. Một tin tuyển dụng có thể được chỉnh sửa, đóng hoặc xóa trong khi ứng viên vẫn cần xem lại lịch sử. Vì vậy, một hệ thống có khả năng kết nối CV, tin tuyển dụng, ứng tuyển, thông báo và trao đổi sẽ giúp mô hình hóa đầy đủ hơn quy trình tuyển dụng trực tuyến.
+
+Đề tài RabbitCV được lựa chọn vì phù hợp với mục tiêu của một đồ án Khoa học Máy tính: xây dựng hệ thống có nhiều vai trò, thiết kế dữ liệu có quan hệ, xác thực người dùng, xử lý REST API, giao tiếp thời gian thực, quản lý tệp PDF và kiểm thử các quy tắc nghiệp vụ.
+
+\section{Phát biểu bài toán}
+
+Bài toán đặt ra là xây dựng một ứng dụng web thống nhất cho ba nhóm người dùng: ứng viên, doanh nghiệp và quản trị viên. Ứng viên cần tạo hoặc tải CV, tìm việc, lưu việc, nộp hồ sơ, theo dõi tiến độ và trò chuyện. Doanh nghiệp cần quản lý hồ sơ công ty, đăng tin, đóng hoặc mở trạng thái nhận hồ sơ, xem ứng viên và trao đổi. Quản trị viên cần theo dõi hoạt động chung và thực hiện các thao tác quản lý trong phạm vi hệ thống.
+
+Hệ thống phải giải quyết một số tình huống thực tế. CV tạo trên web và CV tải từ máy tính có nguồn dữ liệu khác nhau nhưng khi doanh nghiệp xem vẫn cần giữ tỷ lệ A4. Tin tuyển dụng bị xóa không được tiếp tục nhận hồ sơ nhưng các bản ghi ứng tuyển cũ phải được giữ. Cuộc trò chuyện bị ẩn ở một phía không được làm mất dữ liệu của phía còn lại. Trạng thái đăng nhập cũng phải được chia sẻ thống nhất giữa các trang để tránh hiển thị sai chức năng.
 
 \section{Mục tiêu của đề tài}
 
+Mục tiêu tổng quát là xây dựng nguyên mẫu có khả năng vận hành của một nền tảng CV và tuyển dụng toàn ngăn xếp. Các mục tiêu cụ thể gồm:
+
 \begin{itemize}
-    \item Trang web này sẽ cung cấp cho người dùng những bản CV mẫu chất lượng và cũng như công cụ viết CV chuyên nghiệp. Điều này sẽ giúp người dùng tạo ra các bản CV chuyên nghiệp và dễ dàng tuỳ chỉnh theo phong cách cá nhân sao cho phù hợp với ngành nghề của mình.
-    \item Tích hợp với chức năng tìm kiếm việc làm dựa trên nhiều tiêu chí khác nhau. Đồng thời, cung cấp công cụ lọc và sắp xếp kết quả tìm kiếm để người dùng dễ dàng tìm thấy cơ hội việc làm phù hợp với bản thân mình.
-    \item Cho phép người dùng chia sẻ CV đã hoàn thiện của mình để các nhà tuyển dụng tìm đến và liên hệ.
-    \item Các công ty trong hệ thống có thể đăng những bài đăng tìm kiếm nhân tài cho công ty mình hoặc sẽ tìm kiếm nhân sự cho công ty thông qua sàng lọc những bản CV của những người dùng đã chia sẻ CV lên trang web và liên hệ đến họ.
-    \item Cung cấp những thông tin, tài liệu hướng dẫn người dùng cách viết CV và cách phỏng vấn hiệu quả.
+    \item Xây dựng giao diện thống nhất, dễ sử dụng và phù hợp cho các nhóm người dùng khác nhau.
+    \item Cho phép ứng viên quản lý hồ sơ cá nhân, học vấn, kinh nghiệm và CV; hỗ trợ tạo CV trên web và tải CV PDF.
+    \item Bảo đảm CV khi xem và khi in giữ đúng tỷ lệ A4, đồng thời kiểm soát các tệp PDF không hợp lệ.
+    \item Cung cấp chức năng tìm kiếm, lọc, xem chi tiết, lưu và ứng tuyển tin tuyển dụng.
+    \item Theo dõi trạng thái ứng tuyển kể cả khi tin gốc đã đóng hoặc bị xóa.
+    \item Cung cấp nhắn tin thời gian thực và thông báo chưa đọc.
+    \item Xây dựng cổng doanh nghiệp, khu vực quản trị và các cơ chế phân quyền cơ bản.
+    \item Tích hợp các chức năng AI có kiểm soát cho việc hỗ trợ CV và luyện phỏng vấn.
+    \item Kiểm thử các quy tắc quan trọng và ghi nhận trung thực các giới hạn còn tồn tại.
 \end{itemize}
 
-\section{Bố cục của luận văn}
+\section{Phạm vi đề tài}
 
-Đồ án này của tôi bao gồm 4 chương và được chia thành các phần chi tiết sau:
+Phạm vi chức năng bao gồm quản lý tài khoản, hồ sơ, CV, tin tuyển dụng, ứng tuyển, việc đã lưu, thông báo, nhắn tin, doanh nghiệp, quản trị cơ bản và các chức năng AI liên quan đến CV. Hệ thống tập trung vào luồng tuyển dụng trực tuyến, chưa tích hợp thanh toán, ký hợp đồng điện tử, lịch phỏng vấn đồng bộ với lịch ngoài, xác minh danh tính bằng dịch vụ bên thứ ba hoặc hệ thống giới thiệu việc làm quy mô lớn.
 
-\subparagraph{Chương 1: Giới thiệu đề tài}
+Phạm vi triển khai là môi trường phát triển và trình diễn. Frontend chạy qua Vite, backend Express cung cấp REST API và Socket.IO, còn MongoDB lưu dữ liệu. Các phương án vận hành quy mô lớn như cân bằng tải, kho lưu trữ đối tượng, hàng đợi thông điệp và giám sát phân tán chưa được triển khai đầy đủ.
+
+Về bảo mật, đồ án áp dụng băm mật khẩu, JWT trong cookie HTTP-only, middleware xác thực, giới hạn quyền theo vai trò, kiểm tra quyền sở hữu, làm sạch dữ liệu và giới hạn tần suất. Báo cáo không tuyên bố sản phẩm đạt chuẩn kiểm toán bảo mật doanh nghiệp.
+
+\section{Đối tượng sử dụng}
+
 \begin{itemize}
-    \item Giới thiệu đồ án nghiên cứu, xác định tình trạng vấn đề và những động lực để thực hiện dự án.
-    \item Mô tả và nêu những mục tiêu có thể đạt được khi thực hiện dự án.
+    \item \textbf{Khách:} xem trang công khai, danh sách việc làm, chi tiết công việc và nội dung giới thiệu.
+    \item \textbf{Ứng viên/employee:} quản lý hồ sơ, tạo hoặc tải CV, tìm và lưu việc, ứng tuyển, theo dõi trạng thái, nhận thông báo, nhắn tin và sử dụng công cụ AI.
+    \item \textbf{Doanh nghiệp/company:} quản lý thông tin công ty, tạo và điều chỉnh tin tuyển dụng, xem hồ sơ ứng viên, cập nhật trạng thái và trao đổi.
+    \item \textbf{Quản trị viên/admin:} theo dõi số liệu tổng quan và quản lý các dữ liệu được cung cấp trong khu vực quản trị.
 \end{itemize}
 
-\subparagraph{Chương 2: Giới thiệu các công nghệ đã sử dụng}
-\begin{itemize}
-    \item Giới thiệu tổng quan về các công nghệ đã sử dụng trong dự án.
-    \item Phân tích các mặt lợi ích của các công nghệ đang sử dụng so với những công nghệ khác.
-    \item Diễn giải lý do tại sao lại chọn những công nghệ này.
-\end{itemize}
+\section{Phương pháp thực hiện}
 
-\subparagraph{Chương 3: Phân tích hệ thống và thiết kế trang web:}
-\begin{itemize}
-    \item Tìm hiểu, phân tích và thiết kế các lược đồ phác thảo về cơ sở dữ liệu và cách vận hành của hệ thống.
-\end{itemize}
+Đồ án được triển khai theo quy trình lặp. Trước hết, yêu cầu được thu thập từ các luồng điển hình của ứng viên và nhà tuyển dụng. Sau đó, hệ thống được phân rã thành các mô-đun, thiết kế mô hình dữ liệu và các API cần thiết. Giao diện được xây dựng theo từng trang, kết nối dần với backend và điều chỉnh dựa trên phản hồi trực quan.
 
- \subparagraph{Chương 4: Thiết kế giao diện người dùng}:
- \begin{itemize}
-     \item Mô tả và thiết kế những trang khác nhau của giao diện của người dùng.
- \end{itemize}
- 
- \subparagraph{Chương 5: Tóm tắt và kế hoạch tương lai}
- \begin{itemize}
- 	\item Mô tả lịch trình hoàn thành Đồ án chuyên ngành của kỳ này.
- 	\item Hoạch định trước kế hoạch cho giai đoạn tiếp theo của Đồ án tốt nghiệp.
- \end{itemize}
+Phương pháp đánh giá kết hợp kiểm thử tự động bằng Node Test Runner, kiểm tra lint, build frontend và kiểm thử thủ công theo kịch bản. Đối với PDF, việc đánh giá không chỉ dựa trên phản hồi API mà còn dựa vào tỷ lệ A4, số trang, khả năng hiển thị và bố cục in.
+
+\section{Đóng góp của đề tài}
+
+Đề tài tạo ra một sản phẩm toàn ngăn xếp tích hợp các bài toán thường bị tách rời: tạo CV, quản lý PDF, tuyển dụng, ứng tuyển, thông báo, trò chuyện và hỗ trợ AI. Một số điểm kỹ thuật đáng chú ý gồm phân biệt CV ảo và CV thực, loại bỏ trường PDF lớn khỏi truy vấn danh sách, lưu ảnh chụp tin tuyển dụng trong Application, ẩn chat theo từng người dùng, kết hợp Socket.IO với polling và dùng một ngữ cảnh xác thực thống nhất ở frontend.
+
+\section{Cấu trúc báo cáo}
+
+Báo cáo gồm sáu chương. Chương 1 trình bày bối cảnh, mục tiêu và phạm vi. Chương 2 giới thiệu cơ sở lý thuyết và công nghệ. Chương 3 phân tích yêu cầu, kiến trúc, dữ liệu và quy trình. Chương 4 mô tả việc triển khai các mô-đun. Chương 5 trình bày kiểm thử và đánh giá. Chương 6 tổng kết kết quả, hạn chế và hướng phát triển.

@@ -1,0 +1,39 @@
+% !TEX root = ../main.tex
+\chapter{Kết luận và hướng phát triển}
+
+\section{Kết quả đạt được}
+
+Đồ án đã xây dựng được RabbitCV như một ứng dụng web toàn ngăn xếp có luồng nghiệp vụ giữa ứng viên, doanh nghiệp và quản trị viên. Ứng viên có thể tạo hoặc tải CV PDF, tìm và lưu việc, nộp hồ sơ, theo dõi trạng thái, nhận thông báo và nhắn tin. Doanh nghiệp có thể quản lý tin tuyển dụng, tiếp nhận hồ sơ, cập nhật trạng thái và trao đổi với ứng viên.
+
+Các mục tiêu kỹ thuật chính được hiện thực bằng React, Vite, Tailwind CSS, Express, MongoDB, JWT, Socket.IO, node-cron và PDF.js. Hệ thống xử lý được một số tình huống dữ liệu thực tế như phân biệt CV ảo và CV thật, giữ lịch sử ứng tuyển sau khi Job bị xóa, giới hạn PDF upload, lưu trạng thái đọc theo từng người dùng và ngăn ứng tuyển trùng.
+
+Phiên bản hiện tại còn mở rộng bằng các chức năng AI hỗ trợ viết và review CV, chấm mức độ phù hợp giữa CV và công việc và luyện phỏng vấn. Các biện pháp làm sạch dữ liệu, quota, rate limit và structured output giúp tính năng AI phù hợp hơn với phạm vi demo, nhưng kết quả vẫn chỉ mang tính tham khảo.
+
+\section{Bài học kinh nghiệm}
+
+Thứ nhất, lỗi giao diện thường phản ánh vấn đề về nguồn dữ liệu hoặc vòng đời state chứ không chỉ là lỗi CSS. \texttt{AuthContext} và việc tách trạng thái thông tin đối tác khỏi danh sách message là những ví dụ cho nguyên tắc này.
+
+Thứ hai, xóa dữ liệu trong hệ thống nhiều bên phải được phân tích theo quyền sở hữu và yêu cầu lưu lịch sử. \texttt{jobSnapshot} trong Application và cơ chế ẩn chat theo từng user phù hợp hơn việc xóa dây chuyền trong các luồng nghiệp vụ này.
+
+Thứ ba, tài liệu PDF cần được kiểm tra bằng kích thước vật lý, quá trình in và khả năng hiển thị, không chỉ bằng việc nhìn giao diện trên màn hình. Thứ tư, mỗi cơ chế realtime nên được chọn theo độ trễ và chi phí nghiệp vụ; chat phù hợp Socket.IO, còn notification quy mô nhỏ có thể dùng polling.
+
+\section{Hạn chế của hệ thống}
+
+Hệ thống vẫn còn một số hạn chế: PDF được lưu base64 trong MongoDB; backend còn tập trung nhiều route trong một file; thông báo polling có độ trễ; kiểm thử API, browser end-to-end, Socket.IO và ma trận quyền chưa đầy đủ; một số màn hình admin cần đồng bộ thêm với backend; và cấu hình production cần bắt buộc dùng secret an toàn thay cho fallback.
+
+\section{Hướng phát triển}
+
+\begin{itemize}
+    \item Chuyển PDF và ảnh sang object storage hoặc GridFS; database chỉ giữ URL, checksum, MIME type và metadata.
+    \item Tách backend thành các nhóm route, controller, service, middleware và repository theo domain.
+    \item Hoàn thiện API admin, middleware role và nhật ký thao tác quản trị.
+    \item Bổ sung kiểm thử API, phân quyền, component và end-to-end bằng trình duyệt.
+    \item Chuyển các notification quan trọng sang sự kiện Socket.IO, đồng thời giữ polling làm cơ chế dự phòng.
+    \item Đưa tác vụ tạo PDF, gửi email, quét file và xử lý hạn tin vào hàng đợi hoặc worker riêng.
+    \item Tăng cường bảo mật production: bắt buộc cấu hình JWT secret, kiểm soát CORS bằng biến môi trường, bổ sung CSRF protection phù hợp và kiểm tra truy cập CV theo quan hệ nghiệp vụ.
+    \item Theo dõi chất lượng AI bằng bộ dữ liệu kiểm thử, giới hạn chi phí và cơ chế phản hồi người dùng.
+\end{itemize}
+
+\section{Tổng kết}
+
+RabbitCV đáp ứng mục đích của một đồ án Khoa học Máy tính: vận dụng kiến thức về phát triển web, cơ sở dữ liệu, xác thực, kiến trúc phần mềm, tài liệu PDF, giao tiếp thời gian thực và kiểm thử vào một bài toán có nhiều đối tượng. Sản phẩm chưa thay thế một nền tảng tuyển dụng thương mại, nhưng đã tạo được mô hình có thể vận hành và nền tảng rõ ràng cho các bước phát triển tiếp theo.

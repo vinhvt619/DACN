@@ -1,114 +1,99 @@
 % !TEX root = ../main.tex
-\chapter{Thiết kế giao diện người diện}
+\chapter{Triển khai hệ thống}
 
-\section{Trang chào mừng}
+\section{Tổ chức mã nguồn}
 
-\begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/Welcome.png}
-    \caption{Giao diện của Trang chào mừng}
-\end{center}
-\end{figure}
+Mã nguồn RabbitCV được chia thành hai phần chính. Thư mục \texttt{src} chứa các page, component, context, hook, utility và dữ liệu mẫu của frontend. Thư mục \texttt{server} chứa entry point Express, model Mongoose, route AI, service AI, utility xử lý dữ liệu, tác vụ cron và các script hỗ trợ.
 
-Trang chào mừng của một trang web là điểm tiếp xúc đầu tiên giữa người dùng và nội dung của trang web đó. Đây là nơi mà người dùng sẽ có ấn tượng đầu tiên về trang web, và do đó, nó cần phải được thiết kế một cách cẩn thận và chuyên nghiệp.
+Frontend dùng lazy loading cho nhiều page trong \texttt{App.jsx}. Các context chính gồm \texttt{AuthContext}, \texttt{SavedJobsContext} và \texttt{SocketContext}. Backend dùng middleware xác thực chung, các model cho từng collection và các hàm utility để kiểm tra việc làm, PDF, rich text và dữ liệu AI.
 
-Trang chào mừng của một trang web đóng vai trò quan trọng trong việc tạo ấn tượng đầu tiên với người dùng. Đây là nơi mà người dùng sẽ quyết định liệu họ có muốn tiếp tục khám phá trang web hay không. Một trang chào mừng hiệu quả không chỉ cần có thiết kế đẹp mắt mà còn phải cung cấp thông tin rõ ràng và dễ hiểu về nội dung và mục đích của trang web. 
+\section{Đăng nhập, đăng ký và phân quyền}
 
-Do đó, việc thiết kế giao diện của trang chào mừng cần phải thân thiện với người dùng và dễ dàng điều hướng.
+Trang đăng ký cho phép tạo tài khoản ứng viên hoặc doanh nghiệp. Backend kiểm tra username, email, mật khẩu và vai trò trước khi lưu. Mật khẩu được băm bằng bcryptjs.
 
-\section{Trang đăng nhập}
+Sau khi đăng nhập, backend tạo JWT và lưu trong cookie HTTP-only. \texttt{AuthContext} gọi \texttt{/api/me} để lấy phiên hiện tại và cung cấp \texttt{currentUser} cho toàn bộ giao diện. \texttt{RoleAccessGuard} chuyển người dùng doanh nghiệp đến cổng doanh nghiệp, chuyển admin đến khu vực quản trị và ngăn truy cập sai vai trò.
 
 \begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/Login.png}
-    \caption{Giao diện của Trang đăng nhập}
-\end{center}
+    \centering
+    \includegraphics[width=0.78\textwidth]{img/Login.png}
+    \caption{Giao diện đăng nhập RabbitCV}
+    \label{fig:login}
 \end{figure}
 
-Trang đăng nhập là một phần quan trọng của bất kỳ trang web hoặc ứng dụng nào yêu cầu người dùng xác thực danh tính trước khi truy cập vào các tính năng hoặc dữ liệu cá nhân. Trang đăng nhập cũng có nhiều tuỳ chọn khác như: "Đăng ký tài khoản mới", "Quên tài khoản",.... 
+\section{Quản lý hồ sơ và CV}
 
-Trang đăng nhập bao gồm các thành phần:
+Ứng viên có thể cập nhật thông tin cá nhân, kinh nghiệm, học vấn, kỹ năng, dự án, chứng chỉ, ngôn ngữ, giải thưởng và sở thích. Resume được chọn template, chỉnh sửa qua form và hiển thị đồng thời trong vùng preview.
 
-\begin{itemize}
-    \item \textbf{Tên đăng nhập:} người dùng được yêu cầu phải điền vào trang web.
-    \item \textbf{Mật khẩu:} Được yêu cầu điền để kiểm tra mật khẩu ứng với tên đăng nhập trong cơ sở dữ liệu.
-    \item \textbf{Quên mật khẩu:} Là một đường link được chuyển hướng đến trang "Quên mật khẩu" khi người dùng thực sự quên mật khẩu, tài khoản của mình.
-    \item \textbf{Nhớ mật khẩu:} Là một tuỳ chọn giúp người dùng có thể tự động đăng nhập ở các phiên đăng nhập sau.
-    \item \textbf{Đăng nhập:} Là một nút để đăng nhập khi người dùng đã điền thông tin tài khoản và mật khẩu. Khi đăng nhập, hệ thông sẽ kiểm tra tài khoản và mật khẩu của người dùng có trong cơ sở dữ liệu của hệ thống hay không.
-    \item \textbf{Đăng ký ngay:} Là đường link chuyển hướng tới trang "Đăng ký tài khoản". Nếu người dùng vẫn chưa có tài khoản trong cơ sở dữ liệu của hệ thống, người dùng có thể lựa chọn tuỳ chọn này để tạo tài khoản mới.
-\end{itemize}
-
-\section{Trang đăng ký}
+CV tạo trên web sử dụng CSS in khổ A4 210 x 297 mm. Người dùng có thể in hoặc tải PDF thông qua chức năng in của trình duyệt. Dữ liệu Resume được lưu theo cấu trúc, vì vậy có thể tiếp tục chỉnh sửa ở lần sau.
 
 \begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/Register.png}
-    \caption{Giao diện Trang đăng ký}
-\end{center}
+    \centering
+    \includegraphics[width=0.80\textwidth]{img/CV_Management.png}
+    \caption{Giao diện quản lý CV}
+    \label{fig:cv-management}
 \end{figure}
 
-Là trang web yêu cầu người dùng tạo tài khoản mới để có truy cập vào các tính năng và dịch vụ của trang web. Để đăng ký tài khoản mới, người dùng cần phải đồng ý với các điều khoản, điều kiện đăng ký của trang web.
+\subsection{Hỗ trợ AI cho CV}
 
-Trang đăng ký có các thành phần:
-\begin{itemize}
-    \item \textbf{Tên đăng nhập:} Là trường yêu cầu người dùng phải nhập tên đăng nhập của mình. 
-    \item \textbf{Email:} Là trường người dùng được yêu cầu phải nhập để sau này khi người dùng quên mật khẩu, hệ thống có thể dựa vào đó để xác minh người dùng.
-    \item \textbf{Mật khẩu:} Là trường để người dùng đặt mật khẩu. Ở trường này, mật khẩu sẽ được dấu dưới dạng ký hiệu *, để dấu mật khẩu trước những người khác ở trước màn hình. Người dùng cũng có thể lựa chọn nhìn mật khẩu nếu họ thực sự muốn.
-    \item \textbf{Xác nhận mật khẩu:} Là trường để xác nhận lại với người dùng mật khẩu mà họ đã chọn .
-    \item \textbf{Đăng ký:} Là nút khi người dùng nhấn vào, hệ thống sẽ kiểm tra lại cơ sở dữ liệu xem tài khoản mà người dùng chọn đã có người khác xài chưa. Nếu đã có, thì hệ thống sẽ thông báo "Tạo tài khoản thất bại" và yêu cầu người chọn một tên tài khoản khác. Còn nếu chưa, hệ thống sẽ thông báo "Tạo tài khoản thành công" và đưa người dùng đến trang đăng nhập.
-    \item \textbf{Đăng nhập:} Là đường link chuyển hướng người dùng đến trang "Đăng nhập". Nếu người dùng đã có tài khoản trong cơ sở dữ liệu của hệ thống, họ có thể lựa chọn chức năng này.
-\end{itemize}
+Trong form CV, người dùng có thể yêu cầu AI viết mới, cải thiện hoặc rút gọn tiểu sử. Kết quả được hiển thị ở dạng gợi ý để người dùng xem và chủ động áp dụng, không tự động ghi đè nội dung hiện tại.
 
+Chức năng review CV trả về điểm tổng quan, các nhóm điểm thành phần, điểm tốt và các vấn đề cần sửa theo mức ưu tiên. Chức năng AI điền CV hỗ trợ bổ sung các nhóm nội dung còn trống nhưng không được tự bịa tên công ty, trường học, chứng chỉ, giải thưởng hoặc mốc thời gian cụ thể.
 
-\section{Trang chủ}
+\section{Tìm kiếm và ứng tuyển việc làm}
+
+Trang việc làm hiển thị danh sách tin từ database và dữ liệu mẫu. Người dùng có thể tìm theo từ khóa, công ty, địa điểm hoặc tags; xem chi tiết công việc; lưu hoặc bỏ lưu tin. Các tin Draft, Expired hoặc Deleted không được nhận hồ sơ mới.
 
 \begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.15]{img/Homepage.png}
-    \caption{Giao diện của Trang chủ}
-\end{center}
+    \centering
+    \includegraphics[width=0.82\textwidth]{img/FindingJob.png}
+    \caption{Giao diện tìm kiếm việc làm}
+    \label{fig:finding-job}
 \end{figure}
 
-Trang chủ của một trang web là điểm đầu tiên và quan trọng nhất mà người dùng sẽ truy cập. Đây là nơi cung cấp cái nhìn tổng quan về nội dung và dịch vụ mà trang web cung cấp. Trang web này cũng là cổng thông tin chính giúp người dùng dễ dàng điều hướng và tìm kiếm thông tin.
-
-Ở trang web này, gồm có 3 mục: Top doanh nghiệp, Top CV và Tin tức. Ở mảng bên trái sẽ có một danh sách gồm các danh mục vừa được nêu giúp người dùng có thể chọn và nhanh chóng di chuyển đến mục đã được chọn.
-
-
-\section{Trang tìm kiếm công việc}
+Khi ứng tuyển, ứng viên có thể chọn Resume đã lưu hoặc tải file PDF từ máy tính. Backend kiểm tra Application trùng bằng unique index, kiểm tra hạn Job và lưu \texttt{jobSnapshot} để giữ lịch sử. Trường hợp PDF upload được lưu trong Resume ảo với \texttt{isVirtual=true}.
 
 \begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/FindingJob.png}
-    \caption{Giao diện của Trang tìm kiếm công việc}
-\end{center}
+    \centering
+    \includegraphics[width=0.88\textwidth,height=0.58\textheight,keepaspectratio]{img/Apply_jobs_Activity.png}
+    \caption{Quy trình ứng tuyển việc làm}
+    \label{fig:apply-job}
 \end{figure}
 
-Trang tìm kiếm công việc là trang hiển thị những bài đăng tuyển dụng của các doanh nghiệp. Ở đây, có 3 phần: "Recommend for you" gồm những bài đăng ngẫu nhiên được hệ thống đưa lên hệ thống, "Newest posts" gồm những bài đăng mới nhất, gần đây nhất và mục lọc danh sách những bài đăng tuỳ theo vị trí, lương, kinh nghiệm,.... 
+\subsection{Chấm mức độ phù hợp giữa CV và việc làm}
 
-\section{Trang quản lý CV}
+Tại trang chi tiết Job, ứng viên có thể chọn CV đã lưu để gửi yêu cầu chấm điểm. Backend làm sạch Resume và Job, sau đó trả về điểm tổng quan, điểm theo nhóm kỹ năng, kinh nghiệm, học vấn và từ khóa cùng các nhận xét có thể hành động. Điểm chỉ mang tính tham khảo, không quyết định kết quả tuyển dụng.
+
+\section{Cổng doanh nghiệp}
+
+Cổng doanh nghiệp được thiết kế riêng nhưng dùng chung cơ chế xác thực. Doanh nghiệp có thể quản lý hồ sơ công ty, tạo tin nháp, đăng tin, chỉnh sửa nội dung, bật hoặc tắt nhận ứng viên, xóa tin và xem danh sách hồ sơ.
+
+Danh sách ứng viên hiển thị trạng thái Pending, Reviewing, Interview, Offered, Rejected hoặc Accepted. Khi doanh nghiệp mở CV, backend kiểm tra mối liên hệ giữa công ty và Job hoặc Application trước khi trả dữ liệu. Sau khi cập nhật trạng thái, hệ thống tạo thông báo cho ứng viên.
+
+\section{Thông báo và nhắn tin}
+
+Notification lưu người nhận, vai trò, loại, tiêu đề, nội dung, đường dẫn và trạng thái đã đọc. Header hiển thị số lượng chưa đọc; trang thông báo hỗ trợ phân trang, đánh dấu từng thông báo, đánh dấu tất cả và xóa.
+
+Chat lưu Message qua REST API và phát sự kiện thời gian thực bằng Socket.IO. Room riêng được tạo từ định danh hai người dùng. Trạng thái đọc cuối và việc ẩn room được lưu theo từng người dùng, nên thao tác ở một phía không xóa dữ liệu của phía còn lại.
 
 \begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/CV_Management.png}
-    \caption{Giao diện của Trang quản lý CV}
-\end{center}
+    \centering
+    \includegraphics[width=0.88\textwidth,height=0.58\textheight,keepaspectratio]{img/Message_workflow.png}
+    \caption{Luồng nhắn tin trong hệ thống}
+    \label{fig:message-workflow}
 \end{figure}
 
-Là trang để người dùng quản lý CV của mình. Trang này cung cấp cho người dùng các công cụ và tính năng để tạo, chỉnh sửa và xoá CV của họ một cách nhanh chóng và hiệu quả. Trang quản lý CV không chỉ giúp người dùng tạo ra những bản CV ấn tượng mà còn giúp người dùng dễ dàng quản lý và dễ dàng cập nhật thông tin, từ đó, nâng cao cơ hội tìm kiếm việc làm thành công.
+\section{Luyện phỏng vấn với AI}
 
-Việc chỉnh sửa CV sẽ tuỳ thuộc vào tuỳ chọn mà người dùng đã chọn. Nếu dùng chọn CV template có trên trang web, hệ thống sẽ hiển thị sẵn một bản mẫu CV có sẵn và việc người dùng cần làm là chỉ điền thông tin cần thiết vào CV. Còn nếu người dùng chọn mục "Custom", hệ thống sẽ chỉ hiển thị 1 trang A4 lên trang web và những công cụ hữu ích hỗ trợ người dùng trong việc tự mình chỉnh sửa CV. Ở mục "Custom", người dùng có thể tự do chỉnh sửa, căn chỉnh hình ảnh, cỡ chữ phù hợp với yêu cầu của mình.
+Trang \texttt{AiInterview} cho phép ứng viên chọn vị trí, cấp độ, hình thức phỏng vấn và số lượng câu hỏi. Mỗi lượt trả lời được gửi đến endpoint \texttt{interview/turn} thuộc nhóm API AI. Backend giữ lịch sử hội thoại đã làm sạch, giới hạn số câu hỏi và trả về câu hỏi tiếp theo hoặc tổng kết.
 
+Khi hoàn tất, giao diện hiển thị điểm tổng quan, điểm mạnh, điểm cần luyện thêm và khuyến nghị. Hệ thống không hỏi các thông tin nhạy cảm như tuổi, giới tính, tôn giáo, sức khỏe, hôn nhân hoặc tài chính. Kết quả chỉ phục vụ luyện tập.
 
+\section{Khu vực quản trị}
 
-\section{Trang quản lý tài khoản}
+Khu vực admin có dashboard và các màn hình quản lý người dùng, công việc, doanh nghiệp, báo cáo và log hệ thống. Các route admin được bảo vệ bởi middleware xác thực và kiểm tra role. Khi hoàn thiện sản phẩm, cần tiếp tục đồng bộ danh sách endpoint với từng màn hình frontend để tránh trường hợp giao diện gọi API chưa được backend cung cấp.
 
-\begin{figure}[H]
-\begin{center}
-    \includegraphics[scale=0.2]{img/ProfileManagement.png}
-    \caption{Giao diện của Trang quản lý tài khoản}
-\end{center}
-\end{figure}
+\section{Triển khai và vận hành}
 
-Là trang cài đặt gồm nhiều chức năng quản lý tài khoản. Ở đây, có nhiều mục cho người dùng có thể lựa chọn. Họ có thể lựa chọn để chỉnh sửa thông tin cá nhân của mình và thêm nhiều kỹ năng, kinh nghiệm của mình lên trang web.
+Trong môi trường phát triển, backend chạy tại cổng 5000, frontend chạy tại cổng 4000 và Vite proxy các request \texttt{/api} cùng kết nối \texttt{/socket.io}. Biến môi trường chứa chuỗi MongoDB, JWT secret, client URL và các thiết lập AI.
 
-Người dùng có thể lựa chọn màn hình tối đối với trang web phù hợp với thị hiếu của mình. Nếu người dùng có bất kỳ vấn đề và cần hỗ trợ hay muốn đóng góp ý kiến bản thân về trang web, họ có thể lựa chọn các mục "Trợ giúp và hỗ trợ" hay "Đóng góp ý kiến". Hệ thống sẽ chuyển hướng người dùng đến trang tương ứng và hướng dẫn người dùng cách thực hiện.
+Trong môi trường production, frontend được build bằng Vite. Backend dùng CORS theo danh sách origin cho phép, cookie bật thuộc tính \texttt{Secure} khi chạy HTTPS và server có thể được triển khai theo cấu hình Vercel hiện có. Khóa Groq chỉ được đặt ở backend hoặc biến môi trường triển khai, không đặt trong mã frontend.

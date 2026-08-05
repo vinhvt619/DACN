@@ -1,45 +1,92 @@
 % !TEX root = ../main.tex
-\chapter{Tóm tắt và kế hoạch tương lai}
+\chapter{Kiểm thử và đánh giá}
 
-\section{Đánh giá nhiệm vụ}
+\section{Mục tiêu kiểm thử}
 
-Trong quá trình thực hiện đồ án chuyên ngành này, tôi đã đạt được các mục tiêu sau đây:
+Kiểm thử nhằm xác nhận các quy tắc kỹ thuật và nghiệp vụ quan trọng của RabbitCV hoạt động đúng. Các nhóm ưu tiên gồm: CV đúng khổ A4; chỉ nhận PDF hợp lệ; không nhận hồ sơ vào tin không khả dụng; không cho ứng tuyển trùng; giữ lịch sử khi Job bị xóa; xử lý đúng ngày tháng; bảo vệ dữ liệu AI; đồng bộ trạng thái đã đọc của chat và thông báo.
 
-\begin{itemize}
-	\item Xác định mục tiêu, những yêu cầu chức năng và phi chức năng, các bên liên quan của trang web.
-	\item Thiết kế các lược đồ usecase, quy trình làm việc, lược đồ lớp, lược đồ tuần tự, cơ sở dữ liệu và hệ thống kiến trúc.
-	\item Nghiên cứu và phân tích điểm mạnh, điểm yếu của các công nghệ phù hợp sẽ sử dụng trong đồ án chuyên ngành.
-	\item Thiết kế giao diện người dùng, tạo khung dây cho các trang chính.
-	\item Phân tích các trang web liên quan, so sánh và cải thiện đối với trang web của mình.
-\end{itemize}
-\newpage
-Dưới đây là kế hoạch cho giai đoạn 1 của Đồ án chuyên ngành:
+\section{Môi trường và công cụ}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.35]{img/TKB_GD1.png}
-	\caption{Kế hoạch cho Giai đoạn 1 của Đồ án chuyên ngành}
-\end{figure}
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|p{0.28\linewidth}|p{0.59\linewidth}|} \hline
+        \textbf{Thành phần} & \textbf{Môi trường hoặc công cụ} \\ \hline
+        Frontend & React, Vite, React Router và Tailwind CSS. \\ \hline
+        Backend & Node.js, Express và Socket.IO. \\ \hline
+        Cơ sở dữ liệu & MongoDB thông qua Mongoose. \\ \hline
+        Kiểm thử tự động & Node Test Runner với lệnh \texttt{npm test}. \\ \hline
+        Kiểm tra mã nguồn & ESLint với lệnh \texttt{npm run lint}. \\ \hline
+        Kiểm tra giao diện & Trình duyệt, Print Preview, PDF.js và các kịch bản thủ công. \\ \hline
+    \end{tabular}
+    \caption{Môi trường kiểm thử}
+    \label{tab:test-environment}
+\end{table}
 
+\section{Kết quả kiểm thử tự động}
 
-\section{Kế hoạch tương lai}
+Trên working tree DA2 được dùng làm baseline, lệnh \texttt{npm test} thực thi 41 trường hợp và cả 41 trường hợp đều đạt. Các test tập trung vào logic ổn định và các thay đổi có nguy cơ làm hỏng nghiệp vụ.
 
-Trong giai đoạn tiếp theo, tôi có kế hoạch dự định hiện thực những chức năng sau:
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|p{0.28\linewidth}|p{0.49\linewidth}|p{0.12\linewidth}|} \hline
+        \textbf{Nhóm} & \textbf{Nội dung kiểm tra} & \textbf{Kết quả} \\ \hline
+        CV và A4 & Wrapper CV, print page, tải PDF từ CV tạo trên web và hiển thị PDF upload theo trang. & Đạt \\ \hline
+        PDF upload & Data URL, header PDF, từ chối DOC/DOCX, nội dung giả PDF và giới hạn 5 MB. & Đạt \\ \hline
+        Dữ liệu AI & Làm sạch HTML hoặc mã thực thi, ẩn thông tin liên hệ, giới hạn payload và schema đầu ra. & Đạt \\ \hline
+        Luồng AI & Route xác thực, structured output, bio assistant, review CV, fill CV, chấm điểm và phỏng vấn. & Đạt \\ \hline
+        Việc làm & Tin đã xóa, tin hết hạn, deadline, trạng thái không khả dụng và không ứng tuyển sai. & Đạt \\ \hline
+        Ngày tháng & Chuẩn hóa ngày học vấn, kinh nghiệm và định dạng tháng trong CV. & Đạt \\ \hline
+        Chat và thông báo & Lưu trạng thái đã đọc ở server, đồng bộ badge và làm sạch rich text. & Đạt \\ \hline
+        Giao diện vai trò & Điều hướng admin/company, nhãn tiếng Việt và form doanh nghiệp. & Đạt \\ \hline
+    \end{tabular}
+    \caption{Tổng hợp kết quả kiểm thử tự động}
+    \label{tab:automated-tests}
+\end{table}
 
-\begin{itemize}
-	\item Trong 2 tuần đầu, tôi sẽ thiết lập môi trường code và thư viện
-	\item 4 tuần sau đó, tôi sẽ thiết kế sơ qua những giao diện người dùng đã được vẽ ở trên mà không sử dụng cơ sở dữ liệu.
-	\item Vào tuần thứ 6 của đồ án, tôi sẽ nghiên cứu và xây dựng cơ sở dữ liệu cho trang web. Đến tuần thứ 7 sẽ thêm dữ liệu vào database và bắt đầu thử nghiệm thêm API vào trang web. Tuần 8, 9 và 10, tôi sẽ thử nghiệm và sửa lỗi của trang web. Và hoàn thiện những trang chính của trang web.
-	\item Đồng thời, ở tuần 8, 9, 10 và 11, tôi nghiên cứu và hiện thức các chức năng liên quan đến CV như: nhập dữ liệu từ file PDF, trích xuất dữ liệu từ hệ thống thành file PDF.
-	\item Việc kiếm nghiệm và sửa lỗi trang web sẽ được thực hiện xuyên suốt trong quá trình xây dựng trang web.
-	\item Quá trình deploy sẽ được thực hiện ngay khi trang web đã hoàn tất.
-\end{itemize}
+Lệnh \texttt{npm run lint} không phát hiện lỗi lint. Hiện còn hai cảnh báo về dependency của \texttt{useEffect} tại màn hình AdminJobs và AdminReports; đây là các điểm cần xử lý trước khi chốt bản phát hành.
 
+\section{Kịch bản kiểm thử thủ công}
 
-Dưới đây là kế hoạch cho giai đoạn 2 của Đồ án tốt nghiệp:
+\subsection{Đăng nhập và phân quyền}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.35]{img/TKB_GD2.png}
-	\caption{Kế hoạch cho Giai đoạn 2 của Đồ án tốt nghiệp}
-\end{figure}
+Đăng nhập lần lượt bằng tài khoản ứng viên, doanh nghiệp và admin. Kiểm tra header, route mặc định, khả năng truy cập các trang riêng tư, đăng xuất và trạng thái sau khi tải lại trình duyệt. Thử truy cập URL admin bằng tài khoản không có role admin để xác nhận bị chuyển hướng.
+
+\subsection{CV tạo trên web và CV tải lên}
+
+Tạo CV có nội dung ngắn, in ra PDF và kiểm tra kích thước trang 210 x 297 mm. Tạo CV dài để kiểm tra tràn nội dung. Tải PDF hợp lệ dưới 5 MB, xác nhận danh sách không tải trước toàn bộ \texttt{pdfData}, sau đó mở từ tài khoản doanh nghiệp và kiểm tra từng trang. Thử DOC, DOCX, ảnh, data URL giả và PDF vượt dung lượng.
+
+\subsection{Việc làm và ứng tuyển}
+
+Tìm kiếm và lọc một tin đang Active, lưu tin, bỏ lưu tin và ứng tuyển bằng CV đã lưu. Thử ứng tuyển lần hai để kiểm tra unique index. Thử ứng tuyển vào tin Draft, Expired hoặc Deleted. Sau khi tin bị xóa, kiểm tra lịch sử Application vẫn hiển thị thông tin từ \texttt{jobSnapshot}.
+
+\subsection{Doanh nghiệp, chat và thông báo}
+
+Đăng nhập doanh nghiệp, tạo tin nháp, đăng tin, đóng nhận hồ sơ, mở lại, sửa và xóa tin. Mở hồ sơ ứng viên, cập nhật từng trạng thái và xác nhận ứng viên nhận được thông báo. Gửi tin nhắn giữa hai tài khoản, mở room, đánh dấu đã đọc và ẩn room ở một phía; xác nhận phía còn lại vẫn giữ dữ liệu.
+
+\subsection{AI}
+
+Tạo CV có dữ liệu cơ bản, thử viết mới, cải thiện, rút gọn tiểu sử, review CV, điền CV, chấm điểm theo một Job và luyện phỏng vấn 5, 8 hoặc 12 câu. Kiểm tra kết quả không tự ghi đè nội dung nếu người dùng chưa áp dụng. Khi thiếu khóa AI, vượt quota hoặc gửi nội dung không hợp lệ, giao diện phải nhận thông báo lỗi phù hợp và không làm hỏng các chức năng CV còn lại.
+
+\section{Đánh giá theo mục tiêu}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|p{0.29\linewidth}|p{0.48\linewidth}|p{0.11\linewidth}|} \hline
+        \textbf{Mục tiêu} & \textbf{Bằng chứng} & \textbf{Đánh giá} \\ \hline
+        Tạo và quản lý CV & Resume model, nhiều template, preview, in A4 và test A4. & Đạt \\ \hline
+        Tìm việc và ứng tuyển & Job, Application, lưu việc, trạng thái và kiểm tra tin hết hạn. & Đạt \\ \hline
+        Hỗ trợ CV tải lên & Validation PDF, giới hạn 5 MB và render bằng PDF.js. & Đạt \\ \hline
+        Kết nối ứng viên -- doanh nghiệp & Cổng doanh nghiệp, cập nhật hồ sơ, chat và notification. & Đạt một phần \\ \hline
+        AI hỗ trợ nghề nghiệp & Các route AI, UI tương ứng và test sanitizer hoặc integration. & Đạt trong phạm vi demo \\ \hline
+        Quản trị hệ thống & Có layout và một số thống kê; một số route cần tiếp tục đồng bộ. & Đạt một phần \\ \hline
+    \end{tabular}
+    \caption{Đánh giá theo mục tiêu đề tài}
+    \label{tab:goal-evaluation}
+\end{table}
+
+\section{Hạn chế}
+
+Thứ nhất, PDF upload đang lưu base64 trong MongoDB làm tài liệu lớn và không phù hợp với hệ thống có nhiều tệp. Thứ hai, \texttt{server.js} còn chứa nhiều trách nhiệm nên chi phí bảo trì sẽ tăng khi số chức năng mở rộng. Thứ ba, thông báo sử dụng polling nên có độ trễ và tạo request định kỳ. Thứ tư, bộ test hiện tại chưa bao phủ đầy đủ API thật, browser end-to-end, Socket.IO trong môi trường mạng không ổn định và ma trận quyền truy cập. Thứ năm, một số màn hình admin còn cần kiểm tra sự tương ứng giữa frontend và backend.
