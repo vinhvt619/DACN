@@ -26,7 +26,7 @@
 %\csdeptname{KHOA ĐIỆN ĐIỆN TỬ}
 %\crname{BÁO CÁO THỰC TẬP TỐT NGHIỆP}
 % \crname{BÁO CÁO TIỂU LUẬN}
-\title{RABBITCV -- NỀN TẢNG HỖ TRỢ VIẾT CV, TÌM KIẾM VIỆC LÀM VÀ TUYỂN DỤNG TRỰC TUYẾN}
+\title{Xây dựng trang web hỗ trợ viết CV có tích hợp AI}
 \cstuname{SVTH: Nguyễn Thành Vinh -  2053592}
 
 \csCouncil{Khoa học máy tính}
@@ -99,11 +99,11 @@ Khoa Khoa học và Kỹ thuật máy tính
 
 %-  Lời cảm ơn/ Lời ngỏ
 \begin{acknowledgments}
-  Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian quý báu của mình để hướng dẫn tận tình, quan tâm, định hướng và động viên tôi trong suốt quá trình làm báo cáo Đồ án chuyên ngành.
+  Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian quý báu của mình để hướng dẫn tận tình, quan tâm, định hướng và động viên tôi trong suốt quá trình làm báo cáo Đồ án tốt nghiệp.
 
-  Tôi cũng xin bày tỏ lòng biết ơn sâu sắc đến Ban giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh, các thầy cô giảng viên trong Khoa Khoa học và Kỹ thuật Máy tính đã truyền đạt cho tôi những kiến thức nền tảng đầy đủ và là cơ sở giúp tôi có thể hoàn thành báo cáo Đồ án chuyên ngành này.
+  Tôi cũng xin bày tỏ lòng biết ơn sâu sắc đến Ban giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh, các thầy cô giảng viên trong Khoa Khoa học và Kỹ thuật Máy tính đã truyền đạt cho tôi những kiến thức nền tảng đầy đủ và là cơ sở giúp tôi có thể hoàn thành báo cáo Đồ án tốt nghiệp này.
 
-  Đặc biệt, tôi xin cảm ơn gia đình và các bạn học đã luôn hỗ trợ và cổ vũ tôi trong suốt quá trình học tập tại trường Đại học Bách Khoa. Sự tận tuỵ và khổ cực của cha mẹ chính là những động lực không bao giờ dứt để cho tôi có thể làm việc chăm chỉ hơn và hoàn thiện bài báo cáo Đồ án chuyên ngành một cách hoàn thiện và trọn vẹn nhất.
+  Đặc biệt, tôi xin cảm ơn gia đình và các bạn học đã luôn hỗ trợ và cổ vũ tôi trong suốt quá trình học tập tại trường Đại học Bách Khoa. Sự tận tuỵ và khổ cực của cha mẹ chính là những động lực không bao giờ dứt để cho tôi có thể làm việc chăm chỉ hơn và hoàn thiện bài báo cáo Đồ án tốt nghiệp một cách hoàn thiện và trọn vẹn nhất.
   \begin{flushright}
     \textit{Tp. Hồ Chí Minh, ngày ____ tháng ____ năm 2026\\}
     \textit{Sinh viên\\}
@@ -113,7 +113,7 @@ Khoa Khoa học và Kỹ thuật máy tính
 
 %-  Tóm tắt LV
 \begin{abstract}
-  RabbitCV là một ứng dụng web toàn ngăn xếp hỗ trợ ứng viên xây dựng hồ sơ nghề nghiệp, tạo CV theo mẫu, tải CV PDF, tìm kiếm và lưu tin tuyển dụng, nộp hồ sơ, theo dõi trạng thái ứng tuyển và trao đổi với doanh nghiệp. Hệ thống đồng thời cung cấp cổng dành cho doanh nghiệp để quản lý thông tin công ty, đăng tin tuyển dụng, tiếp nhận ứng viên và cập nhật trạng thái hồ sơ; quản trị viên có thể theo dõi các số liệu và dữ liệu hệ thống trong phạm vi được triển khai.
+  RabbitCV là một ứng dụng web hỗ trợ ứng viên xây dựng hồ sơ nghề nghiệp, tạo CV theo mẫu, tải CV PDF, tìm kiếm và lưu tin tuyển dụng, nộp hồ sơ, theo dõi trạng thái ứng tuyển và trao đổi với doanh nghiệp. Hệ thống đồng thời cung cấp cổng dành cho doanh nghiệp để quản lý thông tin công ty, đăng tin tuyển dụng, tiếp nhận ứng viên và cập nhật trạng thái hồ sơ; quản trị viên có thể theo dõi các số liệu và dữ liệu hệ thống trong phạm vi được triển khai.
 
   Hệ thống được xây dựng bằng React, Vite và Tailwind CSS ở phía giao diện; Node.js, Express và MongoDB/Mongoose ở phía máy chủ. REST API xử lý phần lớn nghiệp vụ, JWT trong cookie HTTP-only duy trì phiên đăng nhập, Socket.IO hỗ trợ nhắn tin thời gian thực và node-cron xử lý các tin tuyển dụng sắp hết hạn. CV tạo trên web được trình bày và in theo tỷ lệ A4; CV tải lên được kiểm tra là PDF, giới hạn 5 MB và hiển thị bằng PDF.js theo từng trang.
 

@@ -17,7 +17,7 @@ Hệ thống phải giải quyết một số tình huống thực tế. CV tạ
 
 \section{Mục tiêu của đề tài}
 
-Mục tiêu tổng quát là xây dựng nguyên mẫu có khả năng vận hành của một nền tảng CV và tuyển dụng toàn ngăn xếp. Các mục tiêu cụ thể gồm:
+Mục tiêu tổng quát là xây dựng nguyên mẫu có khả năng vận hành của một nền tảng CV và tuyển dụng trực tuyến. Các mục tiêu cụ thể gồm:
 
 \begin{itemize}
     \item Xây dựng giao diện thống nhất, dễ sử dụng và phù hợp cho các nhóm người dùng khác nhau.
@@ -25,39 +25,77 @@ Mục tiêu tổng quát là xây dựng nguyên mẫu có khả năng vận hà
     \item Bảo đảm CV khi xem và khi in giữ đúng tỷ lệ A4, đồng thời kiểm soát các tệp PDF không hợp lệ.
     \item Cung cấp chức năng tìm kiếm, lọc, xem chi tiết, lưu và ứng tuyển tin tuyển dụng.
     \item Theo dõi trạng thái ứng tuyển kể cả khi tin gốc đã đóng hoặc bị xóa.
-    \item Cung cấp nhắn tin thời gian thực và thông báo chưa đọc.
-    \item Xây dựng cổng doanh nghiệp, khu vực quản trị và các cơ chế phân quyền cơ bản.
-    \item Tích hợp các chức năng AI có kiểm soát cho việc hỗ trợ CV và luyện phỏng vấn.
-    \item Kiểm thử các quy tắc quan trọng và ghi nhận trung thực các giới hạn còn tồn tại.
+    \item Cung cấp nhắn tin và thông báo chưa đọc theo thời gian thực.
+    \item Xây dựng cổng doanh nghiệp, admin và các cơ chế phân quyền cơ bản.
+    \item Tích hợp các chức năng AI có kiểm soát cho việc hỗ trợ CV và luyện tập phỏng vấn với AI.
+    % \item Kiểm thử các quy tắc quan trọng và ghi nhận trung thực các giới hạn còn tồn tại.
 \end{itemize}
 
 \section{Phạm vi đề tài}
 
-Phạm vi chức năng bao gồm quản lý tài khoản, hồ sơ, CV, tin tuyển dụng, ứng tuyển, việc đã lưu, thông báo, nhắn tin, doanh nghiệp, quản trị cơ bản và các chức năng AI liên quan đến CV. Hệ thống tập trung vào luồng tuyển dụng trực tuyến, chưa tích hợp thanh toán, ký hợp đồng điện tử, lịch phỏng vấn đồng bộ với lịch ngoài, xác minh danh tính bằng dịch vụ bên thứ ba hoặc hệ thống giới thiệu việc làm quy mô lớn.
+Phạm vi chức năng bao gồm quản lý tài khoản, hồ sơ, CV, tin tuyển dụng, ứng tuyển, việc đã lưu, thông báo, nhắn tin, doanh nghiệp, quản trị cơ bản và các chức năng AI liên quan đến CV. Hệ thống tập trung vào luồng tuyển dụng trực tuyến, lịch phỏng vấn đồng bộ với lịch ngoài, xác minh danh tính bằng dịch vụ bên thứ ba như số điện thoại, gmail, v.v.
 
-Phạm vi triển khai là môi trường phát triển và trình diễn. Frontend chạy qua Vite, backend Express cung cấp REST API và Socket.IO, còn MongoDB lưu dữ liệu. Các phương án vận hành quy mô lớn như cân bằng tải, kho lưu trữ đối tượng, hàng đợi thông điệp và giám sát phân tán chưa được triển khai đầy đủ.
+Hệ thống được triển khai trên máy cá nhân để phục vụ việc phát triển, kiểm thử và minh họa các chức năng chính, chưa tối ưu cho môi trường production. Frontend chạy qua Vite, backend Express cung cấp REST API và Socket.IO, còn MongoDB để lưu dữ liệu. Các phương án vận hành quy mô lớn như cân bằng tải, kho lưu trữ đối tượng, hàng đợi thông điệp và giám sát phân tán chưa được triển khai đầy đủ.
 
-Về bảo mật, đồ án áp dụng băm mật khẩu, JWT trong cookie HTTP-only, middleware xác thực, giới hạn quyền theo vai trò, kiểm tra quyền sở hữu, làm sạch dữ liệu và giới hạn tần suất. Báo cáo không tuyên bố sản phẩm đạt chuẩn kiểm toán bảo mật doanh nghiệp.
+% Về bảo mật, đồ án áp dụng băm mật khẩu, JWT trong cookie HTTP-only, middleware xác thực, giới hạn quyền theo vai trò, kiểm tra quyền sở hữu, làm sạch dữ liệu và giới hạn tần suất. Báo cáo không tuyên bố sản phẩm đạt chuẩn kiểm toán bảo mật doanh nghiệp.
 
 \section{Đối tượng sử dụng}
 
 \begin{itemize}
     \item \textbf{Khách:} xem trang công khai, danh sách việc làm, chi tiết công việc và nội dung giới thiệu.
-    \item \textbf{Ứng viên/employee:} quản lý hồ sơ, tạo hoặc tải CV, tìm và lưu việc, ứng tuyển, theo dõi trạng thái, nhận thông báo, nhắn tin và sử dụng công cụ AI.
-    \item \textbf{Doanh nghiệp/company:} quản lý thông tin công ty, tạo và điều chỉnh tin tuyển dụng, xem hồ sơ ứng viên, cập nhật trạng thái và trao đổi.
-    \item \textbf{Quản trị viên/admin:} theo dõi số liệu tổng quan và quản lý các dữ liệu được cung cấp trong khu vực quản trị.
+    \item \textbf{Ứng viên:} quản lý hồ sơ, tạo hoặc tải CV, tìm và lưu việc, ứng tuyển, theo dõi trạng thái, nhận thông báo, nhắn tin và sử dụng công cụ AI.
+    \item \textbf{Doanh nghiệp:} quản lý thông tin công ty, tạo và điều chỉnh tin tuyển dụng, xem hồ sơ ứng viên, cập nhật trạng thái và trao đổi.
+    \item \textbf{Quản trị viên:} theo dõi số liệu tổng quan và quản lý các dữ liệu được cung cấp trong khu vực quản trị.
 \end{itemize}
 
-\section{Phương pháp thực hiện}
+% \section{Phương pháp thực hiện}
 
-Đồ án được triển khai theo quy trình lặp. Trước hết, yêu cầu được thu thập từ các luồng điển hình của ứng viên và nhà tuyển dụng. Sau đó, hệ thống được phân rã thành các mô-đun, thiết kế mô hình dữ liệu và các API cần thiết. Giao diện được xây dựng theo từng trang, kết nối dần với backend và điều chỉnh dựa trên phản hồi trực quan.
+% Đồ án được triển khai theo quy trình lặp. Trước hết, yêu cầu được thu thập từ các luồng điển hình của ứng viên và nhà tuyển dụng. Sau đó, hệ thống được phân rã thành các mô-đun, thiết kế mô hình dữ liệu và các API cần thiết. Giao diện được xây dựng theo từng trang, kết nối dần với backend và điều chỉnh dựa trên phản hồi trực quan.
 
-Phương pháp đánh giá kết hợp kiểm thử tự động bằng Node Test Runner, kiểm tra lint, build frontend và kiểm thử thủ công theo kịch bản. Đối với PDF, việc đánh giá không chỉ dựa trên phản hồi API mà còn dựa vào tỷ lệ A4, số trang, khả năng hiển thị và bố cục in.
+% Phương pháp đánh giá kết hợp kiểm thử tự động bằng Node Test Runner, kiểm tra lint, build frontend và kiểm thử thủ công theo kịch bản. Đối với PDF, việc đánh giá không chỉ dựa trên phản hồi API mà còn dựa vào tỷ lệ A4, số trang, khả năng hiển thị và bố cục in.
 
-\section{Đóng góp của đề tài}
+\section{Kết quả và giá trị đạt được}
 
-Đề tài tạo ra một sản phẩm toàn ngăn xếp tích hợp các bài toán thường bị tách rời: tạo CV, quản lý PDF, tuyển dụng, ứng tuyển, thông báo, trò chuyện và hỗ trợ AI. Một số điểm kỹ thuật đáng chú ý gồm phân biệt CV ảo và CV thực, loại bỏ trường PDF lớn khỏi truy vấn danh sách, lưu ảnh chụp tin tuyển dụng trong Application, ẩn chat theo từng người dùng, kết hợp Socket.IO với polling và dùng một ngữ cảnh xác thực thống nhất ở frontend.
+Đề tài xây dựng một nguyên mẫu nền tảng CV và tuyển dụng trực tuyến, hỗ trợ các luồng nghiệp vụ chính giữa ứng viên, doanh nghiệp và quản trị viên. Hệ thống mô phỏng tương đối đầy đủ quy trình từ xây dựng hồ sơ, tạo hoặc tải CV, tìm kiếm việc làm, nộp hồ sơ đến theo dõi và trao đổi trong quá trình tuyển dụng.
+
+Những giá trị đạt được trong đề tài:
+
+\begin{itemize}
+\item Xây dựng mô hình người dùng đa vai trò gồm ứng viên, doanh nghiệp và quản trị viên, với các chức năng và quyền truy cập phù hợp cho từng nhóm.
+
+\item Hiện thực chức năng quản lý hồ sơ và CV, bao gồm tạo CV trên nền web, lưu thông tin cá nhân, học vấn, kinh nghiệm, kỹ năng và tải CV dưới dạng PDF.
+
+\item Khả năng hiển thị CV trên nền web và hỗ trợ trình bày CV theo tỷ lệ khổ giấy A4.
+
+\item Mô hình hóa các quy tắc nghiệp vụ quan trọng như ngăn ứng tuyển trùng, lưu thông tin tin tuyển dụng tại thời điểm ứng tuyển và duy trì lịch sử ứng tuyển khi tin tuyển dụng bị đóng hoặc xóa.
+
+\item Tích hợp chức năng tìm kiếm, lưu tin tuyển dụng, thông báo và nhắn tin giữa ứng viên với doanh nghiệp nhằm hỗ trợ tuyển dụng trực tuyến.
+
+\item Tích hợp một số chức năng AI hỗ trợ viết nội dung CV, nhận xét hồ sơ, đánh giá mức độ phù hợp giữa CV và công việc và luyện tập phỏng vấn với AI. Các chức năng này được giới hạn trong phạm vi hỗ trợ tham khảo, không thay thế quyết định của người dùng.
+
+% \item Đánh giá hệ thống thông qua kiểm thử tự động và kiểm thử thủ công đối với các luồng nghiệp vụ chính, đồng thời ghi nhận các giới hạn về lưu trữ PDF, khả năng mở rộng và mức độ sẵn sàng cho môi trường production.
+
+\end{itemize}
+
+Nhìn chung, đóng góp của đề tài nằm ở việc tích hợp nhiều chức năng của quy trình tuyển dụng vào một hệ thống thống nhất, qua đó tạo ra một nguyên mẫu có thể vận hành và làm cơ sở cho các hướng phát triển tiếp theo.
+
 
 \section{Cấu trúc báo cáo}
 
-Báo cáo gồm sáu chương. Chương 1 trình bày bối cảnh, mục tiêu và phạm vi. Chương 2 giới thiệu cơ sở lý thuyết và công nghệ. Chương 3 phân tích yêu cầu, kiến trúc, dữ liệu và quy trình. Chương 4 mô tả việc triển khai các mô-đun. Chương 5 trình bày kiểm thử và đánh giá. Chương 6 tổng kết kết quả, hạn chế và hướng phát triển.
+Báo cáo được chia thành sáu chương, theo trình tự từ trình bày bối cảnh, xác định mục tiêu, phân tích và thiết kế, triển khai, đánh giá đến tổng kết thành phẩm. Nội dung và mục tiêu của từng chương được trình bày như sau:
+
+\begin{itemize}
+    \item \textbf{Chương 1 -- Tổng quan đề tài:} Trình bày bối cảnh, lý do chọn đề tài, bài toán cần giải quyết, mục tiêu, phạm vi, đối tượng sử dụng và các đóng góp chính của đề tài. Mục tiêu của chương này là xác định rõ định hướng và giới hạn của hệ thống.
+
+    \item \textbf{Chương 2 -- Cơ sở lý thuyết và công nghệ:} Giới thiệu các kiến thức và công nghệ được sử dụng, bao gồm kiến trúc ứng dụng web, React, Vite, Node.js, Express, MongoDB, JWT, Socket.IO, PDF.js và các chức năng AI. Mục tiêu của chương là giải thích cơ sở lựa chọn công nghệ và vai trò của chúng trong hệ thống.
+
+    \item \textbf{Chương 3 -- Phân tích và thiết kế hệ thống:} Phân tích yêu cầu chức năng, yêu cầu phi chức năng, các nhóm người dùng, quy tắc nghiệp vụ và các luồng xử lý chính. Chương này cũng trình bày kiến trúc hệ thống, thiết kế cơ sở dữ liệu, các ca sử dụng và quy trình ứng tuyển. Mục tiêu là chuyển các yêu cầu của bài toán thành thiết kế có thể triển khai.
+
+    \item \textbf{Chương 4 -- Triển khai hệ thống:} Mô tả quá trình hiện thực các chức năng chính ở frontend và backend, bao gồm xác thực, quản lý hồ sơ và CV, kiểm soát PDF, quản lý tin tuyển dụng, ứng tuyển, thông báo, nhắn tin và các chức năng AI. Mục tiêu của chương là trình bày cách thiết kế được chuyển thành các mô-đun hoạt động trong hệ thống.
+
+    \item \textbf{Chương 5 -- Kiểm thử và đánh giá:} Trình bày phương pháp, các trường hợp và kết quả của kiểm thử tự động và kiểm thử thủ công đối với những chức năng quan trọng. Chương này cũng đánh giá mức độ đáp ứng mục tiêu, hiệu quả hoạt động và các giới hạn còn tồn tại của hệ thống.
+
+    \item \textbf{Chương 6 -- Kết luận và hướng phát triển:} Tổng kết các kết quả đạt được, những bài học kinh nghiệm và các hạn chế của đề tài. Chương này đồng thời đề xuất những hướng phát triển như cải thiện khả năng mở rộng, tăng cường bảo mật, hoàn thiện kiểm thử và tối ưu việc lưu trữ tệp PDF.
+\end{itemize}
+
+Cấu trúc báo cáo được xây dựng theo mạch nội dung: xác định bài toán, lựa chọn giải pháp, thiết kế hệ thống, triển khai chức năng, kiểm chứng kết quả và đề xuất hướng phát triển.

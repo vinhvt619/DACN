@@ -1,21 +1,25 @@
 % !TEX root = ../main.tex
 \chapter{Cơ sở lý thuyết và công nghệ sử dụng}
 
-\section{Kiến trúc ứng dụng web toàn ngăn xếp}
+\section{Kiến trúc ứng dụng}
 
-Ứng dụng web toàn ngăn xếp gồm lớp giao diện trên trình duyệt, lớp dịch vụ xử lý nghiệp vụ và lớp lưu trữ. Trong RabbitCV, trình duyệt tải ứng dụng React, gửi yêu cầu HTTP đến REST API và thiết lập kết nối Socket.IO khi cần nhắn tin. Express xác thực, xử lý nghiệp vụ và làm việc với MongoDB thông qua Mongoose. Cách phân lớp này giúp giao diện và máy chủ phát triển tương đối độc lập, đồng thời cho phép kiểm tra quyền truy cập tại server.
+RabbitCV được tổ chức theo mô hình client--server, gồm giao diện người dùng, máy chủ xử lý nghiệp vụ và cơ sở dữ liệu. Giao diện được xây dựng bằng React và Vite, chạy trên trình duyệt và chịu trách nhiệm hiển thị các trang, tiếp nhận thao tác của người dùng, quản lý trạng thái giao diện và gửi yêu cầu đến máy chủ.
+
+Máy chủ sử dụng Node.js và Express để cung cấp REST API, xác thực người dùng và kiểm tra quyền truy cập. Khi cần trao đổi gần thời gian thực, chẳng hạn như nhắn tin, frontend thiết lập kết nối Socket.IO với backend. Backend làm việc với MongoDB thông qua Mongoose để đọc và ghi dữ liệu người dùng, CV, tin tuyển dụng, hồ sơ ứng tuyển, tin nhắn và thông báo.
+
+Luồng xử lý của hệ thống bắt đầu khi người dùng thực hiện thao tác trên giao diện. Frontend tiếp nhận thao tác và gửi yêu cầu đến backend thông qua REST API hoặc Socket.IO, tùy theo loại chức năng. Backend xác thực người dùng, kiểm tra dữ liệu đầu vào và quyền truy cập, sau đó thực hiện chức năng tương ứng. Khi cần, backend sẽ đọc hoặc ghi dữ liệu trong MongoDB. Kết quả được trả về dưới dạng dữ liệu JSON hoặc sự kiện thời gian thực để frontend cập nhật giao diện. Cách tổ chức này phân tách rõ trách nhiệm giữa giao diện, máy chủ và các dịch vụ hỗ trợ, giúp hệ thống dễ phát triển, kiểm thử và bảo trì, đồng thời hạn chế frontend truy cập trực tiếp vào cơ sở dữ liệu.
 
 \section{MERN Stack}
 
-MERN là tổ hợp MongoDB, Express, React và Node.js. JavaScript được sử dụng xuyên suốt ở client và server, giúp giảm chi phí chuyển đổi ngôn ngữ và thuận tiện khi trao đổi dữ liệu JSON. Đối với một đồ án cá nhân, hệ sinh thái thống nhất giúp tập trung thời gian vào nghiệp vụ CV và tuyển dụng.
+MERN là viết tắt của MongoDB, Express, React và Node.js. JavaScript được sử dụng xuyên suốt ở client và server, giúp giảm chi phí chuyển đổi ngôn ngữ và thuận tiện khi trao đổi dữ liệu JSON. Hệ sinh thái thống nhất này rất phù hợp, giúp tập trung thời gian vào nghiệp vụ CV và tuyển dụng.
 
-MERN không phải lựa chọn tốt nhất cho mọi hệ thống. Cơ sở dữ liệu quan hệ có lợi thế về ràng buộc tham chiếu và giao dịch; các backend có cấu trúc nghiêm ngặt có thể phù hợp hơn với nhóm lớn. RabbitCV chọn MERN vì dữ liệu CV có nhiều nhóm thuộc tính lồng nhau, giao diện có tính tương tác cao và phạm vi triển khai phù hợp với một ứng dụng JavaScript toàn ngăn xếp.
+MERN không phải là lựa chọn tốt nhất cho mọi hệ thống. Cơ sở dữ liệu quan hệ có lợi thế về ràng buộc tham chiếu và giao dịch; các backend có cấu trúc chặt chẽ sẽ phù hợp hơn với nhóm lớn. RabbitCV chọn MERN vì dữ liệu CV có nhiều nhóm thuộc tính lồng nhau, giao diện có tính tương tác cao và phạm vi triển khai phù hợp với một ứng dụng web JavaScript sử dụng frontend, backend và cơ sở dữ liệu MongoDB.
 
 \section{React và quản lý trạng thái}
 
-React xây dựng giao diện từ các component và cập nhật màn hình dựa trên state \cite{reactdocs}. Trong RabbitCV, các component dùng lại gồm header, CV preview, form CV, chat box, notification bell và các thành phần bảo vệ route. \texttt{AuthContext} là nguồn dữ liệu dùng chung cho người dùng hiện tại, trạng thái kiểm tra phiên và các thao tác đăng nhập, đăng xuất.
+React xây dựng giao diện từ các component và cập nhật màn hình dựa trên state \cite{reactdocs}. \texttt{AuthContext} là nguồn dữ liệu dùng chung cho người dùng hiện tại, trạng thái kiểm tra phiên và các thao tác đăng nhập, đăng xuất.
 
-So với việc mỗi trang tự gọi API lấy thông tin người dùng, một context thống nhất giúp giảm trạng thái không nhất quán giữa header, route bảo vệ và trang chức năng. \texttt{SavedJobsContext} quản lý việc đã lưu; \texttt{SocketContext} quản lý kết nối Socket.IO, trạng thái tin nhắn chưa đọc và các thao tác đánh dấu đã đọc.
+So với việc mỗi trang tự gọi API lấy thông tin người dùng thì một context thống nhất giúp giảm trạng thái không nhất quán giữa header, route bảo vệ và trang chức năng. \texttt{SavedJobsContext} quản lý việc đã lưu; \texttt{SocketContext} quản lý kết nối Socket.IO, trạng thái tin nhắn chưa đọc và các thao tác đánh dấu đã đọc.
 
 \section{Vite và React Router}
 
