@@ -1,80 +1,98 @@
 % !TEX root = ../main.tex
 \chapter{Cơ sở lý thuyết và công nghệ sử dụng}
 
-\section{Kiến trúc ứng dụng}
+\section{Kiến trúc ứng dụng web}
 
-RabbitCV được tổ chức theo mô hình client--server, gồm giao diện người dùng, máy chủ xử lý nghiệp vụ và cơ sở dữ liệu. Giao diện được xây dựng bằng React và Vite, chạy trên trình duyệt và chịu trách nhiệm hiển thị các trang, tiếp nhận thao tác của người dùng, quản lý trạng thái giao diện và gửi yêu cầu đến máy chủ.
+RabbitCV được tổ chức theo mô hình client--server. Trình duyệt tải giao diện React, quản lý trạng thái tương tác và gửi yêu cầu đến máy chủ. Express tiếp nhận yêu cầu, xác thực người dùng, kiểm tra dữ liệu và thực hiện nghiệp vụ. MongoDB lưu trạng thái bền vững thông qua Mongoose. Việc phân tách này ngăn frontend truy cập trực tiếp vào cơ sở dữ liệu và đặt các kiểm tra quan trọng ở phía server.
 
-Máy chủ sử dụng Node.js và Express để cung cấp REST API, xác thực người dùng và kiểm tra quyền truy cập. Khi cần trao đổi gần thời gian thực, chẳng hạn như nhắn tin, frontend thiết lập kết nối Socket.IO với backend. Backend làm việc với MongoDB thông qua Mongoose để đọc và ghi dữ liệu người dùng, CV, tin tuyển dụng, hồ sơ ứng tuyển, tin nhắn và thông báo.
+REST API phù hợp với các thao tác đọc, tạo, cập nhật và xóa có vòng đời rõ ràng. Socket.IO được dùng cho chat vì yêu cầu phản hồi có độ trễ thấp và cần kênh sự kiện hai chiều. Thông báo thông thường vẫn được truy vấn định kỳ qua REST API; báo cáo phân biệt hai cơ chế để không đồng nhất mọi chức năng với khái niệm ``thời gian thực''.
 
-Luồng xử lý của hệ thống bắt đầu khi người dùng thực hiện thao tác trên giao diện. Frontend tiếp nhận thao tác và gửi yêu cầu đến backend thông qua REST API hoặc Socket.IO, tùy theo loại chức năng. Backend xác thực người dùng, kiểm tra dữ liệu đầu vào và quyền truy cập, sau đó thực hiện chức năng tương ứng. Khi cần, backend sẽ đọc hoặc ghi dữ liệu trong MongoDB. Kết quả được trả về dưới dạng dữ liệu JSON hoặc sự kiện thời gian thực để frontend cập nhật giao diện. Cách tổ chức này phân tách rõ trách nhiệm giữa giao diện, máy chủ và các dịch vụ hỗ trợ, giúp hệ thống dễ phát triển, kiểm thử và bảo trì, đồng thời hạn chế frontend truy cập trực tiếp vào cơ sở dữ liệu.
+\section{Lựa chọn công nghệ}
 
-\section{MERN Stack}
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.19\textwidth}|p{0.24\textwidth}|Y|} \hline
+        \textbf{Công nghệ} & \textbf{Vai trò} & \textbf{Lý do trong RabbitCV} \\ \hline
+        React, React Router & Component, state và điều hướng. & Giao diện có nhiều form CV, preview, portal theo vai trò và trang được tải lười. \\ \hline
+        Vite, Tailwind CSS & Phát triển, build và hệ thống giao diện. & Thời gian phản hồi phát triển nhanh; lớp tiện ích giúp thống nhất bố cục giữa ứng viên, doanh nghiệp và admin. \\ \hline
+        Node.js, Express & REST API và middleware. & Dùng JavaScript xuyên suốt, thuận tiện chia sẻ định dạng JSON và xử lý I/O bất đồng bộ. \\ \hline
+        MongoDB, Mongoose & Lưu tài liệu và mô hình dữ liệu. & CV có nhiều mảng lồng nhau; schema và index giúp ràng buộc các quy tắc quan trọng. \\ \hline
+        Socket.IO & Nhắn tin bằng sự kiện. & Hỗ trợ room, xác thực khi bắt tay và kết nối lại ở phía client. \\ \hline
+        PDF.js & Kết xuất CV PDF. & Cho phép hiển thị từng trang trong giao diện thay vì phụ thuộc trình xem PDF gốc. \\ \hline
+        Groq, OpenAI SDK & Gọi mô hình ngôn ngữ. & API tương thích OpenAI và hỗ trợ đầu ra theo JSON Schema cho các luồng AI. \\ \hline
+    \end{tabularx}
+    \caption{Vai trò và lý do lựa chọn công nghệ}
+    \label{tab:technology-choice}
+\end{table}
 
-MERN là viết tắt của MongoDB, Express, React và Node.js. JavaScript được sử dụng xuyên suốt ở client và server, giúp giảm chi phí chuyển đổi ngôn ngữ và thuận tiện khi trao đổi dữ liệu JSON. Hệ sinh thái thống nhất này rất phù hợp, giúp tập trung thời gian vào nghiệp vụ CV và tuyển dụng.
+\section{React, Vite và tổ chức giao diện}
 
-MERN không phải là lựa chọn tốt nhất cho mọi hệ thống. Cơ sở dữ liệu quan hệ có lợi thế về ràng buộc tham chiếu và giao dịch; các backend có cấu trúc chặt chẽ sẽ phù hợp hơn với nhóm lớn. RabbitCV chọn MERN vì dữ liệu CV có nhiều nhóm thuộc tính lồng nhau, giao diện có tính tương tác cao và phạm vi triển khai phù hợp với một ứng dụng web JavaScript sử dụng frontend, backend và cơ sở dữ liệu MongoDB.
+React xây dựng giao diện từ component và cập nhật màn hình dựa trên state \cite{reactdocs}. RabbitCV dùng \texttt{AuthContext} cho phiên hiện tại, \texttt{SavedJobsContext} cho danh sách việc đã lưu và \texttt{SocketContext} cho kết nối chat. Context chung giúp header, route bảo vệ và trang chức năng cùng sử dụng một nguồn trạng thái thay vì tự gọi API theo cách không nhất quán.
 
-\section{React và quản lý trạng thái}
+React Router quản lý các nhóm trang công khai, ứng viên, doanh nghiệp và quản trị viên \cite{reactrouterdocs}. \texttt{RoleAccessGuard} hỗ trợ điều hướng sớm ở frontend, nhưng đây chỉ là lớp trải nghiệm; backend vẫn phải xác thực token, vai trò và quyền sở hữu trước mọi thao tác nhạy cảm.
 
-React xây dựng giao diện từ các component và cập nhật màn hình dựa trên state \cite{reactdocs}. \texttt{AuthContext} là nguồn dữ liệu dùng chung cho người dùng hiện tại, trạng thái kiểm tra phiên và các thao tác đăng nhập, đăng xuất.
-
-So với việc mỗi trang tự gọi API lấy thông tin người dùng thì một context thống nhất giúp giảm trạng thái không nhất quán giữa header, route bảo vệ và trang chức năng. \texttt{SavedJobsContext} quản lý việc đã lưu; \texttt{SocketContext} quản lý kết nối Socket.IO, trạng thái tin nhắn chưa đọc và các thao tác đánh dấu đã đọc.
-
-\section{Vite và React Router}
-
-Vite cung cấp máy chủ phát triển và quá trình build frontend nhanh, hỗ trợ cập nhật nóng trong quá trình lập trình \cite{vitedocs}. RabbitCV sử dụng Vite để chạy frontend tại cổng 4000 và proxy các đường dẫn \texttt{/api} và \texttt{/socket.io} sang backend tại cổng 5000. Nhờ đó, frontend gọi đường dẫn tương đối và giảm sai khác giữa môi trường phát triển và triển khai.
-
-React Router đảm nhiệm điều hướng phía client. Các route được chia theo nhóm công khai, ứng viên, doanh nghiệp và admin. \texttt{RoleAccessGuard} ngăn người dùng truy cập các khu vực không phù hợp với vai trò, nhưng việc kiểm tra quan trọng vẫn được thực hiện lại tại backend.
-
-\section{Tailwind CSS và hệ thống giao diện}
-
-Tailwind CSS cung cấp các lớp tiện ích để biểu diễn màu sắc, khoảng cách, lưới, kích thước và trạng thái tương tác \cite{tailwinddocs}. Cách tiếp cận này giúp RabbitCV giữ sự thống nhất giữa trang ứng viên, cổng doanh nghiệp và khu vực quản trị.
-
-CSS riêng vẫn được dùng cho những phần có yêu cầu đặc thù như vùng in CV A4, trình xem PDF, thanh cuộn, kích thước responsive và các component rich text. Tiptap hỗ trợ trình soạn thảo nội dung có định dạng; Heroicons cung cấp biểu tượng cho các thao tác giao diện.
+Vite cung cấp máy chủ phát triển, proxy và build frontend \cite{vitedocs}. Trong môi trường hiện tại, frontend chạy ở cổng 4000, proxy \texttt{/api} và \texttt{/socket.io} đến backend ở cổng 5000. Tailwind CSS cung cấp các lớp tiện ích cho màu sắc, khoảng cách, lưới và trạng thái tương tác \cite{tailwinddocs}. Tiptap được dùng ở các vùng soạn thảo rich text; nội dung vẫn phải được làm sạch ở server vì kiểm soát trên giao diện không phải ranh giới bảo mật \cite{tiptapdocs}.
 
 \section{Node.js và Express}
 
-Node.js sử dụng mô hình I/O bất đồng bộ, phù hợp với máy chủ có nhiều thao tác chờ như truy vấn database, gửi phản hồi và giao tiếp Socket.IO. Express cung cấp middleware, định tuyến và cách tổ chức REST API gọn \cite{expressdocs}.
+Node.js sử dụng vòng lặp sự kiện và I/O bất đồng bộ, phù hợp với máy chủ web có nhiều thao tác chờ như truy vấn database hoặc gọi dịch vụ AI \cite{nodedocs}. Express cung cấp middleware và routing cho REST API \cite{expressdocs}. RabbitCV hiện có một entry point lớn là \texttt{server/server.js}; route AI, service AI, sanitizer và cron đã được tách thành module riêng. Cấu trúc này vận hành được trong phạm vi đồ án nhưng làm tăng chi phí bảo trì khi số domain tiếp tục mở rộng.
 
-Trong phiên bản hiện tại, \texttt{server/server.js} vẫn là entry point lớn và chứa phần lớn route nghiệp vụ. Một số phần đã được tách thành các nhóm route, service, utility và cron. Đây là cách tổ chức phù hợp với phạm vi đồ án, nhưng việc tách controller và service theo domain là hướng cải thiện cần thực hiện khi hệ thống mở rộng.
+Các middleware dùng chung gồm CORS, Helmet, cookie parser, rate limiter và xác thực JWT. Trình tự middleware quan trọng vì dữ liệu chỉ nên đi vào nghiệp vụ sau khi đã qua giới hạn request, xác thực và các kiểm tra đầu vào tương ứng.
 
 \section{MongoDB và Mongoose}
 
-MongoDB lưu tài liệu BSON và hỗ trợ cấu trúc lồng nhau \cite{mongodbdocs}. Điều này phù hợp với CV vì một Resume có các nhóm học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ, ngôn ngữ và sở thích. Mongoose cung cấp schema, kiểu dữ liệu, giá trị mặc định, validation và index \cite{mongooseDocs}.
+MongoDB lưu dữ liệu ở dạng tài liệu BSON và hỗ trợ cấu trúc lồng nhau \cite{mongodbdocs}. Cấu trúc này phù hợp với Resume vì một CV gồm thông tin cá nhân, học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ, ngôn ngữ và các nhóm tùy chọn. Mongoose bổ sung schema, kiểu dữ liệu, giá trị mặc định, validation và index \cite{mongooseDocs}.
 
-RabbitCV sử dụng ObjectId để liên kết người dùng, CV, công việc và hồ sơ ứng tuyển. Một số index quan trọng gồm cặp \texttt{jobId}--\texttt{candidateId} duy nhất trong Application để ngăn ứng tuyển trùng, cặp \texttt{recipient}--\texttt{isRead}--\texttt{createdAt} trong Notification để tối ưu truy vấn thông báo và cặp \texttt{userId}--\texttt{room} trong ChatReadState hoặc HiddenChat để lưu trạng thái theo người dùng.
+Việc dùng MongoDB không loại bỏ nhu cầu thiết kế ràng buộc. RabbitCV dùng unique index cho username, email, cặp ứng tuyển và trạng thái chat theo người dùng; dùng reference ObjectId giữa User, Resume, Job và Application; đồng thời lưu snapshot khi lịch sử không được phụ thuộc hoàn toàn vào tài liệu gốc.
 
-\section{REST API và xác thực JWT}
+\section{Xác thực JWT và kiểm soát truy cập}
 
-REST tổ chức chức năng quanh tài nguyên và dùng phương thức HTTP biểu đạt thao tác. RabbitCV dùng \texttt{GET} để đọc, \texttt{POST} để tạo hoặc thực hiện hành động, \texttt{PUT} hoặc \texttt{PATCH} để cập nhật và \texttt{DELETE} để xóa hoặc bỏ liên kết. Phản hồi JSON giúp frontend xử lý thống nhất.
+JWT là định dạng gọn để biểu diễn một tập claim giữa các bên \cite{rfc7519}. Sau khi đăng nhập, RabbitCV tạo token chứa định danh và vai trò rồi lưu trong cookie HTTP-only. JavaScript phía trình duyệt không đọc trực tiếp cookie này; server xác minh token và tải người dùng hiện tại trước khi xử lý API riêng tư.
 
-JWT được tạo sau khi đăng nhập thành công và lưu trong cookie HTTP-only. JavaScript phía trình duyệt không đọc trực tiếp token, giảm một phần rủi ro lộ token qua mã giao diện. Backend dùng middleware để kiểm tra token, người dùng hiện tại, vai trò và quyền sở hữu trước khi thực hiện thao tác nhạy cảm \cite{jwtdocs}.
-
-Ngoài xác thực, server còn sử dụng bcryptjs để băm mật khẩu, CORS để kiểm soát nguồn truy cập, Helmet để thiết lập header bảo mật và express-rate-limit để giới hạn các request chung, đăng nhập, đăng ký và nhóm API AI.
+Cookie HTTP-only không tự giải quyết toàn bộ bảo mật. Hệ thống còn cần kiểm soát CORS, thuộc tính \texttt{Secure} khi dùng HTTPS, chính sách \texttt{SameSite}, thời hạn token, rate limit và kiểm tra quyền trên đối tượng. Các nhóm kiểm tra được đối chiếu ở mức phù hợp với đồ án từ OWASP Application Security Verification Standard \cite{owaspasvs}; báo cáo không tuyên bố hệ thống đã qua kiểm toán ASVS đầy đủ.
 
 \section{Socket.IO và tác vụ theo lịch}
 
-Socket.IO cung cấp giao tiếp hai chiều dựa trên sự kiện, room và cơ chế kết nối lại \cite{socketiodocs}. Middleware Socket.IO đọc cookie, xác minh JWT và đưa socket vào room riêng theo người dùng. Khi có tin nhắn mới, server lưu Message vào MongoDB và phát sự kiện \texttt{newMessage} đến bên nhận.
+Socket.IO cung cấp giao tiếp hai chiều dựa trên event, room và cơ chế kết nối lại \cite{socketiodocs}. Khi socket kết nối, middleware đọc cookie, xác minh JWT và đưa kết nối vào room riêng của người dùng. Tin nhắn được lưu vào MongoDB trước khi sự kiện \texttt{newMessage} được phát cho bên nhận, giúp database vẫn là nguồn dữ liệu chính khi client mất kết nối.
 
-Thông báo chưa đọc được truy vấn định kỳ vì dữ liệu nhỏ và không yêu cầu độ trễ tuyệt đối. Ngược lại, chat sử dụng Socket.IO vì cần phản hồi gần thời gian thực. \texttt{node-cron} chạy tác vụ kiểm tra tin sắp hết hạn hoặc đã hết hạn, cập nhật trạng thái Job và tạo Notification tương ứng.
+node-cron chạy tác vụ kiểm tra tin tuyển dụng sắp hết hạn hoặc đã hết hạn \cite{nodecrondocs}. Cron phù hợp với quy mô một tiến trình; nếu mở rộng nhiều instance, hệ thống cần cơ chế khóa phân tán hoặc đưa tác vụ sang queue/worker để tránh thực thi lặp.
 
-\section{PDF, PDF.js và khổ giấy A4}
+\section{PDF, PDF.js và khổ A4}
 
-CV tạo trên web được trình bày bằng HTML/CSS rồi in qua trình duyệt. Quy tắc \texttt{@page}, kích thước 210 x 297 mm, lề trang và các thuộc tính in được dùng để kiểm soát đầu ra.
+CV tạo trên web được trình bày bằng HTML/CSS và áp dụng quy tắc in A4 210 x 297 mm. Kiểm thử cần xem cả wrapper hiển thị, print page và hành động tải PDF; chỉ quan sát trên màn hình không đủ để kết luận kích thước vật lý đúng.
 
-CV tải lên phải là PDF, có data URL hợp lệ, có header PDF và dung lượng không vượt quá 5 MB. Hệ thống từ chối DOC, DOCX, ảnh và nội dung giả PDF. PDF được lưu trong trường \texttt{pdfData} dưới dạng base64 trong phạm vi đồ án; danh sách CV không trả trường này để giảm băng thông.
+CV tải lên phải có data URL hợp lệ, MIME và đuôi PDF phù hợp, header PDF đúng và kích thước sau giải mã không vượt quá 5 MB. PDF.js kết xuất từng trang vào vùng hiển thị riêng \cite{pdfjsdocs}. Cách làm này cho trải nghiệm nhất quán nhưng việc lưu base64 trực tiếp trong MongoDB chỉ phù hợp với bản demo và không nên xem là thiết kế lưu trữ quy mô lớn.
 
-Ở giao diện doanh nghiệp, PDF.js kết xuất từng trang vào vùng hiển thị riêng thay vì dùng iframe hoặc thanh công cụ PDF gốc \cite{pdfjsdocs}. Cách làm này giúp giao diện xem CV nhất quán, nhưng làm tăng chi phí xử lý phía trình duyệt và chưa giải quyết hoàn toàn bài toán lưu trữ tệp ở quy mô lớn.
+\section{Mô hình ngôn ngữ và đầu ra có cấu trúc}
 
-\section{Tích hợp AI có kiểm soát}
+Các chức năng AI của RabbitCV sử dụng mô hình ngôn ngữ thông qua API Groq tương thích OpenAI. Backend gửi instruction và dữ liệu đã rút gọn, sau đó yêu cầu phản hồi theo JSON Schema. JSON Schema mô tả kiểu, trường bắt buộc và các ràng buộc của tài liệu JSON \cite{jsonschema}; structured output giúp backend nhận dữ liệu có cấu trúc thay vì phải tách văn bản tự do \cite{groqstructured}.
 
-Các chức năng AI được gọi từ Express backend thông qua API tương thích OpenAI của Groq. Frontend không nhận khóa API. Các luồng hiện có gồm viết, cải thiện hoặc rút gọn tiểu sử; review CV; điền nội dung CV; chấm mức độ phù hợp giữa CV và tin tuyển dụng; và luyện phỏng vấn theo từng lượt.
+Đầu ra có cấu trúc không bảo đảm nội dung đúng về mặt ngữ nghĩa. Mô hình vẫn có thể đưa ra gợi ý chung chung, suy diễn quá mức hoặc chấm điểm thiếu ổn định. Vì vậy, RabbitCV áp dụng thêm validation theo từng chức năng, lọc độ dài, enum, URL, ngày tháng và nội dung có dấu hiệu thực thi. Kết quả được hiển thị như gợi ý; người dùng phải chủ động áp dụng vào CV.
 
-Trước khi gửi, dữ liệu CV được làm sạch và loại thông tin liên hệ trực tiếp. Backend áp dụng quota theo ngày, rate limit, timeout, schema đầu ra có cấu trúc và bộ lọc kết quả. Model \texttt{AiUsage} chỉ lưu thống kê như feature, model, trạng thái, hash đầu vào, số token, độ trễ và mã lỗi; không lưu prompt hoặc toàn bộ nội dung CV.
+\section{Kiểm soát dữ liệu và rủi ro AI}
 
-AI chỉ mang tính hỗ trợ tham khảo. Kết quả review, điểm phù hợp và điểm phỏng vấn không được xem là quyết định tuyển dụng thực tế. Người dùng phải kiểm tra và chủ động áp dụng nội dung trước khi lưu vào CV.
+Trước khi gọi mô hình, sanitizer loại thông tin liên hệ trực tiếp, giới hạn số phần tử và độ dài, bỏ HTML hoặc nội dung giống mã thực thi. Lịch sử phỏng vấn cũng được giới hạn và các yêu cầu cố gắng thay đổi vai trò hệ thống được coi như dữ liệu hội thoại, không phải instruction. Sau khi nhận kết quả, backend tiếp tục làm sạch văn bản và chỉ giữ các trường được schema cho phép.
+
+Mỗi request AI yêu cầu phiên đăng nhập, chịu rate limit 30 request trong 15 phút và quota theo ngày. Service đặt timeout, chỉ retry trong trường hợp được thiết kế và lưu thống kê gồm feature, model, hash đầu vào, token, độ trễ, trạng thái và mã lỗi; không lưu toàn bộ prompt hay nội dung CV. Việc giới hạn dữ liệu, ghi nhận sự cố và nêu rõ vai trò tham khảo phù hợp với mục tiêu quản lý rủi ro AI của NIST AI RMF \cite{nistairmf}.
+
+\section{Nhóm giải pháp liên quan và vị trí của RabbitCV}
+
+Các sản phẩm trong lĩnh vực thường tập trung vào một trong ba nhóm: trình tạo CV theo mẫu, nền tảng tuyển dụng hoặc trợ lý viết nội dung bằng AI. RabbitCV không đặt mục tiêu thay thế sản phẩm thương mại mà kết hợp ba nhóm ở quy mô nguyên mẫu. Điểm cần kiểm chứng không phải số lượng tính năng mà là khả năng giữ một luồng dữ liệu nhất quán từ hồ sơ có cấu trúc, gợi ý AI, CV A4 đến Application và quá trình trao đổi với doanh nghiệp.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.25\textwidth}|Y|Y|} \hline
+        \textbf{Nhóm giải pháp} & \textbf{Ưu tiên thường gặp} & \textbf{Vai trò tương ứng trong RabbitCV} \\ \hline
+        Trình tạo CV & Template, soạn thảo, preview và xuất tệp. & Resume có cấu trúc, nhiều template, preview và in A4. \\ \hline
+        Nền tảng tuyển dụng & Tìm việc, ứng tuyển và quản lý hồ sơ. & Job, Application, company portal, trạng thái và snapshot lịch sử. \\ \hline
+        Trợ lý AI & Viết, review hoặc chấm nội dung. & Năm luồng AI có sanitizer, schema, quota và disclaimer. \\ \hline
+    \end{tabularx}
+    \caption{Vị trí chức năng của RabbitCV so với các nhóm giải pháp}
+    \label{tab:solution-groups}
+\end{table}
 
 \section{Công cụ phát triển và kiểm thử}
 
-Git được dùng để quản lý phiên bản và branch. ESLint kiểm tra quy tắc mã nguồn. Node Test Runner thực hiện kiểm thử tự động cho các hàm xử lý ngày tháng, PDF, dữ liệu AI, trạng thái việc làm, rich text, thông báo và các luồng giao diện quan trọng. Vite build frontend để phát hiện lỗi tích hợp tĩnh trước khi triển khai.
+Git quản lý phiên bản và nhánh; ESLint kiểm tra mã; Node Test Runner thực thi kiểm thử tự động; Vite build kiểm tra khả năng đóng gói. PDF được biên dịch từ LaTeX và rà soát trực quan theo trang. Sự kết hợp này giúp phân biệt bốn loại bằng chứng: chất lượng tĩnh, tính đúng đắn của quy tắc, khả năng build và chất lượng trình bày.

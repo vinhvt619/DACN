@@ -3,175 +3,293 @@
 
 \section{Phân tích tác nhân}
 
-Hệ thống có bốn nhóm tác nhân chính:
+RabbitCV có bốn tác nhân. Khách chỉ truy cập tài nguyên công khai. Ứng viên là tác nhân trung tâm của đề tài vì trực tiếp tạo CV, nhận gợi ý AI và dùng CV để ứng tuyển. Doanh nghiệp tạo tin, tiếp nhận hồ sơ và trao đổi với ứng viên. Quản trị viên giám sát dữ liệu và thực hiện các thao tác đặc quyền trong phạm vi backend đã triển khai.
 
-\begin{itemize}
-    \item \textbf{Khách:} truy cập các nội dung công khai như trang chủ, tin tuyển dụng, chi tiết công việc và tin tức.
-    \item \textbf{Ứng viên:} quản lý hồ sơ, tạo hoặc tải CV, tìm việc, lưu việc, ứng tuyển, xem trạng thái, nhận thông báo, nhắn tin và sử dụng AI.
-    \item \textbf{Doanh nghiệp:} quản lý thông tin công ty, tạo và cập nhật tin tuyển dụng, xem ứng viên, xử lý hồ sơ và trao đổi.
-    \item \textbf{Quản trị viên:} theo dõi số liệu và thực hiện các thao tác quản trị được backend cung cấp.
-\end{itemize}
+Tác nhân ngoài hệ thống là dịch vụ AI Groq. Dịch vụ này không truy cập trực tiếp database; mọi request đều đi qua backend để xác thực, rút gọn dữ liệu, áp dụng quota và kiểm tra schema.
 
-Mọi quyền quan trọng đều được kiểm tra lại ở server. Việc ẩn một nút trên giao diện chỉ nhằm cải thiện trải nghiệm, không được xem là cơ chế phân quyền.
+\begin{figure}[H]
+    \centering
+    \resizebox{0.96\textwidth}{!}{%
+    \begin{tikzpicture}[
+        actor/.style={draw, rounded corners, fill=gray!10, minimum width=2.2cm, minimum height=0.8cm, align=center},
+        usecase/.style={draw, ellipse, fill=blue!6, minimum width=3.5cm, minimum height=0.82cm, align=center},
+        link/.style={-Latex, line width=0.7pt}
+    ]
+        \node[actor] (guest) at (0,3.6) {Khách};
+        \node[actor] (candidate) at (0,1.2) {Ứng viên};
+        \node[actor] (company) at (12,3.6) {Doanh nghiệp};
+        \node[actor] (admin) at (12,1.2) {Quản trị viên};
+        \node[actor] (ai) at (12,-1.2) {Dịch vụ AI};
+
+        \node[usecase] (public) at (4.1,4.2) {Xem và tìm việc công khai};
+        \node[usecase] (auth) at (7.8,4.2) {Đăng ký, đăng nhập};
+        \node[usecase] (cv) at (4.1,2.6) {Tạo, quản lý và in CV};
+        \node[usecase] (aicv) at (7.8,2.6) {Viết, review và điền CV};
+        \node[usecase] (apply) at (4.1,1.0) {Lưu việc và ứng tuyển};
+        \node[usecase] (recruit) at (7.8,1.0) {Quản lý tin và hồ sơ};
+        \node[usecase] (message) at (4.1,-0.6) {Chat và thông báo};
+        \node[usecase] (score) at (7.8,-0.6) {Chấm CV, luyện phỏng vấn};
+        \node[usecase] (manage) at (6.0,-2.0) {Quản trị dữ liệu hệ thống};
+
+        \draw[link] (guest) -- (public);
+        \draw[link] (guest) -- (auth);
+        \draw[link] (candidate) -- (cv);
+        \draw[link] (candidate) -- (aicv);
+        \draw[link] (candidate) -- (apply);
+        \draw[link] (candidate) -- (message);
+        \draw[link] (company) -- (recruit);
+        \draw[link] (company) -- (message);
+        \draw[link] (admin) -- (manage);
+        \draw[link] (ai) -- (aicv);
+        \draw[link] (ai) -- (score);
+        \node[draw, dashed, rounded corners, fit=(public)(auth)(cv)(aicv)(apply)(recruit)(message)(score)(manage), inner sep=0.35cm, label=above:{\textbf{RabbitCV}}] {};
+    \end{tikzpicture}}
+    \caption{Bản đồ tác nhân và nhóm ca sử dụng chính}
+    \label{fig:usecase-map}
+\end{figure}
 
 \section{Yêu cầu chức năng}
 
-\subsection{Nhóm chức năng của ứng viên}
+Các yêu cầu được gắn mã để liên kết với module triển khai và kiểm thử.
 
-\begin{enumerate}
-    \item Đăng ký, đăng nhập, đăng xuất và lấy thông tin phiên hiện tại.
-    \item Cập nhật thông tin cá nhân, học vấn, kinh nghiệm và cài đặt bảo mật.
-    \item Tạo, đổi tên, chỉnh sửa, xem, in, tải xuống và xóa CV tạo trên web.
-    \item Tải CV PDF từ máy tính để dùng khi ứng tuyển.
-    \item Tìm kiếm, lọc, xem chi tiết, lưu và bỏ lưu tin tuyển dụng.
-    \item Ứng tuyển bằng CV đã lưu hoặc CV PDF tải lên; không được ứng tuyển trùng.
-    \item Xem lịch sử và trạng thái hồ sơ ứng tuyển.
-    \item Nhận, đọc và xóa thông báo; xem số lượng thông báo chưa đọc.
-    \item Nhắn tin, theo dõi tin nhắn chưa đọc và ẩn cuộc trò chuyện theo phía người dùng.
-    \item Sử dụng các chức năng AI hỗ trợ CV, chấm điểm phù hợp và luyện phỏng vấn.
-\end{enumerate}
-
-\subsection{Nhóm chức năng của doanh nghiệp}
-
-\begin{enumerate}
-    \item Cập nhật hồ sơ và thông tin doanh nghiệp.
-    \item Tạo tin nháp, đăng tin, sửa tin, đóng hoặc mở trạng thái nhận hồ sơ và xóa tin.
-    \item Xem danh sách hồ sơ ứng tuyển theo từng tin tuyển dụng.
-    \item Xem CV ứng viên trong phạm vi công việc có liên quan.
-    \item Cập nhật trạng thái hồ sơ: Pending, Reviewing, Interview, Offered, Rejected hoặc Accepted.
-    \item Nhận thông báo khi có ứng viên mới và nhắn tin với ứng viên.
-\end{enumerate}
-
-\subsection{Nhóm chức năng của quản trị viên}
-
-\begin{enumerate}
-    \item Xem thống kê người dùng, doanh nghiệp, việc làm và hồ sơ ứng tuyển.
-    \item Xem danh sách tài khoản và trạng thái xác minh doanh nghiệp.
-    \item Quản lý trạng thái hiển thị của tin tuyển dụng trong phạm vi route đã triển khai.
-    \item Theo dõi các khu vực báo cáo, hệ thống và dữ liệu quản trị.
-\end{enumerate}
-
-Một số màn hình admin hiện có trên frontend cần tiếp tục đối chiếu với route backend. Vì vậy, báo cáo chỉ xem các chức năng đã được kiểm chứng là một phần của sản phẩm, không tuyên bố mọi màn hình quản trị đều đã hoàn chỉnh.
+\begin{longtable}{|p{0.13\textwidth}|p{0.20\textwidth}|p{0.57\textwidth}|}
+    \hline
+    \textbf{Mã} & \textbf{Nhóm} & \textbf{Yêu cầu} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Mã} & \textbf{Nhóm} & \textbf{Yêu cầu} \\ \hline
+    \endhead
+    FR-CV-01 & CV & Ứng viên tạo, đọc, cập nhật, xóa Resume và chọn template. \\ \hline
+    FR-CV-02 & CV & Hệ thống preview CV theo A4, hỗ trợ in/tải PDF và tiếp tục chỉnh sửa dữ liệu cấu trúc. \\ \hline
+    FR-CV-03 & PDF & Ứng viên có thể tải CV PDF hợp lệ; doanh nghiệp xem từng trang bằng PDF.js. \\ \hline
+    FR-AI-01 & AI viết CV & AI viết mới, cải thiện, rút gọn hoặc tối ưu ATS cho phần tiểu sử; người dùng quyết định áp dụng. \\ \hline
+    FR-AI-02 & AI review/fill & AI review CV theo nhóm tiêu chí và gợi ý điền mục còn thiếu mà không tự khẳng định sự kiện cá nhân chưa có. \\ \hline
+    FR-AI-03 & AI mở rộng & Hệ thống chấm mức độ phù hợp CV--Job và luyện phỏng vấn theo từng lượt. \\ \hline
+    FR-JOB-01 & Việc làm & Người dùng tìm, lọc, xem, lưu và bỏ lưu tin tuyển dụng. \\ \hline
+    FR-APP-01 & Ứng tuyển & Ứng viên nộp CV đã lưu hoặc PDF, không được nộp trùng và không nộp vào tin không khả dụng. \\ \hline
+    FR-APP-02 & Lịch sử & Application giữ snapshot thông tin Job và trạng thái xử lý hồ sơ. \\ \hline
+    FR-COM-01 & Doanh nghiệp & Doanh nghiệp tạo/sửa/xóa tin, quản lý nhận hồ sơ, xem ứng viên và cập nhật trạng thái. \\ \hline
+    FR-MSG-01 & Giao tiếp & Hai bên gửi tin nhắn, theo dõi trạng thái đọc, ẩn room theo từng người và nhận thông báo nghiệp vụ. \\ \hline
+    FR-ADM-01 & Quản trị & Admin xem thống kê và quản lý người dùng, doanh nghiệp, tin trong phạm vi API có sẵn. \\ \hline
+\caption{Danh sách yêu cầu chức năng}
+\label{tab:functional-requirements}
+\end{longtable}
 
 \section{Yêu cầu phi chức năng}
 
 \begin{table}[H]
     \centering
     \small
-    \begin{tabular}{|p{0.24\linewidth}|p{0.67\linewidth}|} \hline
-        \textbf{Nhóm} & \textbf{Yêu cầu} \\ \hline
-        Hiệu năng & Danh sách CV không truyền \texttt{pdfData}; các truy vấn thường dùng có index; gửi tin nhắn không tải lại toàn bộ panel. \\ \hline
-        Khả dụng & Có trạng thái tải, rỗng và lỗi; điều hướng theo vai trò; giao diện chủ yếu dùng tiếng Việt. \\ \hline
-        Bảo mật cơ bản & Mật khẩu được băm; JWT nằm trong cookie HTTP-only; API riêng tư cần xác thực; thao tác đặc quyền cần kiểm tra vai trò và quyền sở hữu. \\ \hline
-        Toàn vẹn nghiệp vụ & Không ứng tuyển trùng; không nhận hồ sơ vào tin đã đóng, hết hạn, bị ẩn hoặc bị xóa; lịch sử cũ được giữ. \\ \hline
-        Tương thích tài liệu & CV in theo A4; PDF tải lên được kiểm tra và kết xuất theo trang; không hỗ trợ DOC hoặc DOCX. \\ \hline
-        Khả năng bảo trì & Component giao diện được dùng lại; model có schema; logic làm sạch dữ liệu và kiểm thử được tách thành utility hoặc service. \\ \hline
-    \end{tabular}
-    \caption{Các yêu cầu phi chức năng chính}
-    \label{tab:nonfunctional}
+    \begin{tabularx}{\textwidth}{|p{0.13\textwidth}|p{0.21\textwidth}|Y|} \hline
+        \textbf{Mã} & \textbf{Nhóm} & \textbf{Tiêu chí kiểm chứng} \\ \hline
+        NFR-SEC-01 & Xác thực & Mọi API riêng tư và toàn bộ route AI yêu cầu JWT hợp lệ; thao tác đặc quyền kiểm tra role ở backend. \\ \hline
+        NFR-SEC-02 & Quyền dữ liệu & Resume chỉ được trả cho chủ sở hữu, admin hoặc doanh nghiệp có quan hệ nghiệp vụ phù hợp. \\ \hline
+        NFR-PDF-01 & Tài liệu & CV web dùng kích thước A4; PDF upload phải có header hợp lệ và kích thước giải mã không quá 5 MB. \\ \hline
+        NFR-AI-01 & Kiểm soát AI & Rate limit 30 request/15 phút; quota ngày và timeout có thể cấu hình, mặc định lần lượt là 100 request và 20 giây. \\ \hline
+        NFR-AI-02 & Hợp đồng dữ liệu & Request AI loại thông tin liên hệ trực tiếp; response phải khớp JSON Schema và được làm sạch trước khi trả frontend. \\ \hline
+        NFR-DATA-01 & Toàn vẹn & Unique index ngăn ứng tuyển trùng; snapshot giữ lịch sử; thao tác ẩn/đọc chat không xóa dữ liệu của bên còn lại. \\ \hline
+        NFR-TEST-01 & Khả năng tái lập & Quy trình \texttt{npm run check} phải chạy lint, 41 test hiện có và Vite build; mọi lỗi hoặc cảnh báo được ghi nhận. \\ \hline
+        NFR-UX-01 & Khả dụng & Kết quả AI chỉ là gợi ý, có trạng thái chờ/lỗi và không tự ghi đè nội dung khi người dùng chưa xác nhận. \\ \hline
+    \end{tabularx}
+    \caption{Yêu cầu phi chức năng có tiêu chí kiểm chứng}
+    \label{tab:nonfunctional-requirements}
 \end{table}
+
+\section{Ma trận phân quyền}
+
+\begin{table}[H]
+    \centering
+    \scriptsize
+    \begin{tabularx}{\textwidth}{|Y|c|c|c|c|} \hline
+        \textbf{Chức năng} & \textbf{Khách} & \textbf{Ứng viên} & \textbf{Doanh nghiệp} & \textbf{Admin} \\ \hline
+        Xem danh sách/chi tiết việc công khai & Có & Có & Có & Có \\ \hline
+        Tạo, sửa và dùng AI cho CV cá nhân & Không & Có & Không & Giới hạn \\ \hline
+        Lưu việc và nộp hồ sơ & Không & Có & Không & Không \\ \hline
+        Tạo và quản lý tin tuyển dụng & Không & Không & Tin sở hữu & Đặc quyền \\ \hline
+        Xem CV ứng viên & Không & CV sở hữu & Hồ sơ liên quan & Đặc quyền \\ \hline
+        Cập nhật trạng thái Application & Không & Không & Hồ sơ thuộc tin sở hữu & Đặc quyền \\ \hline
+        Nhắn tin và đọc thông báo & Không & Có & Có & Theo phạm vi \\ \hline
+        Quản lý người dùng/doanh nghiệp & Không & Không & Không & Có \\ \hline
+    \end{tabularx}
+    \caption{Ma trận quyền theo tác nhân}
+    \label{tab:role-matrix}
+\end{table}
+
+Ma trận trên mô tả chính sách mong muốn ở mức nghiệp vụ. Frontend có thể ẩn hoặc chuyển hướng giao diện, nhưng quyết định cuối cùng phải do middleware và truy vấn có điều kiện ở backend thực hiện.
 
 \section{Kiến trúc tổng thể}
 
-Kiến trúc thực tế của RabbitCV là mô hình client-server với frontend React và backend Express. Hệ thống được triển khai trong một ứng dụng JavaScript thống nhất, không phải kiến trúc microservice. Backend có một entry point lớn là \texttt{server/server.js}, bên cạnh các model Mongoose, utility, route AI, service AI và cron job.
+RabbitCV là ứng dụng client--server, không phải microservice. Frontend và backend có thể build/chạy riêng nhưng backend hiện tập trung phần lớn REST route trong \texttt{server/server.js}. Route AI, schema, service gọi provider, sanitizer và cron được tách thành các module riêng.
 
 \begin{figure}[H]
     \centering
-    \fbox{\begin{minipage}{0.91\textwidth}
-        \centering
-        Trình duyệt\\[2pt]
-        React + React Router + Context + Tailwind CSS\\[2pt]
-        $\downarrow$ \texttt{/api} và \texttt{/socket.io}\\[2pt]
-        Express REST API + middleware JWT + phân quyền\\[2pt]
-        $\downarrow$\\[2pt]
-        Mongoose models + services + utilities\\[2pt]
-        $\downarrow$\\[2pt]
-        MongoDB\\[2pt]
-        \rule{0.6\linewidth}{0.4pt}\\[-2pt]
-        Socket.IO xử lý chat thời gian thực; node-cron xử lý tin hết hạn; PDF.js chạy ở trình duyệt.
-    \end{minipage}}
-    \caption{Kiến trúc triển khai thực tế của RabbitCV}
-    \label{fig:actual_architecture}
-\end{figure}
+    \resizebox{0.98\textwidth}{!}{%
+    \begin{tikzpicture}[
+        box/.style={draw, rounded corners, align=center, minimum height=1.05cm, minimum width=2.7cm, fill=blue!5},
+        ext/.style={draw, rounded corners, align=center, minimum height=1.05cm, minimum width=2.5cm, fill=orange!10},
+        arr/.style={-Latex, line width=0.8pt}
+    ]
+        \node[box] (browser) {Trình duyệt\\React + Router};
+        \node[box, right=1.1cm of browser] (contexts) {Context + UI\\Tailwind + Tiptap};
+        \node[box, right=1.1cm of contexts] (api) {Express REST API\\JWT + RBAC};
+        \node[box, right=1.1cm of api] (models) {Service/Utility\\Mongoose models};
+        \node[box, right=1.1cm of models] (db) {MongoDB};
+        \node[ext, below=1.1cm of api] (socket) {Socket.IO\\room người dùng};
+        \node[ext, below=1.1cm of models] (cron) {node-cron\\hạn tin};
+        \node[ext, above=1.1cm of models] (groq) {Groq API\\LLM + JSON Schema};
+        \node[ext, above=1.1cm of contexts] (pdf) {PDF.js\\trình kết xuất};
 
-Vite đóng vai trò máy chủ phát triển và proxy, không phải lớp nghiệp vụ. REST API và Socket.IO dùng chung cơ chế xác thực bằng cookie JWT. Cron job sử dụng các model hiện có để cập nhật trạng thái tin tuyển dụng và tạo thông báo.
+        \draw[arr,<->] (browser) -- node[above]{HTTP} (contexts);
+        \draw[arr,<->] (contexts) -- node[above]{JSON} (api);
+        \draw[arr,<->] (api) -- (models);
+        \draw[arr,<->] (models) -- (db);
+        \draw[arr,<->] (contexts) -- (socket);
+        \draw[arr,<->] (socket) -- (api);
+        \draw[arr] (cron) -- (models);
+        \draw[arr,<->] (api) -- (groq);
+        \draw[arr] (contexts) -- (pdf);
+    \end{tikzpicture}}
+    \caption{Kiến trúc triển khai của RabbitCV}
+    \label{fig:system-architecture}
+\end{figure}
 
 \section{Thiết kế mô-đun}
 
 \begin{table}[H]
     \centering
     \small
-    \begin{tabular}{|p{0.25\linewidth}|p{0.64\linewidth}|} \hline
-        \textbf{Mô-đun} & \textbf{Trách nhiệm} \\ \hline
-        Xác thực & Đăng ký, đăng nhập, logout, JWT cookie, lấy phiên và bảo vệ route. \\ \hline
-        Hồ sơ và CV & Quản lý thông tin cá nhân, Resume, template, preview, in PDF và upload PDF. \\ \hline
-        Việc làm & Tạo, đọc, sửa, xóa, đóng/mở tin, lọc và kiểm tra hạn tuyển dụng. \\ \hline
-        Ứng tuyển & Tạo Application, kiểm tra trùng, lưu ảnh chụp tin và cập nhật trạng thái. \\ \hline
-        Thông báo & Lưu Notification, phân trang, đếm chưa đọc, đánh dấu đã đọc và xóa. \\ \hline
-        Nhắn tin & Lưu Message, room chat, Socket.IO, trạng thái đã đọc và ẩn chat. \\ \hline
-        Doanh nghiệp và admin & Cổng công ty, xử lý ứng viên, thống kê và các chức năng quản trị. \\ \hline
-        AI & Làm sạch dữ liệu, quota, rate limit, gọi model có cấu trúc và ghi nhận AiUsage. \\ \hline
-    \end{tabular}
-    \caption{Phân rã các mô-đun của hệ thống}
-    \label{tab:modules}
+    \begin{tabularx}{\textwidth}{|p{0.20\textwidth}|p{0.28\textwidth}|Y|} \hline
+        \textbf{Mô-đun} & \textbf{Thành phần chính} & \textbf{Trách nhiệm} \\ \hline
+        Phiên và vai trò & AuthContext, RoleAccessGuard, authMiddleware. & Đăng ký, đăng nhập, phiên hiện tại, logout, chuyển hướng và kiểm tra quyền. \\ \hline
+        CV & ResumeForm, ResumePreview, Resume model. & Dữ liệu CV, template, preview A4, in PDF, CV upload và quyền sở hữu. \\ \hline
+        AI & aiRoutes, aiService, aiSchemas, sanitizer, AiUsage. & Chuẩn hóa input, quota, gọi model, kiểm tra schema, lọc output và thống kê. \\ \hline
+        Việc làm & Jobs, JobDetail, Job/Application models. & Tìm kiếm, trạng thái tin, lưu việc, ứng tuyển, snapshot và xử lý hồ sơ. \\ \hline
+        Giao tiếp & Message, SocketContext, NotificationBell. & Lưu message, phát event, trạng thái đọc/ẩn room và thông báo. \\ \hline
+        Doanh nghiệp & CompanyDashboard và API Job/Application. & Hồ sơ công ty, tin tuyển dụng, danh sách ứng viên và cập nhật trạng thái. \\ \hline
+        Quản trị & AdminLayout và nhóm API admin. & Thống kê, người dùng, doanh nghiệp và tin tuyển dụng. \\ \hline
+    \end{tabularx}
+    \caption{Phân rã mô-đun theo thành phần triển khai}
+    \label{tab:module-design}
 \end{table}
 
-\section{Thiết kế cơ sở dữ liệu}
+\section{Thiết kế dữ liệu}
 
-RabbitCV sử dụng database MongoDB. Các collection nghiệp vụ chính gồm \texttt{users}, \texttt{resumes}, \texttt{jobs} và \texttt{applications}.
+MongoDB dùng reference ObjectId giữa các tài liệu thay vì lược đồ quan hệ vật lý. Hình \ref{fig:data-model} thể hiện quan hệ nghiệp vụ chính; các mũi tên không có nghĩa database tự áp dụng khóa ngoại.
 
-Hệ thống có các collection riêng cho nhắn tin, thông báo, ẩn room và trạng thái đọc. Collection \texttt{aiusages} lưu thống kê AI.
+\begin{figure}[H]
+    \centering
+    \resizebox{0.96\textwidth}{!}{%
+    \begin{tikzpicture}[
+        entity/.style={draw, rounded corners, align=left, minimum width=3.2cm, minimum height=1.05cm, fill=green!6, font=\small},
+        rel/.style={-Latex, line width=0.75pt}
+    ]
+        \node[entity] (user) at (0,2.5) {\textbf{User}\\role, profile, savedJobs};
+        \node[entity] (resume) at (4.4,4.2) {\textbf{Resume}\\userId, sections, pdfData};
+        \node[entity] (job) at (8.8,4.2) {\textbf{Job}\\companyId, status, expiresAt};
+        \node[entity] (app) at (4.4,0.8) {\textbf{Application}\\jobId, candidateId, resumeId\\jobSnapshot, status};
+        \node[entity] (msg) at (0,-1.0) {\textbf{Message}\\sender, room, content};
+        \node[entity] (read) at (4.4,-2.2) {\textbf{ChatReadState/HiddenChat}\\userId, room, lastReadAt};
+        \node[entity] (noti) at (8.8,0.8) {\textbf{Notification}\\recipient, type, isRead};
+        \node[entity] (usage) at (8.8,-2.2) {\textbf{AiUsage}\\userId, feature, model\\latency, token, status};
 
-\subsection{User}
+        \draw[rel] (user) -- node[above left]{sở hữu} (resume);
+        \draw[rel] (user) -- node[above]{companyId} (job);
+        \draw[rel] (user) -- node[above]{candidateId} (app);
+        \draw[rel] (resume) -- node[right]{resumeId} (app);
+        \draw[rel] (job) -- node[right]{jobId} (app);
+        \draw[rel] (user) -- (msg);
+        \draw[rel] (user) -- (read);
+        \draw[rel] (user) -- (noti);
+        \draw[rel] (user) -- (usage);
+        \draw[rel] (app) -- node[above]{phát sinh} (noti);
+    \end{tikzpicture}}
+    \caption{Mô hình quan hệ giữa các collection chính}
+    \label{fig:data-model}
+\end{figure}
 
-User lưu username, email, mật khẩu đã băm, thông tin cá nhân, thông tin doanh nghiệp, role, status, trạng thái xác minh, danh sách việc đã lưu và cờ bị khóa. Role có các giá trị \texttt{admin}, \texttt{employee} và \texttt{company}.
+\subsection{User và Resume}
 
-\subsection{Resume}
-
-Resume liên kết với User qua \texttt{userId}. Dữ liệu gồm tiêu đề, template, personalInfo, bio, kinh nghiệm, học vấn, kỹ năng, ngôn ngữ, chứng chỉ, dự án, giải thưởng và sở thích. \texttt{isVirtual} phân biệt CV tạo hoặc dùng cho dữ liệu mẫu với CV thực; \texttt{pdfData} và \texttt{fileName} lưu thông tin PDF tải lên.
+User lưu username, email, mật khẩu băm, role, trạng thái tài khoản, hồ sơ ứng viên hoặc công ty và danh sách Job đã lưu. Resume tham chiếu \texttt{userId}, chứa dữ liệu CV có cấu trúc, template và metadata. \texttt{isVirtual} phân biệt CV tạo/tải trong luồng ứng tuyển; \texttt{pdfData} chỉ có ở CV PDF và bị loại khỏi truy vấn danh sách.
 
 \subsection{Job và Application}
 
-Job liên kết với company qua \texttt{companyId}, gồm tiêu đề, công ty, địa điểm, loại công việc, lương, kinh nghiệm, học vấn, hình thức làm việc, mô tả, yêu cầu, quyền lợi, tags, trạng thái và ngày hết hạn. Application liên kết với Job, User và Resume. Trường \texttt{jobSnapshot} giữ lại tiêu đề, công ty, địa điểm, loại và lương tại thời điểm ứng tuyển để lịch sử không mất ngữ cảnh khi Job bị xóa.
-
-Application có unique index trên cặp \texttt{jobId} và \texttt{candidateId}. Trạng thái được giới hạn trong \texttt{Pending}, \texttt{Reviewing}, \texttt{Interview}, \texttt{Offered}, \texttt{Rejected} và \texttt{Accepted}.
+Job liên kết doanh nghiệp qua \texttt{companyId}, chứa nội dung, trạng thái và ngày hết hạn. Application liên kết Job, ứng viên và Resume. Unique index trên \texttt{jobId}--\texttt{candidateId} ngăn hồ sơ trùng. \texttt{jobSnapshot} lưu tiêu đề, công ty, địa điểm, loại và lương tại thời điểm nộp để lịch sử không mất ngữ cảnh khi Job bị xóa.
 
 \subsection{Message, Notification và trạng thái đọc}
 
-Message lưu sender, nội dung, ảnh nếu có và room. Notification lưu recipient, loại, tiêu đề, nội dung, liên kết và cờ \texttt{isRead}. ChatReadState lưu mốc \texttt{lastReadAt} cho từng user và room; HiddenChat lưu việc một user đã ẩn một room cụ thể. Các collection trạng thái này giúp thao tác đọc hoặc ẩn ở một phía không ảnh hưởng người dùng khác.
+Message lưu sender, room và nội dung. ChatReadState lưu \texttt{lastReadAt} theo cặp user--room; HiddenChat ghi việc một phía ẩn room. Notification lưu recipient, nội dung, liên kết và \texttt{isRead}. Thiết kế này tách trạng thái cá nhân khỏi dữ liệu trao đổi chung.
 
 \subsection{AiUsage}
 
-AiUsage lưu user, feature, provider, model, trạng thái, hash đầu vào, số token, độ trễ và mã lỗi. Index theo user và thời gian hỗ trợ kiểm tra quota; TTL index giúp dữ liệu thống kê cũ tự hết hạn sau thời gian cấu hình.
+AiUsage lưu user, feature, model, hash đầu vào, trạng thái, token, độ trễ và mã lỗi. Dữ liệu này hỗ trợ quota và quan sát kỹ thuật mà không cần lưu nguyên prompt hoặc toàn bộ CV. Hash không được dùng như cơ chế ẩn danh tuyệt đối; hệ thống vẫn cần hạn chế quyền truy cập collection thống kê.
 
 \section{Các quy trình nghiệp vụ chính}
 
-\subsection{Đăng nhập}
+\subsection{Ứng tuyển bằng CV}
 
-Người dùng nhập username và password tại frontend. Backend tìm User, so sánh password bằng bcryptjs, tạo JWT chứa định danh và role, sau đó trả cookie HTTP-only. AuthContext gọi hoặc lưu thông tin user để các route và header dùng chung. Khi đăng xuất, backend xóa cookie và frontend xóa trạng thái phiên.
+\begin{figure}[H]
+    \centering
+    \resizebox{0.96\textwidth}{!}{%
+    \begin{tikzpicture}[
+        flowstep/.style={draw, rounded corners, align=center, minimum width=2.65cm, minimum height=1.05cm, fill=purple!7},
+        arr/.style={-Latex, line width=0.8pt}
+    ]
+        \node[flowstep] (select) {Ứng viên chọn\\Job và CV};
+        \node[flowstep, right=0.65cm of select] (auth) {Xác thực và\\quyền sở hữu CV};
+        \node[flowstep, right=0.65cm of auth] (check) {Kiểm tra Job\\hạn và trạng thái};
+        \node[flowstep, right=0.65cm of check] (unique) {Kiểm tra unique\\Application};
+        \node[flowstep, right=0.65cm of unique] (save) {Lưu Application\\và jobSnapshot};
+        \node[flowstep, right=0.65cm of save] (notify) {Tạo thông báo\\trả kết quả};
+        \draw[arr] (select) -- (auth);
+        \draw[arr] (auth) -- (check);
+        \draw[arr] (check) -- (unique);
+        \draw[arr] (unique) -- (save);
+        \draw[arr] (save) -- (notify);
+    \end{tikzpicture}}
+    \caption{Luồng kiểm soát khi ứng tuyển bằng CV}
+    \label{fig:application-flow}
+\end{figure}
 
-\subsection{Ứng tuyển bằng CV đã lưu}
+Với PDF upload, backend kiểm tra data URL, MIME, đuôi, header và dung lượng giải mã; sau đó tạo Resume ảo và tiếp tục cùng luồng Application. Nếu bất kỳ kiểm tra nào thất bại, không tạo Resume hoặc Application mới.
 
-Ứng viên chọn Job và Resume. Backend kiểm tra đăng nhập, quyền sở hữu CV, trạng thái Job, ngày hết hạn và Application trùng. Nếu hợp lệ, server tạo Application ở trạng thái Pending, lưu \texttt{jobSnapshot}, tạo Notification cho ứng viên và doanh nghiệp, rồi trả kết quả thành công.
+\subsection{Yêu cầu AI}
 
-\subsection{Ứng tuyển bằng PDF tải lên}
+\begin{figure}[H]
+    \centering
+    \resizebox{0.98\textwidth}{!}{%
+    \begin{tikzpicture}[
+        flowstep/.style={draw, rounded corners, align=center, minimum width=2.45cm, minimum height=1.05cm, fill=orange!9},
+        arr/.style={-Latex, line width=0.8pt}
+    ]
+        \node[flowstep] (ui) {UI gửi feature\\và context};
+        \node[flowstep, right=0.5cm of ui] (gate) {JWT, rate limit\\quota ngày};
+        \node[flowstep, right=0.5cm of gate] (clean) {Sanitize và\\rút gọn dữ liệu};
+        \node[flowstep, right=0.5cm of clean] (schema) {Chọn instruction\\và JSON Schema};
+        \node[flowstep, right=0.5cm of schema] (provider) {Groq LLM\\structured output};
+        \node[flowstep, right=0.5cm of provider] (validate) {Parse, validate\\lọc kết quả};
+        \node[flowstep, right=0.5cm of validate] (result) {Gợi ý + meta\\người dùng áp dụng};
+        \draw[arr] (ui) -- (gate);
+        \draw[arr] (gate) -- (clean);
+        \draw[arr] (clean) -- (schema);
+        \draw[arr] (schema) -- (provider);
+        \draw[arr] (provider) -- (validate);
+        \draw[arr] (validate) -- (result);
+    \end{tikzpicture}}
+    \caption{Đường đi của dữ liệu trong một yêu cầu AI}
+    \label{fig:ai-request-flow}
+\end{figure}
 
-Frontend chuyển file PDF thành data URL và gửi cùng Job. Backend kiểm tra MIME, đuôi file, header PDF và kích thước giải mã không vượt quá 5 MB. Một Resume ảo được tạo để gắn vào Application. Khi doanh nghiệp xem hồ sơ, PDF.js đọc dữ liệu và kết xuất từng trang trong vùng A4.
+Service tạo bản ghi AiUsage trước khi gọi provider và cập nhật trạng thái sau khi hoàn tất hoặc thất bại. Frontend nhận disclaimer cùng kết quả ở các chức năng review, chấm CV và phỏng vấn. Không có bước tự động lưu kết quả AI vào Resume.
 
-\subsection{Doanh nghiệp cập nhật trạng thái hồ sơ}
+\subsection{Chat và trạng thái đọc}
 
-Doanh nghiệp chọn trạng thái mới từ danh sách ứng viên. Backend tìm Application, tìm Job liên quan và kiểm tra doanh nghiệp có sở hữu Job hoặc có quyền admin. Sau khi cập nhật, hệ thống tạo Notification cho ứng viên. Ứng viên có thể xem trạng thái mới trong lịch sử ứng tuyển.
+Người gửi gọi REST API; server xác thực, làm sạch và lưu Message, sau đó phát \texttt{newMessage} đến room của người nhận. Khi mở room, client cập nhật \texttt{lastReadAt}. Việc ẩn room tạo hoặc cập nhật HiddenChat theo user; Message của phía còn lại không bị xóa. Notification không dùng chung kênh này ở mọi trường hợp mà được tải qua API, do đó có thể có độ trễ polling.
 
-\subsection{Chat riêng thời gian thực}
+\section{Bảo mật và ranh giới tin cậy}
 
-Người gửi gửi nội dung qua REST API. Server kiểm tra phiên, lưu Message vào MongoDB và phát sự kiện \texttt{newMessage} qua room riêng của người nhận. Client nhận sự kiện, cập nhật panel hiện tại và bộ chỉ báo chưa đọc. Khi mở room, client gọi API cập nhật \texttt{lastReadAt}.
+Ranh giới tin cậy đầu tiên nằm giữa trình duyệt và backend: mọi dữ liệu từ client đều không đáng tin, kể cả role hoặc userId. Ranh giới thứ hai nằm giữa backend và dịch vụ AI: chỉ dữ liệu đã làm sạch, giới hạn và cần thiết mới được gửi ra ngoài. Ranh giới thứ ba nằm ở dữ liệu CV: route xem phải kiểm tra quan hệ sở hữu hoặc quan hệ tuyển dụng, không chỉ kiểm tra người gọi đã đăng nhập.
 
-\subsection{AI request}
+Các biện pháp hiện có gồm bcryptjs, JWT cookie HTTP-only, Helmet, CORS theo origin, rate limit, kiểm tra ObjectId, sanitizer rich text/PDF/AI, unique index và truy vấn kèm điều kiện sở hữu. Những biện pháp này giảm rủi ro nhưng không thay thế pentest, CSRF analysis, quản lý secret production hoặc rà soát ma trận quyền đầy đủ.
 
-Frontend gửi yêu cầu đến nhóm \texttt{/api/ai}. Middleware xác thực user và rate limit. Backend làm sạch payload, loại thông tin liên hệ, kiểm tra quota, gọi Groq bằng schema đầu ra tương ứng, lọc kết quả rồi trả JSON. Dữ liệu thống kê được lưu ở AiUsage, còn prompt và nội dung CV không được lưu toàn bộ.
-
-\section{Bảo mật và quyền truy cập}
-
-Các biện pháp chính gồm băm mật khẩu, cookie HTTP-only, JWT, CORS theo origin cho phép, Helmet, rate limit, làm sạch rich text, kiểm tra ObjectId, kiểm tra vai trò và kiểm tra quyền sở hữu. Đặc biệt, route xem Resume phải được giới hạn theo chủ CV, doanh nghiệp có liên quan đến hồ sơ ứng tuyển hoặc admin.
-
-Một số rủi ro còn tồn tại gồm fallback JWT secret trong môi trường chưa cấu hình, việc lưu PDF base64 trong MongoDB, nhiều route tập trung trong \texttt{server.js} và phạm vi kiểm thử quyền truy cập chưa bao phủ đầy đủ mọi ma trận vai trò. Các điểm này được đưa vào phần hạn chế và hướng phát triển.
+\noindent\textbf{Hạn chế của thiết kế hiện tại.}
+Backend còn tập trung nhiều route trong một file; PDF base64 làm tài liệu MongoDB lớn; cron chưa có khóa phân tán; notification dùng polling; một số UI admin cần tiếp tục đối chiếu API. Phần AI phụ thuộc provider và model cấu hình, trong khi chất lượng ngữ nghĩa chưa có bộ dữ liệu chấm độc lập. Các hạn chế này được chuyển thành mục kiểm thử hoặc hướng phát triển thay vì được mô tả như chức năng đã hoàn tất.

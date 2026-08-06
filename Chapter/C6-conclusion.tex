@@ -1,39 +1,65 @@
 % !TEX root = ../main.tex
 \chapter{Kết luận và hướng phát triển}
 
-\section{Kết quả đạt được}
+\section{Mức độ hoàn thành mục tiêu}
 
-Đồ án đã xây dựng được RabbitCV như một ứng dụng web có luồng nghiệp vụ giữa ứng viên, doanh nghiệp và quản trị viên. Ứng viên có thể tạo hoặc tải CV PDF, tìm và lưu việc, nộp hồ sơ, theo dõi trạng thái, nhận thông báo và nhắn tin. Doanh nghiệp có thể quản lý tin tuyển dụng, tiếp nhận hồ sơ, cập nhật trạng thái và trao đổi với ứng viên.
+Đồ án đã xây dựng RabbitCV với trọng tâm là tạo CV và hỗ trợ nội dung bằng AI; các chức năng tuyển dụng đóng vai trò cung cấp ngữ cảnh sử dụng CV. Mức độ hoàn thành được tổng hợp từ thành phần triển khai và kết quả đánh giá ở Chương 5, không chỉ từ việc giao diện có thể hiển thị.
 
-Các mục tiêu kỹ thuật chính được hiện thực bằng React, Vite, Tailwind CSS, Express, MongoDB, JWT, Socket.IO, node-cron và PDF.js. Hệ thống xử lý được một số tình huống dữ liệu thực tế như phân biệt CV ảo và CV thật, giữ lịch sử ứng tuyển sau khi Job bị xóa, giới hạn PDF upload, lưu trạng thái đọc theo từng người dùng và ngăn ứng tuyển trùng.
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.24\textwidth}|Y|p{0.17\textwidth}|} \hline
+        \textbf{Mục tiêu} & \textbf{Kết quả và bằng chứng} & \textbf{Kết luận} \\ \hline
+        Tạo và quản lý CV & Resume có cấu trúc, template, preview A4, in/tải PDF; test A4 và ngày tháng đạt. & Hoàn thành trong phạm vi \\ \hline
+        AI hỗ trợ CV & Viết/cải thiện tiểu sử, review, fill, so khớp CV--Job và phỏng vấn; có sanitizer, schema, quota và usage log. & Hoàn thành mức demo \\ \hline
+        Tìm việc và ứng tuyển & Tìm/lưu Job, nộp Resume hoặc PDF, unique index, trạng thái và jobSnapshot. & Hoàn thành trong phạm vi \\ \hline
+        Kết nối hai phía & Cổng doanh nghiệp, xử lý Application, chat Socket.IO và notification. & Hoàn thành một phần \\ \hline
+        Quản trị & Có thống kê và nhóm endpoint quản lý User, Company, Job. & Hoàn thành một phần \\ \hline
+        Kiểm chứng kỹ thuật & 41/41 test đạt, 0 lỗi lint, build thành công; còn hai cảnh báo hook và cảnh báo bundle. & Đạt baseline \\ \hline
+    \end{tabularx}
+    \caption{Tổng hợp mức độ hoàn thành mục tiêu}
+    \label{tab:objective-completion}
+\end{table}
 
-Phiên bản hiện tại còn mở rộng bằng các chức năng AI hỗ trợ viết và review CV, chấm mức độ phù hợp giữa CV và công việc và luyện phỏng vấn. Các biện pháp làm sạch dữ liệu, quota, rate limit và structured output giúp tính năng AI phù hợp hơn với phạm vi demo, nhưng kết quả vẫn chỉ mang tính tham khảo.
+Kết quả nổi bật của đồ án không nằm ở số lượng màn hình mà ở việc nối được vòng đời CV với nghiệp vụ sử dụng: dữ liệu CV được chỉnh sửa có cấu trúc, được trình bày theo A4, có thể nhận gợi ý AI dưới quyền quyết định của người dùng, rồi được dùng để ứng tuyển và trao đổi với doanh nghiệp.
+
+\section{Đóng góp kỹ thuật}
+
+Thứ nhất, hệ thống tích hợp AI theo một đường biên rõ ràng. Frontend không giữ khóa provider; backend xác thực, giới hạn tần suất và quota, làm sạch dữ liệu, yêu cầu JSON Schema và kiểm tra kết quả. Cơ chế ``gợi ý rồi mới áp dụng'' tránh để mô hình tự sửa hồ sơ cá nhân.
+
+Thứ hai, một số tình huống dễ gây mất hoặc lộ dữ liệu đã được xử lý ngay trong thiết kế: \texttt{jobSnapshot} giữ ngữ cảnh lịch sử; unique index ngăn ứng tuyển trùng; Resume ảo tách PDF ứng tuyển khỏi thư viện CV; truy vấn danh sách không trả \texttt{pdfData}; trạng thái đọc và ẩn chat được lưu theo từng người dùng.
+
+Thứ ba, báo cáo gắn yêu cầu với mã nguồn và test. Việc công bố cả 41 test đạt lẫn phần chưa đánh giá --- browser end-to-end, database integration, phân quyền đầy đủ và chất lượng ngữ nghĩa AI --- giúp giới hạn kết luận đúng với bằng chứng hiện có.
 
 \section{Bài học kinh nghiệm}
 
-Thứ nhất, lỗi giao diện thường phản ánh vấn đề về nguồn dữ liệu hoặc vòng đời state chứ không chỉ là lỗi CSS. \texttt{AuthContext} và việc tách trạng thái thông tin đối tác khỏi danh sách message là những ví dụ cho nguyên tắc này.
-
-Thứ hai, xóa dữ liệu trong hệ thống nhiều bên phải được phân tích theo quyền sở hữu và yêu cầu lưu lịch sử. \texttt{jobSnapshot} trong Application và cơ chế ẩn chat theo từng user phù hợp hơn việc xóa dây chuyền trong các luồng nghiệp vụ này.
-
-Thứ ba, tài liệu PDF cần được kiểm tra bằng kích thước vật lý, quá trình in và khả năng hiển thị, không chỉ bằng việc nhìn giao diện trên màn hình. Thứ tư, mỗi cơ chế realtime nên được chọn theo độ trễ và chi phí nghiệp vụ; chat phù hợp Socket.IO, còn notification quy mô nhỏ có thể dùng polling.
-
-\section{Hạn chế của hệ thống}
-
-Hệ thống vẫn còn một số hạn chế: PDF được lưu base64 trong MongoDB; backend còn tập trung nhiều route trong một file; thông báo polling có độ trễ; kiểm thử API, browser end-to-end, Socket.IO và ma trận quyền chưa đầy đủ; một số màn hình admin cần đồng bộ thêm với backend; và cấu hình production cần bắt buộc dùng secret an toàn thay cho fallback.
-
-\section{Hướng phát triển}
-
 \begin{itemize}
-    \item Chuyển PDF và ảnh sang object storage hoặc GridFS; database chỉ giữ URL, checksum, MIME type và metadata.
-    \item Tách backend thành các nhóm route, controller, service, middleware và repository theo domain.
-    \item Hoàn thiện API admin, middleware role và nhật ký thao tác quản trị.
-    \item Bổ sung kiểm thử API, phân quyền, component và end-to-end bằng trình duyệt.
-    \item Chuyển các notification quan trọng sang sự kiện Socket.IO, đồng thời giữ polling làm cơ chế dự phòng.
-    \item Đưa tác vụ tạo PDF, gửi email, quét file và xử lý hạn tin vào hàng đợi hoặc worker riêng.
-    \item Tăng cường bảo mật production: bắt buộc cấu hình JWT secret, kiểm soát CORS bằng biến môi trường, bổ sung CSRF protection phù hợp và kiểm tra truy cập CV theo quan hệ nghiệp vụ.
-    \item Theo dõi chất lượng AI bằng bộ dữ liệu kiểm thử, giới hạn chi phí và cơ chế phản hồi người dùng.
+    \item Dữ liệu nghề nghiệp cần tách nội dung cấu trúc khỏi bản trình bày. Nếu chỉ lưu PDF, việc đổi template, review theo từng mục và hỗ trợ AI sẽ khó kiểm soát.
+    \item Xóa hoặc ẩn dữ liệu trong hệ thống nhiều bên phải xét quyền sở hữu và nhu cầu lưu lịch sử. Snapshot và trạng thái ẩn theo user phù hợp hơn xóa dây chuyền.
+    \item Kiểm tra ở frontend không thay thế kiểm tra server. Role, userId, MIME hoặc trạng thái Job từ trình duyệt đều phải được xem là dữ liệu không đáng tin.
+    \item Structured output làm giảm lỗi tích hợp AI nhưng không bảo đảm nội dung đúng. Chất lượng mô hình cần rubric, bộ dữ liệu cố định và người chấm độc lập.
+    \item Một PDF ``trông đúng'' trên màn hình chưa đủ; cần kiểm tra kích thước vật lý, ngắt trang, Print Preview và trình xem nhiều trang.
 \end{itemize}
+
+\section{Hạn chế hiện tại}
+
+Hệ thống chưa được xem là sẵn sàng production. PDF base64 làm document MongoDB lớn; backend còn tập trung nhiều route; notification dùng polling; cron chưa có khóa phân tán; một số màn hình admin chưa đồng bộ đủ API. Bộ test chưa chạy MongoDB thật, trình duyệt end-to-end, tải, pentest hoặc mạng Socket.IO không ổn định. Working tree sản phẩm tại thời điểm đánh giá cũng chưa được đóng thành commit/tag tái lập. Cuối cùng, hiệu quả ngữ nghĩa và tính công bằng của AI chưa được đánh giá độc lập.
+
+\section{Lộ trình phát triển}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.18\textwidth}|Y|} \hline
+        \textbf{Giai đoạn} & \textbf{Công việc ưu tiên} \\ \hline
+        Ngắn hạn & Commit/tag baseline DA2; sửa hai cảnh báo React Hook; hoàn thiện API admin; thêm integration test cho Application unique/snapshot và ma trận quyền; chạy checklist nghiệm thu trên trình duyệt. \\ \hline
+        Trung hạn & Chuyển PDF/ảnh sang object storage hoặc GridFS; tách backend theo domain controller--service; đưa notification quan trọng lên Socket.IO; thêm queue/worker cho tác vụ file và cron; bổ sung log/audit. \\ \hline
+        Dài hạn & Xây dựng bộ dữ liệu chấm AI có người đánh giá; theo dõi chi phí/chất lượng theo model; kiểm thử accessibility, tải và bảo mật; thiết kế quy trình backup, khôi phục và quan sát production. \\ \hline
+    \end{tabularx}
+    \caption{Lộ trình phát triển đề xuất}
+    \label{tab:roadmap}
+\end{table}
 
 \section{Tổng kết}
 
-RabbitCV đáp ứng mục đích của một đồ án Khoa học Máy tính: vận dụng kiến thức về phát triển web, cơ sở dữ liệu, xác thực, kiến trúc phần mềm, tài liệu PDF, giao tiếp thời gian thực và kiểm thử vào một bài toán có nhiều đối tượng. Sản phẩm chưa thay thế một nền tảng tuyển dụng thương mại, nhưng đã tạo được mô hình có thể vận hành và nền tảng rõ ràng cho các bước phát triển tiếp theo.
+RabbitCV chứng minh tính khả thi của một ứng dụng web hỗ trợ viết CV có tích hợp AI, đồng thời cho thấy AI chỉ là một thành phần trong hệ thống dữ liệu, quyền truy cập và nghiệp vụ rộng hơn. Sản phẩm hiện đáp ứng mục tiêu đồ án ở mức nguyên mẫu có thể kiểm chứng: chức năng cốt lõi đã hiện thực, các biện pháp kiểm soát quan trọng đã có và quy trình tự động đã vượt qua toàn bộ 41 test. Những giới hạn còn lại đã được xác định thành công việc cụ thể cho giai đoạn hoàn thiện và triển khai thực tế.

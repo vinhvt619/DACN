@@ -1,34 +1,31 @@
 % !TEX root = main.tex
-% this package is designed by: thanhhungqb@gmail.com
-% more information and update:
-%   https://github.com/thanhhungqb/thesis-template
-\documentclass[12pt,a4paper,oneside]{book} % twoside for draft
+% Template tham khảo: https://github.com/thanhhungqb/thesis-template
+\documentclass[12pt,a4paper,oneside]{book}
 
-%\usepackage{babel}
 \usepackage[utf8]{vietnam}
-%\usepackage{times}
-%\usepackage{graphicx}
-\usepackage{array} % required for text wrapping in tables
+\usepackage{array}
 \usepackage{underscore}
-\usepackage{mathptmx}  % same Time New Roma
-%\renewcommand{\rmdefault}{phv} % Arial
-%\renewcommand{\sfdefault}{phv} % Arial
-
+\usepackage{mathptmx}
 \usepackage{fancyhdr}
 \usepackage{algorithm2e}
 \usepackage{bkthesis}
-
 \usepackage{float}
 \usepackage{flafter}
-\restylefloat{table}
 \usepackage{stfloats}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
 
-%\csdeptname{KHOA ĐIỆN ĐIỆN TỬ}
-%\crname{BÁO CÁO THỰC TẬP TỐT NGHIỆP}
-% \crname{BÁO CÁO TIỂU LUẬN}
+\restylefloat{table}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\emergencystretch}{2em}
+\urlstyle{same}
+
+\crname{BÁO CÁO ĐỒ ÁN TỐT NGHIỆP}
 \title{Xây dựng trang web hỗ trợ viết CV có tích hợp AI}
-\cstuname{SVTH: Nguyễn Thành Vinh -  2053592}
-
+\cstuname{SVTH: Nguyễn Thành Vinh - 2053592}
 \csCouncil{Khoa học máy tính}
 \csSupervise{ThS. Mai Đức Trung}
 \csReviewer{KS. Nguyễn Minh Tâm}
@@ -37,104 +34,92 @@
 \thesislayout
 
 \begin{document}
-%-  Bìa cứng - màu xanh dương, chữ mạ vàng (xem mẫu đính kèm)
-%-  Trang tên (tờ lót): chất liệu giấy, nội dung giống như bìa LV
-%-  Ở gáy LV: in nhan đề LV (có thể in tóm tắt nếu nhan đề quá dài), size 15 – 17
-%-  Phiếu Nhiệm vụ LV, chấm điểm Hướng dẫn & Phản biện (đã ký): nhận từ GVHD & GVPB sau khi bảo vệ (theo lịch hẹn).
-%-  Lời cam đoan
-%-  Lời cảm ơn/ Lời ngỏ
-%-  Tóm tắt LV
-%-  Mục lục
-%-  Danh mục, bảng biểu, hình ảnh, ... (nếu có)
-%-  Nội dung LV
-%-  Danh mục TL tham khảo
-%-  Phụ lục (nếu có)
 
+\begingroup
+\setlength{\parindent}{0pt}
 \coverpage
-
+\endgroup
 \frontmatter
-
-% \begin{signature}
-% ~\\\\\\\\
-
-% _____________________________________________Date:___________________\\
-
-% ThS. Mai Đức Trung\\
-
-% Khoa Khoa học và kỹ thuật máy tính
-
-% \end{signature}
 
 \section*{\LARGE Chữ ký của GVHD}
 \thispagestyle{empty}
 \fontsize{15}{25}\selectfont
-
-% \begin{figure}[htp!]
-%     \includegraphics[scale=0.35]{Chữ ký Mai Đức Trung.png}
-%     \label{fig:signature}
-% \end{figure}
-
-% \vspace*{-1.15cm}
 \vspace{2.25cm}
-\noindent \underline{\hspace{10cm}} Ngày: _______________\\
+\noindent \underline{\hspace{10cm}} Ngày: \underline{\hspace{3cm}}\\
 ThS. Mai Đức Trung\\
-Khoa Khoa học và Kỹ thuật máy tính
+Khoa Khoa học và Kỹ thuật Máy tính
+\clearpage
+\normalsize
 
-% add content here
-%-  Lời cam đoan
 \begin{declaration}
-  Tôi xin cam đoan đây là công trình nghiên cứu của riêng tôi dưới sự hướng dẫn của Ths. Mai Đức Trung. Nội dung nghiên cứu và các kết quả đều là trung thực và chưa từng được công bố trước đây. Các số liệu được sử dụng cho quá trình phân tích, nhận xét được chính tôi thu thập từ nhiều nguồn khác nhau và sẽ được ghi rõ trong phần tài liệu tham khảo.
+  Tôi xin cam đoan đây là công trình nghiên cứu và phát triển của riêng tôi dưới sự hướng dẫn của ThS. Mai Đức Trung. Nội dung báo cáo, kết quả triển khai và số liệu kiểm thử được trình bày trung thực theo phiên bản mã nguồn được nêu trong báo cáo. Những nội dung kế thừa từ tài liệu, tiêu chuẩn hoặc công trình của tác giả khác đều được trích dẫn trong phần tài liệu tham khảo.
 
-  Ngoài ra, tôi cũng có sử dụng một số nhận xét, đánh giá và số liệu của các tác giả khác, cơ quan tổ chức khác. Tất cả đều có trích dẫn và chú thích nguồn gốc.
-
-  Nếu phát hiện có bất kì sự gian lận nào, tôi xin hoàn toàn chịu trách nhiệm về nội dung thực tập tốt nghiệp của mình. Trường Đại học Bách Khoa Thành phố Hồ Chí Minh không liên quan đến những vi phạm tác quyền, bản quyền do tôi gây ra trong quá trình thực hiện.
+  Tôi xin hoàn toàn chịu trách nhiệm về nội dung của báo cáo Đồ án tốt nghiệp này và về việc tuân thủ các quy định liên quan đến học thuật, bản quyền và bảo vệ dữ liệu.
 
   \begin{flushright}
-    \textit{Tp. Hồ Chí Minh, ngày ____ tháng ____ năm 2026\\}
+    \textit{Tp. Hồ Chí Minh, ngày \underline{\hspace{1cm}} tháng \underline{\hspace{1cm}} năm 2026\\}
     \textit{Sinh viên\\}
     \textit{Nguyễn Thành Vinh}
-
   \end{flushright}
 \end{declaration}
 
-%-  Lời cảm ơn/ Lời ngỏ
 \begin{acknowledgments}
-  Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian quý báu của mình để hướng dẫn tận tình, quan tâm, định hướng và động viên tôi trong suốt quá trình làm báo cáo Đồ án tốt nghiệp.
+  Tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian hướng dẫn, góp ý và định hướng trong suốt quá trình thực hiện Đồ án tốt nghiệp. Những nhận xét của thầy là cơ sở quan trọng để tôi hoàn thiện cả sản phẩm phần mềm và báo cáo.
 
-  Tôi cũng xin bày tỏ lòng biết ơn sâu sắc đến Ban giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh, các thầy cô giảng viên trong Khoa Khoa học và Kỹ thuật Máy tính đã truyền đạt cho tôi những kiến thức nền tảng đầy đủ và là cơ sở giúp tôi có thể hoàn thành báo cáo Đồ án tốt nghiệp này.
+  Tôi xin cảm ơn Ban Giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh cùng quý thầy cô Khoa Khoa học và Kỹ thuật Máy tính đã cung cấp nền tảng kiến thức về phát triển phần mềm, cơ sở dữ liệu, hệ thống web và phương pháp giải quyết vấn đề.
 
-  Đặc biệt, tôi xin cảm ơn gia đình và các bạn học đã luôn hỗ trợ và cổ vũ tôi trong suốt quá trình học tập tại trường Đại học Bách Khoa. Sự tận tuỵ và khổ cực của cha mẹ chính là những động lực không bao giờ dứt để cho tôi có thể làm việc chăm chỉ hơn và hoàn thiện bài báo cáo Đồ án tốt nghiệp một cách hoàn thiện và trọn vẹn nhất.
+  Cuối cùng, tôi xin cảm ơn gia đình và bạn bè đã luôn hỗ trợ, động viên và tạo điều kiện để tôi hoàn thành đồ án.
+
   \begin{flushright}
-    \textit{Tp. Hồ Chí Minh, ngày ____ tháng ____ năm 2026\\}
+    \textit{Tp. Hồ Chí Minh, ngày \underline{\hspace{1cm}} tháng \underline{\hspace{1cm}} năm 2026\\}
     \textit{Sinh viên\\}
     \textit{Nguyễn Thành Vinh}
   \end{flushright}
 \end{acknowledgments}
 
-%-  Tóm tắt LV
 \begin{abstract}
-  RabbitCV là một ứng dụng web hỗ trợ ứng viên xây dựng hồ sơ nghề nghiệp, tạo CV theo mẫu, tải CV PDF, tìm kiếm và lưu tin tuyển dụng, nộp hồ sơ, theo dõi trạng thái ứng tuyển và trao đổi với doanh nghiệp. Hệ thống đồng thời cung cấp cổng dành cho doanh nghiệp để quản lý thông tin công ty, đăng tin tuyển dụng, tiếp nhận ứng viên và cập nhật trạng thái hồ sơ; quản trị viên có thể theo dõi các số liệu và dữ liệu hệ thống trong phạm vi được triển khai.
+  Đồ án xây dựng RabbitCV, một ứng dụng web hỗ trợ người dùng tạo và quản lý CV, trình bày CV theo khổ A4 và sử dụng trí tuệ nhân tạo để viết hoặc cải thiện phần giới thiệu, review nội dung, gợi ý điền các mục còn thiếu, đánh giá mức độ phù hợp giữa CV và công việc, đồng thời luyện tập phỏng vấn. Để đặt CV trong ngữ cảnh sử dụng thực tế, hệ thống còn cung cấp các chức năng tìm kiếm việc làm, lưu tin, ứng tuyển, theo dõi trạng thái, trao đổi với doanh nghiệp và quản trị cơ bản.
 
-  Hệ thống được xây dựng bằng React, Vite và Tailwind CSS ở phía giao diện; Node.js, Express và MongoDB/Mongoose ở phía máy chủ. REST API xử lý phần lớn nghiệp vụ, JWT trong cookie HTTP-only duy trì phiên đăng nhập, Socket.IO hỗ trợ nhắn tin thời gian thực và node-cron xử lý các tin tuyển dụng sắp hết hạn. CV tạo trên web được trình bày và in theo tỷ lệ A4; CV tải lên được kiểm tra là PDF, giới hạn 5 MB và hiển thị bằng PDF.js theo từng trang.
+  Giao diện được xây dựng bằng React, Vite và Tailwind CSS; máy chủ sử dụng Node.js, Express và MongoDB/Mongoose. REST API xử lý phần lớn nghiệp vụ, JWT trong cookie HTTP-only duy trì phiên đăng nhập, Socket.IO hỗ trợ nhắn tin, node-cron cập nhật tin hết hạn và PDF.js hiển thị CV PDF theo từng trang. Nhóm chức năng AI gọi Groq qua API tương thích OpenAI, sử dụng JSON Schema cho đầu ra có cấu trúc, đồng thời áp dụng xác thực, giới hạn tần suất, quota, timeout và làm sạch dữ liệu trước và sau khi gọi mô hình.
 
-  Phiên bản mã nguồn hiện tại còn tích hợp các chức năng AI ở phía máy chủ gồm hỗ trợ viết hoặc cải thiện tiểu sử, review CV, điền nội dung CV, chấm mức độ phù hợp giữa CV và công việc và luyện phỏng vấn. Dữ liệu gửi đến mô hình được làm sạch, giới hạn tần suất và trả về theo cấu trúc định trước. Kết quả kiểm thử tự động trên working tree hiện tại gồm 41 trường hợp đều đạt; báo cáo vẫn ghi rõ các giới hạn như lưu PDF dạng base64 trong MongoDB, một số route quản trị cần hoàn thiện và phạm vi kiểm thử trình duyệt còn hạn chế.
+  Bản mã nguồn được đánh giá ngày 06/08/2026 bằng quy trình gồm ESLint, Node Test Runner và Vite build. Kết quả ghi nhận 41/41 trường hợp kiểm thử tự động đạt, không có lỗi lint, còn hai cảnh báo React Hook và quá trình build frontend hoàn tất. Phạm vi đánh giá hiện tập trung vào tính đúng đắn của nghiệp vụ, hợp đồng dữ liệu AI và khả năng chống nội dung không an toàn; chất lượng ngữ nghĩa của kết quả AI chưa được đánh giá trên một bộ dữ liệu có giám khảo độc lập. Những hạn chế này được nêu rõ để tránh xem điểm AI như một quyết định tuyển dụng.
+
+  \noindent\textbf{Từ khóa:} CV, trí tuệ nhân tạo, ứng dụng web, tuyển dụng, mô hình ngôn ngữ lớn, React, Express, MongoDB.
 \end{abstract}
 
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{Abstract}
+RabbitCV is a web application for creating and managing resumes, rendering them in A4 format, and applying artificial intelligence to resume writing and improvement. Its AI-assisted workflows include biography generation, resume review, section completion, resume--job matching, and interview practice. Job search, applications, notifications, messaging, company features, and basic administration provide a practical context in which the resume is used.
+
+The frontend is implemented with React, Vite, and Tailwind CSS, while the backend uses Node.js, Express, and MongoDB/Mongoose. Authentication relies on JWT stored in HTTP-only cookies. Socket.IO supports messaging, node-cron updates expired jobs, and PDF.js renders uploaded resumes page by page. AI requests are sent to Groq through an OpenAI-compatible API and are protected by authentication, rate limits, daily quotas, timeouts, input sanitization, and JSON Schema-based structured outputs.
+
+The codebase was evaluated on August 6, 2026 using ESLint, the Node.js test runner, and a Vite production build. All 41 automated tests passed; linting reported no errors and two React Hook warnings; the frontend build completed successfully. The current evaluation verifies business rules, AI data contracts, and defensive sanitization. It does not claim that the semantic quality of AI outputs has been validated by an independent human-rated dataset.
+
+\noindent\textbf{Keywords:} resume, artificial intelligence, web application, recruitment, large language model, React, Express, MongoDB.
+
+\chapter*{DANH MỤC TỪ VIẾT TẮT}
+\addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
+\noindent\begin{tabularx}{\textwidth}{>{\bfseries}p{0.18\textwidth}Y}
+AI & Artificial Intelligence -- Trí tuệ nhân tạo \\
+API & Application Programming Interface -- Giao diện lập trình ứng dụng \\
+CV & Curriculum Vitae -- Hồ sơ nghề nghiệp \\
+HTTP & Hypertext Transfer Protocol \\
+JWT & JSON Web Token \\
+LLM & Large Language Model -- Mô hình ngôn ngữ lớn \\
+PDF & Portable Document Format \\
+RBAC & Role-Based Access Control -- Kiểm soát truy cập theo vai trò \\
+REST & Representational State Transfer \\
+UI & User Interface -- Giao diện người dùng \\
+\end{tabularx}
+
 \tableofcontents
-%\listofsymbols
 \listoftables
 \listoffigures
-%\listofalgorithms
 
 \mainmatter
-
-\fancyhead{}  % Clears all page headers and footers
-%\rhead{\thepage}  % Sets the right side header to show the page number
-%\lhead{}  % Clears the left side page header
-%\fancyfoot[positions]{footer}
+\fancyhead{}
 \renewcommand{\footrulewidth}{0.4pt}
-
-\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+\pagestyle{fancy}
 
 \input{Chapter/C1-overview}
 \input{Chapter/C2-technology}
@@ -142,13 +127,11 @@ Khoa Khoa học và Kỹ thuật máy tính
 \input{Chapter/C4-systemImplementation}
 \input{Chapter/C5-FuturePlan}
 \input{Chapter/C6-conclusion}
-%\input{Chapter3.tex}
 
-%-  Danh mục TL tham khảo
-%-  Phụ lục (nếu có)
-
-% comment two lines and use manually.bbl bellow if manually
-\bibliographystyle{plain} % ieeetr
+\bibliographystyle{plain}
 \bibliography{refs}
+
+\appendix
+\input{Chapter/Appendix}
 
 \end{document}

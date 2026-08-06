@@ -1,92 +1,141 @@
 % !TEX root = ../main.tex
 \chapter{Kiểm thử và đánh giá}
 
-\section{Mục tiêu kiểm thử}
+\section{Mục tiêu và nguyên tắc đánh giá}
 
-Kiểm thử nhằm xác nhận các quy tắc kỹ thuật và nghiệp vụ quan trọng của RabbitCV hoạt động đúng. Các nhóm ưu tiên gồm: CV đúng khổ A4; chỉ nhận PDF hợp lệ; không nhận hồ sơ vào tin không khả dụng; không cho ứng tuyển trùng; giữ lịch sử khi Job bị xóa; xử lý đúng ngày tháng; bảo vệ dữ liệu AI; đồng bộ trạng thái đã đọc của chat và thông báo.
+Việc đánh giá tập trung vào các rủi ro chính của đề tài: CV phải giữ cấu trúc A4; PDF tải lên phải được kiểm tra; Job không khả dụng không được nhận hồ sơ; dữ liệu lịch sử không mất khi Job bị xóa; nội dung rich text và dữ liệu AI không được mang mã thực thi; kết quả AI phải theo hợp đồng cấu trúc; trạng thái đọc phải tồn tại qua lần tải lại.
 
-\section{Môi trường và công cụ}
+Báo cáo phân biệt ba mức bằng chứng. ``Đã chạy'' là kết quả lấy từ lệnh thực thi trong môi trường đánh giá. ``Đối chiếu mã nguồn'' xác nhận thành phần hoặc điều kiện tồn tại nhưng chưa chứng minh luồng chạy toàn hệ thống. ``Kịch bản đề xuất'' là kiểm thử thủ công cần thực hiện trước nghiệm thu; báo cáo không tự gán kết quả đạt cho các kịch bản chưa chạy.
+
+\section{Môi trường và khả năng tái lập}
 
 \begin{table}[H]
     \centering
     \small
-    \begin{tabular}{|p{0.28\linewidth}|p{0.59\linewidth}|} \hline
-        \textbf{Thành phần} & \textbf{Môi trường hoặc công cụ} \\ \hline
-        Frontend & React, Vite, React Router và Tailwind CSS. \\ \hline
-        Backend & Node.js, Express và Socket.IO. \\ \hline
-        Cơ sở dữ liệu & MongoDB thông qua Mongoose. \\ \hline
-        Kiểm thử tự động & Node Test Runner với lệnh \texttt{npm test}. \\ \hline
-        Kiểm tra mã nguồn & ESLint với lệnh \texttt{npm run lint}. \\ \hline
-        Kiểm tra giao diện & Trình duyệt, Print Preview, PDF.js và các kịch bản thủ công. \\ \hline
-    \end{tabular}
-    \caption{Môi trường kiểm thử}
+    \begin{tabularx}{\textwidth}{|p{0.27\textwidth}|Y|} \hline
+        \textbf{Thông tin} & \textbf{Giá trị ghi nhận} \\ \hline
+        Thời điểm đánh giá & Ngày 06/08/2026. \\ \hline
+        Mã nguồn sản phẩm & Working tree tại \texttt{D:\textbackslash Github\textbackslash DA2}; commit gần nhất \texttt{dcc8c58}. \\ \hline
+        Trạng thái nguồn & Có thay đổi và tệp AI chưa commit, vì vậy hash commit một mình chưa tái tạo đầy đủ đúng working tree đã kiểm tra. \\ \hline
+        Runtime & Node.js 26.5.0; npm 11.17.0. \\ \hline
+        Chuỗi kiểm tra & \texttt{npm run check}, lần lượt chạy ESLint, Node Test Runner và Vite production build. \\ \hline
+        Phạm vi không dùng & Không gọi API AI trả phí để chấm ngữ nghĩa; không chạy tải, pentest hoặc browser end-to-end trong lần đánh giá này. \\ \hline
+    \end{tabularx}
+    \caption{Môi trường đánh giá mã nguồn DA2}
     \label{tab:test-environment}
 \end{table}
 
-\section{Kết quả kiểm thử tự động}
+Việc ghi rõ working tree chưa sạch là cần thiết: các tệp route, service, model và test AI đang tồn tại trong môi trường đánh giá nhưng chưa thuộc commit \texttt{dcc8c58}. Để tái lập tuyệt đối, phiên bản sản phẩm cần được commit hoặc phát hành bằng tag trước khi nộp chính thức.
 
-Trên working tree DA2 được dùng làm baseline, lệnh \texttt{npm test} thực thi 41 trường hợp và cả 41 trường hợp đều đạt. Các test tập trung vào logic ổn định và các thay đổi có nguy cơ làm hỏng nghiệp vụ.
-
-\begin{table}[H]
-    \centering
-    \small
-    \begin{tabular}{|p{0.28\linewidth}|p{0.49\linewidth}|p{0.12\linewidth}|} \hline
-        \textbf{Nhóm} & \textbf{Nội dung kiểm tra} & \textbf{Kết quả} \\ \hline
-        CV và A4 & Wrapper CV, print page, tải PDF từ CV tạo trên web và hiển thị PDF upload theo trang. & Đạt \\ \hline
-        PDF upload & Data URL, header PDF, từ chối DOC/DOCX, nội dung giả PDF và giới hạn 5 MB. & Đạt \\ \hline
-        Dữ liệu AI & Làm sạch HTML hoặc mã thực thi, ẩn thông tin liên hệ, giới hạn payload và schema đầu ra. & Đạt \\ \hline
-        Luồng AI & Route xác thực, structured output, bio assistant, review CV, fill CV, chấm điểm và phỏng vấn. & Đạt \\ \hline
-        Việc làm & Tin đã xóa, tin hết hạn, deadline, trạng thái không khả dụng và không ứng tuyển sai. & Đạt \\ \hline
-        Ngày tháng & Chuẩn hóa ngày học vấn, kinh nghiệm và định dạng tháng trong CV. & Đạt \\ \hline
-        Chat và thông báo & Lưu trạng thái đã đọc ở server, đồng bộ badge và làm sạch rich text. & Đạt \\ \hline
-        Giao diện vai trò & Điều hướng admin/company, nhãn tiếng Việt và form doanh nghiệp. & Đạt \\ \hline
-    \end{tabular}
-    \caption{Tổng hợp kết quả kiểm thử tự động}
-    \label{tab:automated-tests}
-\end{table}
-
-Lệnh \texttt{npm run lint} không phát hiện lỗi lint. Hiện còn hai cảnh báo về dependency của \texttt{useEffect} tại màn hình AdminJobs và AdminReports; đây là các điểm cần xử lý trước khi chốt bản phát hành.
-
-\section{Kịch bản kiểm thử thủ công}
-
-\subsection{Đăng nhập và phân quyền}
-
-Đăng nhập lần lượt bằng tài khoản ứng viên, doanh nghiệp và admin. Kiểm tra header, route mặc định, khả năng truy cập các trang riêng tư, đăng xuất và trạng thái sau khi tải lại trình duyệt. Thử truy cập URL admin bằng tài khoản không có role admin để xác nhận bị chuyển hướng.
-
-\subsection{CV tạo trên web và CV tải lên}
-
-Tạo CV có nội dung ngắn, in ra PDF và kiểm tra kích thước trang 210 x 297 mm. Tạo CV dài để kiểm tra tràn nội dung. Tải PDF hợp lệ dưới 5 MB, xác nhận danh sách không tải trước toàn bộ \texttt{pdfData}, sau đó mở từ tài khoản doanh nghiệp và kiểm tra từng trang. Thử DOC, DOCX, ảnh, data URL giả và PDF vượt dung lượng.
-
-\subsection{Việc làm và ứng tuyển}
-
-Tìm kiếm và lọc một tin đang Active, lưu tin, bỏ lưu tin và ứng tuyển bằng CV đã lưu. Thử ứng tuyển lần hai để kiểm tra unique index. Thử ứng tuyển vào tin Draft, Expired hoặc Deleted. Sau khi tin bị xóa, kiểm tra lịch sử Application vẫn hiển thị thông tin từ \texttt{jobSnapshot}.
-
-\subsection{Doanh nghiệp, chat và thông báo}
-
-Đăng nhập doanh nghiệp, tạo tin nháp, đăng tin, đóng nhận hồ sơ, mở lại, sửa và xóa tin. Mở hồ sơ ứng viên, cập nhật từng trạng thái và xác nhận ứng viên nhận được thông báo. Gửi tin nhắn giữa hai tài khoản, mở room, đánh dấu đã đọc và ẩn room ở một phía; xác nhận phía còn lại vẫn giữ dữ liệu.
-
-\subsection{AI}
-
-Tạo CV có dữ liệu cơ bản, thử viết mới, cải thiện, rút gọn tiểu sử, review CV, điền CV, chấm điểm theo một Job và luyện phỏng vấn 5, 8 hoặc 12 câu. Kiểm tra kết quả không tự ghi đè nội dung nếu người dùng chưa áp dụng. Khi thiếu khóa AI, vượt quota hoặc gửi nội dung không hợp lệ, giao diện phải nhận thông báo lỗi phù hợp và không làm hỏng các chức năng CV còn lại.
-
-\section{Đánh giá theo mục tiêu}
+\section{Kết quả quy trình kiểm tra tự động}
 
 \begin{table}[H]
     \centering
     \small
-    \begin{tabular}{|p{0.29\linewidth}|p{0.48\linewidth}|p{0.11\linewidth}|} \hline
-        \textbf{Mục tiêu} & \textbf{Bằng chứng} & \textbf{Đánh giá} \\ \hline
-        Tạo và quản lý CV & Resume model, nhiều template, preview, in A4 và test A4. & Đạt \\ \hline
-        Tìm việc và ứng tuyển & Job, Application, lưu việc, trạng thái và kiểm tra tin hết hạn. & Đạt \\ \hline
-        Hỗ trợ CV tải lên & Validation PDF, giới hạn 5 MB và render bằng PDF.js. & Đạt \\ \hline
-        Kết nối ứng viên -- doanh nghiệp & Cổng doanh nghiệp, cập nhật hồ sơ, chat và notification. & Đạt một phần \\ \hline
-        AI hỗ trợ nghề nghiệp & Các route AI, UI tương ứng và test sanitizer hoặc integration. & Đạt trong phạm vi demo \\ \hline
-        Quản trị hệ thống & Có layout và một số thống kê; một số route cần tiếp tục đồng bộ. & Đạt một phần \\ \hline
-    \end{tabular}
-    \caption{Đánh giá theo mục tiêu đề tài}
-    \label{tab:goal-evaluation}
+    \begin{tabularx}{\textwidth}{|p{0.22\textwidth}|p{0.23\textwidth}|Y|p{0.13\textwidth}|} \hline
+        \textbf{Bước} & \textbf{Lệnh con} & \textbf{Kết quả ghi nhận} & \textbf{Đánh giá} \\ \hline
+        Phân tích tĩnh & \texttt{npm run lint} & 0 lỗi; 2 cảnh báo React Hook về dependency \texttt{fetchJobs} và \texttt{fetchReports}. & Đạt có cảnh báo \\ \hline
+        Kiểm thử logic & \texttt{npm test} & 41/41 trường hợp đạt, 0 thất bại. & Đạt \\ \hline
+        Đóng gói frontend & \texttt{npm run build} & Vite build thành công, 872 module được biến đổi; có cảnh báo chunk lớn hơn 500~kB. & Đạt có cảnh báo \\ \hline
+        Toàn chuỗi & \texttt{npm run check} & Cả ba bước hoàn tất với mã thoát thành công. & Đạt \\ \hline
+    \end{tabularx}
+    \caption{Kết quả chạy quy trình kiểm tra ngày 06/08/2026}
+    \label{tab:check-results}
 \end{table}
 
-\section{Hạn chế}
+Hai cảnh báo lint nằm ở \texttt{AdminJobs.jsx} và \texttt{AdminReports.jsx}. Chúng không làm lệnh thất bại nhưng có thể dẫn tới effect dùng closure cũ hoặc chạy không đúng khi callback thay đổi. Cảnh báo chunk cho thấy cần tách thêm bundle hoặc tối ưu import nếu thời gian tải trở thành yêu cầu nghiệm thu.
 
-Thứ nhất, PDF upload đang lưu base64 trong MongoDB làm tài liệu lớn và không phù hợp với hệ thống có nhiều tệp. Thứ hai, \texttt{server.js} còn chứa nhiều trách nhiệm nên chi phí bảo trì sẽ tăng khi số chức năng mở rộng. Thứ ba, thông báo sử dụng polling nên có độ trễ và tạo request định kỳ. Thứ tư, bộ test hiện tại chưa bao phủ đầy đủ API thật, browser end-to-end, Socket.IO trong môi trường mạng không ổn định và ma trận quyền truy cập. Thứ năm, một số màn hình admin còn cần kiểm tra sự tương ứng giữa frontend và backend.
+\section{Kiểm kê bộ kiểm thử}
+
+Mười hai tệp test sử dụng Node Test Runner, tổng cộng 41 trường hợp. Nội dung dưới đây được tổng hợp theo đúng tên test trong mã nguồn.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.30\textwidth}|p{0.08\textwidth}|Y|} \hline
+        \textbf{Tệp test} & \textbf{Số} & \textbf{Phạm vi chính} \\ \hline
+        \texttt{a4Layout.test.js} & 3 & Kích thước A4, hành động tải PDF dựa trên print và render PDF upload không dùng native iframe. \\ \hline
+        \texttt{aiDataSanitizer.test.js} & 5 & Loại HTML thực thi, giới hạn nội dung, tách lời khuyên khỏi CV, bỏ thông tin liên hệ và kỹ năng chứa mã nguy hiểm. \\ \hline
+        \texttt{aiIntegration.test.js} & 4 & Route AI có xác thực, structured output, các workflow frontend, trang phỏng vấn và điều hướng theo role. \\ \hline
+        \texttt{companyUi.test.js} & 3 & Nhãn tiếng Việt, chuẩn hóa thông tin Job và định dạng ngày trên hồ sơ công khai. \\ \hline
+        \texttt{dateInput.test.js} & 5 & Chuẩn hóa ngày cũ, ngày Resume, hoạt động đang diễn ra và chuyển đổi biểu diễn tháng. \\ \hline
+        \texttt{interviewData}\allowbreak\texttt{Sanitizer.test.js} & 3 & Giới hạn thiết lập, làm sạch lịch sử 12 câu và giới hạn feedback đầu ra. \\ \hline
+    \end{tabularx}
+    \caption{Danh mục tệp kiểm thử tự động (phần 1)}
+    \label{tab:test-inventory-part1}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.30\textwidth}|p{0.08\textwidth}|Y|} \hline
+        \textbf{Tệp test} & \textbf{Số} & \textbf{Phạm vi chính} \\ \hline
+        \texttt{jobAvailability.test.js} & 3 & Job đã xóa, Job active còn hạn và Job hết hạn. \\ \hline
+        \texttt{jobDeadlineUi.test.js} & 3 & Ưu tiên trạng thái hết hạn, chặn ứng tuyển trước khi đồng bộ và cho phép Job còn hạn. \\ \hline
+        \texttt{pdfValidation.test.js} & 3 & Nhận PDF data URL, từ chối Word/nội dung giả và chặn file lớn hơn 5~MB. \\ \hline
+        \texttt{readStatus}\allowbreak\texttt{Persistence.test.js} & 2 & Lưu trạng thái đọc message và notification ở server thay vì chỉ ẩn badge trong React state. \\ \hline
+        \texttt{resumeAiFill.test.js} & 4 & Merge kỹ năng an toàn, chỉ điền mục trống và giữ mô tả kỹ thuật hợp lệ. \\ \hline
+        \texttt{richTextSanitizer.test.js} & 3 & Giữ định dạng CV được hỗ trợ, loại HTML nhúng/thực thi và xử lý input không phải chuỗi. \\ \hline
+        \textbf{Tổng} & \textbf{41} & \textbf{Toàn bộ 41 trường hợp đạt.} \\ \hline
+    \end{tabularx}
+    \caption{Danh mục tệp kiểm thử tự động (phần 2)}
+    \label{tab:test-inventory}
+\end{table}
+
+\section{Truy vết yêu cầu và bằng chứng}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.19\textwidth}|p{0.38\textwidth}|Y|} \hline
+        \textbf{Yêu cầu} & \textbf{Bằng chứng tự động} & \textbf{Mức bao phủ} \\ \hline
+        FR-CV-01, FR-CV-02 & \texttt{a4Layout}, \texttt{dateInput} & Bao phủ layout/định dạng; chưa bao phủ CRUD qua database thật. \\ \hline
+        FR-CV-03 & \texttt{pdfValidation}, \texttt{a4Layout} & Bao phủ validator và cơ chế render; chưa đo PDF đa trang trên nhiều trình duyệt. \\ \hline
+        FR-AI-01--03 & \texttt{aiDataSanitizer}, \texttt{aiIntegration}, \texttt{resumeAiFill}, \texttt{interviewDataSanitizer} & Bao phủ hợp đồng, sanitizer và wiring; chưa chấm chất lượng ngữ nghĩa từ provider. \\ \hline
+        FR-JOB-01, FR-APP-01 & \texttt{jobAvailability}, \texttt{jobDeadlineUi} & Bao phủ khả dụng Job; unique index và transaction cần integration test với MongoDB. \\ \hline
+        FR-APP-02 & Đối chiếu model Application và logic \texttt{jobSnapshot}. & Có bằng chứng mã nguồn, chưa có test tự động chuyên biệt. \\ \hline
+        FR-COM-01 & \texttt{companyUi} & Bao phủ một phần UI; chưa bao phủ toàn bộ vòng đời Job/Application. \\ \hline
+        FR-MSG-01 & \texttt{readStatusPersistence}, \texttt{richTextSanitizer} & Bao phủ persistence ở mức mã và sanitizer; chưa kiểm thử Socket.IO end-to-end. \\ \hline
+        FR-ADM-01 & Điều hướng role trong \texttt{aiIntegration}; lint phát hiện hai cảnh báo admin. & Bao phủ hạn chế, cần kiểm thử ma trận quyền và API. \\ \hline
+    \end{tabularx}
+    \caption{Ma trận truy vết yêu cầu--kiểm thử}
+    \label{tab:requirements-tests}
+\end{table}
+
+\section{Kịch bản kiểm thử thủ công cần thực hiện}
+
+Các kịch bản dưới đây là checklist nghiệm thu, chưa được ghi nhận là đã chạy trong phiên đánh giá ngày 06/08/2026.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.20\textwidth}|Y|p{0.19\textwidth}|} \hline
+        \textbf{Nhóm} & \textbf{Kịch bản và tiêu chí chấp nhận} & \textbf{Trạng thái} \\ \hline
+        Xác thực/RBAC & Đăng nhập bằng candidate, company, admin; thử URL sai role; tải lại phiên; đăng xuất. Server phải từ chối thao tác không đủ quyền. & Chưa chạy thủ công \\ \hline
+        CV/A4/PDF & Tạo CV ngắn và dài, in bằng các trình duyệt mục tiêu, đo trang 210~x~297~mm; mở PDF nhiều trang; thử file giả, sai MIME và quá 5~MB. & Chưa chạy thủ công \\ \hline
+        Ứng tuyển & Nộp bằng Resume và PDF, gửi lặp, thử Job draft/expired/deleted; xóa Job rồi kiểm tra lịch sử từ snapshot. & Chưa chạy thủ công \\ \hline
+        Doanh nghiệp & Tạo/sửa/đóng/mở/xóa Job, xem CV đúng và sai quan hệ, chuyển toàn bộ trạng thái Application. & Chưa chạy thủ công \\ \hline
+        Chat/thông báo & Gửi giữa hai trình duyệt, mất/kết nối lại mạng, đánh dấu đọc, ẩn room một phía và xác nhận dữ liệu phía còn lại. & Chưa chạy thủ công \\ \hline
+        AI & Thử năm workflow, lỗi thiếu khóa, timeout, hết quota và payload nguy hiểm; xác nhận AI không tự ghi đè Resume. & Chưa chạy thủ công \\ \hline
+    \end{tabularx}
+    \caption{Checklist nghiệm thu thủ công chưa thực hiện}
+    \label{tab:manual-checklist}
+\end{table}
+
+\section{Đánh giá riêng cho chức năng AI}
+
+Kết quả 19 test thuộc bốn tệp AI xác nhận được các thuộc tính có tính quyết định: dữ liệu được làm sạch và giới hạn, route yêu cầu xác thực, provider được yêu cầu trả structured output, kết quả fill không ghi thêm sự kiện vào mục đã có và feedback phỏng vấn bị giới hạn. Đây là bằng chứng về an toàn dữ liệu và hợp đồng phần mềm, không phải bằng chứng rằng nội dung do mô hình sinh luôn đúng hoặc hữu ích.
+
+Để đánh giá chất lượng ngữ nghĩa, cần xây dựng bộ dữ liệu cố định gồm CV ở nhiều mức kinh nghiệm và Job description tương ứng; ẩn danh thông tin cá nhân; chạy cùng model, prompt và tham số; sau đó có ít nhất hai người chấm độc lập theo các tiêu chí: bám sát dữ liệu nguồn, tính đúng đắn, khả năng hành động, độ rõ ràng, không bịa đặt và không tạo phân biệt đối xử. Phụ lục A cung cấp rubric đề xuất. Chỉ sau bước này mới nên báo cáo điểm trung bình, độ đồng thuận người chấm hoặc so sánh model.
+
+\section{Hạn chế và rủi ro còn lại}
+
+\begin{itemize}
+    \item Bộ test thiên về unit và source-level integration; chưa chạy MongoDB thật, browser end-to-end, ma trận trình duyệt A4 hoặc Socket.IO khi mạng chập chờn.
+    \item Hai cảnh báo React Hook có thể gây dữ liệu cũ; cảnh báo bundle lớn có thể ảnh hưởng thời gian tải.
+    \item Working tree DA2 chưa có commit/tag tái lập; chất lượng ngữ nghĩa và chi phí AI chưa được chấm trên bộ dữ liệu độc lập.
+    \item Chưa thực hiện kiểm thử tải, pentest, CSRF chuyên sâu, accessibility audit hoặc khôi phục database/file.
+\end{itemize}
+
+\noindent\textbf{Kết luận đánh giá.}
+Trong phạm vi đã chạy, RabbitCV đạt 41/41 test, lint không có lỗi và build frontend thành công. Đây là baseline kỹ thuật của đồ án, chưa phải bằng chứng sẵn sàng production; kiểm thử thủ công, database integration, ma trận quyền và đánh giá ngữ nghĩa AI vẫn cần hoàn tất.

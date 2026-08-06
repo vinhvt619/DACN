@@ -1,0 +1,139 @@
+% !TEX root = ../main.tex
+\chapter{Thông tin tái lập và danh mục kỹ thuật}
+
+\section{Quy trình tái lập kiểm tra}
+
+Các lệnh sau được thực hiện từ thư mục gốc mã nguồn DA2. \texttt{npm ci} phù hợp khi cần cài đúng dependency từ lockfile; lần đánh giá trong báo cáo sử dụng dependency đã cài và chạy trực tiếp \texttt{npm run check}.
+
+\begin{verbatim}
+npm ci
+npm run check
+\end{verbatim}
+
+Script \texttt{check} thực hiện tuần tự ba lệnh:
+
+\begin{verbatim}
+npm run lint
+npm test
+npm run build
+\end{verbatim}
+
+Để chạy ứng dụng phát triển, cần MongoDB và file biến môi trường hợp lệ. Mã nguồn cung cấp script chạy riêng frontend/backend và script điều phối:
+
+\begin{verbatim}
+npm run dev
+npm start
+npm run start:all
+\end{verbatim}
+
+Trước khi lưu số liệu kiểm thử chính thức, cần ghi lại ngày giờ, hệ điều hành, phiên bản Node/npm, commit/tag, trạng thái working tree và toàn bộ output của lệnh \texttt{npm run check}. Không đưa file \texttt{.env}, token, URI có credential hoặc dữ liệu CV thật vào phụ lục.
+
+\section{Biến môi trường}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.34\textwidth}|Y|} \hline
+        \textbf{Tên biến} & \textbf{Mục đích} \\ \hline
+        \texttt{PORT} & Cổng lắng nghe của backend. \\ \hline
+        \texttt{MONGO_URI} & Chuỗi kết nối MongoDB; giá trị có thể chứa credential và phải được bảo vệ. \\ \hline
+        \texttt{JWT_SECRET} & Khóa ký/xác minh JWT; production phải dùng giá trị ngẫu nhiên mạnh. \\ \hline
+        \texttt{NODE_ENV} & Phân biệt môi trường phát triển và production. \\ \hline
+        \texttt{AI_ENABLED} & Bật hoặc tắt toàn bộ nhóm chức năng AI. \\ \hline
+        \texttt{AI_DAILY_LIMIT} & Quota AI theo user trong một ngày. \\ \hline
+        \texttt{AI_REQUEST_TIMEOUT_MS} & Thời gian tối đa chờ provider cho một request. \\ \hline
+        \texttt{GROQ_API_KEY} & Khóa truy cập Groq; chỉ đặt ở backend/secret store. \\ \hline
+        \texttt{GROQ_MODEL} & Tên model dùng cho các workflow AI. \\ \hline
+    \end{tabularx}
+    \caption{Danh sách biến môi trường không kèm giá trị bí mật}
+    \label{tab:environment-variables}
+\end{table}
+
+\section{Danh mục API theo miền nghiệp vụ}
+
+Bảng \ref{tab:api-catalog} và \ref{tab:api-catalog-part2} dùng prefix để tránh lặp đường dẫn. Ký hiệu \texttt{:id}, \texttt{:jobId} và \texttt{:room} là tham số động.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.23\textwidth}|p{0.30\textwidth}|Y|} \hline
+        \textbf{Miền} & \textbf{Prefix/tài nguyên} & \textbf{Phương thức và thao tác chính} \\ \hline
+        Health & \texttt{/api/health} & GET trạng thái tổng quát; admin có GET health details. \\ \hline
+        Xác thực & \texttt{/api/register}, \texttt{/api/login}, \texttt{/api/logout}, \texttt{/api/me} & POST đăng ký, đăng nhập, đăng xuất; GET phiên hiện tại. \\ \hline
+        Hồ sơ User & \texttt{/api/user}, \texttt{/api/users} & GET tìm kiếm/xem profile; PUT profile, security và password. \\ \hline
+        Resume & \texttt{/api/resume}, \texttt{/api/resumes} & GET danh sách/chi tiết/view; POST tạo hoặc cập nhật; DELETE theo id. \\ \hline
+        Job & \texttt{/api/jobs} & GET danh sách, chi tiết và Job doanh nghiệp; POST tạo; PUT sửa; DELETE theo id. \\ \hline
+        Application & \texttt{/api/jobs/apply}, \texttt{/api/jobs/applications} & POST nộp Resume/file; GET hồ sơ; PUT trạng thái Application. \\ \hline
+        Saved jobs & \texttt{/api/saved-jobs} & GET danh sách; POST lưu; DELETE bỏ lưu theo jobId. \\ \hline
+    \end{tabularx}
+    \caption{Danh mục API theo miền nghiệp vụ (phần 1)}
+    \label{tab:api-catalog}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.23\textwidth}|p{0.30\textwidth}|Y|} \hline
+        \textbf{Miền} & \textbf{Prefix/tài nguyên} & \textbf{Phương thức và thao tác chính} \\ \hline
+        Message/chat & \texttt{/api/messages}, \texttt{/api/chat} & GET/POST message; GET user/thread/unread; PATCH đọc hoặc ẩn room. \\ \hline
+        Notification & \texttt{/api/notifications} & GET danh sách/số chưa đọc; PUT đọc từng mục/tất cả; DELETE theo id. \\ \hline
+        AI & \texttt{/api/ai} & GET status; POST resume improve, review, fill, score và interview turn. \\ \hline
+        Admin Job & \texttt{/api/admin/jobs} & GET danh sách; PUT hide/unhide; DELETE theo id. \\ \hline
+        Admin Company & \texttt{/api/admin/companies} & GET danh sách; PUT trạng thái verification. \\ \hline
+        Admin User & \texttt{/api/admin/users} & PUT ban; DELETE theo id. \\ \hline
+        Admin thống kê & \texttt{/api/admin/stats} & GET số liệu dashboard. \\ \hline
+    \end{tabularx}
+    \caption{Danh mục API theo miền nghiệp vụ (phần 2)}
+    \label{tab:api-catalog-part2}
+\end{table}
+
+\section{Bất biến dữ liệu cần bảo vệ}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.28\textwidth}|Y|} \hline
+        \textbf{Bất biến} & \textbf{Ý nghĩa kiểm thử} \\ \hline
+        Application duy nhất theo Job--candidate & Hai request gần nhau vẫn không tạo hai hồ sơ cho cùng ứng viên và Job. \\ \hline
+        Application có \texttt{jobSnapshot} & Lịch sử còn tiêu đề, công ty và ngữ cảnh cần thiết sau khi Job bị xóa. \\ \hline
+        Resume ảo không thuộc thư viện thường & PDF nộp cho một Application không làm rác danh sách CV quản lý của ứng viên. \\ \hline
+        Danh sách Resume không trả \texttt{pdfData} & Truy vấn metadata không kéo theo toàn bộ base64 và không lộ file ngoài nhu cầu. \\ \hline
+        Trạng thái chat gắn với user--room & Đánh dấu đọc hoặc ẩn của một phía không thay đổi dữ liệu cá nhân của phía còn lại. \\ \hline
+        AiUsage không cần nguyên prompt & Quota và quan sát kỹ thuật dùng metadata/hash; dữ liệu CV đầy đủ không được lưu lại chỉ vì mục đích thống kê. \\ \hline
+    \end{tabularx}
+    \caption{Các bất biến quan trọng cho integration test}
+    \label{tab:data-invariants}
+\end{table}
+
+\section{Rubric đề xuất cho chất lượng AI}
+
+Rubric này dành cho lần đánh giá tiếp theo, không phải số liệu đã thu được trong báo cáo. Mỗi output được chấm theo thang 1--5 rồi quy đổi theo trọng số.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.28\textwidth}|p{0.15\textwidth}|Y|} \hline
+        \textbf{Tiêu chí} & \textbf{Trọng số} & \textbf{Câu hỏi chấm} \\ \hline
+        Bám sát dữ liệu nguồn & 25\% & Output có giữ đúng sự kiện trong CV/Job và tránh tự thêm tên, thời gian, bằng cấp hay thành tích không có nguồn không? \\ \hline
+        Đúng đắn và nhất quán & 20\% & Nhận xét có mâu thuẫn với dữ liệu, với chính nó hoặc với ràng buộc workflow không? \\ \hline
+        Khả năng hành động & 20\% & Người dùng có thể sửa CV hoặc luyện phỏng vấn dựa trên đề xuất cụ thể không? \\ \hline
+        Rõ ràng và phù hợp & 15\% & Ngôn ngữ có dễ hiểu, đúng vai trò, đúng độ dài và đúng ngữ cảnh nghề nghiệp không? \\ \hline
+        An toàn, riêng tư, công bằng & 15\% & Output có tiết lộ dữ liệu không cần thiết, suy đoán thuộc tính nhạy cảm hoặc tạo lời khuyên phân biệt đối xử không? \\ \hline
+        Tuân thủ định dạng & 5\% & JSON/schema, trường bắt buộc, giới hạn danh sách và kiểu dữ liệu có đúng không? \\ \hline
+    \end{tabularx}
+    \caption{Rubric 100 điểm đề xuất cho output AI}
+    \label{tab:ai-rubric}
+\end{table}
+
+Một quy trình tối thiểu nên dùng ít nhất 20 CV đã ẩn danh, trải đều sinh viên, junior và mid-level; ít nhất 10 Job description; hai người chấm độc lập; cùng một model, prompt và tham số. Ngoài điểm trung bình, cần báo cáo tỷ lệ output bị loại vì bịa đặt/vi phạm an toàn và mức đồng thuận giữa hai người chấm. Mẫu nào chứa dữ liệu cá nhân thật chỉ được sử dụng khi có quyền hợp lệ và kế hoạch xóa sau đánh giá.
+
+\section{Checklist trước khi nộp phiên bản chính thức}
+
+\begin{itemize}
+    \item Commit toàn bộ mã nguồn DA2 dùng làm bằng chứng và gắn tag phiên bản.
+    \item Chạy lại \texttt{npm run check}; lưu output và cập nhật số liệu nếu thay đổi.
+    \item Chạy checklist thủ công ở Bảng \ref{tab:manual-checklist} và lưu ảnh/kết quả thực tế.
+    \item Xác minh tên đề tài, sinh viên, giảng viên, loại báo cáo và tháng nộp trên bìa.
+    \item Biên dịch LaTeX từ đầu, kiểm tra citation/reference và xem trực quan toàn bộ PDF.
+    \item Loại secret, dữ liệu CV thật, tài khoản demo có mật khẩu và file môi trường khỏi Git/PDF.
+\end{itemize}
