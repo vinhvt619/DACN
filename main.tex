@@ -87,16 +87,6 @@ Khoa Khoa học và Kỹ thuật Máy tính
   \noindent\textbf{Từ khóa:} CV, trí tuệ nhân tạo, ứng dụng web, tuyển dụng, mô hình ngôn ngữ lớn, React, Express, MongoDB.
 \end{abstract}
 
-\chapter*{ABSTRACT}
-\addcontentsline{toc}{chapter}{Abstract}
-RabbitCV is a web application for creating and managing resumes, rendering them in A4 format, and applying artificial intelligence to resume writing and improvement. Its AI-assisted workflows include biography generation, resume review, section completion, resume--job matching, and interview practice. Job search, applications, notifications, messaging, company features, and basic administration provide a practical context in which the resume is used.
-
-The frontend is implemented with React, Vite, and Tailwind CSS, while the backend uses Node.js, Express, and MongoDB/Mongoose. Authentication relies on JWT stored in HTTP-only cookies. Socket.IO supports messaging, node-cron updates expired jobs, and PDF.js renders uploaded resumes page by page. AI requests are sent to Groq through an OpenAI-compatible API and are protected by authentication, rate limits, daily quotas, timeouts, input sanitization, and JSON Schema-based structured outputs.
-
-The codebase was evaluated on August 6, 2026 using ESLint, the Node.js test runner, and a Vite production build. All 41 automated tests passed; linting reported no errors and two React Hook warnings; the frontend build completed successfully. The current evaluation verifies business rules, AI data contracts, and defensive sanitization. It does not claim that the semantic quality of AI outputs has been validated by an independent human-rated dataset.
-
-\noindent\textbf{Keywords:} resume, artificial intelligence, web application, recruitment, large language model, React, Express, MongoDB.
-
 \chapter*{DANH MỤC TỪ VIẾT TẮT}
 \addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
 \noindent\begin{tabularx}{\textwidth}{>{\bfseries}p{0.18\textwidth}Y}
