@@ -1,0 +1,154 @@
+% !TEX root = ../main.tex
+\chapter{Mô-đun trí tuệ nhân tạo}
+\label{chap:ai-module}
+
+Mô-đun trí tuệ nhân tạo của RabbitCV hỗ trợ người dùng xây dựng và đánh giá nội dung CV trong ngữ cảnh tìm việc. Mô-đun không tự động thay đổi dữ liệu đã lưu và không thay thế quyết định của người dùng hoặc nhà tuyển dụng. Chương này trình bày phạm vi, cấu trúc, năm chức năng, quy trình kiểm soát và các giới hạn của mô-đun.
+
+\section{Mục tiêu và phạm vi}
+
+Mục tiêu của mô-đun là giảm thời gian soạn nội dung, giúp người dùng nhận ra điểm thiếu trong CV và tạo môi trường luyện tập trước phỏng vấn. Dữ liệu đầu vào có thể gồm nội dung CV, mô tả công việc, chế độ xử lý và lịch sử hội thoại. Kết quả được trả về dưới dạng dữ liệu có cấu trúc để giao diện hiển thị thành từng nhóm gợi ý.
+
+AI chỉ đóng vai trò hỗ trợ. Nội dung sinh ra có thể chung chung, suy diễn quá mức hoặc chưa phù hợp với kinh nghiệm thực tế. Vì vậy, RabbitCV yêu cầu người dùng chủ động áp dụng gợi ý; điểm phù hợp CV--công việc không được dùng để tự động loại ứng viên.
+
+\section{Kiến trúc tổng thể của mô-đun}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.98\textwidth}{!}{%
+    \begin{tikzpicture}[
+        block/.style={draw, rounded corners, align=center, minimum width=2.55cm, minimum height=1.05cm, fill=blue!7},
+        store/.style={draw, cylinder, shape border rotate=90, aspect=0.28, align=center, minimum width=2.4cm, minimum height=1.1cm, fill=green!8},
+        arr/.style={-Latex, line width=0.8pt}
+    ]
+        \node[block] (ui) {Giao diện\\người dùng};
+        \node[block, right=0.7cm of ui] (route) {Route AI\\xác thực, hạn mức};
+        \node[block, right=0.7cm of route] (clean) {Làm sạch và\\rút gọn dữ liệu};
+        \node[block, right=0.7cm of clean] (service) {Dịch vụ AI\\schema, timeout};
+        \node[block, right=0.7cm of service] (provider) {Groq\\mô hình ngôn ngữ};
+        \node[store, below=1.0cm of service] (usage) {AiUsage\\thống kê kỹ thuật};
+        \draw[arr] (ui) -- (route);
+        \draw[arr] (route) -- (clean);
+        \draw[arr] (clean) -- (service);
+        \draw[arr] (service) -- (provider);
+        \draw[arr] (service) -- (usage);
+    \end{tikzpicture}}
+    \caption{Kiến trúc xử lý của mô-đun trí tuệ nhân tạo}
+    \label{fig:ai-module-architecture}
+\end{figure}
+
+\subsection{Thành phần giao diện và lớp API}
+
+Người dùng kích hoạt chức năng AI từ trình biên tập CV, cửa sổ rà soát, trang việc làm hoặc trang luyện phỏng vấn. Frontend chỉ gửi dữ liệu cần thiết đến nhóm đường dẫn \texttt{/api/ai}; khóa truy cập nhà cung cấp không được đưa vào mã giao diện.
+
+Các route AI kiểm tra phiên đăng nhập, giới hạn tốc độ, hạn mức theo ngày và dữ liệu của từng chức năng. Nếu yêu cầu không hợp lệ, backend trả mã lỗi trước khi gọi mô hình, nhờ đó tránh sử dụng tài nguyên AI cho dữ liệu không thể xử lý.
+
+\subsection{Bộ làm sạch và dịch vụ AI}
+
+Bộ làm sạch chuyển CV, công việc và lịch sử phỏng vấn thành ngữ cảnh rút gọn. Dịch vụ AI chọn cấu hình, chỉ dẫn và JSON Schema theo chức năng, sau đó dùng OpenAI SDK để gửi yêu cầu đến API tương thích OpenAI của Groq. Thời gian chờ và số lần thử lại được giới hạn để một yêu cầu lỗi không giữ tài nguyên máy chủ quá lâu.
+
+Sau khi nhận kết quả, dịch vụ phân tích chuỗi JSON, thực hiện các kiểm tra hoặc bước làm sạch bổ sung rồi trả dữ liệu cho route. Dữ liệu có cấu trúc giúp giao diện hiển thị từng điểm số, vấn đề hoặc gợi ý mà không phải tự tách một đoạn văn bản tự do.
+
+\subsection{Lưu thống kê sử dụng}
+
+Mỗi lần gọi tạo một bản ghi AiUsage trước khi liên hệ nhà cung cấp. Sau khi hoàn tất hoặc thất bại, bản ghi được cập nhật với số token, độ trễ, trạng thái và mã lỗi. Dữ liệu này hỗ trợ tính hạn mức và quan sát vận hành mà không cần lưu nguyên văn toàn bộ CV hoặc prompt.
+
+\section{Các chức năng AI}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|p{0.29\textwidth}|p{0.20\textwidth}|Y|} \hline
+        \textbf{Endpoint} & \textbf{Chức năng} & \textbf{Kết quả có cấu trúc} \\ \hline
+        \texttt{GET /api/ai/status} & Kiểm tra khả dụng & Trạng thái bật hoặc tắt, mô hình, hạn mức ngày và số lượt còn lại. \\ \hline
+        \texttt{POST /api/ai/resume/improve} & Viết hoặc cải thiện giới thiệu & Nội dung đề xuất theo chế độ viết mới, cải thiện hoặc rút gọn. \\ \hline
+        \texttt{POST /api/ai/resume/review} & Rà soát CV & Điểm tổng quan, điểm thành phần, điểm mạnh và vấn đề theo mức ưu tiên. \\ \hline
+        \texttt{POST /api/ai/resume/fill} & Gợi ý điền CV & Danh sách trường và nội dung đề xuất có giới hạn. \\ \hline
+        \texttt{POST /api/ai/resume/score} & So khớp CV--công việc & Điểm kỹ năng, kinh nghiệm, học vấn, từ khóa và khuyến nghị. \\ \hline
+        \texttt{POST /api/ai/interview/turn} & Luyện phỏng vấn & Câu hỏi kế tiếp hoặc phần tổng kết buổi luyện tập. \\ \hline
+    \end{tabularx}
+    \caption{Các endpoint của mô-đun trí tuệ nhân tạo}
+    \label{tab:ai-endpoints}
+\end{table}
+
+\subsection{Viết và cải thiện phần giới thiệu}
+
+Chức năng nhận phần giới thiệu hiện tại, chức danh mục tiêu, kỹ năng và một phần ngữ cảnh nghề nghiệp. Người dùng có thể yêu cầu viết mới, cải thiện hoặc rút gọn. Kết quả là một đoạn giới thiệu đề xuất; nội dung chỉ được đưa vào CV sau khi người dùng xác nhận.
+
+\subsection{Rà soát nội dung CV}
+
+Chức năng rà soát phân tích CV theo nhiều tiêu chí và trả điểm tổng quan, điểm thành phần, điểm mạnh cùng danh sách vấn đề. Mỗi vấn đề có mức độ ưu tiên và gợi ý xử lý để người dùng biết phần nào cần xem trước. Điểm số dùng để định hướng chỉnh sửa, không phải kết luận tuyển dụng.
+
+\subsection{Gợi ý bổ sung các mục còn thiếu}
+
+Chức năng điền CV xác định những phần còn thiếu hoặc có ít thông tin, sau đó tạo danh sách đề xuất theo các trường được cho phép. Backend giới hạn số lượng và độ dài của từng đề xuất. Giao diện không tự động ghi đè dữ liệu đã lưu; người dùng chọn nội dung phù hợp trước khi áp dụng.
+
+\subsection{Đánh giá mức độ phù hợp giữa CV và công việc}
+
+Chức năng so khớp nhận ngữ cảnh CV và mô tả việc làm, sau đó trả các nhóm điểm về kỹ năng, kinh nghiệm, học vấn và từ khóa. Kết quả kèm nhận xét về khoảng thiếu và hành động có thể thực hiện. Chức năng này hỗ trợ ứng viên điều chỉnh hồ sơ, không được sử dụng như quyết định tự động của doanh nghiệp.
+
+\subsection{Luyện tập phỏng vấn}
+
+Mỗi lượt luyện tập gửi vai trò ứng tuyển, ngữ cảnh CV, công việc và lịch sử trả lời đã được giới hạn. Mô hình trả câu hỏi tiếp theo hoặc phần tổng kết gồm điểm mạnh, điểm cần luyện và khuyến nghị. Lịch sử chỉ giữ lượng hội thoại cần thiết cho tối đa 12 câu để kiểm soát kích thước yêu cầu.
+
+\section{Quy trình xử lý một yêu cầu AI}
+
+\subsection{Xác thực, giới hạn tốc độ và hạn mức}
+
+Mọi chức năng AI yêu cầu phiên đăng nhập hợp lệ. Nhóm route AI giới hạn 30 yêu cầu trong 15 phút và kiểm tra số lượt đã dùng trong ngày. Hạn mức mặc định là 100 yêu cầu mỗi ngày cho một người dùng, nhưng có thể thay đổi bằng biến môi trường. Endpoint trạng thái cho phép backend thông báo mô-đun có khả dụng hay không và số lượt còn lại.
+
+\subsection{Làm sạch và rút gọn dữ liệu}
+
+CV gửi đến mô hình không giữ nguyên toàn bộ tài liệu. Thông tin liên hệ trực tiếp được thay bằng trạng thái đã điền hoặc chưa điền; các danh sách được giới hạn số phần tử và văn bản được giới hạn độ dài. Dữ liệu công việc và lịch sử phỏng vấn cũng được lọc theo các trường cần cho chức năng tương ứng.
+
+Biện pháp này giảm dữ liệu truyền ra nhà cung cấp, hạn chế yêu cầu quá lớn và giảm khả năng nội dung không liên quan chi phối kết quả. Tuy nhiên, làm sạch dữ liệu không thể loại bỏ hoàn toàn prompt độc hại hoặc suy diễn sai của mô hình.
+
+\subsection{Tạo yêu cầu và đầu ra có cấu trúc}
+
+Dịch vụ chọn chỉ dẫn hệ thống và JSON Schema dựa trên mã chức năng. OpenAI SDK được cấu hình với địa chỉ Groq, khóa API, mô hình và thời gian chờ. Giá trị mặc định hiện tại là mô hình \texttt{openai/gpt-oss-120b} và thời gian chờ 20 giây; cấu hình có thể thay đổi theo môi trường triển khai.
+
+Nhà cung cấp được yêu cầu trả đầu ra theo JSON Schema ở chế độ nghiêm ngặt. Backend phân tích JSON và áp dụng thêm điều kiện nghiệp vụ hoặc hàm làm sạch theo từng chức năng. Vì chưa có một bộ kiểm tra JSON Schema cục bộ độc lập cho mọi phản hồi, báo cáo không xem đầu ra có cấu trúc là bảo đảm cho tính đúng đắn về ngữ nghĩa.
+
+\subsection{Trả kết quả và quyền quyết định của người dùng}
+
+Kết quả được gửi về giao diện cùng thông tin cần thiết để trình bày điểm số, gợi ý hoặc trạng thái lỗi. Những chức năng thay đổi nội dung CV đều yêu cầu thao tác áp dụng riêng. Nếu yêu cầu thất bại hoặc hết thời gian chờ, dữ liệu CV đang lưu không bị thay đổi.
+
+\section{Quản lý thống kê sử dụng}
+
+AiUsage lưu mã người dùng, chức năng, mô hình, mã băm đầu vào, token đầu vào, token đầu ra, độ trễ, trạng thái và lỗi kỹ thuật. Mã băm hỗ trợ nhận diện yêu cầu ở mức thống kê nhưng không cho phép khôi phục trực tiếp nội dung CV. Chỉ mục TTL xóa bản ghi sau 90 ngày để giới hạn thời gian lưu dữ liệu quan sát.
+
+Thống kê sử dụng phục vụ ba mục đích chính:
+
+\begin{itemize}
+    \item tính hạn mức theo ngày;
+    \item theo dõi độ trễ hoặc lỗi của nhà cung cấp;
+    \item tạo bằng chứng vận hành cho từng chức năng.
+\end{itemize}
+
+Hệ thống không cần lưu nguyên prompt hoặc toàn bộ CV trong bản ghi AiUsage.
+
+\section{Kiểm soát rủi ro và bảo vệ dữ liệu}
+
+Mô-đun áp dụng nhiều lớp kiểm soát:
+
+\begin{itemize}
+    \item xác thực người dùng;
+    \item giới hạn tốc độ và hạn mức sử dụng;
+    \item giới hạn thời gian chờ;
+    \item làm sạch dữ liệu đầu vào;
+    \item yêu cầu đầu ra có cấu trúc;
+    \item kiểm tra kết quả sau phản hồi.
+\end{itemize}
+
+Khóa nhà cung cấp nằm ở backend và được đọc từ biến môi trường. Các biện pháp này phù hợp với hướng quản lý rủi ro AI minh bạch, có thể kiểm tra và lấy con người làm trung tâm \cite{nistairmf}.
+
+Dù vậy, kết quả của mô hình không mặc nhiên chính xác. Người dùng cần đối chiếu gợi ý với kinh nghiệm thực tế, tránh thêm kỹ năng hoặc thành tích không có thật và kiểm tra nội dung trước khi xuất CV. Hệ thống không dùng điểm AI để tự động quyết định việc ứng tuyển hoặc tuyển dụng.
+
+\section{Hạn chế của mô-đun}
+
+Chất lượng kết quả phụ thuộc vào độ đầy đủ của CV và mô tả công việc. Mô hình có thể trả gợi ý chung chung, chấm điểm thiếu ổn định hoặc suy diễn thông tin không có trong dữ liệu. Hệ thống cũng phụ thuộc vào kết nối mạng, hạn mức và khả năng sẵn sàng của nhà cung cấp bên ngoài.
+
+Các kiểm thử hiện tại xác minh hợp đồng API, quy tắc làm sạch, hạn mức và cấu trúc xử lý nhưng chưa phải đánh giá đầy đủ chất lượng ngữ nghĩa trên một bộ CV và công việc có nhãn chuyên gia. Vì vậy, điểm số và nhận xét AI được xem là thông tin tham khảo cần tiếp tục đánh giá trong môi trường sử dụng thực tế.
+
+\section{Tổng kết chương}
+
+Mô-đun AI của RabbitCV gồm năm chức năng được triển khai qua một chuỗi xử lý chung từ xác thực, làm sạch dữ liệu, gọi mô hình, kiểm soát đầu ra đến lưu thống kê. Việc tách lớp route, bộ làm sạch, dịch vụ và hợp đồng đầu ra giúp các chức năng dùng chung quy tắc bảo vệ. Vai trò quyết định cuối cùng vẫn thuộc về người dùng, còn kết quả AI được giới hạn ở mức hỗ trợ soạn thảo, đánh giá và luyện tập.

@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "LaTeX: build main.pdf",
+      "type": "shell",
+      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=build",
+        "main.tex"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
+        }
+      }
+    },
+    {
+      "label": "LaTeX: clean build files",
+      "type": "shell",
+      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "args": [
+        "-C",
+        "-outdir=build",
+        "main.tex"
+      ],
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
+        }
+      }
+    }
+  ]
+}

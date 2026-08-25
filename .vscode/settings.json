@@ -1,29 +1,25 @@
 {
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 700,
-  "latex-workshop.latex.autoBuild.run": "onFileChange",
-  "latex-workshop.latex.recipe.default": "pdflatex",
-  "latex-workshop.formatting.latex": "tex-fmt",
-  "latex-workshop.formatting.tex-fmt.path": "C:\\Users\\SOP\\AppData\\Local\\Programs\\tex-fmt\\tex-fmt.exe",
-  "latex-workshop.formatting.tex-fmt.args": ["--nowrap"],
+  "files.autoSaveDelay": 600,
+
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": true,
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.recipes": [
     {
-      "name": "pdflatex",
-      "tools": ["pdflatex"]
-    },
-    {
-      "name": "latexmk",
+      "name": "latexmk (recommended)",
       "tools": ["latexmk"]
     },
     {
-      "name": "Build with MiKTeX texify",
-      "tools": ["miktex-texify"]
+      "name": "pdflatex (quick draft)",
+      "tools": ["pdflatex"]
     }
   ],
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
-      "command": "C:\\Users\\SOP\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
       "args": [
         "-synctex=1",
         "-interaction=nonstopmode",
@@ -32,40 +28,38 @@
         "-outdir=%OUTDIR%",
         "%DOC%"
       ],
-      "env": {}
+      "env": {
+        "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
+      }
     },
     {
       "name": "pdflatex",
-      "command": "C:\\Users\\SOP\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdflatex.exe",
+      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdflatex.exe",
       "args": [
         "--enable-installer",
         "-synctex=1",
         "-interaction=nonstopmode",
         "-file-line-error",
+        "-output-directory=%OUTDIR%",
         "%DOC%"
       ],
-      "env": {}
-    },
-    {
-      "name": "miktex-texify",
-      "command": "C:\\Users\\SOP\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\texify.exe",
-      "args": [
-        "--pdf",
-        "--synctex=1",
-        "--tex-option=--enable-installer",
-        "--tex-option=--interaction=nonstopmode",
-        "--tex-option=--file-line-error",
-        "%DOC%"
-      ],
-      "env": {}
+      "env": {
+        "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
+      }
     }
   ],
+
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+  "latex-workshop.view.pdf.reload.transition": "none",
   "latex-workshop.synctex.afterBuild.enabled": true,
   "latex-workshop.message.error.show": true,
   "latex-workshop.message.warning.show": false,
+
   "workbench.editorAssociations": {
     "*.pdf": "latex-workshop-pdf-hook"
-  }
+  },
+  "workbench.editor.tabSizing": "fixed",
+  "workbench.editor.tabSizingFixedMaxWidth": 140,
+  "workbench.editor.wrapTabs": true
 }

@@ -7,6 +7,7 @@
 \usepackage{underscore}
 \usepackage{mathptmx}
 \usepackage{fancyhdr}
+\usepackage{lastpage}
 \usepackage{algorithm2e}
 \usepackage{bkthesis}
 \usepackage{float}
@@ -52,9 +53,10 @@ Khoa Khoa học và Kỹ thuật Máy tính
 \normalsize
 
 \begin{declaration}
-  Tôi xin cam đoan đây là công trình nghiên cứu và phát triển của riêng tôi dưới sự hướng dẫn của ThS. Mai Đức Trung. Nội dung báo cáo, kết quả triển khai và số liệu kiểm thử được trình bày trung thực theo phiên bản mã nguồn được nêu trong báo cáo. Những nội dung kế thừa từ tài liệu, tiêu chuẩn hoặc công trình của tác giả khác đều được trích dẫn trong phần tài liệu tham khảo.
+  Tôi xin cam đoan đây là công trình nghiên cứu và phát triển của riêng tôi dưới sự hướng dẫn của ThS. Mai Đức Trung. Nội dung báo cáo, kết quả triển khai và dữ liệu kiểm thử được trình bày trung thực và chính xác. Ngoài ra, tôi cũng có sử dụng một số nhận xét, đánh giá và số liệu của các tác giả khác, cơ quan tổ chức khác. Tất cả đều có trích dẫn và chú thích nguồn gốc.
 
-  Tôi xin hoàn toàn chịu trách nhiệm về nội dung của báo cáo Đồ án tốt nghiệp này và về việc tuân thủ các quy định liên quan đến học thuật, bản quyền và bảo vệ dữ liệu.
+
+  Nếu có phát hiện bất kỳ nội dung vi phạm bản quyền hoặc quyền sở hữu trí tuệ, tôi xin hoàn toàn chịu trách nhiệm về nội dung của báo cáo Đồ án tốt nghiệp này và về việc tuân thủ các quy định liên quan đến học thuật, bản quyền và bảo vệ dữ liệu.
 
   \begin{flushright}
     \textit{Tp. Hồ Chí Minh, ngày \underline{\hspace{1cm}} tháng \underline{\hspace{1cm}} năm 2026\\}
@@ -64,11 +66,11 @@ Khoa Khoa học và Kỹ thuật Máy tính
 \end{declaration}
 
 \begin{acknowledgments}
-  Tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã dành thời gian hướng dẫn, góp ý và định hướng trong suốt quá trình thực hiện Đồ án tốt nghiệp. Những nhận xét của thầy là cơ sở quan trọng để tôi hoàn thiện cả sản phẩm phần mềm và báo cáo.
+  Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã tận tình hướng dẫn, góp ý và định hướng trong suốt quá trình thực hiện Đồ án tốt nghiệp. Những nhận xét của thầy là cơ sở quan trọng để em hoàn thiện cả sản phẩm phần mềm và báo cáo.
 
   Tôi xin cảm ơn Ban Giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia Thành phố Hồ Chí Minh cùng quý thầy cô Khoa Khoa học và Kỹ thuật Máy tính đã cung cấp nền tảng kiến thức về phát triển phần mềm, cơ sở dữ liệu, hệ thống web và phương pháp giải quyết vấn đề.
 
-  Cuối cùng, tôi xin cảm ơn gia đình và bạn bè đã luôn hỗ trợ, động viên và tạo điều kiện để tôi hoàn thành đồ án.
+  Cuối cùng, tôi xin cảm ơn gia đình và bạn bè đã luôn hỗ trợ, động viên và tạo điều kiện để em hoàn thành đồ án tốt nghiệp này.
 
   \begin{flushright}
     \textit{Tp. Hồ Chí Minh, ngày \underline{\hspace{1cm}} tháng \underline{\hspace{1cm}} năm 2026\\}
@@ -78,45 +80,69 @@ Khoa Khoa học và Kỹ thuật Máy tính
 \end{acknowledgments}
 
 \begin{abstract}
-  Đồ án xây dựng RabbitCV, một ứng dụng web hỗ trợ người dùng tạo và quản lý CV, trình bày CV theo khổ A4 và sử dụng trí tuệ nhân tạo để viết hoặc cải thiện phần giới thiệu, review nội dung, gợi ý điền các mục còn thiếu, đánh giá mức độ phù hợp giữa CV và công việc, đồng thời luyện tập phỏng vấn. Để đặt CV trong ngữ cảnh sử dụng thực tế, hệ thống còn cung cấp các chức năng tìm kiếm việc làm, lưu tin, ứng tuyển, theo dõi trạng thái, trao đổi với doanh nghiệp và quản trị cơ bản.
+
+  Xu thế sử dụng trí tuệ nhân tạo (AI) trong các ứng dụng phần mềm đã và đang dần ngày càng trở nên phổ biến hơn trong những năm gần đây. Trong vòng 4 năm kể từ ngày phát hành chính thức, AI đã có những bước tiến vượt bậc. 4 năm trước, không ai nghĩ AI có thể thay thế con người. 4 năm sau, AI đã có thể thay thế con người trong nhiều lĩnh vực, từ những việc đơn giản như trả lời câu hỏi, viết email, đến những việc phức tạp như phân tích dữ liệu, đưa ra quyết định, sáng tạo nội dung.
+
+  Đồ án tập trung xây dựng trang web RabbitCV, một ứng dụng web hỗ trợ người dùng tạo, quản lý và trình bày CV theo khổ A4; đồng thời tích hợp trí tuệ nhân tạo để hỗ trợ viết và cải thiện phần giới thiệu, rà soát nội dung, gợi ý bổ sung các mục còn thiếu, đánh giá mức độ phù hợp giữa CV và vị trí việc làm, cũng như luyện tập phỏng vấn.
 
   Giao diện được xây dựng bằng React, Vite và Tailwind CSS; máy chủ sử dụng Node.js, Express và MongoDB/Mongoose. REST API xử lý phần lớn nghiệp vụ, JWT trong cookie HTTP-only duy trì phiên đăng nhập, Socket.IO hỗ trợ nhắn tin, node-cron cập nhật tin hết hạn và PDF.js hiển thị CV PDF theo từng trang. Nhóm chức năng AI gọi Groq qua API tương thích OpenAI, sử dụng JSON Schema cho đầu ra có cấu trúc, đồng thời áp dụng xác thực, giới hạn tần suất, quota, timeout và làm sạch dữ liệu trước và sau khi gọi mô hình.
 
-  Bản mã nguồn được đánh giá ngày 06/08/2026 bằng quy trình gồm ESLint, Node Test Runner và Vite build. Kết quả ghi nhận 41/41 trường hợp kiểm thử tự động đạt, không có lỗi lint, còn hai cảnh báo React Hook và quá trình build frontend hoàn tất. Phạm vi đánh giá hiện tập trung vào tính đúng đắn của nghiệp vụ, hợp đồng dữ liệu AI và khả năng chống nội dung không an toàn; chất lượng ngữ nghĩa của kết quả AI chưa được đánh giá trên một bộ dữ liệu có giám khảo độc lập. Những hạn chế này được nêu rõ để tránh xem điểm AI như một quyết định tuyển dụng.
-
-  \noindent\textbf{Từ khóa:} CV, trí tuệ nhân tạo, ứng dụng web, tuyển dụng, mô hình ngôn ngữ lớn, React, Express, MongoDB.
 \end{abstract}
 
-\chapter*{DANH MỤC TỪ VIẾT TẮT}
-\addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
-\noindent\begin{tabularx}{\textwidth}{>{\bfseries}p{0.18\textwidth}Y}
-AI & Artificial Intelligence -- Trí tuệ nhân tạo \\
-API & Application Programming Interface -- Giao diện lập trình ứng dụng \\
-CV & Curriculum Vitae -- Hồ sơ nghề nghiệp \\
-HTTP & Hypertext Transfer Protocol \\
-JWT & JSON Web Token \\
-LLM & Large Language Model -- Mô hình ngôn ngữ lớn \\
-PDF & Portable Document Format \\
-RBAC & Role-Based Access Control -- Kiểm soát truy cập theo vai trò \\
-REST & Representational State Transfer \\
-UI & User Interface -- Giao diện người dùng \\
-\end{tabularx}
+% \chapter*{DANH MỤC TỪ VIẾT TẮT}
+% \addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
+% \noindent\begin{tabularx}{\textwidth}{>{\bfseries}p{0.18\textwidth}Y}
+% AI & Artificial Intelligence -- Trí tuệ nhân tạo \\
+% API & Application Programming Interface -- Giao diện lập trình ứng dụng \\
+% CV & Curriculum Vitae -- Hồ sơ nghề nghiệp \\
+% HTTP & Hypertext Transfer Protocol \\
+% JWT & JSON Web Token \\
+% LLM & Large Language Model -- Mô hình ngôn ngữ lớn \\
+% PDF & Portable Document Format \\
+% RBAC & Role-Based Access Control -- Kiểm soát truy cập theo vai trò \\
+% REST & Representational State Transfer \\
+% UI & User Interface -- Giao diện người dùng \\
+% \end{tabularx}
 
+\renewcommand{\contentsname}{MỤC LỤC}
+\begingroup
+\small
 \tableofcontents
-\listoftables
+\endgroup
+\clearpage
+% \listoftables
+\renewcommand{\listfigurename}{DANH SÁCH CÁC HÌNH VẼ}
 \listoffigures
+\clearpage
 
 \mainmatter
-\fancyhead{}
+\newcommand{\setreportfooter}{%
+  \fancyfoot[L]{\fontsize{8}{9}\selectfont\textbf{Báo cáo đồ án tốt nghiệp (CO4337) -- Năm học 2023 -- 2024}}%
+  \fancyfoot[R]{\fontsize{8}{9}\selectfont\textbf{Trang \thepage/\pageref{LastPage}}}%
+}
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0.4pt}
+\setreportfooter
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \setreportfooter
+}
+
 \pagestyle{fancy}
 
 \input{Chapter/C1-overview}
-\input{Chapter/C2-technology}
-\input{Chapter/C3-systemdesign}
-\input{Chapter/C4-systemImplementation}
-\input{Chapter/C5-FuturePlan}
-\input{Chapter/C6-conclusion}
+\input{Chapter/C2-theory}
+\input{Chapter/C3-technologies}
+\input{Chapter/C4-system-design}
+\input{Chapter/C5-system-implementation}
+\input{Chapter/C6-ai-module}
+\input{Chapter/C7-testing-evaluation}
+\input{Chapter/C8-conclusion}
 
 \bibliographystyle{plain}
 \bibliography{refs}

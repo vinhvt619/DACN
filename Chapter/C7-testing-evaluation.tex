@@ -3,9 +3,25 @@
 
 \section{Mục tiêu và nguyên tắc đánh giá}
 
-Việc đánh giá tập trung vào các rủi ro chính của đề tài: CV phải giữ cấu trúc A4; PDF tải lên phải được kiểm tra; Job không khả dụng không được nhận hồ sơ; dữ liệu lịch sử không mất khi Job bị xóa; nội dung rich text và dữ liệu AI không được mang mã thực thi; kết quả AI phải theo hợp đồng cấu trúc; trạng thái đọc phải tồn tại qua lần tải lại.
+Việc đánh giá tập trung vào các rủi ro chính của đề tài:
 
-Báo cáo phân biệt ba mức bằng chứng. ``Đã chạy'' là kết quả lấy từ lệnh thực thi trong môi trường đánh giá. ``Đối chiếu mã nguồn'' xác nhận thành phần hoặc điều kiện tồn tại nhưng chưa chứng minh luồng chạy toàn hệ thống. ``Kịch bản đề xuất'' là kiểm thử thủ công cần thực hiện trước nghiệm thu; báo cáo không tự gán kết quả đạt cho các kịch bản chưa chạy.
+\begin{itemize}
+    \item CV phải giữ cấu trúc A4;
+    \item PDF tải lên phải được kiểm tra;
+    \item Job không khả dụng không được nhận hồ sơ;
+    \item dữ liệu lịch sử không mất khi Job bị xóa;
+    \item nội dung rich text và dữ liệu AI không được mang mã thực thi;
+    \item kết quả AI phải tuân theo hợp đồng cấu trúc;
+    \item trạng thái đọc phải tồn tại qua lần tải lại.
+\end{itemize}
+
+Báo cáo phân biệt ba mức bằng chứng:
+
+\begin{itemize}
+    \item \textbf{Đã chạy:} kết quả được lấy từ lệnh thực thi trong môi trường đánh giá.
+    \item \textbf{Đối chiếu mã nguồn:} xác nhận thành phần hoặc điều kiện tồn tại nhưng chưa chứng minh luồng chạy toàn hệ thống.
+    \item \textbf{Kịch bản đề xuất:} kiểm thử thủ công cần thực hiện trước nghiệm thu; báo cáo không tự gán kết quả đạt cho các kịch bản chưa chạy.
+\end{itemize}
 
 \section{Môi trường và khả năng tái lập}
 
@@ -14,9 +30,9 @@ Báo cáo phân biệt ba mức bằng chứng. ``Đã chạy'' là kết quả 
     \small
     \begin{tabularx}{\textwidth}{|p{0.27\textwidth}|Y|} \hline
         \textbf{Thông tin} & \textbf{Giá trị ghi nhận} \\ \hline
-        Thời điểm đánh giá & Ngày 06/08/2026. \\ \hline
-        Mã nguồn sản phẩm & Working tree tại \texttt{D:\textbackslash Github\textbackslash DA2}; commit gần nhất \texttt{dcc8c58}. \\ \hline
-        Trạng thái nguồn & Có thay đổi và tệp AI chưa commit, vì vậy hash commit một mình chưa tái tạo đầy đủ đúng working tree đã kiểm tra. \\ \hline
+        Thời điểm đánh giá & Ngày 09/08/2026, múi giờ Việt Nam. \\ \hline
+        Mã nguồn sản phẩm & Nhánh \texttt{main}, working tree tại \texttt{D:\textbackslash Github\textbackslash DA2}; commit gần nhất \texttt{dcc8c58}. \\ \hline
+        Trạng thái nguồn & Working tree có cả thay đổi đã theo dõi và tệp chưa theo dõi tại thời điểm ghi nhận; riêng hash commit không đủ tái tạo phiên bản đã kiểm tra. \\ \hline
         Runtime & Node.js 26.5.0; npm 11.17.0. \\ \hline
         Chuỗi kiểm tra & \texttt{npm run check}, lần lượt chạy ESLint, Node Test Runner và Vite production build. \\ \hline
         Phạm vi không dùng & Không gọi API AI trả phí để chấm ngữ nghĩa; không chạy tải, pentest hoặc browser end-to-end trong lần đánh giá này. \\ \hline
@@ -25,7 +41,7 @@ Báo cáo phân biệt ba mức bằng chứng. ``Đã chạy'' là kết quả 
     \label{tab:test-environment}
 \end{table}
 
-Việc ghi rõ working tree chưa sạch là cần thiết: các tệp route, service, model và test AI đang tồn tại trong môi trường đánh giá nhưng chưa thuộc commit \texttt{dcc8c58}. Để tái lập tuyệt đối, phiên bản sản phẩm cần được commit hoặc phát hành bằng tag trước khi nộp chính thức.
+Việc ghi rõ working tree chưa sạch là cần thiết: thay đổi hiện tại trải rộng từ dependency, cấu hình Vite/Vercel, giao diện, route, service, model đến test và tài liệu, nhưng chưa thuộc commit \texttt{dcc8c58}. Để tái lập tuyệt đối, phiên bản sản phẩm cần được commit hoặc phát hành bằng tag sau khi loại tệp tạm và bí mật.
 
 \section{Kết quả quy trình kiểm tra tự động}
 
@@ -34,16 +50,16 @@ Việc ghi rõ working tree chưa sạch là cần thiết: các tệp route, se
     \small
     \begin{tabularx}{\textwidth}{|p{0.22\textwidth}|p{0.23\textwidth}|Y|p{0.13\textwidth}|} \hline
         \textbf{Bước} & \textbf{Lệnh con} & \textbf{Kết quả ghi nhận} & \textbf{Đánh giá} \\ \hline
-        Phân tích tĩnh & \texttt{npm run lint} & 0 lỗi; 2 cảnh báo React Hook về dependency \texttt{fetchJobs} và \texttt{fetchReports}. & Đạt có cảnh báo \\ \hline
+        Phân tích tĩnh & \texttt{npm run lint} & ESLint hoàn tất, 0 lỗi và 0 cảnh báo. & Đạt \\ \hline
         Kiểm thử logic & \texttt{npm test} & 41/41 trường hợp đạt, 0 thất bại. & Đạt \\ \hline
-        Đóng gói frontend & \texttt{npm run build} & Vite build thành công, 872 module được biến đổi; có cảnh báo chunk lớn hơn 500~kB. & Đạt có cảnh báo \\ \hline
+        Đóng gói frontend & \texttt{npm run build} & Vite 7.3.6 build thành công, 1.906 module được biến đổi; không phát cảnh báo kích thước chunk. & Đạt \\ \hline
         Toàn chuỗi & \texttt{npm run check} & Cả ba bước hoàn tất với mã thoát thành công. & Đạt \\ \hline
     \end{tabularx}
-    \caption{Kết quả chạy quy trình kiểm tra ngày 06/08/2026}
+    \caption{Kết quả chạy quy trình kiểm tra ngày 09/08/2026}
     \label{tab:check-results}
 \end{table}
 
-Hai cảnh báo lint nằm ở \texttt{AdminJobs.jsx} và \texttt{AdminReports.jsx}. Chúng không làm lệnh thất bại nhưng có thể dẫn tới effect dùng closure cũ hoặc chạy không đúng khi callback thay đổi. Cảnh báo chunk cho thấy cần tách thêm bundle hoặc tối ưu import nếu thời gian tải trở thành yêu cầu nghiệm thu.
+So với mốc trước, hai cảnh báo React Hook đã được loại bỏ và trang báo cáo quản trị không còn dùng dữ liệu minh họa. Các trang được nạp lười; Vite tách riêng nhóm PDF, rich text, React, giao diện, form, query, router, thời gian thực và ngày giờ. Ba nhóm JavaScript lớn nhất trong output lần này là PDF khoảng 433~kB, rich text khoảng 428~kB và React khoảng 385~kB; PDF worker là tài nguyên riêng khoảng 1,26~MB. Build sạch xác nhận khả năng đóng gói, không tự chứng minh thời gian tải hoặc hiệu năng mạng đạt yêu cầu.
 
 \section{Kiểm kê bộ kiểm thử}
 
@@ -89,33 +105,34 @@ Mười hai tệp test sử dụng Node Test Runner, tổng cộng 41 trường 
     \footnotesize
     \begin{tabularx}{\textwidth}{|p{0.19\textwidth}|p{0.38\textwidth}|Y|} \hline
         \textbf{Yêu cầu} & \textbf{Bằng chứng tự động} & \textbf{Mức bao phủ} \\ \hline
-        FR-CV-01, FR-CV-02 & \texttt{a4Layout}, \texttt{dateInput} & Bao phủ layout/định dạng; chưa bao phủ CRUD qua database thật. \\ \hline
+        FR-CV-01, FR-CV-02 & \texttt{a4Layout}, \texttt{dateInput}, \texttt{richTextSanitizer} & Bao phủ layout, ngày và làm sạch nội dung CV; chưa bao phủ CRUD qua database thật. \\ \hline
         FR-CV-03 & \texttt{pdfValidation}, \texttt{a4Layout} & Bao phủ validator và cơ chế render; chưa đo PDF đa trang trên nhiều trình duyệt. \\ \hline
         FR-AI-01--03 & \texttt{aiDataSanitizer}, \texttt{aiIntegration}, \texttt{resumeAiFill}, \texttt{interviewDataSanitizer} & Bao phủ hợp đồng, sanitizer và wiring; chưa chấm chất lượng ngữ nghĩa từ provider. \\ \hline
         FR-JOB-01, FR-APP-01 & \texttt{jobAvailability}, \texttt{jobDeadlineUi} & Bao phủ khả dụng Job; unique index và transaction cần integration test với MongoDB. \\ \hline
         FR-APP-02 & Đối chiếu model Application và logic \texttt{jobSnapshot}. & Có bằng chứng mã nguồn, chưa có test tự động chuyên biệt. \\ \hline
         FR-COM-01 & \texttt{companyUi} & Bao phủ một phần UI; chưa bao phủ toàn bộ vòng đời Job/Application. \\ \hline
-        FR-MSG-01 & \texttt{readStatusPersistence}, \texttt{richTextSanitizer} & Bao phủ persistence ở mức mã và sanitizer; chưa kiểm thử Socket.IO end-to-end. \\ \hline
-        FR-ADM-01 & Điều hướng role trong \texttt{aiIntegration}; lint phát hiện hai cảnh báo admin. & Bao phủ hạn chế, cần kiểm thử ma trận quyền và API. \\ \hline
+        FR-MSG-01 & \texttt{readStatusPersistence} & Bao phủ trạng thái đọc ở mức mã; chưa kiểm thử quyền phòng, ảnh chat hoặc Socket.IO end-to-end. \\ \hline
+        FR-ADM-01 & Điều hướng vai trò trong \texttt{aiIntegration}; ESLint chạy sạch. & Bao phủ hạn chế, cần kiểm thử ma trận quyền và API bằng tài khoản thật. \\ \hline
     \end{tabularx}
     \caption{Ma trận truy vết yêu cầu--kiểm thử}
     \label{tab:requirements-tests}
 \end{table}
 
+\clearpage
 \section{Kịch bản kiểm thử thủ công cần thực hiện}
 
-Các kịch bản dưới đây là checklist nghiệm thu, chưa được ghi nhận là đã chạy trong phiên đánh giá ngày 06/08/2026.
+Các kịch bản dưới đây là checklist nghiệm thu, chưa được ghi nhận là đã chạy trong phiên đánh giá ngày 09/08/2026.
 
 \begin{table}[H]
     \centering
     \footnotesize
     \begin{tabularx}{\textwidth}{|p{0.20\textwidth}|Y|p{0.19\textwidth}|} \hline
         \textbf{Nhóm} & \textbf{Kịch bản và tiêu chí chấp nhận} & \textbf{Trạng thái} \\ \hline
-        Xác thực/RBAC & Đăng nhập bằng candidate, company, admin; thử URL sai role; tải lại phiên; đăng xuất. Server phải từ chối thao tác không đủ quyền. & Chưa chạy thủ công \\ \hline
+        Xác thực/RBAC & Đăng nhập bằng ứng viên, doanh nghiệp, admin; thử URL và API sai vai trò; tải lại phiên; đăng xuất. Kiểm tra riêng AI, lưu việc, ứng tuyển và phòng chat ở backend. & Chưa chạy thủ công \\ \hline
         CV/A4/PDF & Tạo CV ngắn và dài, in bằng các trình duyệt mục tiêu, đo trang 210~x~297~mm; mở PDF nhiều trang; thử file giả, sai MIME và quá 5~MB. & Chưa chạy thủ công \\ \hline
         Ứng tuyển & Nộp bằng Resume và PDF, gửi lặp, thử Job draft/expired/deleted; xóa Job rồi kiểm tra lịch sử từ snapshot. & Chưa chạy thủ công \\ \hline
         Doanh nghiệp & Tạo/sửa/đóng/mở/xóa Job, xem CV đúng và sai quan hệ, chuyển toàn bộ trạng thái Application. & Chưa chạy thủ công \\ \hline
-        Chat/thông báo & Gửi giữa hai trình duyệt, mất/kết nối lại mạng, đánh dấu đọc, ẩn room một phía và xác nhận dữ liệu phía còn lại. & Chưa chạy thủ công \\ \hline
+        Chat/thông báo & Gửi giữa hai trình duyệt, thử phòng không thuộc người gọi, ảnh lớn/sai loại, mất và kết nối lại mạng, đánh dấu đọc, ẩn phòng một phía. & Chưa chạy thủ công \\ \hline
         AI & Thử năm workflow, lỗi thiếu khóa, timeout, hết quota và payload nguy hiểm; xác nhận AI không tự ghi đè Resume. & Chưa chạy thủ công \\ \hline
     \end{tabularx}
     \caption{Checklist nghiệm thu thủ công chưa thực hiện}
@@ -124,18 +141,37 @@ Các kịch bản dưới đây là checklist nghiệm thu, chưa được ghi n
 
 \section{Đánh giá riêng cho chức năng AI}
 
-Kết quả 19 test thuộc bốn tệp AI xác nhận được các thuộc tính có tính quyết định: dữ liệu được làm sạch và giới hạn, route yêu cầu xác thực, provider được yêu cầu trả structured output, kết quả fill không ghi thêm sự kiện vào mục đã có và feedback phỏng vấn bị giới hạn. Đây là bằng chứng về an toàn dữ liệu và hợp đồng phần mềm, không phải bằng chứng rằng nội dung do mô hình sinh luôn đúng hoặc hữu ích.
+Kết quả 16 test thuộc bốn tệp tập trung vào AI xác nhận được các thuộc tính có tính quyết định: dữ liệu được làm sạch và giới hạn, route yêu cầu xác thực, nhà cung cấp được yêu cầu trả structured output, kết quả fill không ghi thêm sự kiện vào mục đã có và feedback phỏng vấn bị giới hạn. Ba test rich text bổ sung bằng chứng cho nội dung CV nhưng được tính ở nhóm riêng. Đây là bằng chứng về đường nối và hợp đồng phần mềm, không phải bằng chứng rằng nội dung do mô hình sinh luôn đúng hoặc hữu ích.
 
-Để đánh giá chất lượng ngữ nghĩa, cần xây dựng bộ dữ liệu cố định gồm CV ở nhiều mức kinh nghiệm và Job description tương ứng; ẩn danh thông tin cá nhân; chạy cùng model, prompt và tham số; sau đó có ít nhất hai người chấm độc lập theo các tiêu chí: bám sát dữ liệu nguồn, tính đúng đắn, khả năng hành động, độ rõ ràng, không bịa đặt và không tạo phân biệt đối xử. Phụ lục A cung cấp rubric đề xuất. Chỉ sau bước này mới nên báo cáo điểm trung bình, độ đồng thuận người chấm hoặc so sánh model.
+Để đánh giá chất lượng ngữ nghĩa, quy trình cần thực hiện các bước sau:
+
+\begin{enumerate}
+    \item Xây dựng bộ dữ liệu cố định gồm CV ở nhiều mức kinh nghiệm và mô tả công việc tương ứng.
+    \item Ẩn danh thông tin cá nhân trong dữ liệu đánh giá.
+    \item Chạy cùng mô hình, prompt và tham số cho toàn bộ mẫu.
+    \item Có ít nhất hai người chấm độc lập theo các tiêu chí:
+    \begin{itemize}
+        \item bám sát dữ liệu nguồn;
+        \item tính đúng đắn;
+        \item khả năng hành động;
+        \item độ rõ ràng;
+        \item không bịa đặt;
+        \item không tạo phân biệt đối xử.
+    \end{itemize}
+\end{enumerate}
+
+Phụ lục A cung cấp rubric đề xuất. Chỉ sau bước này mới nên báo cáo điểm trung bình, độ đồng thuận giữa những người chấm hoặc kết quả so sánh mô hình.
 
 \section{Hạn chế và rủi ro còn lại}
 
 \begin{itemize}
     \item Bộ test thiên về unit và source-level integration; chưa chạy MongoDB thật, browser end-to-end, ma trận trình duyệt A4 hoặc Socket.IO khi mạng chập chờn.
-    \item Hai cảnh báo React Hook có thể gây dữ liệu cũ; cảnh báo bundle lớn có thể ảnh hưởng thời gian tải.
-    \item Working tree DA2 chưa có commit/tag tái lập; chất lượng ngữ nghĩa và chi phí AI chưa được chấm trên bộ dữ liệu độc lập.
-    \item Chưa thực hiện kiểm thử tải, pentest, CSRF chuyên sâu, accessibility audit hoặc khôi phục database/file.
+    \item Working tree DA2 chưa có commit/tag tái lập; chưa có CI, số liệu bao phủ mã hoặc artifact kiểm thử được lưu theo phiên bản.
+    \item Kiểm tra quyền theo vai trò chưa đồng đều: API AI, ứng tuyển và lưu việc chủ yếu dựa trên JWT; gửi/ẩn chat chưa xác minh đầy đủ người gọi thuộc phòng.
+    \item Khóa JWT dự phòng và tài khoản quản trị seed chỉ phù hợp phát triển; ảnh chat chưa có validator server tương đương PDF.
+    \item Chất lượng ngữ nghĩa, tính công bằng và chi phí AI chưa được chấm trên bộ dữ liệu độc lập; chưa gọi provider thật trong chuỗi kiểm tra tự động.
+    \item Chưa thực hiện kiểm thử tải, kiểm thử xâm nhập, CSRF chuyên sâu, accessibility audit, Vercel Cron/Socket.IO production hoặc khôi phục cơ sở dữ liệu và tệp.
 \end{itemize}
 
 \noindent\textbf{Kết luận đánh giá.}
-Trong phạm vi đã chạy, RabbitCV đạt 41/41 test, lint không có lỗi và build frontend thành công. Đây là baseline kỹ thuật của đồ án, chưa phải bằng chứng sẵn sàng production; kiểm thử thủ công, database integration, ma trận quyền và đánh giá ngữ nghĩa AI vẫn cần hoàn tất.
+Trong phạm vi đã chạy, RabbitCV đạt 41/41 test, ESLint không có lỗi hoặc cảnh báo và build frontend thành công mà không phát cảnh báo kích thước chunk. Đây là baseline kỹ thuật của working tree ngày 09/08/2026, chưa phải bằng chứng sẵn sàng production; kiểm thử thủ công, tích hợp MongoDB, ma trận quyền, hạ tầng triển khai và đánh giá ngữ nghĩa AI vẫn cần hoàn tất.

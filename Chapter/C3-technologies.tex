@@ -1,0 +1,553 @@
+% !TEX root = ../main.tex
+\chapter{Giới thiệu các công nghệ đã sử dụng}
+\label{chap:used-technologies}
+
+
+\section{Phát triển giao diện người dùng (Front-end)}
+
+\subsection{React}
+
+React là thư viện JavaScript mã nguồn mở được sử dụng để xây dựng giao diện người dùng theo mô hình thành phần \cite{reactdocs}. Thay vì viết toàn bộ giao diện trong một khối lớn, React cho phép chia trang thành các component nhỏ như thanh điều hướng, biểu mẫu, danh sách, hộp thoại và khu vực xem trước. Mỗi component đảm nhiệm một nhiệm vụ cụ thể, có thể nhận dữ liệu đầu vào và được kết hợp với các component khác để hình thành một trang hoàn chỉnh. Cách tổ chức này giúp cấu trúc giao diện rõ ràng hơn và phù hợp với những ứng dụng có nhiều khu vực chức năng như RabbitCV.
+
+Các tính năng chính của React bao gồm:
+
+\begin{itemize}
+    \item \textbf{Kiến trúc dựa trên component:} Giao diện được chia thành các thành phần độc lập, trong đó mỗi component quản lý một phần nội dung và hành vi cụ thể. Component có thể được kết hợp, tái sử dụng và mở rộng để tạo thành những trang có cấu trúc phức tạp. Cách tổ chức này giúp tách biệt trách nhiệm giữa các phần giao diện và làm mã nguồn dễ theo dõi hơn.
+
+    % \item \textbf{JSX và cách xây dựng giao diện khai báo:} JSX cho phép mô tả cấu trúc giao diện bằng cú pháp gần với HTML ngay trong mã JavaScript. Nhà phát triển mô tả giao diện cần hiển thị tương ứng với dữ liệu hiện tại, còn React chịu trách nhiệm cập nhật kết quả trên trình duyệt. Dữ liệu, sự kiện và nội dung hiển thị nhờ đó được đặt gần nhau và thể hiện rõ quan hệ.
+
+    \item \textbf{Quản lý dữ liệu của component:} React phân biệt dữ liệu được truyền vào và dữ liệu thay đổi bên trong component. Các thành phần chính gồm:
+    \begin{itemize}
+        \item \textbf{Props:} Là dữ liệu được truyền từ component cha xuống component con. Props giúp cùng một component có thể hiển thị nội dung hoặc thực hiện hành vi khác nhau tùy theo dữ liệu nhận được.
+
+        \item \textbf{State:} Là dữ liệu có thể thay đổi trong quá trình người dùng tương tác. Khi state thay đổi, React thực hiện kết xuất lại những phần giao diện liên quan để phản ánh trạng thái mới.
+
+        \item \textbf{Luồng dữ liệu một chiều:} Dữ liệu thường được truyền từ component cha xuống component con thông qua props. Component con không trực tiếp thay đổi dữ liệu của component cha. Cơ chế này giúp xác định nguồn của dữ liệu và theo dõi nguyên nhân làm giao diện thay đổi rõ ràng hơn.
+    \end{itemize}
+
+    \item \textbf{Cơ chế cập nhật giao diện hiệu quả:} Khi props hoặc state thay đổi, React xây dựng lại giao diện và so sánh với kết quả trước đó. Quá trình đối chiếu giúp xác định những phần cần thay đổi trên DOM thực, nhờ đó tránh cập nhật toàn bộ trang khi chỉ một vùng dữ liệu thay đổi. Người dùng có thể tiếp tục tương tác mà không phải tải lại trang sau mỗi thao tác.
+    \clearpage
+
+    \item \textbf{Hệ thống Hook:} là tập hợp các hàm cho phép component dạng hàm sử dụng các khả năng của React như lưu trạng thái, đồng bộ với hệ thống bên ngoài, truy cập dữ liệu dùng chung và tái sử dụng logic. Hook giúp React trở nên linh hoạt và dễ sử dụng hơn. Một số Hook phổ biến gồm:
+    \begin{itemize}
+        \item \textbf{\texttt{useState}:} Lưu và cập nhật trạng thái cục bộ của component.
+
+        \item \textbf{\texttt{useEffect}:} Thực hiện tác vụ sau khi component được hiển thị hoặc khi dữ liệu phụ thuộc thay đổi.
+
+        \item \textbf{\texttt{useMemo} và \texttt{useCallback}:} Lưu lại kết quả tính toán hoặc hàm khi cần thiết, qua đó hạn chế việc tạo lại không cần thiết trong một số trường hợp.
+    \end{itemize}
+\end{itemize}
+
+React mang lại một số ưu điểm nổi bật như sau:
+
+\begin{itemize}
+    \item \textbf{Khả năng tái sử dụng cao:} Một component biểu mẫu, nút thao tác, thẻ việc làm hoặc vùng hiển thị CV có thể được sử dụng tại nhiều trang với dữ liệu khác nhau. Điều này giảm mã lặp và giúp thay đổi giao diện được thực hiện tập trung.
+
+    \item \textbf{Dễ tổ chức và bảo trì:} Việc chia giao diện thành các component có trách nhiệm rõ ràng giúp nhà phát triển dễ tìm kiếm, sửa đổi và mở rộng từng chức năng mà ít ảnh hưởng đến những phần không liên quan.
+
+    \item \textbf{Giao diện phản hồi nhanh:} React chỉ cập nhật những vùng bị ảnh hưởng bởi thay đổi dữ liệu, giúp các thao tác như nhập biểu mẫu, mở hộp thoại, lọc danh sách và thay đổi bản xem trước diễn ra mà không tải lại toàn bộ trang.
+
+    \item \textbf{Hệ sinh thái phong phú:} React có cộng đồng lớn và nhiều thư viện hỗ trợ biểu mẫu, truy vấn dữ liệu, trình soạn thảo, hiển thị PDF và các nhu cầu khác của ứng dụng web. Dự án có thể lựa chọn công cụ phù hợp thay vì tự xây dựng toàn bộ chức năng từ đầu.
+\end{itemize}
+
+Trong RabbitCV, React được dùng để xây dựng các trang công khai, khu vực ứng viên, cổng doanh nghiệp và khu vực quản trị. Trình biên tập CV tận dụng trạng thái component để phản ánh dữ liệu người dùng nhập vào bản xem trước; danh sách việc làm và hồ sơ ứng tuyển cập nhật theo dữ liệu nhận từ máy chủ; các hộp thoại và thông báo thay đổi theo thao tác mà không tải lại trang. Việc tổ chức giao diện thành component giúp dự án có thể dùng chung các thành phần, mở rộng chức năng theo từng khu vực và duy trì trải nghiệm nhất quán trên toàn hệ thống.
+
+\subsection{TanStack Query}
+
+TanStack Query là thư viện quản lý dữ liệu máy chủ trong ứng dụng web, giúp đơn giản hóa việc lấy dữ liệu (fetching), lưu bộ nhớ đệm (caching), đồng bộ hóa (synchronizing) và cập nhật dữ liệu bất đồng bộ trong các ứng dụng web. Trong RabbitCV, TanStack Query giúp các thành phần giao diện sử dụng dữ liệu máy chủ theo một cơ chế thống nhất, hạn chế yêu cầu trùng lặp và giảm lượng mã xử lý thủ công. Các ưu điểm chính của TanStack Query:
+
+\begin{itemize}
+    \item \textbf{Quản lý bộ nhớ đệm:} Lưu và dùng chung dữ liệu giữa các thành phần, giúp hạn chế yêu cầu API trùng lặp.
+
+    \item \textbf{Quản lý trạng thái yêu cầu:} Cung cấp sẵn trạng thái đang tải, thành công, thất bại và đang cập nhật dữ liệu.
+
+    \item \textbf{Làm mới và đồng bộ dữ liệu:} Cho phép cập nhật đúng nhóm dữ liệu liên quan mà không cần tải lại toàn bộ trang.
+
+    \item \textbf{Hỗ trợ phân trang:} Giữ nội dung hiện tại trong lúc tải trang tiếp theo, giúp giao diện ổn định hơn.
+
+    \item \textbf{Cập nhật lạc quan:} Hiển thị trước kết quả thao tác và khôi phục dữ liệu cũ nếu yêu cầu thất bại.
+
+    \item \textbf{Giảm mã xử lý thủ công:} Hạn chế việc tự xây dựng bộ nhớ đệm, trạng thái tải, xử lý lỗi và đồng bộ dữ liệu.
+\end{itemize}
+\medskip
+\noindent\textbf{Sự khác biệt giữa TanStack Query với \texttt{fetch} và Axios}
+\medskip
+
+TanStack Query và Axios, \texttt{fetch} là 2 nhóm giải quyết công việc khác nhau. \texttt{fetch} và Axios thuộc lớp giao tiếp mạng: chúng tạo và gửi yêu cầu HTTP, truyền tham số, phương thức và nội dung yêu cầu đến máy chủ, sau đó nhận phản hồi HTTP. Còn TanStack Query thuộc lớp quản lý dữ liệu trên giao diện: lưu, theo dõi, quản lý bộ nhớ đệm, xác định dữ liệu và cung cấp trạng thái cho component.
+
+TanStack Query không thể trực tiếp tạo hay gửi yêu cầu HTTP đến máy chủ. Để thực hiện điều này, nó cần được cung cấp thông qua các hàm bất đồng bộ trả về Promise. Trong ứng dụng sử dụng REST API, hàm này thường dùng \texttt{fetch} hoặc Axios để xác định địa chỉ API, phương thức HTTP, tiêu đề, cookie và nội dung yêu cầu; đồng thời nhận, chuyển đổi và kiểm tra phản hồi của máy chủ. Sau đó, TanStack Query tiếp nhận kết quả để xử lý, vì vậy, \texttt{fetch} hoặc Axios chịu trách nhiệm truyền dữ liệu giữa trình duyệt và máy chủ, còn TanStack Query chịu trách nhiệm quản lý dữ liệu trong ứng dụng.
+
+Ngược lại, chỉ sử dụng \texttt{fetch} hoặc Axios cũng chỉ có thể gửi yêu cầu và trả kết quả nhưng lại không tự quản lý bộ nhớ đệm dùng chung cho React, không xác định dữ liệu còn mới hay đã cũ, không tự đồng bộ các component đang dùng cùng một nguồn dữ liệu và không tự làm mới những nhóm dữ liệu bị ảnh hưởng sau thao tác cập nhật. Do đó, quan hệ giữa chúng là bổ sung: \texttt{fetch} hoặc Axios thực hiện việc truyền dữ liệu qua HTTP, còn TanStack Query quản lý dữ liệu sau khi yêu cầu được tổ chức trong ứng dụng.
+
+\subsection{React Hook Form và Zod}
+
+React Hook Form là một thư viện quản lý form nhẹ, nhanh và được sử dụng rộng rãi trong cộng đồng React. Nó giúp giảm thiểu lượng code phức tạp, đồng thời cải thiện hiệu năng và khả năng mở rộng cho ứng dụng. 
+
+Một vài ưu điểm nổi bật của React Hook Form có thể kể đến như:
+
+\begin{itemize}
+    \item \textbf{Hiệu năng cao:} Bằng cách tận dụng cơ chế "uncontrolled components", nó giúp hạn chế tối đa việc re-render lại toàn bộ dữ liệu mỗi khi người dùng nhập dữ liệu, từ đó giảm thiểu lượng code phức tạp và cải thiện hiệu năng.
+
+    \item \textbf{Ít code thủ công hơn:} Với việc không cần sử dụng hay tạo ra các state và hàm xử lý riêng lẻ cho từng trường dữ liệu, React Hook Form giúp tối ưu hóa quy trình code, giảm thiểu code và tránh các lỗi phát sinh từ việc quản lý state thủ công. 
+
+    \item \textbf{Hỗ trợ validation mạnh mẽ:} React Hook Form có hỗ trợ sẵn các tính năng cơ bản trong việc validation, ví dụ như xác thực required, min, max,.... Đồng thời, nó cũng tích hợp mượt mà với các thư viện kiểm tra schema hàng đầu như Zod, Yup, Valibot.
+    
+    \item \textbf{Hỗ trợ form phức tạp:} React Hook Form cung cấp đầy đủ các tính năng cần thiết để xử lý các form phức tạp, bao gồm validation, error handling, form submission, và form reset. Nó giúp xử lý tốt input động, dữ liệu lồng nhau, form nhiều bước và các giá trị mặc định.
+\end{itemize}
+
+\medskip
+\noindent\textbf{Zod}
+\medskip
+
+Zod là thư viện khai báo và kiểm tra cấu trúc dữ liệu bằng schema, có thể sử dụng trong cả JavaScript và TypeScript \cite{zoddocs}. Nó giúp bảo đảm dữ liệu nhận được có đúng kiểu, đúng định dạng và đáp ứng các điều kiện của ứng dụng hay không. Đồng thời, nó giúp xây dựng các schema mô tả format dữ liệu theo định dạng mong muốn, sau đó dùng schema này để kiểm tra dữ liệu thực tế. Nếu dữ liệu không khớp với schema, Zod sẽ cho biết lỗi sai ở đâu.
+
+Zod cũng có một vài ưu điểm đáng chú ý:
+
+\begin{itemize}
+    \item \textbf{Kiểm tra dữ liệu khi chương trình đang chạy:} Trước đây việc kiểm tra dữ liệu thường chỉ được thực hiện khi chương trình đang trong quá trình phát triển. Tuy nhiên khi chương trình được triển khai và có người dùng tương tác trực tiếp, việc kiểm tra dữ liệu này trở nên khó khăn hơn. Với Zod, nhà phát triển có thể kiểm tra dữ liệu ngay cả khi chương trình đang chạy, giúp phát hiện lỗi sớm và tăng trải nghiệm người dùng.
+
+    \item \textbf{Hỗ trợ nhiều kiểu dữ liệu:} Zod cung cấp các phương thức để kiểm tra nhiều kiểu dữ liệu khác nhau, bao gồm \texttt{string}, \texttt{number}, \texttt{boolean}, \texttt{array}, \texttt{object}, \texttt{date}, \texttt{enum}, và nhiều hơn nữa. Điều này giúp nhà phát triển có thể kiểm tra dữ liệu theo nhiều cách khác nhau, phù hợp với nhu cầu sử dụng của chính mình.
+
+    \item \textbf{Có thể chuyển đổi dữ liệu:} Zod không chỉ kiểm tra mà còn có thể chuẩn hóa dữ liệu đầu vào theo đúng định dạng mà ứng dụng mong muốn.
+
+    \item \textbf{Thông báo lỗi chi tiết:} Khi kiểm tra thất bại, Zod trả về các lỗi có cấu trúc rõ ràng, bao gồm thông tin về trường bị lỗi, loại lỗi và thông tin lỗi chi tiết. Điều này giúp lớp giao diện dễ dàng xác định chính xác trường nào bị lỗi và hiển thị thông báo tương ứng.
+    
+    \item \textbf{Hệ sinh thái tích hợp cực kỳ phong phú:} Zod được hỗ trợ bởi nhiều thư viện biểu mẫu, công cụ xây dựng API, cơ sở dữ liệu, sinh tài liệu và kiểm thử. Khả năng này cho phép schema được kết nối hoặc tái sử dụng trong nhiều tầng của ứng dụng, qua đó giảm mã kiểm tra trùng lặp và giúp quy tắc dữ liệu nhất quán hơn.
+\end{itemize}
+
+
+\medskip
+\noindent\textbf{Lý do kết hợp React Hook Form với Zod}
+\medskip
+
+React Hook Form và Zod đảm nhiệm hai vai trò khác nhau nhưng bổ sung trực tiếp cho nhau. React Hook Form quản lý các trường nhập, thu thập giá trị, theo dõi trạng thái biểu mẫu và điều phối thao tác gửi; trong khi Zod tập trung mô tả cấu trúc và kiểm tra tính hợp lệ của dữ liệu. Hai thư viện được kết nối thông qua zodResolver, giúp kết quả kiểm tra của Zod được chuyển thành lỗi theo từng trường mà React Hook Form có thể hiển thị \cite{hookformresolvers}. Sự kết hợp giữa React Hook Form và Zod thông qua \texttt{zodResolver} mang lại giải pháp quản lý biểu mẫu vừa đạt hiệu năng cao, giảm thiểu việc re-render, vừa đảm bảo dữ liệu đầu vào của ứng dụng luôn chính xác và đáng tin cậy. RabbitCV tận dụng sự kết hợp này để xử lý các form phức tạp trong ứng dụng.
+
+Việc kết hợp mang lại các lợi ích chính sau:
+
+\begin{itemize}
+    \item \textbf{Phân chia trách nhiệm rõ ràng:} React Hook Form quản lý trạng thái và tương tác của biểu mẫu, còn Zod quản lý quy tắc và cấu trúc dữ liệu. Điều này giúp code không bị lộn xộn, dễ dàng quản lý và bảo trì.
+
+    \item \textbf{Phản hồi lỗi chính xác:} Lỗi được gắn với đúng trường nhập, giúp người dùng dễ nhận biết và sửa dữ liệu. Người dùng nhận thông báo ngay tại trường nhập liệu bị lỗi thay vì đợi gửi toàn bộ biểu mẫu rồi mới nhận thông báo.
+
+    \item \textbf{Giảm mã lặp và tăng khả năng bảo trì:} Nhà phát triển không phải tạo state, hàm thay đổi và câu lệnh kiểm tra riêng cho từng trường. Quy tắc được đọc tập trung trong schema, còn mã giao diện tập trung vào hiển thị thông báo lỗi cho người dùng.
+
+    \item \textbf{Thống nhất dữ liệu đầu ra:} Hàm xử lý gửi nhận một đối tượng đã vượt qua cùng một bộ quy tắc, giúp giảm các trường hợp mỗi vị trí trong giao diện hiểu dữ liệu theo một cách khác nhau.
+\end{itemize}
+
+
+\subsection{Tailwind CSS}
+
+Tailwind CSS là framework CSS mã nguồn mở theo hướng tiện ích, giúp xây dựng giao diện chỉ bằng cách kết hợp các lớp tiện ích nhỏ \cite{tailwinddocs}. Thay vì viết bằng CSS truyền thống các lập trình viên phải tạo tên lớp riêng rồi khai báo các thuộc tính tương ứng trong tệp CSS. Tailwind cho phép kết hợp trực tiếp các lớp tiện ích ngay trên phần tử giao diện. Việc sử dụng hệ thống lớp tiện ích này giúp RabbitCV dễ dàng duy trì hệ thống khoảng cách, màu sắc và bố cục đáp ứng giữa trang công khai, khu vực ứng viên, doanh nghiệp và quản trị.
+
+Các thành phần tương tác phức tạp được hỗ trợ bởi Radix UI, trong khi Heroicons cung cấp bộ biểu tượng có phong cách thống nhất. Radix UI tập trung vào những nguyên mẫu như hộp thoại, menu và danh sách chọn, đồng thời hỗ trợ quản lý tiêu điểm, bàn phím và các thuộc tính trợ năng. Sonner được dùng để hiển thị thông báo ngắn sau thao tác thành công hoặc thất bại. Việc sử dụng các thư viện chuyên biệt giúp giảm lượng mã tự xây dựng cho những hành vi giao diện dễ phát sinh lỗi và tạo trải nghiệm nhất quán hơn.
+
+Những ưu điểm nổi bật có thể kể đến của Tailwind CSS như:
+
+\begin{itemize}
+    \item \textbf{Tối ưu CSS đầu ra:} Tailwind CSS quét mã nguồn và chỉ tạo các utility class thực sự được sử dụng. Khi build production, CSS còn được nén lại, giúp giảm dung lượng tệp, loại bỏ CSS dư thừa và cải thiện tốc độ tải trang. Tailwind tạo CSS tĩnh nên không cần JavaScript xử lý giao diện lúc chạy.
+    \item \textbf{Tăng tốc độ phát triển:} Tailwind CSS giúp giảm thời gian phát triển giao diện do có các lớp tiện ích có sẵn.
+    \item \textbf{Duy trì giao diện nhất quán:} Các màu sắc, khoảng cách, cỡ chữ, độ bo góc và bóng đổ được lấy từ một hệ thống giá trị chung. Nhờ đó, các thành phần khác nhau có thể duy trì cùng ngôn ngữ thiết kế.
+    \item \textbf{Dễ dàng bảo trì và mở rộng:} Các lớp tiện ích giúp dễ dàng thay đổi hoặc thêm các lớp mới mà không ảnh hưởng đến các phần khác của ứng dụng.
+    \item \textbf{Hệ sinh thái và công cụ hỗ trợ mạnh mẽ:} Tailwind CSS tích hợp tốt với các thư viện UI và nhiều framework khác nhau, cho phép xây dựng giao diện phức tạp một cách nhanh chóng.
+    \item \textbf{Thân thiện với người dùng:} Tailwind CSS có cấu trúc rõ ràng, dễ hiểu, giúp lập trình viên nhanh chóng làm quen và sử dụng. Đồng thời, Tailwind CSS cũng hỗ trợ nhiều tính năng nâng cao như responsive design, dark mode, animation, giúp tạo ra giao diện đẹp và thân thiện với người dùng.
+\end{itemize}
+
+\subsection{Vite}
+
+Vite là một công cụ phát triển cho ứng dụng web frontend hiện đại, được thiết kế để mang đến trải nghiệm phát triển nhanh chóng và hiệu quả, hỗ trợ toàn diện cho React, Vue, Svelte, và các framework khác \cite{vitedocs}. Trong môi trường phát triển, Vite cung cấp máy chủ dựa trên ES Module và cơ chế thay thế mô-đun nhanh, giúp cập nhật phần mã vừa thay đổi mà không phải tải lại toàn bộ ứng dụng.
+
+Vite đảm nhận 2 công việc chính: cung cấp máy chủ phát triển để lập trình viên chạy và chỉnh sửa giao diện trên máy tính cá nhân và đóng gói mã nguồn thành các tệp HTML, CSS, JavaScript và tài nguyên tĩnh để triển khai trên máy chủ. Trong RabbitCV, React xây dựng giao diện, Tailwind CSS định dạng giao diện, còn Vite chịu trách nhiệm chạy môi trường phát triển và đóng gói phần frontend.
+
+Ngoài ra, RabbitCV cũng cấu hình Vite để xử lý các yêu cầu API và kết nối thời gian thực. Các yêu cầu được chuyển tiếp đến máy chủ Express thông qua các proxy \texttt{/api} và \texttt{/socket.io}. Điều này cho phép frontend và backend có thể được phát triển và chạy một cách độc lập, trong khi giao diện người dùng vẫn có thể gọi các đường dẫn thống nhất mà không cần phải lo lắng về việc thiết lập các cấu hình phức tạp.
+
+RabbitCV kết hợp \texttt{React.lazy} với \texttt{Suspense} để tải lười các trang có kích thước lớn. Mã của trang quản trị, cổng doanh nghiệp, quản lý CV hoặc các chức năng chuyên biệt chỉ được tải khi người dùng điều hướng đến đường dẫn tương ứng. Trong thời gian chờ, \texttt{Suspense} hiển thị trạng thái tải thay vì để giao diện trống. Cách làm này làm giảm lượng JavaScript cần tải và phân tích ở lần truy cập đầu tiên, đặc biệt có ích khi một người dùng chỉ sử dụng một nhóm chức năng theo vai trò của mình.
+
+Tải lười không làm giảm tổng lượng mã của toàn bộ hệ thống mà nó thay đổi thời điểm tải mã. Tuy nhiên, dự án áp dụng tải lười ở cấp trang và nhóm chức năng lớn, đồng thời gom những thư viện có quan hệ thành các gói phù hợp để cân bằng giữa tốc độ khởi động, khả năng lưu đệm và độ trễ khi chuyển trang.
+
+\section{Phát triển Back-end}
+
+\subsection{Node.js và Express}
+
+Node.js là nền tảng phát triển các ứng dụng web back-end được viết bằng JavaScript \cite{nodedocs}. Khi một thao tác phải chờ cơ sở dữ liệu, hệ thống tệp hoặc dịch vụ AI, Node.js có thể tiếp tục tiếp nhận công việc khác thay vì chặn toàn bộ luồng xử lý. Với việc sử dụng kiến trúc lập trình hướng sự kiện không đồng bộ, nó giúp cho các ứng dụng Node.js có thể chạy với hiệu suất cao và khả năng mở rộng tốt.
+
+Express là framework xây dựng máy chủ web trên Node.js, cung cấp cơ chế định tuyến, xử lý yêu cầu-phản hồi và các tính năng cần thiết cho ứng dụng web \cite{expressdocs}. RabbitCV sử dụng Express để tổ chức API theo nhóm tài nguyên và nghiệp vụ, bao gồm tài khoản, CV, việc làm, ứng tuyển, trò chuyện, thông báo và trí tuệ nhân tạo. Mỗi đường dẫn có thể gắn các bước xác thực, kiểm tra vai trò, giới hạn tốc độ và kiểm tra dữ liệu trước khi gọi hàm xử lý chính.
+
+Node.js và Express cho phép frontend và backend cùng sử dụng hệ sinh thái JavaScript, nhờ đó cách biểu diễn JSON, mô hình bất đồng bộ và công cụ quản lý gói được thống nhất. Express có cấu trúc tối giản nên dự án có thể lựa chọn thư viện phù hợp cho cookie, bảo mật, giới hạn tốc độ, cơ sở dữ liệu và thời gian thực. Máy chủ HTTP của Express còn được dùng chung với Socket.IO, tránh phải vận hành một dịch vụ riêng chỉ để truyền sự kiện trò chuyện.
+
+Node.js và Express có các đặc điểm phù hợp với phạm vi của đề tài:
+
+\begin{itemize}
+    \item \textbf{Ưu điểm:} Linh hoạt, có hệ sinh thái lớn và phù hợp với các tác vụ vào/ra.
+    \item \textbf{Hạn chế:} Vòng lặp sự kiện không phù hợp với công việc tính toán nặng kéo dài trên cùng tiến trình, vì một tác vụ đồng bộ lớn có thể làm chậm các yêu cầu khác.
+    \item \textbf{Cách áp dụng trong RabbitCV:} Hệ thống chủ yếu thực hiện truy vấn dữ liệu và gọi dịch vụ bên ngoài; các tác vụ nặng như suy luận mô hình được giao cho nhà cung cấp AI, nên mô hình của Node.js phù hợp với phạm vi đề tài.
+\end{itemize}
+
+% \subsection{REST API và tổ chức đường dẫn}
+
+% REST API là kênh giao tiếp chính giữa frontend và backend đối với dữ liệu cần đọc, tạo, cập nhật hoặc xóa. Các đường dẫn được tổ chức quanh tài nguyên và nhóm nghiệp vụ, còn phương thức HTTP thể hiện ý định của yêu cầu. GET dùng để đọc dữ liệu; POST tạo tài nguyên hoặc thực hiện thao tác; PUT và PATCH cập nhật; DELETE loại bỏ tài nguyên khi người dùng có quyền. Phản hồi sử dụng JSON và mã trạng thái HTTP để giao diện có thể phân biệt thành công, lỗi dữ liệu, chưa xác thực, không đủ quyền hoặc lỗi máy chủ.
+
+% RabbitCV sử dụng REST API cho đăng nhập, hồ sơ, quản lý CV, tìm và lưu việc làm, ứng tuyển, quản lý tin tuyển dụng, lấy lịch sử trò chuyện, thông báo và các yêu cầu AI. Cách tổ chức này tách phần hiển thị khỏi nghiệp vụ: frontend chịu trách nhiệm thu thập dữ liệu và trình bày kết quả, trong khi backend áp dụng chính sách truy cập, truy vấn cơ sở dữ liệu và quyết định trạng thái cuối cùng. Một API có thể phục vụ nhiều trang và nhiều vai trò mà không sao chép logic nghiệp vụ sang giao diện.
+
+% Mô hình yêu cầu--phản hồi của REST dễ theo dõi, kiểm thử và xử lý lỗi. Dữ liệu bền vững được ghi vào MongoDB trước khi máy chủ xác nhận thành công, vì vậy giao diện có thể tải lại trạng thái từ nguồn chính khi cần. Đối với dữ liệu thời gian thực, REST vẫn được giữ làm kênh lấy lịch sử và đồng bộ lại, còn Socket.IO chỉ phát tín hiệu mới. Sự phân công này tránh phụ thuộc hoàn toàn vào một kết nối liên tục.
+
+% REST API không tự bảo đảm an toàn hoặc tính nhất quán. Mỗi đường dẫn vẫn phải kiểm tra dữ liệu, xác thực người dùng, xác định quyền trên tài nguyên và trả lỗi có kiểm soát. Ngoài ra, tên đường dẫn, cấu trúc phản hồi và quy ước phân trang cần được duy trì nhất quán để giảm mã xử lý đặc biệt ở frontend.
+
+% \subsection{Middleware}
+
+% Middleware là hàm được thực thi trong chuỗi xử lý yêu cầu trước hoặc sau hàm nghiệp vụ. RabbitCV sử dụng middleware cho các mối quan tâm dùng chung như CORS, Helmet, đọc cookie, phân tích JSON, giới hạn tốc độ, xác thực JWT, kiểm tra vai trò và kiểm tra đầu vào. Nhờ đó, hàm nghiệp vụ không phải lặp lại cùng một đoạn mã bảo vệ ở mọi đường dẫn và có thể tập trung vào thao tác dữ liệu cần thực hiện.
+
+% Thứ tự của chuỗi xử lý có ý nghĩa trực tiếp. Yêu cầu cần được đọc đúng định dạng trước khi kiểm tra nội dung; token cần được xác minh trước khi kiểm tra vai trò; dữ liệu cần hợp lệ trước khi truy vấn hoặc ghi vào cơ sở dữ liệu. Các đường dẫn nhạy cảm như đăng nhập, đăng ký và gọi AI có bộ giới hạn riêng ngoài giới hạn chung. Việc bố trí đúng thứ tự giúp chặn yêu cầu không hợp lệ sớm và giảm tài nguyên tiêu tốn cho các thao tác không được phép.
+
+% Xử lý lỗi tập trung giúp chuyển các lỗi phát sinh thành phản hồi có cấu trúc và mã trạng thái phù hợp. Frontend có thể hiển thị thông báo rõ ràng mà không cần biết chi tiết bên trong máy chủ. Trong môi trường triển khai, phản hồi không nên làm lộ dấu vết ngăn xếp, khóa truy cập hoặc dữ liệu nhạy cảm; thông tin kỹ thuật cần được ghi nhận ở phía máy chủ để phục vụ chẩn đoán.
+
+% Chuỗi middleware có các đặc điểm cần lưu ý:
+
+% \begin{itemize}
+%     \item \textbf{Ưu điểm:} Có tính tái sử dụng và cho phép áp dụng chính sách nhất quán.
+%     \item \textbf{Hạn chế:} Chuỗi quá dài hoặc phụ thuộc vào thứ tự ngầm có thể khó theo dõi.
+%     \item \textbf{Cách tổ chức trong RabbitCV:} Middleware được tách theo mục đích, gắn gần nhóm đường dẫn liên quan và backend vẫn là điểm kiểm soát cuối cùng đối với quyền truy cập cũng như tính hợp lệ của dữ liệu.
+% \end{itemize}
+
+\subsection{Socket.IO}
+
+Socket.IO là một thư viện dành cho các ứng dụng web, mobile để phát triển các ứng dụng realtime (thời gian thực). Nó cung cấp một giao diện đơn giản để giao tiếp theo thời gian thực giữa trình duyệt và máy chủ \cite{socketiodocs}. Socket.IO sử dụng rất nhiều các công nghệ realtime như: WebSocket, Flash Socket, IFrame, JSONP polling,.... Nó sẽ tự động chuyển sang WebSocket nếu có thể nên việc sử dụng Socket.IO trên trình duyệt cũng là đang sử dụng WebSocket vậy.
+
+RabbitCV sử dụng Socket.IO cho chức năng trò chuyện thời gian thực giữa ứng viên và doanh nghiệp. Sau khi xác thực kết nối, mỗi socket được đưa vào phòng mang định danh người dùng. Khi có tin nhắn mới, hệ thống lưu tin nhắn vào cơ sở dữ liệu trước, sau đó phát sự kiện đến phòng của người nhận.
+
+Socket.IO trong RabbitCV không quản lý thông báo tuyển dụng. Thông báo được lấy qua REST API bằng fetch và được TanStack Query quản lý, làm mới theo chu kỳ. Socket.IO chỉ đóng vai trò thông báo nhanh về tin nhắn mới; lịch sử trò chuyện vẫn được lấy từ cơ sở dữ liệu qua API.
+
+Những ưu điểm nổi bật của Socket.IO:
+
+\begin{itemize}
+    \item \textbf{Tự động chuyển đổi giao thức thông minh:} Socket.IO có thể lựa chọn sử dụng WebSocket, WebTransport hay HTTP long-polling,.... khác mà không làm gián đoạn trải nghiệm người dùng.
+    \item \textbf{Tự động phát hiện mất kết nối và kết nối lại:} Socket.IO sử dụng cơ chế heartbeat để kiểm tra trạng thái kết nối. Khi kết nối bị gián đoạn, máy khách tự thử kết nối lại với khoảng chờ tăng dần, hạn chế việc gửi quá nhiều yêu cầu cùng lúc.
+    \item \textbf{Khả năng mở rộng nhiều máy chủ:} Khi hệ thống phát triển, Socket.IO có thể kết hợp các adapter như Redis Adapter để chia sẻ và đồng bộ các sự kiện giữa các server node một cách dễ dàng. Điều này rất hữu ích cho các ứng dụng web, mobile cần real-time như chat, game,....
+    \item \textbf{Hệ sinh thái và hỗ trợ đa nền tảng:} Socket.IO cung cấp một hệ sinh thái phong phú với nhiều thư viện và công cụ hỗ trợ phát triển ứng dụng real-time. Nó có các thư viện client cho web, mobile (iOS, Android) và các framework phổ biến khác như React, Vue, Angular,..... giúp việc tích hợp vào ứng dụng trở nên dễ dàng và nhanh chóng.
+\end{itemize}
+
+\section{Phát triển cơ sở dữ liệu}
+
+\subsection{MongoDB}
+
+MongoDB là hệ quản trị cơ sở dữ liệu NoSQL hướng tài liệu \cite{mongodbdocs}. Thay vì tổ chức dữ liệu thành bảng và hàng như cơ sở dữ liệu quan hệ, MongoDB lưu mỗi bản ghi dưới dạng một tài liệu BSON. BSON có cấu trúc gần với đối tượng JSON nhưng hỗ trợ thêm các kiểu dữ liệu phục vụ lưu trữ, chẳng hạn ngày giờ, dữ liệu nhị phân và mã định danh \texttt{ObjectId}. Các tài liệu được tập hợp trong collection, còn nhiều collection tạo thành một cơ sở dữ liệu. Cách biểu diễn này phù hợp với ứng dụng JavaScript vì dữ liệu có thể được chuyển đổi giữa đối tượng ở backend và tài liệu trong cơ sở dữ liệu mà không phải ánh xạ qua cấu trúc bảng phức tạp.
+
+MongoDB cung cấp mô hình dữ liệu linh hoạt: các tài liệu trong cùng một collection không bắt buộc phải có toàn bộ trường giống nhau. Tuy nhiên, tính linh hoạt không đồng nghĩa với việc dữ liệu không cần thiết kế. Các tài liệu cùng loại vẫn cần duy trì cấu trúc hợp lý để truy vấn, kiểm tra và mở rộng ổn định. MongoDB cho phép nhúng đối tượng hoặc mảng vào một tài liệu, đồng thời cũng cho phép lưu mã định danh để tham chiếu đến tài liệu thuộc collection khác. Hai cách này giúp hệ thống lựa chọn cấu trúc theo vòng đời và cách sử dụng dữ liệu thay vì buộc mọi quan hệ phải được biểu diễn theo một hình thức duy nhất.
+
+Những đặc điểm nổi bật của MongoDB gồm:
+
+\begin{itemize}
+    \item \textbf{Mô hình tài liệu gần với dữ liệu ứng dụng:} Một tài liệu có thể chứa chuỗi, số, ngày giờ, đối tượng con và mảng. Dữ liệu nghiệp vụ vì vậy có thể được biểu diễn gần với cấu trúc mà Node.js tiếp nhận và trả về cho giao diện.
+
+    \item \textbf{Hỗ trợ dữ liệu lồng nhau:} Những thông tin thường được đọc và cập nhật cùng nhau có thể được đặt trong cùng một tài liệu. Cách tổ chức này giảm nhu cầu thực hiện nhiều truy vấn chỉ để dựng lại một đối tượng nghiệp vụ hoàn chỉnh.
+
+    \item \textbf{Truy vấn và tổng hợp dữ liệu:} MongoDB cung cấp các thao tác tạo, đọc, cập nhật và xóa, đồng thời hỗ trợ lọc, sắp xếp, phân trang và aggregation pipeline để xử lý những yêu cầu tổng hợp phức tạp hơn.
+
+    \item \textbf{Hệ thống chỉ mục:} Chỉ mục có thể được tạo trên một trường hoặc tổ hợp nhiều trường để tăng tốc các truy vấn thường xuyên. Chỉ mục duy nhất còn có thể thực thi những ràng buộc không cho phép dữ liệu trùng lặp.
+
+    \item \textbf{Khả năng mở rộng:} MongoDB hỗ trợ sao chép dữ liệu để tăng tính sẵn sàng và phân mảnh dữ liệu để mở rộng theo chiều ngang. Đây là khả năng của nền tảng khi hệ thống phát triển; RabbitCV hiện sử dụng MongoDB trong phạm vi phù hợp với quy mô đồ án và không khẳng định đã triển khai các cơ chế mở rộng này.
+\end{itemize}
+
+Trong RabbitCV, MongoDB lưu tài khoản người dùng, CV, tin tuyển dụng, hồ sơ ứng tuyển, tin nhắn, thông báo, trạng thái trò chuyện và thống kê sử dụng AI. Một CV có thể chứa nhiều nhóm thông tin như học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ và ngôn ngữ; mỗi nhóm lại có số lượng phần tử khác nhau giữa các người dùng. Mô hình tài liệu giúp các nhóm dữ liệu này được biểu diễn tự nhiên dưới dạng đối tượng và mảng, đồng thời vẫn có thể liên kết CV với chủ sở hữu hoặc liên kết hồ sơ ứng tuyển với công việc bằng mã định danh.
+
+\subsection{Mongoose}
+
+Mongoose là thư viện mô hình hóa dữ liệu đối tượng dành cho Node.js và MongoDB \cite{mongooseDocs}. Thư viện tạo một lớp làm việc có cấu trúc giữa mã nguồn backend và cơ sở dữ liệu, cung cấp cách khai báo hình dạng tài liệu, kiểu dữ liệu, quy tắc kiểm tra và các thao tác truy vấn. Mongoose không phải là cơ sở dữ liệu và không thay thế MongoDB; dữ liệu cuối cùng vẫn được lưu, truy vấn và lập chỉ mục bởi MongoDB. Ứng dụng có thể sử dụng MongoDB Driver trực tiếp, nhưng Mongoose giúp giảm phần mã lặp khi nhiều nhóm dữ liệu cần tuân theo các quy tắc thống nhất.
+
+Bốn khái niệm chính của Mongoose gồm:
+
+\begin{itemize}
+    \item \textbf{Schema:} Mô tả các trường dự kiến của một loại tài liệu, kiểu dữ liệu, trường bắt buộc, giá trị mặc định, tập giá trị hợp lệ và chỉ mục. Schema cũng có thể chứa phương thức và các bước xử lý được thực hiện trong vòng đời tài liệu.
+
+    \item \textbf{Model:} Được tạo từ Schema và đại diện cho một collection. Model cung cấp những thao tác như tạo tài liệu, tìm kiếm, cập nhật, xóa và tổng hợp dữ liệu.
+
+    \item \textbf{Document:} Là một bản ghi cụ thể được tạo hoặc đọc thông qua Model. Document có thể được kiểm tra, thay đổi và lưu trở lại MongoDB.
+
+    \item \textbf{Query:} Biểu diễn điều kiện và tùy chọn của một thao tác truy vấn. Các phương thức có thể được nối tiếp để lọc trường, sắp xếp, giới hạn kết quả, phân trang hoặc lấy thêm tài liệu liên quan.
+\end{itemize}
+
+Mongoose hỗ trợ chuyển đổi dữ liệu về kiểu đã khai báo trước khi thực hiện thao tác. Nếu một giá trị không thể chuyển đổi hợp lệ, thư viện phát sinh lỗi thay vì âm thầm lưu dữ liệu sai kiểu. Các validator có sẵn như \texttt{required}, \texttt{min}, \texttt{max} và \texttt{enum} giúp kiểm tra những điều kiện cơ bản; dự án cũng có thể định nghĩa validator riêng cho quy tắc đặc thù. Giá trị mặc định và tùy chọn \texttt{timestamps} giúp các Model sử dụng thống nhất trạng thái ban đầu, thời điểm tạo và thời điểm cập nhật.
+
+Những ưu điểm nổi bật của Mongoose gồm:
+
+\begin{itemize}
+    \item \textbf{Tổ chức cấu trúc dữ liệu tập trung:} Quy tắc của một nhóm dữ liệu được đặt trong Schema tương ứng, giúp nhà phát triển dễ xác định trường nào được lưu và điều kiện nào phải được đáp ứng.
+
+    \item \textbf{Giảm mã truy vấn thủ công:} Model cung cấp giao diện nhất quán cho các thao tác cơ sở dữ liệu, giúp mã xử lý nghiệp vụ dễ đọc hơn so với việc tự xây dựng mọi lệnh ở tầng Driver.
+
+    \item \textbf{Kiểm tra và chuyển đổi dữ liệu:} Dữ liệu được kiểm tra và ép kiểu trước khi ghi, qua đó phát hiện sớm nhiều lỗi về trường bắt buộc, kiểu dữ liệu hoặc trạng thái không hợp lệ.
+
+    \item \textbf{Hỗ trợ quan hệ tham chiếu:} Kiểu \texttt{ObjectId}, thuộc tính \texttt{ref} và cơ chế \texttt{populate} hỗ trợ lấy dữ liệu liên quan từ collection khác khi nghiệp vụ cần sử dụng.
+
+    \item \textbf{Hỗ trợ bảo trì và mở rộng:} Middleware, phương thức dùng chung, trường ảo, chỉ mục và tùy chọn chọn trường cho phép đặt những hành vi lặp lại gần với mô hình dữ liệu thay vì phân tán ở nhiều vị trí xử lý.
+\end{itemize}
+
+Trong RabbitCV, Mongoose được sử dụng để quy định các trường bắt buộc, vai trò và trạng thái hợp lệ, gán giá trị mặc định, tự động ghi thời gian và mô tả quan hệ giữa các tài liệu. Những trường nhạy cảm như mật khẩu và mã PIN được cấu hình không xuất hiện trong truy vấn thông thường. Các Model cũng khai báo chỉ mục phục vụ đăng nhập, tra cứu dữ liệu theo người sở hữu, theo dõi thông báo và ngăn hồ sơ ứng tuyển trùng. Tuy nhiên, validation của Mongoose chỉ bảo vệ các thao tác đi qua Mongoose; các ràng buộc quan trọng vẫn cần chỉ mục hoặc cơ chế kiểm tra ở MongoDB và không thay thế kiểm tra nghiệp vụ tại backend.
+
+\subsection{Sự kết hợp giữa MongoDB và Mongoose}
+
+MongoDB và Mongoose đảm nhiệm hai tầng khác nhau nhưng bổ sung cho nhau. MongoDB chịu trách nhiệm lưu trữ bền vững, thực thi truy vấn, quản lý chỉ mục và trả kết quả. Mongoose nằm trong ứng dụng Node.js, tiếp nhận dữ liệu từ nghiệp vụ, áp dụng Schema, chuyển đổi kiểu, kiểm tra giá trị rồi sử dụng MongoDB Driver để gửi thao tác đến cơ sở dữ liệu. Kết quả từ MongoDB được Mongoose chuyển thành Document hoặc đối tượng để backend tiếp tục xử lý và trả về giao diện \cite{mongodbdocs,mongooseDocs}.
+
+Một thao tác ghi dữ liệu thông thường được thực hiện theo trình tự sau:
+
+\begin{enumerate}
+    \item Express tiếp nhận yêu cầu và backend kiểm tra phiên đăng nhập, quyền truy cập cùng các điều kiện nghiệp vụ.
+    \item Dữ liệu hợp lệ về mặt nghiệp vụ được chuyển cho Model Mongoose tương ứng.
+    \item Mongoose chuyển đổi kiểu, áp dụng giá trị mặc định và thực hiện validation theo Schema.
+    \item MongoDB nhận thao tác ghi, thực thi chỉ mục và các ràng buộc ở tầng cơ sở dữ liệu trước khi lưu tài liệu.
+    \item Kết quả hoặc lỗi được trả về qua Mongoose để backend tạo phản hồi phù hợp cho giao diện.
+\end{enumerate}
+
+Sự kết hợp này mang lại các lợi ích chính sau:
+
+\begin{itemize}
+    \item \textbf{Kết hợp tính linh hoạt với tính nhất quán:} MongoDB cho phép cấu trúc tài liệu thích ứng với dữ liệu nghiệp vụ, trong khi Mongoose giúp các tài liệu do RabbitCV tạo ra tuân theo hình dạng và quy tắc dự kiến.
+
+    \item \textbf{Phù hợp với hệ sinh thái JavaScript:} Dữ liệu được biểu diễn dưới dạng đối tượng từ giao diện, qua Express và Mongoose đến MongoDB, giúp giảm số bước chuyển đổi giữa các mô hình dữ liệu khác nhau.
+
+    \item \textbf{Giảm mã lặp ở backend:} Kiểu dữ liệu, giá trị mặc định, validation, thời gian và thao tác truy vấn được cung cấp qua Schema và Model thay vì được xây dựng lại trong từng đường dẫn API.
+
+    \item \textbf{Hỗ trợ cả dữ liệu lồng nhau và dữ liệu liên kết:} Các thành phần thuộc cùng một CV có thể được nhúng trong một tài liệu, còn người dùng, công việc, CV và hồ sơ ứng tuyển có thể liên kết bằng \texttt{ObjectId} khi chúng có vòng đời riêng.
+
+    \item \textbf{Tạo nhiều lớp bảo vệ dữ liệu:} Backend kiểm tra nghiệp vụ và quyền sở hữu, Mongoose kiểm tra cấu trúc, còn MongoDB thực thi chỉ mục và ràng buộc dữ liệu. Mỗi lớp giải quyết một loại lỗi khác nhau và không thay thế lẫn nhau.
+
+    \item \textbf{Tăng khả năng bảo trì:} Khi bổ sung trường hoặc trạng thái mới, thay đổi có thể được quản lý tập trung tại Model liên quan, sau đó các chức năng sử dụng chung cùng một cách biểu diễn dữ liệu.
+\end{itemize}
+
+Trong RabbitCV, lợi ích của sự kết hợp thể hiện rõ ở dữ liệu CV và hồ sơ ứng tuyển. Nội dung CV được biểu diễn bằng các đối tượng và mảng lồng nhau, trong khi quyền sở hữu và quan hệ ứng tuyển được biểu diễn bằng mã định danh. Mongoose giúp backend đọc và ghi những cấu trúc này bằng Model thống nhất; MongoDB cung cấp nơi lưu trữ, truy vấn và chỉ mục để dữ liệu vẫn được duy trì giữa các phiên sử dụng. Nhờ phân chia trách nhiệm rõ ràng, hệ thống vừa giữ được sự linh hoạt cần thiết cho nội dung CV, vừa kiểm soát được những trường bắt buộc và ràng buộc quan trọng của quy trình tuyển dụng.
+
+
+% \subsection{Dữ liệu lồng nhau và quan hệ tham chiếu}
+
+% Hai cách tổ chức chính trong MongoDB là nhúng dữ liệu vào cùng tài liệu và lưu quan hệ bằng tham chiếu. Dữ liệu được nhúng phù hợp khi các phần thường được đọc cùng nhau, có cùng chủ sở hữu và không cần cập nhật độc lập. Trong RabbitCV, nhiều mục thành phần của CV được tổ chức dưới dạng mảng lồng nhau vì chúng chỉ có ý nghĩa trong hồ sơ tương ứng và thường được hiển thị cùng lúc.
+
+% Tham chiếu phù hợp khi tài liệu có vòng đời riêng, được nhiều nghiệp vụ sử dụng hoặc có thể tăng trưởng độc lập. Người dùng, tin tuyển dụng, CV và đơn ứng tuyển được liên kết bằng mã định danh để backend có thể kiểm tra chủ sở hữu và truy vấn theo từng phạm vi. Mongoose hỗ trợ khai báo tham chiếu và lấy thêm dữ liệu liên quan khi cần, nhưng dự án vẫn kiểm soát các trường được chọn để tránh trả về thông tin nhạy cảm hoặc dữ liệu không cần thiết.
+
+% Đối với lịch sử ứng tuyển, RabbitCV lưu thêm bản chụp thông tin quan trọng của công việc tại thời điểm nộp hồ sơ. Bản chụp giúp đơn ứng tuyển vẫn còn ngữ cảnh về vị trí, doanh nghiệp và nội dung cơ bản ngay cả khi tin tuyển dụng gốc đã bị xóa hoặc thay đổi. Đây là sự kết hợp giữa tham chiếu và dữ liệu bất biến theo thời điểm, phù hợp với yêu cầu lưu lịch sử nghiệp vụ.
+
+% Việc lựa chọn nhúng hay tham chiếu ảnh hưởng đến số lượng truy vấn, kích thước tài liệu và độ phức tạp khi cập nhật. Nhúng giúp đọc nhanh theo cụm nhưng có thể làm tài liệu lớn; tham chiếu giảm trùng lặp nhưng cần thêm truy vấn hoặc phép nối ở tầng ứng dụng. RabbitCV lựa chọn theo vòng đời và tần suất sử dụng dữ liệu thay vì áp dụng một cách duy nhất cho toàn hệ thống.
+
+% \subsection{Chỉ mục, ràng buộc và tối ưu dữ liệu}
+
+% Chỉ mục giúp MongoDB tìm tài liệu theo trường hoặc tổ hợp trường mà không phải quét toàn bộ tập dữ liệu. RabbitCV tạo chỉ mục cho những thuộc tính thường dùng để đăng nhập, lọc hoặc liên kết. Chỉ mục duy nhất được dùng cho dữ liệu không được phép trùng như tên đăng nhập, thư điện tử và tổ hợp định danh công việc--ứng viên trong đơn ứng tuyển. Ràng buộc ở cơ sở dữ liệu ngăn hai yêu cầu đồng thời tạo bản ghi trùng ngay cả khi cả hai đã vượt qua bước kiểm tra ở mã ứng dụng.
+
+% Ngoài chỉ mục, dự án dùng giá trị liệt kê, trường bắt buộc, giá trị mặc định và quy tắc kiểm tra của Mongoose để duy trì trạng thái hợp lệ. Quyền sở hữu được thể hiện bằng mã người dùng hoặc doanh nghiệp liên quan. Trạng thái đọc và ẩn của trò chuyện được lưu theo từng người dùng, nhờ đó thao tác của một bên không xóa hoặc thay đổi lịch sử chung của bên còn lại.
+
+% Tối ưu dữ liệu không chỉ nằm ở truy vấn cơ sở dữ liệu mà còn ở nội dung phản hồi. CV PDF tải lên có thể chứa chuỗi mã hóa dung lượng lớn; khi trả danh sách CV, backend loại phần dữ liệu PDF và chỉ gửi thông tin mô tả cần cho danh sách. Nội dung đầy đủ chỉ được lấy khi người dùng mở một CV cụ thể. Cách chiếu trường này giảm lượng dữ liệu truyền, thời gian phân tích JSON và bộ nhớ dùng ở frontend.
+
+% Chỉ mục làm tăng tốc độ đọc nhưng tiêu tốn dung lượng và làm mỗi thao tác ghi phải cập nhật thêm cấu trúc chỉ mục. Vì vậy, chỉ mục cần dựa trên truy vấn thực tế thay vì tạo cho mọi trường. Tương tự, ràng buộc model và chỉ mục không thay thế kiểm tra nghiệp vụ; chúng hoạt động như lớp bảo vệ bổ sung để giữ dữ liệu nhất quán khi có lỗi hoặc yêu cầu đồng thời.
+
+\section{Phát triển trí tuệ nhân tạo}
+
+\subsection{Mô hình ngôn ngữ lớn, Groq và OpenAI SDK}
+
+Mô hình ngôn ngữ lớn có khả năng tạo, biến đổi và phân tích văn bản dựa trên chỉ dẫn cùng ngữ cảnh đầu vào. RabbitCV sử dụng khả năng này để hỗ trợ viết hoặc cải thiện phần giới thiệu, rà soát nội dung CV, gợi ý bổ sung, đánh giá mức độ phù hợp giữa CV và công việc, đồng thời tạo hội thoại luyện phỏng vấn. Mô hình giúp xử lý nội dung linh hoạt hơn các tập luật cố định, đặc biệt khi cách diễn đạt và kinh nghiệm của mỗi người dùng khác nhau.
+
+Backend sử dụng OpenAI SDK để tạo yêu cầu theo giao diện lập trình phổ biến, nhưng cấu hình địa chỉ API tương thích OpenAI của Groq. Cách tích hợp này giúp mã gọi mô hình có cấu trúc rõ ràng và có thể cấu hình nhà cung cấp, mô hình, thời gian chờ cũng như tham số sinh nội dung ở phía máy chủ. Groq hỗ trợ thực thi mô hình với độ trễ thấp, phù hợp với các chức năng cần phản hồi trong lúc người dùng đang chỉnh sửa CV hoặc luyện phỏng vấn.
+
+Khóa truy cập được lưu trong biến môi trường của backend và không được đưa xuống trình duyệt. Frontend chỉ gửi yêu cầu đến API của RabbitCV; backend chịu trách nhiệm xác thực người dùng, kiểm soát hạn mức, rút gọn dữ liệu và gọi nhà cung cấp. Cách đặt lớp trung gian này bảo vệ khóa, thống nhất chính sách và cho phép thay đổi cấu hình mà không phải sửa mã giao diện.
+
+Mô hình ngôn ngữ được sử dụng với các điểm cần lưu ý sau:
+
+\begin{itemize}
+    \item \textbf{Ưu điểm:} Có khả năng thích ứng và tạo gợi ý theo ngữ cảnh.
+    \item \textbf{Hạn chế:} Kết quả có thể không chính xác, suy diễn quá mức hoặc không phù hợp với dữ liệu thật của người dùng.
+    \item \textbf{Nguyên tắc sử dụng:} RabbitCV xem đầu ra AI là đề xuất cần được người dùng xem xét; mô hình không tự ghi đè CV và không thay người dùng đưa ra quyết định cuối cùng.
+\end{itemize}
+
+\subsection{JSON Schema và đầu ra có cấu trúc}
+
+JSON Schema mô tả hình dạng của tài liệu JSON, bao gồm tên trường, kiểu dữ liệu, trường bắt buộc, giá trị cho phép và cấu trúc lồng nhau \cite{jsonschema}. RabbitCV định nghĩa schema riêng cho từng chức năng AI thay vì yêu cầu mô hình trả một đoạn văn bản tự do. Ví dụ, kết quả rà soát cần tách nhận xét và đề xuất; kết quả so khớp cần có điểm và các nhóm phân tích; hội thoại phỏng vấn cần phân biệt câu hỏi, phản hồi và bước tiếp theo.
+
+Yêu cầu đầu ra có cấu trúc giúp backend nhận dữ liệu gần với hình dạng mà giao diện cần sử dụng. Chế độ structured output của nhà cung cấp được dùng để buộc kết quả tuân theo schema đã chọn \cite{groqstructured}. Sau khi nhận phản hồi, backend vẫn phân tích JSON, kiểm tra trường và chuẩn hóa giá trị trước khi trả cho frontend. Cách làm này giảm lỗi do tách văn bản thủ công và giúp thành phần giao diện không phải dự đoán cách mô hình trình bày câu trả lời.
+
+Schema cũng tạo hợp đồng rõ ràng giữa mô-đun AI và phần còn lại của hệ thống. Khi muốn thay đổi giao diện hoặc thêm trường kết quả, nhà phát triển có thể cập nhật schema và bộ xử lý tương ứng. Việc kiểm thử trở nên cụ thể hơn vì có thể xác nhận kiểu, giới hạn và trường bắt buộc thay vì chỉ so sánh một chuỗi văn bản dài.
+
+Tuy nhiên, đúng cấu trúc không đồng nghĩa đúng nội dung. Một điểm số có thể nằm trong giới hạn cho phép nhưng lập luận vẫn chưa hợp lý; một gợi ý có thể đúng ngữ pháp nhưng không phản ánh kinh nghiệm thật. Do đó, kiểm tra schema chỉ giải quyết tính máy đọc được, còn độ tin cậy ngữ nghĩa cần được hỗ trợ bằng prompt rõ ràng, giới hạn dữ liệu, thông báo cho người dùng và quyền xác nhận cuối cùng.
+
+\subsection{Kiểm soát đầu vào, hạn mức và thống kê sử dụng}
+
+Dữ liệu CV và công việc có thể dài, chứa thông tin liên hệ hoặc nội dung cố gắng thay đổi chỉ dẫn của hệ thống. Trước khi gửi đến mô hình, RabbitCV chuẩn hóa văn bản, giới hạn độ dài, giới hạn số phần tử và loại hoặc thay thế thông tin liên hệ trực tiếp khi không cần thiết. Prompt hệ thống phân biệt dữ liệu người dùng với chỉ dẫn, đồng thời yêu cầu mô hình chỉ thực hiện đúng nhiệm vụ đã định nghĩa. Các bước này làm giảm lượng dữ liệu gửi ra ngoài và hạn chế ảnh hưởng của nội dung không đáng tin cậy.
+
+Mỗi đường dẫn AI được bảo vệ bằng xác thực, giới hạn tốc độ và thời gian chờ. Hệ thống còn áp dụng hạn mức theo ngày cho từng tài khoản để kiểm soát chi phí và ngăn một người dùng chiếm toàn bộ năng lực dịch vụ. Khi nhà cung cấp phản hồi chậm hoặc không khả dụng, yêu cầu được kết thúc có kiểm soát để tiến trình máy chủ không chờ vô hạn và giao diện có thể hướng dẫn người dùng thử lại.
+
+RabbitCV lưu thống kê kỹ thuật như loại chức năng, số lượt gọi, lượng token, độ trễ và trạng thái lỗi. Dữ liệu đầu vào được nhận diện bằng giá trị băm khi cần đối chiếu thay vì lưu lại toàn bộ nội dung CV trong bản ghi thống kê. Cách thu thập này hỗ trợ đánh giá mức sử dụng, phát hiện bất thường và ước lượng chi phí nhưng hạn chế sao chép dữ liệu cá nhân không cần thiết.
+
+Những biện pháp trên phù hợp với cách quản lý rủi ro AI theo hướng minh bạch, có thể kiểm tra và lấy con người làm trung tâm \cite{nistairmf}. Đây mới là phần giới thiệu nền tảng công nghệ; kiến trúc, năm luồng AI, cấu trúc prompt và cách xử lý kết quả được trình bày chi tiết tại Chương~\ref{chap:ai-module}.
+
+\section{Phát triển tạo và xuất tệp PDF}
+
+\subsection{Bố cục A4 và react-to-print}
+
+CV có cấu trúc được RabbitCV kết xuất từ dữ liệu thành các thành phần HTML và CSS. Vùng nội dung chính được thiết kế theo khổ A4 với kích thước $210 \times 297$~mm, lề và kiểu chữ phù hợp với tài liệu in. Bố cục trên màn hình có thể được thu phóng để vừa cửa sổ, trong khi quy tắc dành cho in giữ kích thước vật lý và loại bỏ những thành phần điều khiển không thuộc nội dung CV.
+
+Thư viện \texttt{react-to-print} kết nối một vùng thành phần React với chức năng in của trình duyệt. RabbitCV sử dụng hook dùng chung để chọn nội dung cần in, thiết lập tên tài liệu, áp dụng quy tắc trang và xử lý lỗi. Khi mở hộp thoại in, người dùng có thể chọn máy in hoặc chức năng lưu thành PDF có sẵn trong trình duyệt. Cách tiếp cận này tận dụng công cụ bố cục của trình duyệt và không yêu cầu backend dựng lại toàn bộ CV bằng một thư viện PDF riêng.
+
+Ưu điểm của phương pháp HTML/CSS là mẫu CV có thể dùng chung cho xem trước và xuất, thay đổi dữ liệu được phản ánh ngay và nhà phát triển có thể xây dựng mẫu bằng cùng công nghệ với giao diện. Việc bổ sung mẫu mới cũng chủ yếu là tạo thành phần trình bày thay vì mô tả tọa độ từng dòng trong tệp PDF.
+
+Giới hạn là kết quả in có thể khác nhẹ giữa trình duyệt, phông chữ và thiết lập lề của người dùng. Nội dung dài còn có thể phát sinh ngắt trang không mong muốn. Vì vậy, các mẫu cần quy tắc CSS dành riêng cho in, kiểm tra với dữ liệu ngắn và dài, đồng thời hướng dẫn người dùng chọn khổ giấy, tỷ lệ và lề thích hợp khi lưu PDF.
+
+\subsection{PDF.js và hiển thị PDF tải lên}
+
+Ngoài CV được tạo trong hệ thống, RabbitCV cho phép người dùng tải lên CV PDF đã có. PDF.js là thư viện đọc và kết xuất tài liệu PDF trong trình duyệt \cite{pdfjsdocs}. Thư viện tải tài liệu, xác định số trang và vẽ từng trang lên vùng hiển thị. Phần xử lý chính có thể chạy qua worker để tránh chặn luồng giao diện khi giải mã nội dung PDF.
+
+RabbitCV sử dụng PDF.js để cung cấp trải nghiệm xem trước thống nhất thay vì phụ thuộc hoàn toàn vào trình đọc PDF tích hợp của từng trình duyệt. Giao diện có thể kiểm soát tỷ lệ, thứ tự trang, trạng thái đang tải và lỗi tài liệu. Người dùng nhờ đó có thể xem lại CV đã tải lên ngay trong luồng quản lý hoặc ứng tuyển mà không phải mở một ứng dụng bên ngoài.
+
+PDF.js có các đặc điểm chính như sau:
+
+\begin{itemize}
+    \item \textbf{Ưu điểm:} Có khả năng hiển thị đa nền tảng và tích hợp sâu với giao diện web.
+    \item \textbf{Hạn chế:} Tài liệu nhiều trang hoặc có đồ họa phức tạp tiêu tốn bộ nhớ và thời gian kết xuất; worker và tệp thư viện cũng làm tăng kích thước gói frontend.
+    \item \textbf{Cách tối ưu trong RabbitCV:} Nhóm PDF được tách thành gói riêng và chỉ được tải khi người dùng mở chức năng liên quan.
+\end{itemize}
+
+PDF tải lên là tài liệu gần như hoàn chỉnh, khác với CV có cấu trúc mà hệ thống có thể chỉnh sửa từng mục. RabbitCV phân biệt hai loại để chọn đúng cách hiển thị, cập nhật và sử dụng. Sự phân biệt này cũng tránh áp dụng nhầm thao tác chỉnh sửa cấu trúc cho một tệp chỉ có thể xem hoặc thay thế.
+
+\subsection{Kiểm tra, lưu trữ và tối ưu dữ liệu PDF}
+
+Không nên tin cậy tệp chỉ dựa trên tên hoặc phần mở rộng do trình duyệt gửi lên. Backend RabbitCV kiểm tra định dạng data URL, kiểu MIME, phần mở rộng, phần đầu tệp sau giải mã và dung lượng thực. Tệp chỉ được chấp nhận khi các dấu hiệu đều phù hợp với PDF và kích thước nằm trong giới hạn của hệ thống. Kiểm tra nhiều lớp giúp loại bỏ dữ liệu sai định dạng sớm và giảm nguy cơ lưu một nội dung không phải PDF dưới tên tệp PDF.
+
+CV cấu trúc và CV tải lên được đánh dấu bằng thuộc tính trạng thái để backend biết tài liệu được tạo từ dữ liệu biểu mẫu hay từ tệp. Với CV cấu trúc, dữ liệu các mục là nguồn chính và giao diện có thể kết xuất lại mẫu. Với CV tải lên, nội dung PDF là nguồn chính và người dùng thao tác trên tệp đã có. Cách phân loại này giúp các luồng xem, sửa, chọn CV khi ứng tuyển và xuất tài liệu hoạt động đúng theo loại hồ sơ.
+
+Dữ liệu PDF được mã hóa có kích thước lớn hơn tệp nhị phân ban đầu. Nếu đưa trường này vào mọi phản hồi danh sách, giao diện phải tải lượng dữ liệu lớn dù chỉ cần tên, ngày cập nhật và loại CV. RabbitCV dùng phép chiếu để loại dữ liệu PDF khỏi truy vấn danh sách; nội dung đầy đủ chỉ được trả khi mở một hồ sơ cụ thể. Biện pháp này giảm băng thông, thời gian xử lý JSON và mức sử dụng bộ nhớ ở cả máy chủ lẫn trình duyệt.
+
+Cách lưu dữ liệu mã hóa trong cơ sở dữ liệu phù hợp với quy mô và phạm vi hiện tại vì đơn giản hóa quá trình triển khai. Tuy nhiên, nếu số lượng hoặc dung lượng tệp tăng mạnh, hệ thống nên cân nhắc kho lưu trữ đối tượng và chỉ giữ đường dẫn cùng siêu dữ liệu trong MongoDB. Đây là giới hạn mở rộng cần được theo dõi, không làm thay đổi quy trình kiểm tra và phân quyền tải tệp.
+
+% \section{Giao tiếp và đồng bộ dữ liệu}
+
+% \subsection{Socket.IO và tin nhắn thời gian thực}
+
+% Socket.IO cung cấp giao tiếp hai chiều dựa trên sự kiện giữa trình duyệt và máy chủ, đồng thời hỗ trợ kết nối lại khi đường truyền bị gián đoạn \cite{socketiodocs}. Sau khi kết nối được xác thực, máy chủ đưa socket vào một phòng mang định danh người dùng. Phòng trong trường hợp này là nhóm kết nối logic; máy chủ có thể phát sự kiện đến đúng các thiết bị hoặc tab đang đăng nhập bằng cùng tài khoản mà không gửi cho mọi người dùng khác.
+
+% RabbitCV dùng Socket.IO cho tín hiệu và tin nhắn trò chuyện giữa ứng viên với doanh nghiệp. Tin nhắn được kiểm tra quyền tham gia hội thoại và lưu vào MongoDB trước, sau đó máy chủ phát sự kiện \texttt{newMessage} đến phòng của người nhận. Thứ tự lưu trước, phát sau giúp sự kiện chỉ thông báo về dữ liệu đã tồn tại bền vững. Giao diện có thể thêm tin nhắn mới, cập nhật chỉ báo và phản hồi ngay mà không phải tải lại toàn bộ trang.
+
+% Socket.IO mang lại độ trễ thấp và phù hợp với sự kiện phát sinh không dự đoán trước. Cơ chế kết nối lại hỗ trợ các gián đoạn ngắn, nhưng không bảo đảm mọi sự kiện đều được nhận khi người dùng ngoại tuyến lâu hoặc khi máy chủ khởi động lại. Vì vậy, Socket.IO không phải nguồn dữ liệu duy nhất. Khi mở cuộc trò chuyện hoặc sau khi mất kết nối, lịch sử vẫn được lấy qua REST API để đồng bộ với cơ sở dữ liệu.
+
+% Trong RabbitCV, Socket.IO không quản lý thông báo nghiệp vụ và không thay thế TanStack Query. Phạm vi của nó được giới hạn ở trò chuyện thời gian thực, giúp kiến trúc dễ hiểu: REST API chịu trách nhiệm dữ liệu bền vững, Socket.IO phát tín hiệu mới, còn frontend quyết định cập nhật hoặc tải lại dữ liệu liên quan.
+
+% \subsection{Đồng bộ thông báo bằng fetch và TanStack Query}
+
+% Thông báo về hồ sơ, tuyển dụng hoặc thay đổi trạng thái được đồng bộ thông qua REST API. Các hàm frontend sử dụng \texttt{fetch} để gửi cookie xác thực và nhận JSON; TanStack Query quản lý kết quả theo khóa, trạng thái tải, phân trang và số lượng chưa đọc. Khi người dùng đánh dấu đã đọc hoặc xóa một mục khỏi phần hiển thị, bộ nhớ đệm liên quan được cập nhật và những truy vấn cần thiết được làm mới.
+
+% RabbitCV kiểm tra số thông báo chưa đọc theo chu kỳ 30 giây. Cách lấy định kỳ này không tức thời tuyệt đối như sự kiện Socket.IO, nhưng đơn giản, dễ phục hồi và phù hợp với thông báo không yêu cầu phản hồi trong từng mili giây. Nếu một lần gọi thất bại, lần làm mới sau có thể lấy lại trạng thái từ máy chủ mà không cần duy trì hàng đợi sự kiện riêng ở trình duyệt.
+
+% Cơ chế đồng bộ thông báo có các đặc điểm sau:
+
+% \begin{itemize}
+%     \item \textbf{Ưu điểm:} Dữ liệu luôn có thể được tái tạo từ API và tích hợp trực tiếp với bộ nhớ đệm của TanStack Query.
+%     \item \textbf{Hạn chế:} Mỗi phiên hoạt động tạo yêu cầu theo chu kỳ và thông báo có thể xuất hiện chậm tối đa gần một chu kỳ.
+%     \item \textbf{Cách lựa chọn chu kỳ:} Khoảng thời gian cần được cân nhắc dựa trên mức độ tức thời và tải máy chủ; với phạm vi RabbitCV, 30 giây là sự cân bằng giữa trải nghiệm và số lượng yêu cầu.
+% \end{itemize}
+
+% Việc tách trò chuyện và thông báo thành hai cơ chế cũng phản ánh yêu cầu khác nhau. Trò chuyện cần tương tác liên tục nên sử dụng Socket.IO; thông báo nghiệp vụ ưu tiên tính phục hồi và có thể chấp nhận độ trễ ngắn nên dùng REST cùng TanStack Query. Cả hai cuối cùng đều dựa trên dữ liệu đã lưu ở backend thay vì chỉ giữ trạng thái tạm thời trên giao diện.
+
+% \section{Xác thực, phân quyền và bảo mật}
+
+% \subsection{JWT, cookie HTTP-only và bcryptjs}
+
+% JWT là định dạng gọn để biểu diễn các claim giữa các bên \cite{rfc7519}. Sau khi người dùng đăng nhập thành công, RabbitCV tạo token chứa định danh và vai trò, ký token bằng bí mật của máy chủ rồi lưu trong cookie HTTP-only. Trình duyệt tự gửi cookie trong yêu cầu phù hợp, nhưng JavaScript phía giao diện không thể đọc trực tiếp giá trị token. Backend xác minh chữ ký và thời hạn trước khi gắn thông tin người dùng vào yêu cầu.
+
+% Cookie được cấu hình các thuộc tính phù hợp với môi trường như HTTP-only, Secure và SameSite. HTTP-only giảm khả năng mã JavaScript bị chèn đọc token; Secure yêu cầu truyền qua HTTPS trong môi trường triển khai; SameSite hỗ trợ hạn chế gửi cookie trong một số yêu cầu khác nguồn. Các thuộc tính này cần được kết hợp với cấu hình CORS, thời hạn token và quy trình đăng xuất, vì không thuộc tính đơn lẻ nào bảo vệ toàn bộ phiên.
+
+% Mật khẩu được băm bằng \texttt{bcryptjs} trước khi lưu. Thuật toán bổ sung salt và chi phí tính toán để làm chậm việc thử nhiều mật khẩu nếu dữ liệu băm bị lộ. Khi đăng nhập, hệ thống so sánh mật khẩu nhập vào với giá trị băm chứ không giải mã mật khẩu đã lưu. Các trường mật khẩu, mã PIN và thông tin xác thực không được đưa vào phản hồi tài khoản.
+
+% Sự kết hợp JWT và cookie giúp backend duy trì phiên không cần lưu token trong bộ nhớ trình duyệt mà mã giao diện có thể truy cập. Tuy nhiên, hệ thống vẫn phải phòng ngừa yêu cầu giả mạo, thu hồi quyền khi trạng thái tài khoản thay đổi và không đặt dữ liệu nhạy cảm vào payload JWT, vì payload chỉ được mã hóa biểu diễn chứ không được che giấu nội dung.
+
+% \subsection{RBAC và kiểm tra quyền sở hữu}
+
+% RBAC là cơ chế kiểm soát truy cập dựa trên vai trò. RabbitCV phân biệt ba nhóm chính: ứng viên, doanh nghiệp và quản trị viên. Vai trò xác định nhóm chức năng người dùng có thể tiếp cận, chẳng hạn ứng viên quản lý CV và ứng tuyển; doanh nghiệp đăng tin và xử lý hồ sơ; quản trị viên giám sát các tài nguyên theo chính sách hệ thống. Middleware vai trò chặn yêu cầu không thuộc nhóm được phép trước khi thực hiện nghiệp vụ.
+
+% Chỉ kiểm tra vai trò chưa đủ vì hai người có cùng vai trò không đương nhiên được truy cập dữ liệu của nhau. Backend kết hợp RBAC với kiểm tra quyền sở hữu và quan hệ nghiệp vụ. Ứng viên chỉ sửa hoặc xóa CV do mình sở hữu; doanh nghiệp chỉ quản lý tin tuyển dụng và hồ sơ thuộc phạm vi tuyển dụng của mình; người dùng chỉ đọc cuộc trò chuyện mà họ là thành viên. Quyền được xác định lại từ dữ liệu ở máy chủ thay vì tin vào mã định danh hoặc vai trò do frontend gửi lên.
+
+% Frontend cũng có lớp bảo vệ đường dẫn và ẩn chức năng theo vai trò. Lớp này giúp người dùng không điều hướng nhầm và làm giao diện rõ ràng hơn, nhưng không được xem là biện pháp bảo mật chính. Người dùng vẫn có thể tự tạo yêu cầu API, nên mọi đường dẫn nhạy cảm phải xác thực token, vai trò và quyền trên tài nguyên ở backend.
+
+% RBAC có các đặc điểm cần lưu ý trong RabbitCV:
+
+% \begin{itemize}
+%     \item \textbf{Ưu điểm:} Dễ mô tả quyền theo nhóm và phù hợp với ba tác nhân rõ ràng của hệ thống. Khi kết hợp với kiểm tra quyền sở hữu, mô hình tránh cấp quyền quá rộng cho những người dùng có cùng vai trò.
+%     \item \textbf{Hạn chế:} Số lượng điều kiện có thể tăng khi nghiệp vụ phức tạp; vì vậy ma trận phân quyền và các hàm kiểm tra dùng chung cần được duy trì nhất quán với yêu cầu hệ thống.
+% \end{itemize}
+
+% \subsection{CORS, Helmet và giới hạn tốc độ}
+
+% CORS quy định nguồn giao diện nào được trình duyệt cho phép gửi yêu cầu có thông tin xác thực đến backend. RabbitCV cấu hình danh sách nguồn phù hợp thay vì cho phép tùy ý, đồng thời cho phép cookie trên các yêu cầu cần phiên. CORS chủ yếu là chính sách do trình duyệt thực thi và không thay thế xác thực; một công cụ bên ngoài trình duyệt vẫn có thể gửi yêu cầu, nên backend phải kiểm tra mọi yêu cầu độc lập.
+
+% Helmet thiết lập tập hợp HTTP header giúp giảm một số rủi ro phổ biến như suy đoán kiểu nội dung, nhúng trang ngoài ý muốn và sử dụng tài nguyên không đúng chính sách. Các header tạo lớp cấu hình an toàn mặc định cho ứng dụng Express. Khi hệ thống dùng tài nguyên ngoài hoặc worker PDF, chính sách cần được điều chỉnh có chủ đích để vừa cho phép chức năng cần thiết vừa không mở phạm vi quá rộng.
+
+% Giới hạn tốc độ kiểm soát số yêu cầu từ một nguồn trong một khoảng thời gian. RabbitCV có giới hạn chung cho API và giới hạn chặt hơn cho đăng nhập, đăng ký cũng như chức năng AI. Biện pháp này làm chậm hành vi thử mật khẩu, tạo tài khoản hàng loạt hoặc tiêu thụ tài nguyên AI quá mức. Hạn mức theo tài khoản ở mô-đun AI bổ sung cho giới hạn theo yêu cầu, vì người dùng có thể thay đổi kết nối nhưng vẫn dùng cùng một tài khoản.
+
+% Các lớp bảo vệ trên giúp giảm bề mặt tấn công nhưng không thay thế việc kiểm tra dữ liệu, quản lý bí mật, ghi log và cập nhật phụ thuộc. Cách tiếp cận của RabbitCV là dùng nhiều lớp có phạm vi khác nhau: CORS kiểm soát nguồn trình duyệt, Helmet củng cố phản hồi HTTP, rate limit giảm lạm dụng, còn xác thực và phân quyền quyết định ai được thao tác trên tài nguyên nào \cite{owaspasvs}.
+
+% \section{Công cụ phát triển, kiểm thử và triển khai}
+
+% \subsection{Git, GitHub và quản lý nhánh}
+
+% Git là hệ thống quản lý phiên bản phân tán, lưu lịch sử thay đổi dưới dạng commit và cho phép phát triển trên nhiều nhánh. Mỗi nhánh là một chuỗi lịch sử độc lập tại một thời điểm, vì vậy thay đổi thử nghiệm có thể được thực hiện mà không làm thay đổi nội dung của nhánh chính. Khi chức năng đã được kiểm tra, các thay đổi cần thiết mới được hợp nhất theo quy trình của dự án.
+
+% GitHub cung cấp kho lưu trữ từ xa để đồng bộ mã nguồn, theo dõi lịch sử và hỗ trợ xem xét thay đổi. Việc đẩy một nhánh lên GitHub không tự động làm thay đổi nhánh khác; các nhánh vẫn giữ nội dung riêng cho đến khi có thao tác hợp nhất. Cơ chế này phù hợp với quá trình phát triển RabbitCV vì mã ứng dụng và báo cáo có thể được chỉnh sửa, biên dịch và đánh giá trên nhánh riêng trước khi quyết định đưa vào phiên bản chính.
+
+% Quản lý nhánh mang lại các lợi ích và yêu cầu sau:
+
+% \begin{itemize}
+%     \item \textbf{Ưu điểm:} Cô lập rủi ro, dễ so sánh và có thể quay lại những mốc đã ghi nhận.
+%     \item \textbf{Hạn chế:} Nhánh tồn tại quá lâu có thể lệch xa nhau và phát sinh xung đột khi hợp nhất.
+%     \item \textbf{Nguyên tắc thực hiện:} Dự án cần tạo commit có nội dung rõ, đồng bộ thay đổi thường xuyên và chỉ đưa vào commit các tệp nguồn cần thiết thay vì các tệp phụ sinh ra khi biên dịch.
+% \end{itemize}
+
+% Đối với báo cáo LaTeX, PDF có thể được biên dịch và xem ngay trên bất kỳ nhánh nào sau khi nhánh đó được checkout về máy. Tệp PDF được tạo phản ánh đúng nội dung nguồn của nhánh hiện tại; việc xem hoặc biên dịch không yêu cầu nhánh phải được hợp nhất vào \texttt{main}.
+
+% \subsection{ESLint, Node Test Runner và quy trình kiểm tra}
+
+% ESLint phân tích tĩnh mã JavaScript và React để phát hiện quy tắc không nhất quán, biến không sử dụng và một số mẫu mã dễ gây lỗi. Kiểm tra tĩnh không chạy nghiệp vụ nhưng cung cấp phản hồi sớm ngay trong quá trình phát triển. Quy tắc chung giúp mã do nhiều phần chức năng tạo ra có phong cách nhất quán và giảm những lỗi đơn giản trước khi kiểm thử.
+
+% Node Test Runner thực thi các tệp kiểm thử tự động trong môi trường Node.js. Dự án sử dụng kiểm thử để xác nhận những quy tắc có thể tách biệt như kiểm tra dữ liệu, quyền truy cập, tiện ích bảo mật, xử lý AI và các điều kiện nghiệp vụ quan trọng. Kiểm thử có thể chạy lặp lại sau khi sửa mã, giúp phát hiện trường hợp một thay đổi mới làm hỏng hành vi đã có.
+
+% Quy trình kiểm tra còn bao gồm bước đóng gói frontend bằng Vite. Một bản build thành công xác nhận các mô-đun có thể được phân giải và mã frontend có thể tạo thành tài nguyên triển khai. Khi kết hợp lint, test và build, dự án kiểm tra ba lớp khác nhau: chất lượng tĩnh của mã, hành vi của các quy tắc và khả năng tạo bản phân phối.
+
+% Các công cụ tự động làm tăng khả năng phát hiện lỗi nhưng không chứng minh toàn bộ hệ thống đúng. Những luồng qua nhiều thành phần, hành vi trình duyệt, bố cục CV và cấu hình môi trường vẫn cần kiểm tra tích hợp hoặc kiểm tra thủ công. Kết quả và phạm vi kiểm thử cụ thể của RabbitCV được trình bày tại chương kiểm thử và đánh giá.
+
+% \subsection{Vercel, cấu hình triển khai và Vercel Cron}
+
+% Vercel được sử dụng để triển khai frontend đã đóng gói và hàm Node.js phục vụ API. Tệp \texttt{vercel.json} mô tả cách định tuyến yêu cầu giao diện, API và những đường dẫn cần thiết của hệ thống. Các biến môi trường chứa chuỗi kết nối cơ sở dữ liệu, bí mật JWT và khóa dịch vụ được cấu hình ở nền tảng triển khai thay vì ghi trực tiếp trong mã nguồn.
+
+% Mô hình triển khai này hỗ trợ tạo bản mới từ mã nguồn và cung cấp HTTPS cho ứng dụng. Frontend tĩnh có thể được phân phối hiệu quả, còn API được khởi tạo theo yêu cầu. Những đặc điểm chính gồm:
+
+% \begin{itemize}
+%     \item \textbf{Ưu điểm:} Giảm công việc vận hành máy chủ cố định và phù hợp với phạm vi đồ án.
+%     \item \textbf{Hạn chế:} Tiến trình trong môi trường hàm không tồn tại liên tục, thời gian thực thi có giới hạn và kết nối thời gian thực cần được kiểm tra theo khả năng của nền tảng.
+% \end{itemize}
+
+% Vercel Cron là dịch vụ gửi yêu cầu theo lịch đến một đường dẫn đã cấu hình \cite{vercelcrondocs}. RabbitCV dùng lịch hằng ngày để gọi \texttt{/api/cron/job-expiry}, từ đó cập nhật trạng thái những tin tuyển dụng đã hết hạn. Đường dẫn kiểm tra bí mật cron trước khi thực hiện, tránh để người dùng thông thường kích hoạt tác vụ quản trị. Tác vụ này do nền tảng gọi theo lịch, không sử dụng \texttt{node-cron} chạy thường trực trong tiến trình backend.
+
+% Cron phù hợp với việc bảo trì định kỳ không cần phản hồi trực tiếp cho người dùng. Tuy nhiên, tác vụ phải được thiết kế để chạy lặp an toàn, có xử lý lỗi và không giả định tiến trình luôn hoạt động. Nếu hệ thống mở rộng, việc theo dõi lần chạy, cảnh báo thất bại và cơ chế thử lại cần được bổ sung để bảo đảm tin tuyển dụng được cập nhật đúng thời điểm.
+
+% \section{Tổng kết chương}
+
+% Các công nghệ trong chương được lựa chọn theo yêu cầu thực tế của RabbitCV thay vì hoạt động riêng lẻ. React và các thư viện liên quan tạo giao diện; Node.js và Express cung cấp nghiệp vụ; MongoDB và Mongoose lưu dữ liệu; công nghệ AI hỗ trợ xử lý nội dung; PDF.js cùng cơ chế in phục vụ CV; còn các lớp đồng bộ và bảo mật kết nối những phần trên thành một hệ thống hoàn chỉnh. Bảng~\ref{tab:used-technologies-summary} tổng hợp vai trò của từng nhóm. Chương tiếp theo chuyển từ việc giới thiệu công nghệ sang phân tích yêu cầu, kiến trúc tổng thể, mô hình dữ liệu và các quy trình chính của hệ thống.
+
+% \begin{table}[H]
+%     \centering
+%     \small
+%     \begin{tabularx}{\textwidth}{|p{0.18\textwidth}|p{0.28\textwidth}|Y|} \hline
+%         \textbf{Nhóm} & \textbf{Công nghệ chính} & \textbf{Vai trò trong RabbitCV} \\ \hline
+%         Giao diện & React, React Router, React Context, TanStack Query, Vite, Tailwind CSS & Xây dựng thành phần và đường dẫn, quản lý trạng thái dùng chung, đồng bộ dữ liệu máy chủ, tải lười và tổ chức giao diện đáp ứng. \\ \hline
+%         Máy chủ & Node.js, Express, REST API & Tiếp nhận yêu cầu, áp dụng chuỗi xử lý trung gian, thực hiện nghiệp vụ và cung cấp dữ liệu cho giao diện. \\ \hline
+%         Dữ liệu & MongoDB, Mongoose & Biểu diễn dữ liệu tài liệu, khai báo schema, liên kết tài nguyên, tạo chỉ mục và duy trì ràng buộc. \\ \hline
+%         Trí tuệ nhân tạo & Groq, OpenAI SDK, JSON Schema & Gọi mô hình, yêu cầu đầu ra có cấu trúc, kiểm soát đầu vào, hạn mức và thống kê sử dụng. \\ \hline
+%     \end{tabularx}
+%     \caption{Tổng hợp các nhóm công nghệ được sử dụng}
+%     \label{tab:used-technologies-summary}
+% \end{table}
+
+% \begin{table}[H]
+%     \centering
+%     \small
+%     \begin{tabularx}{\textwidth}{|p{0.18\textwidth}|p{0.28\textwidth}|Y|} \hline
+%         \textbf{Nhóm} & \textbf{Công nghệ chính} & \textbf{Vai trò trong RabbitCV} \\ \hline
+%         CV và PDF & HTML/CSS, react-to-print, PDF.js & Trình bày CV A4, hỗ trợ in hoặc lưu PDF, hiển thị và kiểm tra PDF do người dùng tải lên. \\ \hline
+%         Đồng bộ & REST API, Socket.IO, TanStack Query & Lưu dữ liệu bền vững, phát tin nhắn thời gian thực và làm mới thông báo theo chu kỳ. \\ \hline
+%         Bảo mật & JWT, bcryptjs, RBAC, CORS, Helmet, rate limit & Duy trì phiên, bảo vệ mật khẩu, kiểm tra vai trò và quyền sở hữu, giảm yêu cầu không hợp lệ hoặc lạm dụng. \\ \hline
+%         Kiểm thử và triển khai & Git, GitHub, ESLint, Node Test Runner, Vercel & Quản lý phiên bản, kiểm tra mã và hành vi, tạo bản build, triển khai API và thực hiện tác vụ định kỳ. \\ \hline
+%     \end{tabularx}
+%     \par\smallskip
+%     Bảng~\ref{tab:used-technologies-summary} (tiếp theo)
+% \end{table}

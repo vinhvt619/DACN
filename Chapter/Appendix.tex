@@ -3,7 +3,7 @@
 
 \section{Quy trình tái lập kiểm tra}
 
-Các lệnh sau được thực hiện từ thư mục gốc mã nguồn DA2. \texttt{npm ci} phù hợp khi cần cài đúng dependency từ lockfile; lần đánh giá trong báo cáo sử dụng dependency đã cài và chạy trực tiếp \texttt{npm run check}.
+Các lệnh sau được thực hiện từ thư mục gốc mã nguồn DA2. \texttt{npm ci} phù hợp khi cần cài đúng dependency từ lockfile; lần đánh giá ngày 09/08/2026 sử dụng dependency đã cài và chạy trực tiếp \texttt{npm run check}. Kết quả ghi nhận là ESLint không có lỗi/cảnh báo, 41/41 test đạt và Vite 7.3.6 build 1.906 module thành công.
 
 \begin{verbatim}
 npm ci
@@ -36,14 +36,18 @@ Trước khi lưu số liệu kiểm thử chính thức, cần ghi lại ngày 
     \begin{tabularx}{\textwidth}{|p{0.34\textwidth}|Y|} \hline
         \textbf{Tên biến} & \textbf{Mục đích} \\ \hline
         \texttt{PORT} & Cổng lắng nghe của backend. \\ \hline
-        \texttt{MONGO_URI} & Chuỗi kết nối MongoDB; giá trị có thể chứa credential và phải được bảo vệ. \\ \hline
+        \texttt{MONGODB_URI}, \texttt{MONGO_URI} & Chuỗi kết nối MongoDB; \texttt{MONGO\_URI} được ưu tiên nếu cả hai cùng tồn tại. Giá trị có thể chứa thông tin xác thực và phải được bảo vệ. \\ \hline
+        \texttt{MONGO_DB_NAME} & Tên cơ sở dữ liệu; mặc định là \texttt{RabbitCV}. \\ \hline
         \texttt{JWT_SECRET} & Khóa ký/xác minh JWT; production phải dùng giá trị ngẫu nhiên mạnh. \\ \hline
         \texttt{NODE_ENV} & Phân biệt môi trường phát triển và production. \\ \hline
+        \texttt{CLIENT_URL} & Bổ sung nguồn frontend được CORS cho phép. \\ \hline
+        \texttt{VITE_SOCKET_URL} & Ghi đè địa chỉ Socket.IO ở frontend khi không dùng địa chỉ mặc định. \\ \hline
         \texttt{AI_ENABLED} & Bật hoặc tắt toàn bộ nhóm chức năng AI. \\ \hline
         \texttt{AI_DAILY_LIMIT} & Quota AI theo user trong một ngày. \\ \hline
         \texttt{AI_REQUEST_TIMEOUT_MS} & Thời gian tối đa chờ provider cho một request. \\ \hline
         \texttt{GROQ_API_KEY} & Khóa truy cập Groq; chỉ đặt ở backend/secret store. \\ \hline
         \texttt{GROQ_MODEL} & Tên model dùng cho các workflow AI. \\ \hline
+        \texttt{CRON_SECRET} & Khóa Bearer bảo vệ endpoint Vercel Cron ở production. \\ \hline
     \end{tabularx}
     \caption{Danh sách biến môi trường không kèm giá trị bí mật}
     \label{tab:environment-variables}
@@ -58,7 +62,7 @@ Bảng \ref{tab:api-catalog} và \ref{tab:api-catalog-part2} dùng prefix để 
     \footnotesize
     \begin{tabularx}{\textwidth}{|p{0.23\textwidth}|p{0.30\textwidth}|Y|} \hline
         \textbf{Miền} & \textbf{Prefix/tài nguyên} & \textbf{Phương thức và thao tác chính} \\ \hline
-        Health & \texttt{/api/health} & GET trạng thái tổng quát; admin có GET health details. \\ \hline
+        Vận hành & \texttt{/api/health}, \texttt{/api/admin/health/details}, \texttt{/api/cron/job-expiry} & GET trạng thái tối giản; admin đọc chẩn đoán; Vercel Cron gọi kiểm tra hạn tin bằng Bearer secret. \\ \hline
         Xác thực & \texttt{/api/register}, \texttt{/api/login}, \texttt{/api/logout}, \texttt{/api/me} & POST đăng ký, đăng nhập, đăng xuất; GET phiên hiện tại. \\ \hline
         Hồ sơ User & \texttt{/api/user}, \texttt{/api/users} & GET tìm kiếm/xem profile; PUT profile, security và password. \\ \hline
         Resume & \texttt{/api/resume}, \texttt{/api/resumes} & GET danh sách/chi tiết/view; POST tạo hoặc cập nhật; DELETE theo id. \\ \hline
@@ -77,7 +81,7 @@ Bảng \ref{tab:api-catalog} và \ref{tab:api-catalog-part2} dùng prefix để 
         \textbf{Miền} & \textbf{Prefix/tài nguyên} & \textbf{Phương thức và thao tác chính} \\ \hline
         Message/chat & \texttt{/api/messages}, \texttt{/api/chat} & GET/POST message; GET user/thread/unread; PATCH đọc hoặc ẩn room. \\ \hline
         Notification & \texttt{/api/notifications} & GET danh sách/số chưa đọc; PUT đọc từng mục/tất cả; DELETE theo id. \\ \hline
-        AI & \texttt{/api/ai} & GET status; POST resume improve, review, fill, score và interview turn. \\ \hline
+        AI & \texttt{/api/ai} & GET trạng thái/model/quota; POST viết tiểu sử, review, điền CV, chấm CV--Job và từng lượt phỏng vấn. \\ \hline
         Admin Job & \texttt{/api/admin/jobs} & GET danh sách; PUT hide/unhide; DELETE theo id. \\ \hline
         Admin Company & \texttt{/api/admin/companies} & GET danh sách; PUT trạng thái verification. \\ \hline
         Admin User & \texttt{/api/admin/users} & PUT ban; DELETE theo id. \\ \hline
@@ -100,6 +104,8 @@ Bảng \ref{tab:api-catalog} và \ref{tab:api-catalog-part2} dùng prefix để 
         Danh sách Resume không trả \texttt{pdfData} & Truy vấn metadata không kéo theo toàn bộ base64 và không lộ file ngoài nhu cầu. \\ \hline
         Trạng thái chat gắn với user--room & Đánh dấu đọc hoặc ẩn của một phía không thay đổi dữ liệu cá nhân của phía còn lại. \\ \hline
         AiUsage không cần nguyên prompt & Quota và quan sát kỹ thuật dùng metadata/hash; dữ liệu CV đầy đủ không được lưu lại chỉ vì mục đích thống kê. \\ \hline
+        Rich text CV qua danh sách cho phép & Thẻ định dạng được giữ nhưng thuộc tính, script, iframe, object và nội dung nhúng thực thi phải bị loại ở server. \\ \hline
+        Cron không gửi thông báo lặp theo trạng thái & Các mốc đã thông báo chỉ được cập nhật sau khi tạo notification thành công; cần test thêm gọi đồng thời. \\ \hline
     \end{tabularx}
     \caption{Các bất biến quan trọng cho integration test}
     \label{tab:data-invariants}
@@ -130,10 +136,12 @@ Một quy trình tối thiểu nên dùng ít nhất 20 CV đã ẩn danh, trả
 \section{Checklist trước khi nộp phiên bản chính thức}
 
 \begin{itemize}
-    \item Commit toàn bộ mã nguồn DA2 dùng làm bằng chứng và gắn tag phiên bản.
+    \item Commit toàn bộ mã nguồn DA2 dùng làm bằng chứng, loại tệp tạm và gắn tag phiên bản.
     \item Chạy lại \texttt{npm run check}; lưu output và cập nhật số liệu nếu thay đổi.
     \item Chạy checklist thủ công ở Bảng \ref{tab:manual-checklist} và lưu ảnh/kết quả thực tế.
     \item Xác minh tên đề tài, sinh viên, giảng viên, loại báo cáo và tháng nộp trên bìa.
     \item Biên dịch LaTeX từ đầu, kiểm tra citation/reference và xem trực quan toàn bộ PDF.
-    \item Loại secret, dữ liệu CV thật, tài khoản demo có mật khẩu và file môi trường khỏi Git/PDF.
+    \item Bắt buộc cấu hình JWT secret ở production; vô hiệu hóa việc tự tạo tài khoản quản trị trình diễn và không công bố mật khẩu trong Git/PDF.
+    \item Kiểm thử quyền vai trò ở API AI, lưu việc, ứng tuyển; kiểm tra thành viên phòng và giới hạn ảnh chat ở server.
+    \item Loại secret, dữ liệu CV thật, cookie, URI có thông tin xác thực và file môi trường khỏi Git/PDF.
 \end{itemize}

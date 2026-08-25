@@ -1,0 +1,138 @@
+% !TEX root = ../main.tex
+\chapter{Cơ sở lý thuyết}
+
+\section{Kiến trúc ứng dụng web}
+
+RabbitCV được triển khai theo kiến trúc client--server dạng monolith module.
+
+Ở phía client, React và React Router tổ chức giao diện theo các nhóm trang công khai, ứng viên, doanh nghiệp và quản trị. TanStack Query quản lý dữ liệu lấy từ server bằng cache, truy vấn lại và cập nhật lạc quan. React Hook Form kết hợp Zod kiểm tra dữ liệu biểu mẫu trước khi gửi. Vite đảm nhiệm máy chủ phát triển, proxy các đường dẫn \texttt{/api} và \texttt{/socket.io} đến backend, đồng thời chia frontend production thành các nhóm thư viện như PDF, rich text, query, form và React để giảm lượng mã tải ban đầu.
+
+Ở phía server, Node.js và Express tập trung vào trong \texttt{server/server.js}, sau đó chuyển tiếp đến các route nghiệp vụ, service AI, schema đầu ra, sanitizer, model Mongoose và các hàm xử lý dùng chung. Chuỗi middleware đặt trước nghiệp vụ gồm CORS, Helmet, cookie parser, giới hạn tốc độ và xác thực JWT. Backend là nơi quyết định cuối cùng về phiên đăng nhập, vai trò, quyền sở hữu dữ liệu, giới hạn request và tính hợp lệ của payload.
+
+\section{MERN Stack}
+
+MERN Stack là một nhóm công nghệ dùng để xây dựng ứng dụng web toàn ngăn xếp, gồm MongoDB, Express, React và Node.js. MongoDB đảm nhiệm lưu trữ dữ liệu dưới dạng tài liệu; Express cung cấp cơ chế định tuyến và middleware cho máy chủ; React xây dựng giao diện người dùng theo các component; còn Node.js cung cấp môi trường chạy JavaScript phía máy chủ.
+
+Bốn thành phần có thể phối hợp qua REST API và dữ liệu JSON, giúp quá trình phát triển giữa frontend và backend có sự thống nhất về ngôn ngữ và cách trao đổi dữ liệu:
+
+\begin{itemize}
+    \item React đảm nhiệm phần giao diện và các luồng tương tác;
+    \item Node.js và Express xử lý REST API, xác thực, phân quyền và nghiệp vụ;
+    \item MongoDB kết hợp với Mongoose để lưu trữ người dùng, CV, tin tuyển dụng, đơn ứng tuyển, tin nhắn và các dữ liệu liên quan.
+\end{itemize}
+
+MERN Stack phù hợp với đề tài vì hỗ trợ phát triển nhanh ứng dụng web có dữ liệu thay đổi thường xuyên, cấu trúc CV lồng nhau và các chức năng cần giao tiếp giữa trình duyệt với máy chủ.
+
+\clearpage
+
+\section{Cơ chế phân quyền RBAC}
+
+RBAC (Role-Based Access Control) là cơ chế kiểm soát truy cập dựa trên vai trò. Thay vì cấp quyền riêng lẻ cho từng tài khoản, hệ thống gán cho người dùng một vai trò và xác định các thao tác mà vai trò đó được phép thực hiện. Cách tổ chức này giúp chính sách quyền dễ mô tả, dễ kiểm tra và hạn chế việc lặp lại các điều kiện phân quyền trong từng chức năng.
+
+RabbitCV tổ chức người dùng thành bốn vai trò chính:
+
+\begin{itemize}
+    \item Khách: khi chưa đăng nhập chỉ được truy cập các nội dung công khai.
+    \item Ứng viên: khi đăng nhập được quản lý CV cá nhân, lưu việc, ứng tuyển và sử dụng các chức năng hỗ trợ AI.
+    \item Doanh nghiệp: khi đăng nhập được tạo và quản lý tin tuyển dụng của mình, xem các hồ sơ liên quan đến tin đã đăng và cập nhật trạng thái xử lý ứng tuyển.
+    \item Quản trị viên: khi đăng nhập được sử dụng các chức năng quản trị người dùng, doanh nghiệp và tin tuyển dụng.
+\end{itemize}
+
+Khi đăng nhập, vai trò được đưa vào thông tin phiên và token JWT. Backend xác minh token trước khi xử lý API riêng tư, sau đó kiểm tra vai trò đối với các thao tác đặc quyền. Với dữ liệu có phạm vi sở hữu, kiểm tra vai trò được kết hợp với kiểm tra quan hệ giữa người dùng và dữ liệu: doanh nghiệp chỉ thao tác trên tin do mình quản lý, ứng viên chỉ chỉnh sửa CV của mình, còn quản trị viên có quyền quản trị theo chính sách hệ thống. Vì vậy, RabbitCV sử dụng RBAC kết hợp với kiểm tra quyền sở hữu và ngữ cảnh nghiệp vụ, thay vì chỉ dựa vào việc người dùng đã đăng nhập.
+
+\section{Lựa chọn công nghệ}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.19\textwidth}|p{0.24\textwidth}|Y|} \hline
+        \textbf{Công nghệ} & \textbf{Vai trò} & \textbf{Lý do trong RabbitCV} \\ \hline
+        React, React Router & Component, state và điều hướng. & Giao diện có nhiều biểu mẫu CV, vùng xem trước, cổng theo vai trò và trang được tải lười. \\ \hline
+        Vite, Tailwind CSS, Radix UI, Sonner & Phát triển, đóng gói và nền tảng giao diện. & Chia gói mã theo nhóm; thống nhất bố cục, hộp thoại, danh sách chọn, menu và phản hồi thao tác. \\ \hline
+        Node.js, Express & REST API và middleware. & Dùng JavaScript xuyên suốt, thuận tiện chia sẻ định dạng JSON và xử lý dữ liệu bất đồng bộ. \\ \hline
+        MongoDB, Mongoose & Lưu tài liệu và mô hình dữ liệu. & CV có nhiều mảng lồng nhau; schema và index giúp ràng buộc các quy tắc quan trọng. \\ \hline
+        Socket.IO & Nhắn tin bằng sự kiện. & Hỗ trợ room, xác thực khi bắt tay và kết nối lại ở phía client. \\ \hline
+        react-to-print, PDF.js & Xuất và kết xuất CV PDF. & Dùng chung quy tắc in A4 cho CV web và hiển thị từng trang PDF tải lên thay vì phụ thuộc trình xem gốc. \\ \hline
+        Groq, OpenAI SDK & Gọi mô hình ngôn ngữ. & API tương thích OpenAI và hỗ trợ đầu ra theo JSON Schema cho các luồng AI. \\ \hline
+    \end{tabularx}
+    \caption{Vai trò và lý do lựa chọn công nghệ}
+    \label{tab:technology-choice}
+\end{table}
+
+\section{Xây dựng và quản lý giao diện người dùng}
+
+RabbitCV sử dụng React để tổ chức giao diện. Các trang giao diện được chia theo nhóm chức năng gồm: trang công khai, trang ứng viên, trang doanh nghiệp và trang quản trị.
+Những thành phần chung như thanh điều hướng, biểu mẫu, hộp xác nhận, thông báo và vùng xem trước được tách riêng để hạn chế lặp mã và duy trì cách trình bày thống nhất.
+
+Thông tin phiên đăng nhập, danh sách tin nhắn và các hộp thoại dùng chung được cung cấp cho những trang liên quan thông qua React Context. React Router quản lý đường dẫn và nhóm trang của hệ thống \cite{reactrouterdocs}.
+
+TanStack Query được sử dụng để quản lý dữ liệu lấy từ máy chủ thông qua khóa truy vấn, bộ nhớ đệm, trạng thái tải, trạng thái lỗi và cơ chế làm mới dữ liệu \cite{tanstackquerydocs}. Việc lưu và tái sử dụng dữ liệu theo từng khóa giúp hạn chế các yêu cầu lặp, đồng thời giúp giao diện phản hồi nhanh hơn sau thao tác của người dùng.
+
+Bên cạnh đó, cơ chế \textit{lazy load} được áp dụng cho mã nguồn frontend của các trang lớn thông qua \texttt{React.lazy} và \texttt{Suspense}. Nhờ đó, mã của một trang chỉ được tải khi người dùng điều hướng đến trang đó, góp phần giảm dung lượng phải tải ở lần truy cập đầu tiên.
+
+React Hook Form kết hợp với Zod để kiểm tra dữ liệu biểu mẫu ở phía trình duyệt, hiển thị lỗi theo từng trường và chỉ gửi yêu cầu khi dữ liệu cơ bản hợp lệ. Việc tách dữ liệu máy chủ khỏi trạng thái trình bày, đồng thời tách mã nguồn theo từng trang, giúp mã dễ theo dõi, giảm yêu cầu không cần thiết và hạn chế tình trạng các trang sử dụng những bản dữ liệu không đồng nhất.
+
+% \section{Node.js và Express}
+
+% Node.js là môi trường thực thi JavaScript ở phía máy chủ, sử dụng vòng lặp sự kiện và cơ chế vào/ra bất đồng bộ. Mô hình này phù hợp với các yêu cầu phải chờ như truy vấn cơ sở dữ liệu, đọc tệp hoặc gọi dịch vụ AI mà không cần giữ một luồng xử lý riêng cho từng yêu cầu \cite{nodedocs}. Express là thư viện xây dựng trên Node.js, cung cấp cơ chế định tuyến và middleware để tổ chức REST API \cite{expressdocs}. Trong RabbitCV, Node.js tạo máy chủ HTTP, gắn ứng dụng Express và dùng cùng máy chủ đó cho kết nối Socket.IO. Việc tổ chức theo chuỗi giúp các quy tắc dùng chung được áp dụng nhất quán, đồng thời tránh lặp lại cùng một logic bảo mật trong từng đường dẫn API.
+
+% \section{MongoDB và Mongoose}
+
+% MongoDB lưu dữ liệu ở dạng tài liệu BSON và hỗ trợ cấu trúc lồng nhau \cite{mongodbdocs}. Cấu trúc này phù hợp với Resume vì một CV gồm thông tin cá nhân, học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ, ngôn ngữ và các nhóm tùy chọn. Mongoose bổ sung schema, kiểu dữ liệu, giá trị mặc định, validation và index \cite{mongooseDocs}.
+
+% Việc dùng MongoDB không loại bỏ nhu cầu thiết kế ràng buộc. RabbitCV dùng unique index cho username, email, cặp ứng tuyển và trạng thái chat theo người dùng; dùng reference ObjectId giữa User, Resume, Job và Application; đồng thời lưu snapshot khi lịch sử không được phụ thuộc hoàn toàn vào tài liệu gốc.
+
+% \section{Xác thực JWT và kiểm soát truy cập}
+
+% JWT là định dạng gọn để biểu diễn một tập claim giữa các bên \cite{rfc7519}. Sau khi đăng nhập, RabbitCV tạo token chứa định danh và vai trò rồi lưu trong cookie HTTP-only. JavaScript phía trình duyệt không đọc trực tiếp cookie này; server xác minh token và tải người dùng hiện tại trước khi xử lý API riêng tư.
+
+% Cookie HTTP-only không tự giải quyết toàn bộ bảo mật. Hệ thống còn cần kiểm soát CORS, thuộc tính \texttt{Secure} khi dùng HTTPS, chính sách \texttt{SameSite}, thời hạn token, rate limit và kiểm tra quyền trên đối tượng.
+
+\section{Socket.IO}
+
+Socket.IO là một thư viện JavaScript cho phép giao tiếp hai chiều (bidirectional), dựa trên sự kiện (event-based) và theo thời gian thực (real-time) giữa trình duyệt (Client) và máy chủ (Server) với độ trễ cực thấp. Với Socket.IO, Server có thể chủ động đẩy (push) dữ liệu xuống Client ngay lập tức khi có dữ liệu mới.
+
+Trong RabbitCV, Socket.IO được tích hợp chặt chẽ với ứng dụng web để xử lý các tác vụ yêu cầu cập nhật ngay lập tức. Khi một người dùng đăng nhập, một kết nối socket được thiết lập giữa client và server. Server quản lý các kết nối này bằng cách phân loại chúng vào các "phòng" (rooms) riêng biệt để gửi dữ liệu đến chính xác người dùng cần nhận, mà không ảnh hưởng đến những người dùng khác.
+
+Socket.IO trong dự án này chỉ phục vụ tin nhắn trò chuyện theo thời gian thực.
+
+Thông báo nghiệp vụ không được đẩy qua Socket.IO mà được lấy từ các endpoint thông báo bằng \texttt{fetch}; TanStack Query quản lý bộ nhớ đệm, phân trang, trạng thái đã đọc và làm mới số thông báo chưa đọc theo chu kỳ 30 giây. Cách tách này giúp phân biệt rõ kênh sự kiện thời gian thực với cơ chế đồng bộ dữ liệu định kỳ.
+
+% \section{PDF, PDF.js và khổ A4}
+
+% CV tạo trên web được trình bày bằng HTML/CSS và áp dụng quy tắc in A4 $210 \times 297$~mm. Hook dùng chung dựa trên \texttt{react-to-print} đặt tiêu đề tệp, khai báo \texttt{@page}, xử lý lỗi in và được tái sử dụng ở trình biên tập lẫn thư viện CV. Kiểm thử cần xem cả khung hiển thị, trang in và hành động tải PDF; chỉ quan sát trên màn hình không đủ để kết luận kích thước vật lý đúng.
+
+% CV tải lên phải có data URL hợp lệ, MIME và đuôi PDF phù hợp, header PDF đúng và kích thước sau giải mã không vượt quá 5 MB. PDF.js kết xuất từng trang vào vùng hiển thị riêng \cite{pdfjsdocs}.
+
+% \section{Mô hình ngôn ngữ và đầu ra có cấu trúc}
+
+% Các chức năng AI của RabbitCV sử dụng mô hình ngôn ngữ thông qua API Groq tương thích OpenAI. Backend gửi instruction và dữ liệu đã rút gọn, sau đó yêu cầu phản hồi theo JSON Schema. JSON Schema mô tả kiểu, trường bắt buộc và các ràng buộc của tài liệu JSON \cite{jsonschema}; structured output giúp backend nhận dữ liệu có cấu trúc thay vì phải tách văn bản tự do \cite{groqstructured}.
+
+% Đầu ra có cấu trúc không bảo đảm nội dung đúng về mặt ngữ nghĩa. Mô hình vẫn có thể đưa ra gợi ý chung chung, suy diễn quá mức hoặc chấm điểm thiếu ổn định. Vì vậy, RabbitCV áp dụng thêm validation theo từng chức năng, lọc độ dài, enum, URL, ngày tháng và nội dung có dấu hiệu thực thi. Kết quả được hiển thị như gợi ý; người dùng phải chủ động áp dụng vào CV.
+
+% \section{Kiểm soát dữ liệu và rủi ro AI}
+
+% Trước khi gọi mô hình, sanitizer loại thông tin liên hệ trực tiếp, giới hạn số phần tử và độ dài, bỏ HTML hoặc nội dung giống mã thực thi. Lịch sử phỏng vấn cũng được giới hạn và các yêu cầu cố gắng thay đổi vai trò hệ thống được coi như dữ liệu hội thoại, không phải instruction. Sau khi nhận kết quả, backend tiếp tục làm sạch văn bản và chỉ giữ các trường được schema cho phép.
+
+% Mỗi request AI yêu cầu phiên đăng nhập, chịu rate limit 30 request trong 15 phút và quota theo ngày. Service đặt timeout, chỉ retry trong trường hợp được thiết kế và lưu thống kê gồm feature, model, hash đầu vào, token, độ trễ, trạng thái và mã lỗi; không lưu toàn bộ prompt hay nội dung CV. Việc giới hạn dữ liệu, ghi nhận sự cố và nêu rõ vai trò tham khảo phù hợp với mục tiêu quản lý rủi ro AI của NIST AI RMF \cite{nistairmf}.
+
+% \section{Nhóm giải pháp liên quan và vị trí của RabbitCV}
+
+% Các sản phẩm trong lĩnh vực thường tập trung vào một trong ba nhóm: trình tạo CV theo mẫu, nền tảng tuyển dụng hoặc trợ lý viết nội dung bằng AI. RabbitCV không đặt mục tiêu thay thế sản phẩm thương mại mà kết hợp ba nhóm ở quy mô nguyên mẫu. Điểm cần kiểm chứng không phải số lượng tính năng mà là khả năng giữ một luồng dữ liệu nhất quán từ hồ sơ có cấu trúc, gợi ý AI, CV A4 đến Application và quá trình trao đổi với doanh nghiệp.
+
+% \begin{table}[H]
+%     \centering
+%     \small
+%     \begin{tabularx}{\textwidth}{|p{0.25\textwidth}|Y|Y|} \hline
+%         \textbf{Nhóm giải pháp} & \textbf{Ưu tiên thường gặp} & \textbf{Vai trò tương ứng trong RabbitCV} \\ \hline
+%         Trình tạo CV & Template, soạn thảo, preview và xuất tệp. & Resume có cấu trúc, nhiều template, preview và in A4. \\ \hline
+%         Nền tảng tuyển dụng & Tìm việc, ứng tuyển và quản lý hồ sơ. & Job, Application, company portal, trạng thái và snapshot lịch sử. \\ \hline
+%         Trợ lý AI & Viết, review hoặc chấm nội dung. & Năm luồng AI có sanitizer, schema, quota và disclaimer. \\ \hline
+%     \end{tabularx}
+%     \caption{Vị trí chức năng của RabbitCV so với các nhóm giải pháp}
+%     \label{tab:solution-groups}
+% \end{table}
+
+% \section{Công cụ phát triển và kiểm thử}
+
+% Git quản lý phiên bản và nhánh; ESLint kiểm tra mã; Node Test Runner thực thi kiểm thử tự động; Vite build kiểm tra khả năng đóng gói và chiến lược chia gói mã. PDF báo cáo được biên dịch từ LaTeX và rà soát trực quan theo trang. Sự kết hợp này giúp phân biệt bốn loại bằng chứng: chất lượng tĩnh, tính đúng đắn của quy tắc, khả năng đóng gói và chất lượng trình bày.

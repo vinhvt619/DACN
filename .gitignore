@@ -1,1 +1,18 @@
 .setup/*.exe
+
+# LaTeX Workshop writes generated files here.
+build/
+
+# LaTeX auxiliary files should not be stored beside chapter sources.
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc

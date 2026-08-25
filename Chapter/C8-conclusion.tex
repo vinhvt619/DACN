@@ -1,0 +1,81 @@
+% !TEX root = ../main.tex
+\chapter{Kết luận và hướng phát triển}
+
+\section{Mức độ hoàn thành mục tiêu}
+
+Đồ án đã xây dựng RabbitCV với trọng tâm là tạo CV và hỗ trợ nội dung bằng AI; các chức năng tuyển dụng đóng vai trò cung cấp ngữ cảnh sử dụng CV. Mức độ hoàn thành được tổng hợp từ thành phần triển khai và kết quả đánh giá ở Chương 7, không chỉ từ việc giao diện có thể hiển thị.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.24\textwidth}|Y|p{0.17\textwidth}|} \hline
+        \textbf{Mục tiêu} & \textbf{Kết quả và bằng chứng} & \textbf{Kết luận} \\ \hline
+        Tạo và quản lý CV & Resume có cấu trúc, template, preview A4, in/tải PDF; test A4 và ngày tháng đạt. & Hoàn thành trong phạm vi \\ \hline
+        AI hỗ trợ CV & Viết/cải thiện tiểu sử, review, fill, so khớp CV--Job và phỏng vấn; có sanitizer, schema, quota và usage log. & Hoàn thành mức demo \\ \hline
+        Tìm việc và ứng tuyển & Tìm/lưu Job, nộp Resume hoặc PDF, unique index, trạng thái và jobSnapshot. & Hoàn thành trong phạm vi \\ \hline
+        Kết nối hai phía & Cổng doanh nghiệp, xử lý Application, chat Socket.IO, trạng thái đọc/ẩn và notification polling. & Hoàn thành chính \\ \hline
+        Quản trị & Có thống kê và nhóm endpoint quản lý User, Company, Job. & Hoàn thành một phần \\ \hline
+        Nền tảng giao diện & Query cache, biểu mẫu theo schema, hộp thoại/menu dùng chung, toast, Error Boundary và hook in CV. & Hoàn thành đợt 1 \\ \hline
+        Kiểm chứng kỹ thuật & 41/41 test đạt, ESLint 0 lỗi và 0 cảnh báo, build 1.906 module thành công, không có cảnh báo kích thước chunk. & Đạt baseline \\ \hline
+    \end{tabularx}
+    \caption{Tổng hợp mức độ hoàn thành mục tiêu}
+    \label{tab:objective-completion}
+\end{table}
+
+Kết quả nổi bật của đồ án không nằm ở số lượng màn hình mà ở việc nối được vòng đời CV với nghiệp vụ sử dụng: dữ liệu CV được chỉnh sửa có cấu trúc, được trình bày theo A4, có thể nhận gợi ý AI dưới quyền quyết định của người dùng, rồi được dùng để ứng tuyển và trao đổi với doanh nghiệp.
+
+\section{Đóng góp kỹ thuật}
+
+Các đóng góp kỹ thuật chính của đồ án gồm:
+
+\begin{itemize}
+    \item \textbf{Tích hợp AI có kiểm soát:} Frontend không giữ khóa nhà cung cấp; backend xác thực, giới hạn tần suất và hạn mức, làm sạch dữ liệu, yêu cầu JSON Schema và kiểm tra hoặc lọc kết quả theo từng luồng. Cơ chế ``gợi ý rồi mới áp dụng'' tránh để mô hình tự sửa hồ sơ cá nhân.
+
+    \item \textbf{Bảo toàn và giới hạn dữ liệu:} Bản chụp việc làm giữ ngữ cảnh lịch sử; chỉ mục duy nhất ngăn ứng tuyển trùng; CV tạm tách PDF ứng tuyển khỏi thư viện CV; truy vấn danh sách không trả toàn bộ dữ liệu PDF; trạng thái đọc và ẩn chat được lưu theo từng người dùng.
+
+    \item \textbf{Chuẩn hóa nền tảng frontend:} TanStack Query quản lý việc đã lưu và thông báo; React Hook Form kết hợp Zod quản lý biểu mẫu xác thực; Tiptap static renderer và bộ làm sạch thay cách chèn HTML trực tiếp; hook in dùng chung thay các đoạn gọi in rời rạc; Radix UI, Sonner và Error Boundary thống nhất phản hồi và phục hồi lỗi.
+
+    \item \textbf{Liên kết yêu cầu với bằng chứng:} Báo cáo công bố cả 41 trường hợp kiểm thử đạt và các phần chưa được đánh giá như kiểm thử trình duyệt đầu-cuối, tích hợp cơ sở dữ liệu, phân quyền đầy đủ, triển khai serverless và chất lượng ngữ nghĩa AI. Cách trình bày này giúp giới hạn kết luận đúng với bằng chứng hiện có.
+\end{itemize}
+
+\section{Bài học kinh nghiệm}
+
+\begin{itemize}
+    \item Dữ liệu nghề nghiệp cần tách nội dung cấu trúc khỏi bản trình bày. Nếu chỉ lưu PDF, việc đổi template, review theo từng mục và hỗ trợ AI sẽ khó kiểm soát.
+    \item Xóa hoặc ẩn dữ liệu trong hệ thống nhiều bên phải xét quyền sở hữu và nhu cầu lưu lịch sử. Snapshot và trạng thái ẩn theo user phù hợp hơn xóa dây chuyền.
+    \item Kiểm tra ở frontend không thay thế kiểm tra server. Role, userId, MIME hoặc trạng thái Job từ trình duyệt đều phải được xem là dữ liệu không đáng tin.
+    \item Structured output làm giảm lỗi tích hợp AI nhưng không bảo đảm nội dung đúng. Chất lượng mô hình cần rubric, bộ dữ liệu cố định và người chấm độc lập.
+    \item Một PDF ``trông đúng'' trên màn hình chưa đủ; cần kiểm tra kích thước vật lý, ngắt trang, Print Preview và trình xem nhiều trang.
+\end{itemize}
+
+\section{Hạn chế hiện tại}
+
+Hệ thống chưa được xem là sẵn sàng production. Các hạn chế chính gồm:
+
+\begin{itemize}
+    \item \textbf{Lưu trữ:} PDF base64 và ảnh chat dạng data URL làm tài liệu MongoDB lớn.
+    \item \textbf{Kiến trúc backend:} nhiều route còn tập trung; thông báo dùng cơ chế lấy định kỳ; Socket.IO trên môi trường serverless chưa được đánh giá độ bền; lịch Vercel Cron chưa có kiểm thử gọi đồng thời hoặc cơ chế quan sát thất bại.
+    \item \textbf{Phân quyền:} kiểm tra vai trò còn thiếu ở một số API AI, ứng tuyển, lưu việc và quyền phòng chat.
+    \item \textbf{Cấu hình production:} khóa JWT dự phòng, tài khoản quản trị được tạo sẵn và giới hạn ảnh chưa phù hợp môi trường thực tế.
+    \item \textbf{Kiểm thử:} bộ kiểm thử chưa chạy với MongoDB thật, trình duyệt đầu-cuối, tải, kiểm thử xâm nhập hoặc mạng không ổn định.
+    \item \textbf{Khả năng tái lập và đánh giá AI:} working tree tại thời điểm đánh giá chưa được đóng thành commit hoặc tag tái lập; hiệu quả ngữ nghĩa và tính công bằng của AI chưa được đánh giá độc lập.
+\end{itemize}
+
+\section{Lộ trình phát triển}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|p{0.18\textwidth}|Y|} \hline
+        \textbf{Giai đoạn} & \textbf{Công việc ưu tiên} \\ \hline
+        Ngắn hạn & Commit/tag baseline DA2; bắt buộc JWT secret và bỏ tài khoản seed khỏi production; bổ sung kiểm tra vai trò và thành viên phòng; giới hạn ảnh chat; thêm integration test cho Application unique/snapshot, cron và ma trận quyền; chạy checklist trình duyệt. \\ \hline
+        Trung hạn & Chuyển PDF/ảnh sang object storage hoặc GridFS; tách backend theo miền controller--service--repository; dùng hạ tầng thời gian thực phù hợp serverless; thêm queue/worker, retry và tính lũy đẳng cho tác vụ nền; bổ sung CI, log và audit. \\ \hline
+        Dài hạn & Xây dựng bộ dữ liệu chấm AI có người đánh giá; theo dõi chi phí/chất lượng theo model; kiểm thử khả năng truy cập, tải và bảo mật; thiết kế quy trình sao lưu, khôi phục và quan sát production. \\ \hline
+    \end{tabularx}
+    \caption{Lộ trình phát triển đề xuất}
+    \label{tab:roadmap}
+\end{table}
+
+\section{Tổng kết}
+
+RabbitCV chứng minh tính khả thi của một ứng dụng web hỗ trợ viết CV có tích hợp AI, đồng thời cho thấy AI chỉ là một thành phần trong hệ thống dữ liệu, quyền truy cập và nghiệp vụ rộng hơn. Working tree ngày 09/08/2026 đáp ứng mục tiêu đồ án ở mức nguyên mẫu có thể kiểm chứng: chức năng cốt lõi đã hiện thực, nền tảng giao diện và vận hành được củng cố, 41/41 test đạt, ESLint sạch và build thành công. Những giới hạn về phân quyền, lưu tệp, hạ tầng serverless, khả năng tái lập và đánh giá AI đã được chỉ rõ thành công việc cụ thể thay vì được trình bày như đã hoàn tất.
