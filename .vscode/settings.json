@@ -8,18 +8,41 @@
   "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.recipes": [
     {
-      "name": "latexmk (recommended)",
-      "tools": ["latexmk"]
+      "name": "pdflatex + bibtex + pdflatex x2",
+      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
     },
     {
-      "name": "pdflatex (quick draft)",
+      "name": "pdflatex (quick draft, no bibliography refresh)",
       "tools": ["pdflatex"]
+    },
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
     }
   ],
   "latex-workshop.latex.tools": [
     {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        "%OUTDIR%/%DOCFILE%"
+      ],
+      "env": {}
+    },
+    {
       "name": "latexmk",
-      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "command": "latexmk",
       "args": [
         "-synctex=1",
         "-interaction=nonstopmode",
@@ -27,25 +50,7 @@
         "-pdf",
         "-outdir=%OUTDIR%",
         "%DOC%"
-      ],
-      "env": {
-        "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
-      }
-    },
-    {
-      "name": "pdflatex",
-      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdflatex.exe",
-      "args": [
-        "--enable-installer",
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "-output-directory=%OUTDIR%",
-        "%DOC%"
-      ],
-      "env": {
-        "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
-      }
+      ]
     }
   ],
 

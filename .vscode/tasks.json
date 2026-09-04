@@ -4,41 +4,32 @@
     {
       "label": "LaTeX: build main.pdf",
       "type": "shell",
-      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "command": "powershell",
       "args": [
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "-pdf",
-        "-outdir=build",
-        "main.tex"
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\build-latex.ps1"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": [],
-      "options": {
-        "env": {
-          "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
-        }
-      }
+      "problemMatcher": []
     },
     {
       "label": "LaTeX: clean build files",
       "type": "shell",
-      "command": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.exe",
+      "command": "powershell",
       "args": [
-        "-C",
-        "-outdir=build",
-        "main.tex"
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\clean-latex.ps1"
       ],
-      "problemMatcher": [],
-      "options": {
-        "env": {
-          "PATH": "C:\\Users\\vinhv\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;C:\\Strawberry\\perl\\bin;C:\\Windows\\System32;C:\\Windows"
-        }
-      }
+      "problemMatcher": []
     }
   ]
 }
