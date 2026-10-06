@@ -1,0 +1,196 @@
+% !TEX root = ../main.tex
+\chapter{Mô-đun trí tuệ nhân tạo}
+\label{chap:ai-module}
+
+Chương này trình bày cách tích hợp và hiện thực mô-đun trí tuệ nhân tạo trong RabbitCV, gồm ba chức năng: rà soát nội dung CV, gợi ý bổ sung CV và luyện tập phỏng vấn. Hệ thống sử dụng mô hình ngôn ngữ có sẵn thông qua API, không tự huấn luyện mô hình. Phần hiện thực của đề tài tập trung vào chuẩn bị ngữ cảnh, xây dựng chỉ dẫn, kiểm soát cấu trúc phản hồi và đưa kết quả vào luồng sử dụng của ứng viên. AI chỉ đóng vai trò hỗ trợ; người dùng vẫn kiểm tra, chỉnh sửa và quyết định lưu nội dung.
+
+\section{Mục tiêu và nguyên tắc sử dụng}
+
+Mô-đun hướng đến hỗ trợ ứng viên nhận biết những điểm cần cải thiện trong CV, tạo bản nháp cho phần nội dung còn thiếu và luyện cách trả lời phỏng vấn. Đây là mục tiêu hỗ trợ người dùng, chưa phải kết luận về mức độ tiết kiệm thời gian đã được đo lường. Việc tích hợp AI được thiết kế theo các nguyên tắc sau:
+
+\begin{itemize}
+    \item \textbf{Giảm thiểu dữ liệu gửi ra ngoài:} Backend lựa chọn những trường cần thiết cho tác vụ. Các trường liên hệ trực tiếp trong CV được thay bằng trạng thái đã có hoặc còn thiếu trước khi gửi đến nhà cung cấp; văn bản tự do vẫn cần được người dùng kiểm tra để tránh chứa thông tin nhạy cảm.
+    \item \textbf{Đầu ra có cấu trúc:} Phản hồi của mô hình phải tuân theo JSON Schema đã định nghĩa trước, giúp backend và giao diện xử lý dữ liệu theo cùng một định dạng.
+    \item \textbf{Kiểm soát lỗi và tài nguyên:} Các API yêu cầu xác thực và có giới hạn tần suất. Yêu cầu gọi mô hình còn chịu hạn mức hằng ngày, cấu hình thời gian chờ và cơ chế chuẩn hóa lỗi.
+    \item \textbf{Minh bạch về giới hạn:} Kết quả AI có thể chưa chính xác hoặc chưa phù hợp với hoàn cảnh thực tế. Người dùng cần đọc lại nội dung trước khi lưu hoặc sử dụng trong hồ sơ chính thức.
+\end{itemize}
+
+\section{Kiến trúc và kết nối dịch vụ AI}
+
+Giao diện không gọi trực tiếp nhà cung cấp AI mà gửi yêu cầu đến backend qua cookie phiên đăng nhập. Cách tổ chức này giúp bảo vệ khóa truy cập bí mật (\texttt{GROQ\_API\_KEY}) ở máy chủ và tập trung quy tắc xử lý vào các thành phần chính: tuyến API (\texttt{aiRoutes.js}) tiếp nhận yêu cầu, kiểm tra dữ liệu bắt buộc và quyền sở hữu CV; tầng dịch vụ (\texttt{aiService.js}) quản lý kết nối, hạn mức sử dụng và ghi nhận nhật ký; \texttt{aiSchemas.js} khai báo JSON Schema riêng cho từng tác vụ; cùng các bộ sanitizer làm sạch ngữ cảnh trước khi gửi ra ngoài.
+
+Backend sử dụng thư viện máy khách OpenAI SDK nhưng cấu hình địa chỉ dịch vụ trỏ đến hạ tầng Groq API (\url{https://api.groq.com/openai/v1}) nhằm tận dụng tốc độ suy luận cao, với mô hình mã nguồn mở mặc định là \texttt{openai/gpt-oss-120b}. Quá trình vận hành được điều khiển qua các biến môi trường tại máy chủ như \texttt{AI\_ENABLED} (cho phép bật hoặc tắt tính năng), \texttt{AI\_DAILY\_LIMIT} (mặc định giới hạn 100 yêu cầu/người dùng/ngày theo thời gian máy chủ) và \texttt{AI\_REQUEST\_TIMEOUT\_MS} (thời gian chờ tối đa 20.000~ms cho mỗi lượt gọi).
+
+Mỗi yêu cầu gửi đến mô hình gồm chỉ dẫn hệ thống (xác định vai trò, nhiệm vụ, ngôn ngữ và các nội dung cần tránh) kết hợp dữ liệu ngữ cảnh đã được tuần tự hóa thành JSON. Nhằm khắc phục hạn chế mô hình sinh văn bản tự do gây lỗi giao diện, hệ thống áp dụng cơ chế Structured Outputs của Groq với tùy chọn \texttt{response\_format} ở chế độ \texttt{json\_schema} và ràng buộc \texttt{strict: true}. Ràng buộc này bảo đảm dữ liệu trả về tuân thủ chính xác JSON Schema định sẵn, giúp backend và frontend trực tiếp bóc tách kết quả an toàn mà không cần phân tích chuỗi thủ công.
+
+\section{Các chức năng AI đã triển khai}
+
+Các API hiện có của mô-đun AI được liệt kê trong Bảng~\ref{tab:ai-endpoints}. Ngoài API kiểm tra trạng thái, hệ thống chỉ cung cấp ba API nghiệp vụ tương ứng với ba chức năng đang xuất hiện trên giao diện.
+
+\begin{table}[H]
+    \centering
+    \caption{Danh sách API của mô-đun AI}
+    \small
+    \label{tab:ai-endpoints}
+    \begin{tabularx}{\textwidth}{|p{0.15\textwidth}|p{0.32\textwidth}|Y|}
+        \hline
+        \textbf{Phương thức} & \textbf{Đường dẫn} & \textbf{Mục đích} \\
+        \hline
+        GET & \texttt{/api/ai/status} & Trả trạng thái cấu hình, tên mô hình, hạn mức ngày và số lượt còn lại; không gọi nhà cung cấp để kiểm tra kết nối thực tế. \\
+        \hline
+        POST & \texttt{/api/ai/resume/review} & Gửi dữ liệu CV về để AI review và đánh giá. AI sẽ trả về điểm số, điểm mạnh, điểm yếu và điểm cần cải thiện. \\
+        \hline
+        POST & \texttt{/api/ai/resume/fill} & Gửi nội dung CV hiện tại để AI đề xuất nội dung cho các trường còn thiếu. \\
+        \hline
+        POST & \texttt{/api/ai/interview/turn} & Xử lý từng lượt trong buổi luyện phỏng vấn, bao gồm bắt đầu phiên, nhận câu trả lời của người dùng, tạo câu hỏi tiếp theo, nhận xét câu trả lời hoặc kết thúc và tổng kết buổi phỏng vấn. \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsection{Review nội dung CV}
+
+Chức năng rà soát (review) giúp người dùng xem xét nội dung CV theo nhiều tiêu chí. Giao diện có thể gửi bản CV đang chỉnh sửa, kèm mã CV nếu đã lưu, để nhận phản hồi về nội dung hiện tại. Backend kiểm tra quyền sở hữu khi có mã CV và từ chối đầu vào không có nội dung để phân tích. Tác vụ làm việc với dữ liệu CV có cấu trúc; hệ thống chưa trích xuất văn bản từ PDF để phục vụ luồng này.
+
+Kết quả được chia thành các nhóm rõ ràng:
+
+\begin{itemize}
+    \item \textbf{Điểm tổng quan:} một giá trị từ 0 đến 100 giúp người dùng có cái nhìn nhanh về mức độ hoàn thiện của CV.
+    \item \textbf{Điểm theo tiêu chí:} gồm nội dung, độ rõ ràng, mức độ thể hiện tác động, độ đầy đủ và khả năng phù hợp với hệ thống sàng lọc hồ sơ.
+    \item \textbf{Điểm mạnh:} chỉ ra những nội dung đang được trình bày tốt để người dùng tiếp tục duy trì.
+    \item \textbf{Nội dung cần cải thiện:} mỗi nhận xét xác định phần liên quan, vấn đề, cách sửa và mức độ ưu tiên.
+    \item \textbf{Các phần còn thiếu:} liệt kê những nhóm thông tin quan trọng chưa được bổ sung.
+\end{itemize}
+
+Mô hình được yêu cầu nhận xét dựa trên đầu vào, không suy diễn đặc điểm nhạy cảm hoặc tự sinh các thành tích thiếu căn cứ trong dữ liệu gốc. Khi các cờ kiểm tra cho thấy thông tin liên hệ và liên kết hồ sơ đã được điền, backend loại bỏ nhận xét thuộc nhóm thông tin liên hệ để hạn chế báo thiếu sai. Kết quả không tự động thay đổi CV. Điểm tổng quan và điểm ATS là nhận định của mô hình trên dữ liệu đã gửi, không phải kết quả chạy qua một hệ thống ATS thực tế. Do không gửi ảnh trang CV hay cấu trúc bố cục đã dựng, luồng này cũng chưa kiểm chứng trực tiếp chất lượng trình bày bản PDF.
+
+\subsection{Hỗ trợ viết CV}
+
+Chức năng gợi ý bổ sung CV tạo bản nháp cho các phần còn thiếu dựa trên CV hiện tại và ngữ cảnh nghề nghiệp. Giao diện có thể tận dụng thông tin nghề nghiệp đã có trong hồ sơ; nếu chưa đủ ngữ cảnh thì yêu cầu người dùng nhập vị trí mục tiêu. Backend chỉ tiếp tục khi đầu vào có vị trí mong muốn hoặc nội dung nghề nghiệp như tiểu sử, kỹ năng, kinh nghiệm, học vấn, dự án hay chứng chỉ.
+
+Đầu ra có thể gồm phần giới thiệu, kỹ năng, kinh nghiệm, học vấn, ngoại ngữ, chứng chỉ, dự án, giải thưởng và sở thích. Prompt yêu cầu giữ các sự kiện đã có, không tự đặt tên công ty, trường học, chứng chỉ hoặc mốc thời gian cụ thể khi đầu vào chưa cung cấp. Tuy nhiên, nội dung mẫu vẫn có thể chứa gợi ý không phản ánh năng lực thực tế; ứng viên phải xác nhận trước khi sử dụng trong CV.
+
+Khi hợp nhất kết quả vào biểu mẫu, hệ thống tuân theo các quy tắc sau:
+
+\begin{itemize}
+    \item \textbf{Thông tin và tiểu sử:} giữ giá trị đã có và bổ sung trường còn trống; phần tiểu sử hiện có không bị thay bằng bản do AI tạo.
+    \item \textbf{Các nhóm nội dung:} với kinh nghiệm, học vấn, dự án và các nhóm tương tự, hệ thống ghép gợi ý theo tiêu đề, hoặc theo vị trí nếu không tìm thấy tiêu đề tương ứng, rồi điền trường còn trống. Mặc định chỉ thêm các bản ghi gợi ý chưa được ghép khi nhóm ban đầu rỗng.
+    \item \textbf{Kỹ năng:} có thể bổ sung tên kỹ năng mới dù danh sách đã có dữ liệu, loại trùng theo tên đã chuẩn hóa và loại mục có dấu hiệu chứa mã thực thi.
+    \item \textbf{Nội dung bất thường:} mô tả có dấu hiệu là mã thực thi có thể được thay bằng gợi ý đã làm sạch; vì vậy quy tắc giữ nội dung áp dụng cho dữ liệu hợp lệ, không phải mọi chuỗi đầu vào.
+    \item \textbf{Xác nhận lưu:} kết quả nằm trong trạng thái bản CV đang chỉnh sửa; chỉ được ghi vào cơ sở dữ liệu khi người dùng nhấn Lưu.
+\end{itemize}
+
+AI có thể giúp tạo bản nháp và giảm thao tác nhập liệu, nhưng không trực tiếp ghi dữ liệu vào cơ sở dữ liệu. Quyết định lưu cuối cùng vẫn thuộc về người dùng.
+
+\subsection{Luyện tập phỏng vấn}
+
+Chức năng luyện tập phỏng vấn mô phỏng trao đổi nhiều lượt giữa ứng viên và AI đóng vai nhà tuyển dụng. Trước khi bắt đầu, người dùng chọn vị trí mục tiêu, cấp độ kinh nghiệm, loại phỏng vấn và số lượng câu hỏi. Giao diện cung cấp các cấp độ Thực tập sinh, Junior, Middle và Senior, cùng các loại Tổng quan, Hành vi, Chuyên môn và Kết hợp. Giao diện có ba lựa chọn 5, 8 hoặc 12 câu; backend chuẩn hóa số câu trong khoảng 3--12 và dùng giá trị mặc định 5 nếu đầu vào không hợp lệ. Hệ thống không tự xác minh số năm kinh nghiệm của người dùng.
+
+Một phiên phỏng vấn diễn ra qua ba hành động chính:
+
+\begin{itemize}
+    \item \textbf{Bắt đầu:} mô hình AI tạo ra câu hỏi đầu tiên dựa trên các thông tin đã được lựa chọn.
+    \item \textbf{Trả lời:} hệ thống gửi câu trả lời mới nhất cùng phần lịch sử cần thiết để mô hình AI nhận xét và tạo câu hỏi tiếp theo.
+    \item \textbf{Kết thúc:} phiên phỏng vấn được dừng lại theo yêu cầu hoặc khi đã đạt số lượng câu hỏi; mô hình AI trả về phần tổng kết cuối cùng.
+\end{itemize}
+
+Phản hồi của mỗi lượt gồm nội dung mô hình, số thứ tự câu hỏi, trạng thái hoàn thành và nhận xét về câu trả lời. Backend xác định kết thúc khi người dùng chọn dừng hoặc số câu đã trả lời đạt mức cấu hình; không tạo trước toàn bộ bộ câu hỏi. Giao tiếp với AI diễn ra qua các yêu cầu HTTP theo từng lượt, không sử dụng Socket.IO. Khi kết thúc, giao diện hiển thị điểm tổng quan, điểm mạnh và nội dung cần luyện thêm. Các điểm này chỉ phục vụ luyện tập, không đại diện cho kết quả tuyển dụng thực tế.
+
+Lịch sử và kết quả phỏng vấn được giữ trong trạng thái của trang đang mở, không ghi thành lịch sử hội thoại trong cơ sở dữ liệu. Khi tải lại trang hoặc đóng phiên, người dùng không thể tiếp tục phiên cũ. Bản ghi sử dụng AI được lưu riêng để theo dõi hạn mức và không thay thế lịch sử phỏng vấn.
+
+\section{Quy trình xử lý yêu cầu AI}
+
+Ba chức năng sử dụng một dịch vụ gọi mô hình dùng chung, nhưng có kiểm tra đầu vào, chỉ dẫn và schema riêng. Quy trình xử lý một yêu cầu nghiệp vụ gồm:
+
+\begin{enumerate}
+    \item Giao diện kiểm tra điều kiện cơ bản, hiển thị trạng thái chờ và gửi ngữ cảnh JSON kèm cookie phiên đăng nhập.
+    \item Backend xác thực phiên, áp dụng giới hạn tần suất và kiểm tra dữ liệu của tác vụ; khi có mã CV, kiểm tra thêm quyền sở hữu.
+    \item Sanitizer lựa chọn trường dữ liệu, làm sạch văn bản và giới hạn kích thước ngữ cảnh.
+    \item Dịch vụ AI kiểm tra cấu hình bật/tắt, khóa truy cập và hạn mức ngày; nếu được phép xử lý thì tạo bản ghi \texttt{AiUsage}.
+    \item Backend gửi chỉ dẫn, ngữ cảnh và JSON Schema đến Groq API bằng mô hình đã cấu hình.
+    \item Dịch vụ phân tích phản hồi JSON và cập nhật trạng thái sử dụng; tuyến API tiếp tục xử lý kết quả theo chức năng rồi trả về giao diện. Lỗi ở từng giai đoạn được chuyển thành phản hồi phù hợp.
+    \item Giao diện hiển thị nhận xét, hợp nhất gợi ý CV hoặc cập nhật hội thoại phỏng vấn. Việc lưu CV vẫn cần thao tác xác nhận của người dùng.
+\end{enumerate}
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}[
+%         node distance=0.75cm,
+%         flowstep/.style={draw, rounded corners, align=center, minimum height=0.82cm, text width=0.78\textwidth, fill=blue!5},
+%         arrow/.style={-{Latex[length=2.3mm]}, thick}
+%     ]
+%         \node[flowstep] (s1) {Giao diện gửi yêu cầu đã có ngữ cảnh};
+%         \node[flowstep, below=of s1] (s2) {Xác thực, kiểm tra dữ liệu và quyền sở hữu tài nguyên};
+%         \node[flowstep, below=of s2] (s3) {Làm sạch, rút gọn và chuẩn hóa đầu vào};
+%         \node[flowstep, below=of s3] (s4) {Kiểm tra cấu hình, hạn mức và tạo bản ghi sử dụng};
+%         \node[flowstep, below=of s4] (s5) {Gọi Groq API với JSON Schema của chức năng};
+%         \node[flowstep, below=of s5] (s6) {Phân tích, làm sạch đầu ra và chuẩn hóa lỗi};
+%         \node[flowstep, below=of s6] (s7) {Trả kết quả cho giao diện để người dùng quyết định};
+
+%         \draw[arrow] (s1) -- (s2);
+%         \draw[arrow] (s2) -- (s3);
+%         \draw[arrow] (s3) -- (s4);
+%         \draw[arrow] (s4) -- (s5);
+%         \draw[arrow] (s5) -- (s6);
+%         \draw[arrow] (s6) -- (s7);
+%     \end{tikzpicture}
+%     \caption{Quy trình xử lý một yêu cầu AI}
+%     \label{fig:ai-request-flow}
+% \end{figure}
+
+
+\section{Kiểm soát dữ liệu, an toàn và lỗi}
+
+% \subsection{Xác thực và phân quyền}
+
+% Các API AI được đặt sau middleware xác thực nên người dùng phải có phiên đăng nhập hợp lệ để gửi yêu cầu. Giao diện định hướng các chức năng này cho ứng viên sử dụng.
+
+% Đối với rà soát CV có mã định danh, backend kiểm tra định dạng mã (\texttt{resumeId}), quyền sở hữu (\texttt{userId}) và loại trừ CV tạm được tạo khi nộp PDF. Khi nhận dữ liệu CV đang chỉnh sửa hoặc yêu cầu bổ sung CV, backend xử lý ngữ cảnh trong yêu cầu; thao tác gọi AI không trực tiếp ghi vào tài liệu CV của người dùng khác.
+
+\subsection{Bảo vệ dữ liệu đầu vào}
+
+Nhằm bảo đảm an toàn thông tin và giảm thiểu rủi ro khi gửi dữ liệu sang dịch vụ AI của bên thứ ba, hệ thống áp dụng kết hợp hai nguyên tắc chính: giảm thiểu dữ liệu và làm sạch dữ liệu.
+
+Đối với rà soát và bổ sung CV, \texttt{sanitizeResumeForAi} không đưa trực tiếp giá trị các trường họ tên, email, số điện thoại, địa chỉ liên hệ và website cá nhân vào ngữ cảnh, mà chuyển thành các cờ \texttt{contactCompleteness}. Các liên kết hồ sơ cũng được thay bằng trạng thái đã điền. Tuy nhiên, tiểu sử, mô tả kinh nghiệm, địa điểm làm việc và nội dung tùy chỉnh vẫn có thể chứa thông tin cá nhân do người dùng nhập; cơ chế này chưa phải bộ nhận diện và ẩn danh mọi thông tin nhạy cảm trong văn bản.
+
+
+Đối với luyện tập phỏng vấn, backend chọn tối đa 26 tin nhắn gần nhất, làm sạch từng nội dung và giới hạn mỗi tin nhắn ở 1.200 ký tự. Đây là cửa sổ lịch sử gần nhất, không phải quy tắc dành riêng hai tin cho mở đầu và kết thúc. Số câu đã trả lời được tính từ các tin mang vai trò người dùng trong cửa sổ này. Giới hạn giúp kiểm soát kích thước ngữ cảnh, nhưng có thể bỏ thông tin cũ nếu hội thoại vượt quá độ dài được giữ lại.
+
+\subsection{Kiểm soát đầu ra}
+
+Hệ thống yêu cầu đầu ra theo JSON Schema riêng cho từng chức năng, với các trường bắt buộc và kiểu dữ liệu xác định trước. Dịch vụ đọc nội dung phản hồi và phân tích JSON, thay vì tách nhận xét từ văn bản tự do. Đây là ràng buộc về cấu trúc dữ liệu; lỗi kết nối, phản hồi rỗng, lỗi phân tích hoặc nội dung không phù hợp vẫn cần được xử lý riêng.
+
+Sau khi nhận kết quả, mức độ xử lý bổ sung khác nhau giữa các chức năng:
+\begin{itemize}
+    \item \textbf{Rà soát CV:} schema quy định điểm trong khoảng 0--100 và cấu trúc từng nhận xét. Tuyến API lọc nhóm nhận xét về thông tin liên hệ khi các cờ đầu vào cho thấy đã điền đầy đủ; chưa có bộ chấm độc lập để xác minh điểm hoặc mọi nhận xét.
+    \item \textbf{Gợi ý bổ sung CV:} backend làm sạch chuỗi, giới hạn danh sách kết quả, chấp nhận ngày dạng năm hoặc năm--tháng và liên kết bắt đầu bằng HTTP/HTTPS. Việc kiểm tra dạng chuỗi không xác minh ngày tháng, đường dẫn hay sự kiện đó có đúng thực tế hay không.
+    \item \textbf{Luyện phỏng vấn:} backend giới hạn điểm 0--100, số thứ tự câu hỏi, số lượng nhận xét và độ dài văn bản. Phần tổng kết chỉ được giữ khi kết quả thể hiện đã hoàn thành; tuyến API đặt cờ kết thúc khi người dùng dừng hoặc đạt số câu cấu hình.
+\end{itemize}
+
+
+
+% \section{Theo dõi sử dụng và kiểm thử}
+
+% \subsection{Bản ghi sử dụng AI}
+
+% Trước khi gọi nhà cung cấp, hệ thống tạo bản ghi \texttt{AiUsage} với người dùng, chức năng, mô hình và trạng thái chờ. Khi nhận và phân tích được phản hồi, dịch vụ cập nhật trạng thái thành công, thời gian xử lý và số token do nhà cung cấp trả về; nếu có lỗi thì ghi trạng thái thất bại và mã lỗi. Trạng thái thành công của bản ghi phản ánh việc xử lý ở dịch vụ gọi mô hình, không chứng minh người dùng đã lưu CV hoặc nội dung AI chính xác.
+
+% Bản ghi lưu giá trị băm SHA-256 của ngữ cảnh đã tuần tự hóa, không lưu nguyên văn prompt, toàn bộ CV hay hội thoại. Mô hình có chỉ mục TTL với thời hạn 90 ngày để MongoDB dọn bản ghi hết hạn; việc dọn không nhất thiết xảy ra đúng thời điểm tròn 90 ngày. Giá trị băm không phải biện pháp ẩn danh tuyệt đối, nên dữ liệu theo dõi vẫn cần được kiểm soát truy cập.
+
+% \subsection{Phạm vi kiểm thử}
+
+% Mã nguồn có các kiểm thử cho bộ làm sạch dữ liệu, quy tắc hợp nhất gợi ý CV và chuẩn hóa phỏng vấn. Một nhóm kiểm tra còn đối chiếu cấu hình tuyến API, địa chỉ Groq và các chức năng được công khai bằng cách đọc mã nguồn. Các kiểm tra này giúp phát hiện sai lệch cấu trúc hoặc quy tắc xử lý, nhưng không tương đương kiểm thử gọi dịch vụ AI thật hay đánh giá chất lượng nhận xét.
+
+% Các kiểm thử giao diện với dữ liệu hoặc phản hồi mô phỏng cũng không chứng minh mô hình chấm điểm chính xác trong thực tế. Kết quả thực thi kiểm thử được trình bày tại Chương~\ref{chap:testing-evaluation}; chương này không suy ra độ chính xác của AI từ số kiểm thử phần mềm đạt yêu cầu.
+
+% \section{Giới hạn hiện tại và hướng hoàn thiện}
+
+% Mô-đun đã hỗ trợ ba luồng nghiệp vụ nhưng vẫn còn các giới hạn sau:
+
+% \begin{itemize}
+%     \item \textbf{Chất lượng nội dung:} điểm và nhận xét phụ thuộc mô hình, ngữ cảnh và prompt; chưa có bộ đánh giá chuẩn để chứng minh mức độ phù hợp theo từng ngành nghề. Nội dung mẫu cần được ứng viên xác nhận, đặc biệt khi ghép gợi ý theo vị trí bản ghi thay vì tiêu đề.
+%     \item \textbf{Quyền riêng tư và phân quyền:} văn bản tự do có thể còn chứa thông tin nhạy cảm; sanitizer không ngăn được mọi prompt injection. Backend cần bổ sung kiểm tra vai trò ứng viên cho các API AI.
+%     \item \textbf{Hạn mức và dịch vụ ngoài:} thao tác đếm lượt rồi tạo bản ghi chưa nguyên tử, nên các yêu cầu đồng thời có thể vượt mức dự kiến. Độ trễ và khả năng phục vụ còn phụ thuộc Groq API.
+%     \item \textbf{Phạm vi dữ liệu:} luồng rà soát chưa phân tích trực tiếp nội dung hoặc bố cục tệp PDF; lịch sử phỏng vấn chưa được lưu để tiếp tục sau khi tải lại trang.
+% \end{itemize}
+
+% Hướng hoàn thiện là tăng kiểm soát quyền ở máy chủ, áp dụng hạn mức nguyên tử, nhận diện thông tin nhạy cảm trong văn bản và cho phép người dùng lựa chọn lưu lịch sử phỏng vấn. Việc đánh giá chất lượng cần bổ sung tập CV và câu trả lời phỏng vấn có nhận xét tham chiếu của người có chuyên môn, đồng thời kiểm thử tích hợp có kiểm soát với nhà cung cấp. Những nội dung này là hướng phát triển, không được xem là chức năng đã hoàn thành.

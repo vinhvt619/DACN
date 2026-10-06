@@ -1,0 +1,133 @@
+% !TEX root = ../main.tex
+\chapter{Cơ sở lý thuyết}
+
+\section{Kiến trúc hệ thống}
+
+RabbitCV tuân theo mô hình kiến trúc client-server, trong đó giao diện người dùng và logic nghiệp vụ được triển khai thành hai hệ thống độc lập nhưng giao tiếp với nhau thông qua REST API và WebSocket. Hệ thống giao diện người dùng xử lý hiển thị và nhập liệu, trong khi hệ thống nghiệp vụ chịu trách nhiệm xác thực, phân quyền, lưu trữ, truy xuất dữ liệu và điều phối các dịch vụ nghiệp vụ.
+
+Ở phía giao diện người dùng, hệ thống được xây dựng theo mô hình ứng dụng trang đơn, tổ chức phân luồng linh hoạt theo các nhóm tác nhân gồm khách, ứng viên, doanh nghiệp và quản trị viên. Phía giao diện người dùng chịu trách nhiệm quản lý trạng thái hiển thị, thực hiện xác thực sơ bộ, áp dụng cơ chế lưu bộ nhớ đệm, cập nhật dữ liệu lạc quan nhằm giảm thiểu tần suất gửi yêu cầu lên máy chủ. Kết hợp với các kỹ thuật chia nhỏ gói mã nguồn và lazy loading, hệ thống giao diện người dùng tối ưu hóa dung lượng và tốc độ tải trang ban đầu.
+
+Ở phía hệ thống nghiệp vụ, hệ thống đóng vai trò là nguồn xử lý tập trung và là ranh giới bảo mật. Mọi yêu cầu từ client trước khi đi vào xử lý nghiệp vụ đều phải đi qua chuỗi xử lý trung gian để kiểm soát tài nguyên, bảo mật tiêu đề HTTP, giải mã định danh và giới hạn tần suất truy cập. Hệ thống nghiệp vụ nắm giữ quyền quyết định cuối cùng trong việc xác thực tính hợp lệ của các phiên đăng nhập, kiểm soát quyền truy cập theo vai trò kết hợp với xác minh quyền sở hữu tài nguyên, đồng thời là nơi trung gian dữ liệu, chuẩn hóa dữ liệu và trả về kết quả cho client.
+
+% \section{MERN Stack}
+
+% MERN Stack là một nhóm công nghệ dùng để xây dựng ứng dụng web toàn ngăn xếp, gồm MongoDB, Express, React và Node.js. MongoDB đảm nhiệm lưu trữ dữ liệu dưới dạng tài liệu; Express cung cấp cơ chế định tuyến và middleware cho máy chủ; React xây dựng giao diện người dùng theo các component; còn Node.js cung cấp môi trường chạy JavaScript phía máy chủ.
+
+% Bốn thành phần có thể phối hợp qua REST API và dữ liệu JSON, giúp quá trình phát triển giữa frontend và backend có sự thống nhất về ngôn ngữ và cách trao đổi dữ liệu:
+
+% \begin{itemize}
+%     \item React đảm nhiệm phần giao diện và các luồng tương tác;
+%     \item Node.js và Express xử lý REST API, xác thực, phân quyền và nghiệp vụ;
+%     \item MongoDB kết hợp với Mongoose để lưu trữ người dùng, CV, tin tuyển dụng, đơn ứng tuyển, tin nhắn và các dữ liệu liên quan.
+% \end{itemize}
+
+% MERN Stack phù hợp với đề tài vì hỗ trợ phát triển nhanh ứng dụng web có dữ liệu thay đổi thường xuyên, cấu trúc CV lồng nhau và các chức năng cần giao tiếp giữa trình duyệt với máy chủ.
+
+\section{Cơ chế phân quyền RBAC}
+
+RBAC (Role-Based Access Control) là cơ chế kiểm soát truy cập dựa trên vai trò. Thay vì cấp quyền riêng lẻ cho từng tài khoản, hệ thống gán cho người dùng một vai trò và xác định các thao tác mà vai trò đó được phép thực hiện. Cách tổ chức này giúp chính sách quyền dễ mô tả, dễ kiểm tra và hạn chế việc lặp lại các điều kiện phân quyền trong từng chức năng.
+
+Về mặt kiểm soát truy cập, RabbitCV phân định rõ ràng giữa nhóm khách truy cập vãng lai (chưa đăng nhập) và ba vai trò tài khoản chính được định danh và lưu trữ trong cơ sở dữ liệu (\texttt{role} thuộc mô hình \texttt{User}):
+
+\begin{itemize}
+    \item \textbf{Khách (chưa đăng nhập):} là nhóm truy cập vãng lai chưa xác thực danh tính, chỉ được phép xem các nội dung công khai như trang chủ, danh sách việc làm, chi tiết tin tuyển dụng, hồ sơ doanh nghiệp hoặc thực hiện đăng ký và đăng nhập tài khoản.
+    \item \textbf{Ứng viên:} vai trò tài khoản người tìm việc sau khi đăng nhập, được cấp quyền quản lý các bản CV cá nhân, lưu tin tuyển dụng, nộp đơn ứng tuyển, trò chuyện với nhà tuyển dụng và sử dụng các công cụ AI hỗ trợ hoàn thiện hồ sơ.
+    \item \textbf{Doanh nghiệp:} vai trò tài khoản nhà tuyển dụng sau khi đăng nhập, được tạo và quản lý tin tuyển dụng của đơn vị mình, tiếp nhận và duyệt hồ sơ ứng tuyển, cập nhật trạng thái hồ sơ và trao đổi trực tiếp với ứng viên qua kênh tin nhắn thời gian thực.
+    \item \textbf{Quản trị viên:} vai trò tài khoản quản trị hệ thống với đặc quyền cao nhất, chịu trách nhiệm phê duyệt tài khoản doanh nghiệp, kiểm duyệt tin tuyển dụng, quản lý trạng thái tài khoản người dùng và theo dõi số liệu thống kê vận hành.
+\end{itemize}
+
+Khi đăng nhập, vai trò được đưa vào thông tin phiên và token JWT. Backend xác minh token trước khi xử lý API riêng tư, sau đó kiểm tra vai trò đối với các thao tác đặc quyền. Với dữ liệu có phạm vi sở hữu, kiểm tra vai trò được kết hợp với kiểm tra quan hệ giữa người dùng và dữ liệu: doanh nghiệp chỉ thao tác trên tin do mình quản lý, ứng viên chỉ chỉnh sửa CV của mình, còn quản trị viên có quyền quản trị theo chính sách hệ thống. Vì vậy, RabbitCV sử dụng RBAC kết hợp với kiểm tra quyền sở hữu và ngữ cảnh nghiệp vụ, thay vì chỉ dựa vào việc người dùng đã đăng nhập.
+
+% \section{Lựa chọn công nghệ}
+
+% \begin{table}[H]
+%     \centering
+%     \small
+%     \begin{tabularx}{\textwidth}{|p{0.19\textwidth}|p{0.24\textwidth}|Y|} \hline
+%         \textbf{Công nghệ} & \textbf{Vai trò} & \textbf{Lý do trong RabbitCV} \\ \hline
+%         React, React Router & Component, state và điều hướng. & Giao diện có nhiều biểu mẫu CV, vùng xem trước, cổng theo vai trò và trang được tải lười. \\ \hline
+%         Vite, Tailwind CSS & Phát triển, đóng gói và nền tảng giao diện. & Chia gói mã theo nhóm; thống nhất bố cục, hộp thoại, danh sách chọn, menu và phản hồi thao tác. \\ \hline
+%         Node.js, Express & REST API và middleware. & Dùng JavaScript xuyên suốt, thuận tiện chia sẻ định dạng JSON và xử lý dữ liệu bất đồng bộ. \\ \hline
+%         MongoDB, Mongoose & Lưu tài liệu và mô hình dữ liệu. & CV có nhiều mảng lồng nhau; schema và index giúp ràng buộc các quy tắc quan trọng. \\ \hline
+%         Socket.IO & Nhắn tin bằng sự kiện. & Hỗ trợ room, xác thực khi kết nối và kết nối lại ở phía client. \\ \hline
+%         react-to-print, PDF.js & Xuất và kết xuất CV PDF. & Dùng chung quy tắc in A4 cho CV web và hiển thị từng trang PDF tải lên thay vì phụ thuộc trình xem gốc. \\ \hline
+%         Groq,OpenAI SDK & Gọi mô hình ngôn ngữ. & API tương thích OpenAI và hỗ trợ đầu ra theo JSON Schema cho các luồng AI. \\ \hline
+%     \end{tabularx}
+%     \caption{Vai trò và lý do lựa chọn công nghệ}
+%     \label{tab:technology-choice}
+% \end{table}
+
+% \section{Xây dựng và quản lý giao diện người dùng}
+
+% RabbitCV sử dụng React để tổ chức giao diện. Các trang giao diện được chia theo nhóm chức năng gồm: trang công khai, trang ứng viên, trang doanh nghiệp và trang quản trị.
+% Những thành phần chung như thanh điều hướng, biểu mẫu, hộp xác nhận, thông báo và vùng xem trước được tách riêng để hạn chế lặp mã và duy trì cách trình bày thống nhất.
+
+% Thông tin phiên đăng nhập, danh sách tin nhắn và các hộp thoại dùng chung được cung cấp cho những trang liên quan thông qua React Context. React Router quản lý đường dẫn và nhóm trang của hệ thống \cite{reactrouterdocs}.
+
+% TanStack Query được sử dụng để quản lý dữ liệu lấy từ máy chủ thông qua khóa truy vấn, bộ nhớ đệm, trạng thái tải, trạng thái lỗi và cơ chế làm mới dữ liệu \cite{tanstackquerydocs}. Việc lưu và tái sử dụng dữ liệu theo từng khóa giúp hạn chế các yêu cầu lặp, đồng thời giúp giao diện phản hồi nhanh hơn sau thao tác của người dùng.
+
+% Bên cạnh đó, cơ chế \textit{lazy load} được áp dụng cho mã nguồn frontend của các trang lớn thông qua \texttt{React.lazy} và \texttt{Suspense}. Nhờ đó, mã của một trang chỉ được tải khi người dùng điều hướng đến trang đó, góp phần giảm dung lượng phải tải ở lần truy cập đầu tiên.
+
+% React Hook Form kết hợp với Zod để kiểm tra dữ liệu biểu mẫu ở phía trình duyệt, hiển thị lỗi theo từng trường và chỉ gửi yêu cầu khi dữ liệu cơ bản hợp lệ. Việc tách dữ liệu máy chủ khỏi trạng thái trình bày, đồng thời tách mã nguồn theo từng trang, giúp mã dễ theo dõi, giảm yêu cầu không cần thiết và hạn chế tình trạng các trang sử dụng những bản dữ liệu không đồng nhất.
+
+% \section{Node.js và Express}
+
+% Node.js là môi trường thực thi JavaScript ở phía máy chủ, sử dụng vòng lặp sự kiện và cơ chế vào/ra bất đồng bộ. Mô hình này phù hợp với các yêu cầu phải chờ như truy vấn cơ sở dữ liệu, đọc tệp hoặc gọi dịch vụ AI mà không cần giữ một luồng xử lý riêng cho từng yêu cầu \cite{nodedocs}. Express là thư viện xây dựng trên Node.js, cung cấp cơ chế định tuyến và middleware để tổ chức REST API \cite{expressdocs}. Trong RabbitCV, Node.js tạo máy chủ HTTP, gắn ứng dụng Express và dùng cùng máy chủ đó cho kết nối Socket.IO. Việc tổ chức theo chuỗi giúp các quy tắc dùng chung được áp dụng nhất quán, đồng thời tránh lặp lại cùng một logic bảo mật trong từng đường dẫn API.
+
+% \section{MongoDB và Mongoose}
+
+% MongoDB lưu dữ liệu ở dạng tài liệu BSON và hỗ trợ cấu trúc lồng nhau \cite{mongodbdocs}. Cấu trúc này phù hợp với Resume vì một CV gồm thông tin cá nhân, học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ, ngôn ngữ và các nhóm tùy chọn. Mongoose bổ sung schema, kiểu dữ liệu, giá trị mặc định, validation và index \cite{mongooseDocs}.
+
+% Việc dùng MongoDB không loại bỏ nhu cầu thiết kế ràng buộc. RabbitCV dùng unique index cho username, email, cặp ứng tuyển và trạng thái chat theo người dùng; dùng reference ObjectId giữa User, Resume, Job và Application; đồng thời lưu snapshot khi lịch sử không được phụ thuộc hoàn toàn vào tài liệu gốc.
+
+% \section{Xác thực JWT và kiểm soát truy cập}
+
+% JWT là định dạng gọn để biểu diễn một tập claim giữa các bên \cite{rfc7519}. Sau khi đăng nhập, RabbitCV tạo token chứa định danh và vai trò rồi lưu trong cookie HTTP-only. JavaScript phía trình duyệt không đọc trực tiếp cookie này; server xác minh token và tải người dùng hiện tại trước khi xử lý API riêng tư.
+
+% Cookie HTTP-only không tự giải quyết toàn bộ bảo mật. Hệ thống còn cần kiểm soát CORS, thuộc tính \texttt{Secure} khi dùng HTTPS, chính sách \texttt{SameSite}, thời hạn token, rate limit và kiểm tra quyền trên đối tượng.
+
+\section{Mô hình dữ liệu hướng tài liệu (NoSQL)}
+
+Mô hình cơ sở dữ liệu hướng tài liệu (Document-oriented NoSQL) tổ chức và lưu trữ dữ liệu dưới dạng các tài liệu bán cấu trúc (phổ biến là JSON hoặc BSON) thay vì mô hình bảng với các hàng và cột cố định như cơ sở dữ liệu quan hệ (RDBMS). Mỗi tài liệu là một thực thể độc lập, có thể chứa các cặp khóa-giá trị, các mảng danh sách và các tài liệu con lồng nhau nhiều cấp.
+
+Trong quá trình thiết kế cơ sở dữ liệu cho ứng dụng web, mô hình hướng tài liệu cung cấp hai chiến lược biểu diễn mối quan hệ chính:
+
+\begin{itemize}
+    \item \textbf{Chiến lược nhúng (Embedding):} Lưu trữ các thực thể phụ thuộc trực tiếp bên trong tài liệu cha dưới dạng các mảng hoặc tài liệu con lồng nhau. Chiến lược này giúp tối ưu hóa hiệu năng truy vấn gom một lần (read locality), cho phép đọc toàn bộ dữ liệu liên quan chỉ với một truy vấn duy nhất mà không tốn chi phí thực hiện phép kết (JOIN) phức tạp giữa nhiều bảng.
+    \item \textbf{Chiến lược tham chiếu (Referencing):} Lưu trữ định danh khóa của tài liệu đích trong tài liệu nguồn. Chiến lược này phù hợp cho các mối quan hệ nhiều-nhiều hoặc các thực thể có vòng đời hoạt động độc lập và thay đổi thường xuyên, nhằm tránh trùng lặp dữ liệu và giảm dung lượng lưu trữ.
+    \item \textbf{Mẫu thiết kế bản chụp dữ liệu (Snapshotting Pattern):} Sao chép và lưu trữ trạng thái bất biến của dữ liệu tại thời điểm phát sinh giao dịch thay vì chỉ liên kết qua tham chiếu động. Cơ chế này bảo toàn trọn vẹn lịch sử và ngữ cảnh: khi dữ liệu gốc tiếp tục được chỉnh sửa hoặc xóa bỏ trong tương lai, dữ liệu trong bản chụp vẫn giữ nguyên trạng thái tại thời điểm diễn ra giao dịch.
+\end{itemize}
+
+Trong hệ thống RabbitCV, mô hình dữ liệu hướng tài liệu được áp dụng chặt chẽ vào các nghiệp vụ cốt lõi:
+
+\begin{itemize}
+    \item \textbf{Cấu trúc CV phân cấp lồng nhau:} Một bản CV bao gồm nhiều mục nội dung như thông tin cá nhân, học vấn, kinh nghiệm làm việc, kỹ năng, dự án và chứng chỉ. Việc áp dụng mô hình nhúng các mảng này vào cùng một tài liệu CV giúp quá trình lưu trữ, chỉnh sửa biểu mẫu và kết xuất tài liệu chuẩn A4 diễn ra nhanh chóng, toàn vẹn và đồng bộ.
+    \item \textbf{Tham chiếu liên kết thực thể:} Hệ thống sử dụng tham chiếu định danh giữa Người dùng (User), CV cá nhân (Resume), Tin tuyển dụng (Job) và Đơn ứng tuyển (Application) để duy trì mối quan hệ liên kết dữ liệu rõ ràng, độc lập và dễ mở rộng.
+    \item \textbf{Bảo toàn hồ sơ ứng tuyển với bản chụp dữ liệu:} Khi ứng viên nộp hồ sơ, hệ thống tạo bản chụp độc lập của CV (\texttt{resumeSnapshot}) và tin tuyển dụng (\texttt{jobSnapshot}) tại thời điểm nộp. Nhờ đó, nhà tuyển dụng luôn theo dõi đúng phiên bản CV mà ứng viên đã gửi, giải quyết triệt để rủi ro dữ liệu ứng tuyển bị thay đổi hoặc mất mát khi ứng viên tiếp tục cập nhật hoặc xóa CV gốc trong trang quản lý cá nhân.
+\end{itemize}
+
+\section{Hỗ trợ nhắn tin và thông báo theo thời gian thực}
+
+Trong các ứng dụng tuyển dụng hiện đại, nhu cầu tương tác tức thời giữa ứng viên và nhà tuyển dụng đòi hỏi một cơ chế truyền thông vượt trội hơn mô hình kéo dữ liệu truyền thống (HTTP Polling). Việc ứng dụng giao thức truyền thông hai chiều dựa trên sự kiện (Event-driven) thông qua WebSocket và thư viện Socket.IO cho phép thiết lập kết nối song công toàn phần (full-duplex) duy trì liên tục giữa máy khách và máy chủ với độ trễ cực thấp. Nhờ đó, máy chủ có thể chủ động đẩy (push) dữ liệu xuống trình duyệt ngay khi phát sinh sự kiện mà không cần máy khách phải liên tục gửi yêu cầu thăm dò.
+
+Trong hệ thống RabbitCV, cơ chế thời gian thực được tổ chức thành hai luồng tương tác chính:
+
+\begin{itemize}
+    \item \textbf{Luồng tin nhắn trò chuyện (Real-time Chat):} Khi người dùng đăng nhập thành công, một kết nối socket được xác thực sẽ được thiết lập. Máy chủ quản lý các kết nối này bằng cách phân phối vào các ``phòng'' (rooms) riêng biệt theo từng cuộc hội thoại gắn liền với tin tuyển dụng và hồ sơ ứng tuyển cụ thể. Khi một bên gửi tin nhắn, sự kiện được chuyển tiếp tức thì đến đúng người nhận trong phòng mà không ảnh hưởng đến những người dùng khác. Đồng thời, tin nhắn được lưu trữ bền vững vào cơ sở dữ liệu để bảo đảm lịch sử trao đổi luôn được bảo toàn trọn vẹn.
+    \item \textbf{Luồng thông báo nghiệp vụ (Real-time Notifications):} Bên cạnh tin nhắn, các sự kiện quan trọng trong quy trình tuyển dụng (như khi nhà tuyển dụng cập nhật trạng thái hồ sơ, phản hồi đơn ứng tuyển hoặc có tin nhắn mới) được phát đi tức thời qua socket đến tài khoản người nhận. Nhờ đó, số lượng thông báo chưa đọc và nội dung thông báo được cập nhật ngay lập tức trên thanh công cụ của người dùng mà không cần tải lại trang.
+\end{itemize}
+
+
+\section{Mô hình ngôn ngữ lớn (LLM)}
+
+Mô hình ngôn ngữ lớn (Large Language Models -- LLM) là các mô hình học sâu có khả năng tiếp nhận, xử lý và tạo sinh văn bản tự nhiên dựa trên việc nắm bắt mối quan hệ ngữ nghĩa phức tạp trong ngữ cảnh. Trong kiến trúc phần mềm hiện đại, việc khai thác sức mạnh của LLM thường được triển khai dưới dạng dịch vụ suy luận qua API (Inference-as-a-Service), trong đó ứng dụng đóng vai trò là bên điều phối ngữ cảnh, chuẩn bị dữ liệu đầu vào và tiếp nhận kết quả tạo sinh từ mô hình.
+
+Việc tích hợp LLM vào RabbitCV dựa trên các nguyên lý kỹ thuật cốt lõi sau:
+
+\begin{itemize}
+    \item \textbf{Quản lý ngữ cảnh và kỹ thuật thiết kế lời nhắc:} Lời nhắc là phương tiện định hướng hành vi và phạm vi xử lý của mô hình mà không cần can thiệp vào trọng số thuật toán. Hệ thống phân định ngữ cảnh gửi đến mô hình thành các vai trò chuyên biệt: chỉ thị hệ thống (\textit{system prompt}) nhằm thiết lập vai trò chuyên gia nhân sự và quy tắc đánh giá nghiêm ngặt; dữ liệu người dùng (\textit{user prompt}) chứa nội dung CV và tin tuyển dụng; cùng lịch sử đối thoại (\textit{assistant history}) đối với các tác vụ hội thoại nhiều lượt.
+    \item \textbf{Đầu ra có cấu trúc dựa trên JSON Schema:} Mặc định, mô hình ngôn ngữ sinh ra văn bản tự do, dễ dẫn đến hiện tượng sai lệch định dạng hoặc lỗi cú pháp khi tích hợp vào hệ thống phần mềm. Kỹ thuật giải mã có ràng buộc theo JSON Schema ép buộc phản hồi của mô hình phải tuân thủ nghiêm ngặt một lược đồ định sẵn (gồm các trường điểm số, nhận xét chi tiết, mảng kỹ năng và nội dung văn bản gợi ý). Cơ chế này giúp backend dễ dàng phân tích dữ liệu một cách an toàn, loại bỏ lỗi vỡ cấu trúc và hiển thị trực quan lên giao diện người dùng.
+    \item \textbf{Kiểm soát an toàn thông tin và bảo vệ dữ liệu nhạy cảm:} Nhằm tuân thủ nguyên tắc quản trị rủi ro và quyền riêng tư, hệ thống trang bị bộ làm sạch dữ liệu tự động trước khi gửi yêu cầu đến mô hình bên ngoài. Các thông tin định danh cá nhân nhạy cảm như họ tên thật, số điện thoại, địa chỉ email được khử định danh, vừa ngăn ngừa nguy cơ rò rỉ dữ liệu, vừa tối ưu hóa dung lượng cửa sổ ngữ cảnh.
+\end{itemize}
+
+Trong phạm vi đồ án, mô hình ngôn ngữ lớn đóng vai trò là trợ lý thông minh hỗ trợ người tìm việc thông qua ba tác vụ trọng tâm: rà soát đánh giá chất lượng CV, gợi ý điền các phần nội dung còn thiếu theo vị trí ứng tuyển, và mô phỏng phỏng vấn thử nghiệm. Kết quả từ AI luôn được định vị như một nguồn tham khảo hỗ trợ, trao quyền quyết định cuối cùng cho người tìm việc trong việc hoàn thiện hồ sơ nghề nghiệp của mình.

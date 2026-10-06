@@ -1,0 +1,20 @@
+﻿
+Line Id     Name                                Errors                                                                                                                                      
+---- --     ----                                ------                                                                                                                                      
+ 183 CV-1.1 Đăng nhập                           & E1. Tài khoản hoặc mật khẩu không chính xác\\ & E2. Tài khoản đã bị khóa\\ & E3. Hệ thống đang bảo trì\\                                  
+ 233 CV-1.2 Đăng ký                             & E1. Thông tin tài khoản hoặc mật khẩu không hợp lệ\\ & E2. Tài khoản đã tồn tại\\ & E3. Hệ thống đang bảo trì\\                           
+ 281 CV-1.3 Đăng xuất                           & E1. Hệ thống đang bảo trì\\                                                                                                               
+ 325 CV-1.4 Quản lý thông tin tài khoản         & E1. Hệ thống đang bảo trì\\                                                                                                               
+ 374 CV-1.5 Quản lý CV                          & E1. Hệ thống đang bảo trì\\ &E2. Người dùng chưa ấn nút Lưu CV\\                                                                          
+ 424 CV-1.6 Tải CV                              & E1. Hệ thống đang bảo trì\\                                                                                                               
+ 483 CV-1.7 Điền CV bằng AI                     & E1. Hệ thống đang bảo trì\\ & E2. Người dùng chưa ấn nút Lưu CV\\                                                                         
+ 534 CV-1.8 Review CV bằng AI                   & E1. Hệ thống đang bảo trì\\                                                                                                               
+ 584 CV-1.9 Phỏng vấn với AI                    & E1. Hệ thống đang bảo trì\\                                                                                                               
+ 650 CV-2.1 Tìm kiếm việc làm                   & E1. Hệ thống đang bảo trì\\ & E2. Ứng viên chưa nhập nội dung tìm kiếm\\ & E3. Không tìm thấy công việc phù hợp với yêu cầu của ứng viên\\
+ 706 CV-2.2 Ứng tuyển việc làm                  & E1. Hệ thống đang bảo trì\\ & E2. Ứng viên chưa chọn CV để ứng tuyển\\ & E3. CV tải lên không hợp lệ\\ & E4. CV tải lên bị lỗi\\          
+ 763 CV-2.3 Theo dõi trạng thái ứng tuyển       & E1. Hệ thống đang bảo trì\\ & E2. Ứng viên chưa ứng tuyển bất kỳ công việc nào\\                                                          
+ 945 CV-4.1 Quản lý bài đăng tuyển dụng         & E1. Hệ thống đang bảo trì\\                                                                                                               
+1003 CV-4.2 Cập nhật trạng thái hồ sơ ứng tuyển & E1. Hệ thống đang bảo trì\\                                                                                                               
+
+
+

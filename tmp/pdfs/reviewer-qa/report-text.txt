@@ -1,0 +1,2684 @@
+\n===== PDF PAGE 1 =====\nĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+TRƯỜNG ĐẠI HỌC BÁCH KHOA
+KHOA KHOA HỌC & KỸ THUẬT MÁY TÍNH
+——————– * ———————
+BÁO CÁO ĐỒ ÁN TỐT NGHIỆP
+Xây dựng trang web hỗ trợ viết CV có tích hợp
+AI
+HỘI ĐỒNG: Khoa học Máy tính - 12 CLC
+GVHD: ThS. Mai Đức Trung
+TKHĐ: KS. Nguyễn Minh Tâm
+—o0o—
+SVTH: Nguyễn Thành Vinh - 2053592
+TP . HỒ CHÍ MINH, THÁNG 08/2026\n===== PDF PAGE 2 =====\nChữ ký của GVHD
+Ngày:
+ThS. Mai Đức Trung
+Khoa Khoa học và Kỹ thuật Máy tính\n===== PDF PAGE 3 =====\nii
+Lời cam đoan
+Tôi xin cam đoan đây là công trình nghiên cứu và phát triển của riêng tôi dưới
+sự hướng dẫn của ThS. Mai Đức Trung. Nội dung báo cáo, kết quả triển khai và dữ
+liệu kiểm thử được trình bày trung thực và chính xác. Ngoài ra, tôi cũng có sử dụng
+một số nhận xét, đánh giá và số liệu của các tác giả khác, cơ quan tổ chức khác. Tất
+cả đều có trích dẫn và chú thích nguồn gốc.
+Nếu có phát hiện bất kỳ nội dung vi phạm bản quyền hoặc quyền sở hữu trí tuệ,
+tôi xin hoàn toàn chịu trách nhiệm về nội dung của báo cáo Đồ án tốt nghiệp này và
+về việc tuân thủ các quy định liên quan đến học thuật, bản quyền và bảo vệ dữ liệu.
+Tp. Hồ Chí Minh, ngày tháng năm 2026
+Sinh viên
+Nguyễn Thành Vinh\n===== PDF PAGE 4 =====\niii
+Lời cảm ơn
+Lời đầu tiên, tôi xin chân thành cảm ơn ThS. Mai Đức Trung đã tận tình hướng
+dẫn, góp ý và định hướng trong suốt quá trình thực hiện Đồ án tốt nghiệp. Những
+nhận xét của thầy là cơ sở quan trọng để em hoàn thiện cả sản phẩm phần mềm và
+báo cáo.
+Tôi xin cảm ơn Ban Giám hiệu Trường Đại học Bách khoa, Đại học Quốc gia
+Thành phố Hồ Chí Minh cùng quý thầy cô Khoa Khoa học và Kỹ thuật Máy tính đã
+cung cấp nền tảng kiến thức về phát triển phần mềm, cơ sở dữ liệu, hệ thống web và
+phương pháp giải quyết vấn đề.
+Cuối cùng, tôi xin cảm ơn gia đình và bạn bè đã luôn hỗ trợ, động viên và tạo
+điều kiện để em hoàn thành đồ án tốt nghiệp này.
+Tp. Hồ Chí Minh, ngày tháng năm 2026
+Sinh viên
+Nguyễn Thành Vinh\n===== PDF PAGE 5 =====\niv
+Tóm tắt nội dung
+Trong thị trường lao động hiện nay, vị trí của ứng viên phụ thuộc nhiều vào chất lượng của
+CV . Một CV được viết tốt có thể giúp ứng viên nổi bật hơn so với các ứng viên khác, trong khi
+một CV được viết kém có thể khiến ứng viên bị loại ngay từ vòng đầu tiên. CV chính là yếu tố
+quyết định cơ hội tiếp cận việc làm của ứng viên. Tuy nhiên, việc tạo ra một bản CV hoàn chỉnh
+và chuyên nghiệp là một quá trình không hề đơn giản, đặc biệt là đối với các sinh viên mới tốt
+nghiệp hoặc những người mới tham gia thị trường lao động. Quá trình này bao gồm nhiều công
+đoạn phức tạp như suy nghĩ và chọn lọc các thông tin, sử dụng các thuật ngữ nghề nghiệp chuẩn
+xác, sắp xếp các thông tin, bố cục và định dạng sao cho vừa vặn trong một trang giấy mà không
+bị rối mắt. Bên cạnh đó, nhiều ứng viên còn lúng túng khi không biết CV của mình còn thiếu
+sót những gì và chưa có sự chuẩn bị kỹ lưỡng trước các câu hỏi phỏng vấn thực tế.
+Nhằm hỗ trợ ứng viên tháo gỡ những khó khăn này, việc ứng dụng trí tuệ nhân tạo (AI) vào
+quá trình tạo CV là một giải pháp vô cùng tiềm năng và tất yếu theo xu thế công nghệ hiện nay.
+Những bước tiến vượt bậc của AI trong những năm gần đây đã chứng minh khả năng hỗ trợ đắc
+lực cho con người. Trong vòng 4 năm kể từ ngày phát hành chính thức, AI đã có những bước
+tiến vượt bậc. 4 năm trước, không ai nghĩ AI có thể thay thế con người. 4 năm sau, AI đã có thể
+thay thế con người trong nhiều lĩnh vực, từ những việc đơn giản như trả lời câu hỏi, viết email,
+đến những việc phức tạp như phân tích dữ liệu, đưa ra quyết định, sáng tạo nội dung. Nắm bắt
+được xu thế này, đồ án tập trung xây dựng trang web RabbitCV – ứng dụng hỗ trợ người dùng
+tạo, quản lý và trình bày CV chuẩn khổ A4; đồng thời tích hợp AI để rà soát, cải thiện nội dung
+CV và mô phỏng luyện tập phỏng vấn.\n===== PDF PAGE 6 =====\nMỤC LỤC
+1 Tổng quan đề tài 1
+1.1 Bối cảnh và lý do chọn đề tài . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+1.2 Mục tiêu của đề tài . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+1.3 Đối tượng sử dụng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+1.4 Kết quả và giá trị đạt được . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+1.5 Cấu trúc báo cáo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+2 Cơ sở lý thuyết 4
+2.1 Kiến trúc ứng dụng web . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+2.2 MERN Stack . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+2.3 Cơ chế phân quyền RBAC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.4 Lựa chọn công nghệ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.5 Xây dựng và quản lý giao diện người dùng . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.6 Socket.IO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+3 Giới thiệu các công nghệ đã sử dụng 7
+3.1 Phát triển giao diện người dùng (Front-end) . . . . . . . . . . . . . . . . . . . . . . . . 7
+3.1.1 React . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+3.1.2 TanStack Query . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+3.1.3 React Hook Form và Zod . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+3.1.4 Tailwind CSS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1.5 Vite . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.2 Phát triển Back-end . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2.1 Node.js và Express . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2.2 Socket.IO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.3 Phát triển cơ sở dữ liệu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.3.1 MongoDB . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.3.2 Mongoose . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.3.3 Sự kết hợp giữa MongoDB và Mongoose . . . . . . . . . . . . . . . . . . . . . 15
+3.3.4 Bố cục A4 và react-to-print . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+3.3.5 PDF.js và hiển thị PDF tải lên . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+4 Phân tích và thiết kế hệ thống 18
+4.1 Phân tích vai trò người dùng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+4.2 Y êu cầu chức năng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+4.2.1 Đối với người dùng chưa đăng nhập (guest) . . . . . . . . . . . . . . . . . . . . 18
+4.2.2 Đối với các ứng viên (employee) . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+4.2.3 Đối với các doanh nghiệp (company) . . . . . . . . . . . . . . . . . . . . . . . 19
+4.2.4 Đối với quản trị viên (administrator) . . . . . . . . . . . . . . . . . . . . . . . . 19
+4.3 Y êu cầu phi chức năng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+4.4 Lược đồ usecase cho toàn bộ hệ thống . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+i\n===== PDF PAGE 7 =====\nMỤC LỤC ii
+4.5 Đặc tả usecase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.5.1 Quản lý CV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.5.2 Tìm việc và ứng tuyển việc làm . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+4.5.3 Giao tiếp và thông báo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+4.5.4 Quản lý bài đăng tuyển dụng . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+4.5.5 Quản trị viên . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+4.6 Activity diagram (Lược đồ hoạt động): . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+4.6.1 Đăng ký, đăng nhập và quên mật khẩu: . . . . . . . . . . . . . . . . . . . . . . 34
+4.6.2 Quản lý CV: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+4.6.3 Tìm kiếm việc làm: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.6.4 Quản lý tin tuyển dụng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.6.5 Cập nhật trạng thái hồ sơ ứng tuyển: . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.6.6 Phỏng vấn với AI: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.6.7 Quản trị viên: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+4.7 Lược đồ tuần tự (Sequence diagram): . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+4.7.1 Đăng ký, đăng nhập: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+4.7.2 Quản lý CV: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+4.7.3 Phỏng vấn với AI: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+4.7.4 Ứng tuyển công việc: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+4.7.5 Quản lý tin ứng tuyển: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+4.7.6 Chat và thông báo: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+4.7.7 Quản trị viên: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+4.8 Thiết kế cơ sở dữ liệu: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+4.8.1 Lược đồ thực thể ERD: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+4.8.2 Lược đồ quan hệ: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+5 Triển khai hệ thống 50
+5.1 Tổ chức mã nguồn và phạm vi triển khai . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+5.2 Ứng viên . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+5.2.1 Trang chào mừng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+5.2.2 Đăng ký: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+5.2.3 Đăng nhập: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+5.2.4 Trang chủ: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+5.2.5 Tìm kiếm công việc: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+5.2.6 Quản lý CV: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+5.2.7 Trang bảng xếp hạng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+5.2.8 Trang tin tức: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+5.2.9 Phỏng vấn AI: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+5.2.10 Trang cá nhân: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+5.3 Doanh nghiệp . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+5.3.1 Trang tổng quan: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+5.3.2 Hồ sơ doanh nghiệp: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+5.3.3 Đăng tin tuyển dụng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+5.3.4 Quản lý tuyển dụng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+5.3.5 Duyệt ứng viên: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+5.3.6 Nhắn tin tuyển dụng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+5.4 Quản trị viên . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+5.4.1 Trang tổng quan: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+5.4.2 Quản lý người dùng: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
+5.4.3 Quản lý việc làm và tuyển dụng: . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+5.4.4 Quản lý doanh nghiệp: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 68\n===== PDF PAGE 8 =====\nMỤC LỤCiii
+6 MÔ-ĐUN TRÍ TUỆ NHÂN TẠO 69
+6.1 Mục tiêu và nguyên tắc sử dụng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+6.2 Các thành phần xử lý của mô-đun AI . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+6.2.1 Kiểm tra và làm sạch dữ liệu đầu vào . . . . . . . . . . . . . . . . . . . . . . . 69
+6.2.2 Cấu hình và kết nối dịch vụ AI . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+6.3 Các chức năng AI đã triển khai . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+6.3.1 Review nội dung CV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+6.3.2 Gợi ý hoàn thiện CV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+6.3.3 Luyện tập phỏng vấn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+6.4 Kiểm soát dữ liệu, an toàn và lỗi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+6.4.1 Xác thực và phân quyền . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+6.4.2 Bảo vệ dữ liệu đầu vào . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+6.4.3 Kiểm soát đầu ra . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+7 Kiểm thử và đánh giá 74
+7.1 Công cụ kiểm thử . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.1.1 Node Test Runner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.1.2 Playwright . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+7.1.3 Bộ công cụ DevTools và kiểm thử hiển thị khổ in A4 . . . . . . . . . . . . . . . 75
+7.2 Tổ chức kiểm thử hệ thống . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+7.2.1 Mục tiêu kiểm thử . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+7.3 Kết quả kiểm thử hệ thống . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+7.3.1 Node Test Runner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+7.3.2 Playwright . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+7.3.3 Kết quả thực thi Playwright . . . . . . . . . . . . . . . . . . . . . . . . . . . . 80
+8 Kết luận và hướng phát triển 87
+8.1 Kết quả đạt được . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87
+8.2 Hướng phát triển . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+8.3 Kết luận . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88\n===== PDF PAGE 9 =====\nDANH SÁCH CÁC HÌNH VẼ
+4.1 Lược đồ usecase cho toàn bộ hệ thống . . . . . . . . . . . . . . . . . . . . . . 20
+4.2 Lược đồ usecase quản lý CV . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.3 Lược đồ usecase tìm việc và ứng tuyển việc làm . . . . . . . . . . . . . . . . . 26
+4.4 Lược đồ usecase giao tiếp và thông báo . . . . . . . . . . . . . . . . . . . . . 28
+4.5 Lược đồ usecase quản lý thông tin doanh nghiệp . . . . . . . . . . . . . . . . . 29
+4.6 Lược đồ usecase phân hệ Quản trị viên . . . . . . . . . . . . . . . . . . . . . . 32
+4.7 Lược đồ hoạt động: Đăng ký, đăng nhập và quên mật khẩu . . . . . . . . . . . 34
+4.8 Lược đồ hoạt động: Quản lý CV . . . . . . . . . . . . . . . . . . . . . . . . . 35
+4.9 Lược đồ hoạt động: Tìm kiếm việc làm . . . . . . . . . . . . . . . . . . . . . . 36
+4.10 Lược đồ hoạt động: Quản lý tin tuyển dụng . . . . . . . . . . . . . . . . . . . 37
+4.11 Lược đồ hoạt động: Cập nhật trạng thái hồ sơ ứng tuyển . . . . . . . . . . . . . 38
+4.12 Lược đồ hoạt động: Phỏng vấn với AI . . . . . . . . . . . . . . . . . . . . . . 38
+4.13 Lược đồ hoạt động: Quản trị viên . . . . . . . . . . . . . . . . . . . . . . . . . 39
+4.14 Lược đồ tuần tự: Đăng ký, đăng nhập . . . . . . . . . . . . . . . . . . . . . . . 40
+4.15 Lược đồ tuần tự: Quản lý CV . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+4.16 Lược đồ tuần tự: Phỏng vấn với AI . . . . . . . . . . . . . . . . . . . . . . . . 42
+4.17 Lược đồ tuần tự: Ứng tuyển công việc . . . . . . . . . . . . . . . . . . . . . . 43
+4.18 Lược đồ tuần tự: Ứng tuyển công việc bằng CV PDF . . . . . . . . . . . . . . 43
+4.19 Lược đồ tuần tự: Quản lý tin ứng tuyển . . . . . . . . . . . . . . . . . . . . . . 44
+4.20 Lược đồ tuần tự: Nhắn tin theo thời gian thực . . . . . . . . . . . . . . . . . . 44
+4.21 Lược đồ tuần tự: Thông báo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+4.22 Lược đồ tuần tự: Quản trị viên . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+4.23 Lược đồ thực thể - mối quan hệ (ERD) . . . . . . . . . . . . . . . . . . . . . . 47
+4.24 Lược đồ quan hệ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+5.1 Giao diện chào mừng của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . 50
+5.2 Giao diện đăng ký tài khoản của RabbitCV . . . . . . . . . . . . . . . . . . . 51
+5.3 Giao diện đăng nhập tài khoản của RabbitCV . . . . . . . . . . . . . . . . . . 52
+5.4 Giao diện trang chủ của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . . 52
+5.5 Giao diện tìm kiếm công việc của RabbitCV . . . . . . . . . . . . . . . . . . . 53
+5.6 Giao diện chi tiết công việc của RabbitCV . . . . . . . . . . . . . . . . . . . . 54
+5.7 Giao diện lựa chọn CV để ứng tuyển của RabbitCV . . . . . . . . . . . . . . . 55
+5.8 Giao diện danh sách CV của RabbitCV . . . . . . . . . . . . . . . . . . . . . 56
+5.9 Trang chỉnh sửa nội dung CV của RabbitCV . . . . . . . . . . . . . . . . . . . 56
+5.10 Trang bảng xếp hạng của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . 57
+5.11 Trang tin tức của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+5.12 Trang chi tiết tin tức của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . . 58
+5.13 Trang phỏng vấn AI của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . . 59
+iv\n===== PDF PAGE 10 =====\nDANH SÁCH CÁC HÌNH VẼv
+5.14 Trang nhắn tin phỏng vấn của RabbitCV . . . . . . . . . . . . . . . . . . . . . 59
+5.15 Trang cá nhân của RabbitCV . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+5.16 Giao diện tổng quan của doanh nghiệp . . . . . . . . . . . . . . . . . . . . . . 61
+5.17 Giao diện quản lý hồ sơ doanh nghiệp . . . . . . . . . . . . . . . . . . . . . . 62
+5.18 Giao diện đăng tin tuyển dụng mới . . . . . . . . . . . . . . . . . . . . . . . . 63
+5.19 Giao diện quản lý tin tuyển dụng . . . . . . . . . . . . . . . . . . . . . . . . . 63
+5.20 Giao diện duyệt hồ sơ ứng viên . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+5.21 Giao diện nhắn tin trao đổi với ứng viên . . . . . . . . . . . . . . . . . . . . . 64
+5.22 Giao diện tổng quan hệ thống dành cho quản trị viên . . . . . . . . . . . . . . 65
+5.23 Giao diện quản lý người dùng của quản trị viên . . . . . . . . . . . . . . . . . 66
+5.24 Giao diện quản lý việc làm và tuyển dụng của quản trị viên . . . . . . . . . . . 67
+5.25 Giao diện quản lý doanh nghiệp của quản trị viên . . . . . . . . . . . . . . . . 68
+7.1 Kết quả Node Test Runner . . . . . . . . . . . . . . . . . . . . . . . . . . . . 78
+7.2 Báo cáo tổng quan kết quả thực thi 6 kịch bản Playwright . . . . . . . . . . . . 80
+7.3 Chi tiết thực thi kịch bản kiểm tra trang chào mừng . . . . . . . . . . . . . . . 81
+7.4 Chi tiết thực thi kịch bản xác thực biểu mẫu đăng nhập rỗng . . . . . . . . . . . 82
+7.5 Chi tiết thực thi kịch bản đăng nhập vai trò Ứng viên . . . . . . . . . . . . . . 83
+7.6 Chi tiết thực thi kịch bản đăng nhập vai trò Doanh nghiệp . . . . . . . . . . . . 84
+7.7 Chi tiết thực thi kịch bản đăng nhập vai trò Quản trị viên . . . . . . . . . . . . 85
+7.8 Chi tiết thực thi kịch bản chặn ứng viên truy cập cổng quản trị . . . . . . . . . 86\n===== PDF PAGE 11 =====\nChương 1
+Tổng quan đề tài
+1.1 Bối cảnh và lý do chọn đề tài
+CV là điểm tiếp xúc đầu tiên giữa nhiều ứng viên và nhà tuyển dụng. Một CV có bố cục rõ
+ràng, nội dung nhất quán và tập trung vào năng lực liên quan sẽ giúp người đọc nhanh chóng
+xác định được mức độ phù hợp ban đầu.
+Tuy nhiên, đối với người mới tham gia thị trường lao động, họ thường gặp ba khó khăn
+chính: thiếu kinh nghiệm trong việc tổ chức thông tin, chưa biết cách diễn đạt kinh nghiệm theo
+ngôn ngữ nghề nghiệp và chưa biết điều chỉnh CV theo vị trí mục tiêu.
+Bên cạnh đó, một thực tế đáng quan ngại là nhiều ứng viên vẫn đang sử dụng các phiên bản
+CV cũ kỹ, thiếu chuyên nghiệp và không tuân thủ các tiêu chuẩn hiện đại, điều này làm giảm
+đáng kể cơ hội của họ trong thị trường lao động đầy cạnh tranh.
+Các công cụ AI có thể hỗ trợ người dùng viết lại, tóm tắt và phân tích nội dung. Tuy nhiên,
+nội dung do mô hình tạo ra có thể chưa chính xác, vì vậy người dùng cần kiểm tra trước khi
+sử dụng. Bên cạnh đó, nếu thông tin nhạy cảm được đưa vào hệ thống mà không có biện pháp
+kiểm soát phù hợp, dữ liệu có nguy cơ bị sử dụng ngoài mục đích ban đầu. Do đó, việc tích hợp
+mô hình ngôn ngữ không đơn thuần là gửi yêu cầu và nhận kết quả, mà còn phải kiểm soát dữ
+liệu đầu vào, chuẩn hóa đầu ra và quản lý quyền truy cập. Người dùng vẫn là người xem xét và
+đưa ra quyết định cuối cùng đối với nội dung do AI đề xuất. Cách tiếp cận này phù hợp với các
+nguyên tắc quản lý rủi ro AI về tính minh bạch, khả năng kiểm tra và vai trò trung tâm của con
+người.
+Từ nhu cầu trên, đề tài lựa chọn xây dựng trang web RabbitCV – ứng dụng web hỗ trợ tạo
+CV và tìm kiếm việc làm có tích hợp AI. Tạo và cải thiện CV chính là trọng tâm; các chức năng
+tìm việc, ứng tuyển, doanh nghiệp, thông báo và nhắn tin tạo ra bối cảnh thực tế để người dùng
+sử dụng CV sau khi hoàn thành.
+1.2 Mục tiêu của đề tài
+Mục tiêu tổng quát là xây dựng một trang web có thể vận hành để hỗ trợ người dùng tạo CV
+và các thao tác tuyển dụng liên quan, trong đó AI sẽ đóng vai trò trợ lý hỗ trợ người dùng và
+không thay thế quyết định của họ. Các mục tiêu cụ thể gồm:
+1. Xây dựng giao diện và quy trình tạo, chỉnh sửa, lưu, xem trước và in CV theo tỷ lệ A4.
+2. Hỗ trợ tải lên CV định dạng PDF, chỉ chấp nhận dữ liệu PDF hợp lệ và giới hạn kích thước
+giải mã ở 5 MB.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 1/89\n===== PDF PAGE 12 =====\n3. Tích hợp AI viết mới, cải thiện hoặc rút gọn tiểu sử; review CV; gợi ý điền mục còn thiếu;
+chấm mức độ phù hợp với công việc; và tập luyện phỏng vấn với AI.
+4. Cung cấp tìm kiếm, lưu tin, ứng tuyển bằng CV đã lưu hoặc PDF, theo dõi trạng thái và
+duy trì lịch sử khi tin bị đóng hoặc xóa.
+5. Tổ chức quyền truy cập cho khách, ứng viên, doanh nghiệp và quản trị viên; kiểm tra vai
+trò và quyền sở hữu ở backend.
+6. Hỗ trợ chat bằng Socket.IO, lưu trạng thái đọc theo từng người dùng và quản lý thông báo.
+1.3 Đối tượng sử dụng
+Khách xem nội dung công khai, danh sách và chi tiết công việc. Ứng viên quản lý hồ sơ, tạo
+hoặc tải CV , dùng công cụ AI, tìm và lưu việc, ứng tuyển, theo dõi trạng thái, nhận thông báo
+và nhắn tin. Doanh nghiệp quản lý thông tin công ty, tạo và điều chỉnh tin, tiếp nhận hồ sơ, xem
+CV có liên quan, cập nhật trạng thái và trao đổi với ứng viên. Quản trị viên theo dõi số liệu,
+quản lý người dùng, doanh nghiệp và tin tuyển dụng.
+1.4 Kết quả và giá trị đạt được
+Đề tài tạo ra một nguyên mẫu thống nhất giữa soạn CV và bối cảnh tuyển dụng. Những điểm
+kỹ thuật có giá trị gồm:
+•Phân biệt CV được tạo trực tiếp trên hệ thống với CV PDF tải lên bằng một trường đánh
+dấu loại CV; đồng thời chỉ trả về các thông tin cần thiết khi hiển thị danh sách CV , còn nội
+dung PDF đầy đủ được tải khi người dùng mở hoặc xem CV cụ thể.
+•Lưu bản chụp thông tin việc làm tại thời điểm ứng tuyển cùng hồ sơ ứng tuyển, giúp duy trì
+ngữ cảnh lịch sử ngay cả khi tin tuyển dụng bị xóa.
+•Thiết lập ràng buộc duy nhất cho mỗi cặp ứng viên và tin tuyển dụng, qua đó ngăn ngừa
+việc gửi hồ sơ trùng lặp ngay tại tầng cơ sở dữ liệu.
+•Lưu trạng thái đã đọc và trạng thái ẩn của cuộc trò chuyện riêng cho từng người dùng thay
+vì xóa dữ liệu dùng chung.
+•Xây dựng năm nhóm chức năng AI với kiểm soát đầu vào, đầu ra, giới hạn hạn mức và tần
+suất sử dụng, kiểm soát thời gian xử lý và thống kê mức độ sử dụng.
+1.5 Cấu trúc báo cáo
+Báo cáo được tổ chức thành tám chương và một phần phụ lục. Nội dung, trọng tâm và điểm
+nổi bật của từng phần được trình bày như sau:
+•Chương 1 – Tổng quan đề tài:Trình bày bối cảnh và lý do lựa chọn đề tài, mục tiêu xây
+dựng hệ thống, các nhóm người dùng, kết quả đạt được và giá trị của sản phẩm. Chương
+này xác định vai trò hỗ trợ của AI, trong đó người dùng vẫn kiểm tra và quyết định cuối
+cùng đối với nội dung được đề xuất.
+•Chương 2 – Cơ sở lý thuyết:Trình bày các kiến thức nền tảng liên quan đến kiến trúc ứng
+dụng web, tổ chức hệ thống, quản lý dữ liệu, xác thực, phân quyền, giao tiếp theo thời gian
+thực, xử lý PDF và mô hình ngôn ngữ.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 2/89\n===== PDF PAGE 13 =====\n•Chương 3 – Giới thiệu các công nghệ đã sử dụng:Giới thiệu các công nghệ được dùng
+để phát triển giao diện, máy chủ, cơ sở dữ liệu, trí tuệ nhân tạo, xử lý PDF, đồng bộ dữ liệu,
+bảo mật, kiểm thử và triển khai RabbitCV .
+•Chương 4 – Phân tích và thiết kế hệ thống:Chuyển các mục tiêu của đề tài thành các
+nhóm tác nhân, yêu cầu chức năng, yêu cầu phi chức năng, ma trận phân quyền, kiến trúc
+tổng thể, thiết kế dữ liệu và các quy trình nghiệp vụ chính. Chương này nhấn mạnh mối liên
+hệ giữa yêu cầu, quyền truy cập, dữ liệu và ranh giới bảo mật trong từng luồng sử dụng.
+•Chương 5 – Triển khai hệ thống:Trình bày quá trình hiện thực các chức năng chính gồm
+xác thực, tạo và quản lý CV , xuất CV , tìm việc, ứng tuyển, quản lý phía doanh nghiệp, nhắn
+tin và thông báo.
+•Chương 6 – Mô-đun trí tuệ nhân tạo:Giải thích kiến trúc mô-đun AI, năm chức năng đã
+triển khai, quy trình xử lý yêu cầu, kiểm soát dữ liệu, thống kê sử dụng, giới hạn hiện tại và
+vai trò quyết định cuối cùng của người dùng.
+•Chương 7 – Kiểm thử và đánh giá:Trình bày môi trường đánh giá, khả năng tái lập, kết
+quả kiểm tra tự động và thủ công, danh mục kiểm thử, truy vết yêu cầu và các kịch bản
+kiểm thử thủ công. Chương có điểm nhấn là phân biệt rõ bằng chứng kiểm thử nghiệp vụ,
+kiểm tra kỹ thuật và đánh giá riêng cho chức năng AI.
+•Chương 8 – Kết luận và hướng phát triển:Đối chiếu kết quả thực hiện với các mục tiêu
+ban đầu, tổng hợp đóng góp kỹ thuật, bài học kinh nghiệm, hạn chế hiện tại và lộ trình phát
+triển. Điểm nổi bật của chương là nêu rõ những giới hạn chưa được kiểm chứng, đặc biệt
+đối với chất lượng ngữ nghĩa của kết quả AI.
+•Phụ lục – Thông tin tái lập và danh mục kỹ thuật:Cung cấp quy trình tái lập kiểm tra,
+các biến môi trường, danh mục giao tiếp của hệ thống, những nguyên tắc bảo toàn dữ liệu,
+tiêu chí đánh giá chất lượng AI và danh sách kiểm tra trước khi nộp báo cáo.
+Nhìn tổng thể, báo cáo được xây dựng theo mạch từ bối cảnh và mục tiêu, đến cơ sở lý
+thuyết, công nghệ sử dụng, phân tích thiết kế, triển khai, mô-đun AI, kiểm thử và kết luận. Cách
+tổ chức này giúp người đọc theo dõi được quá trình chuyển đổi từ yêu cầu ban đầu thành hệ
+thống, đồng thời đối chiếu được kết quả với các bằng chứng kiểm tra tương ứng.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 3/89\n===== PDF PAGE 14 =====\nChương 2
+Cơ sở lý thuyết
+2.1 Kiến trúc ứng dụng web
+RabbitCV được triển khai theo kiến trúc client–server dạng monolith module.
+Ở phía client, React và React Router tổ chức giao diện theo các nhóm trang công khai, ứng
+viên, doanh nghiệp và quản trị. TanStack Query quản lý dữ liệu lấy từ server bằng cache, truy
+vấn lại và cập nhật lạc quan. React Hook Form kết hợp Zod kiểm tra dữ liệu biểu mẫu trước
+khi gửi. Vite đảm nhiệm máy chủ phát triển, proxy các đường dẫn/apivà/socket.iođến
+backend, đồng thời chia frontend production thành các nhóm thư viện như PDF, rich text, query,
+form và React để giảm lượng mã tải ban đầu.
+Ở phía server, Node.js và Express tập trung vào trongserver/server.js, sau đó chuyển
+tiếp đến các route nghiệp vụ, service AI, schema đầu ra, sanitizer, model Mongoose và các hàm
+xử lý dùng chung. Chuỗi middleware đặt trước nghiệp vụ gồm CORS, Helmet, cookie parser,
+giới hạn tốc độ và xác thực JWT. Backend là nơi quyết định cuối cùng về phiên đăng nhập, vai
+trò, quyền sở hữu dữ liệu, giới hạn request và tính hợp lệ của payload.
+2.2 MERN Stack
+MERN Stack là một nhóm công nghệ dùng để xây dựng ứng dụng web toàn ngăn xếp, gồm
+MongoDB, Express, React và Node.js. MongoDB đảm nhiệm lưu trữ dữ liệu dưới dạng tài liệu;
+Express cung cấp cơ chế định tuyến và middleware cho máy chủ; React xây dựng giao diện
+người dùng theo các component; còn Node.js cung cấp môi trường chạy JavaScript phía máy
+chủ.
+Bốn thành phần có thể phối hợp qua REST API và dữ liệu JSON, giúp quá trình phát triển
+giữa frontend và backend có sự thống nhất về ngôn ngữ và cách trao đổi dữ liệu:
+•React đảm nhiệm phần giao diện và các luồng tương tác;
+•Node.js và Express xử lý REST API, xác thực, phân quyền và nghiệp vụ;
+•MongoDB kết hợp với Mongoose để lưu trữ người dùng, CV , tin tuyển dụng, đơn ứng tuyển,
+tin nhắn và các dữ liệu liên quan.
+MERN Stack phù hợp với đề tài vì hỗ trợ phát triển nhanh ứng dụng web có dữ liệu thay đổi
+thường xuyên, cấu trúc CV lồng nhau và các chức năng cần giao tiếp giữa trình duyệt với máy
+chủ.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 4/89\n===== PDF PAGE 15 =====\n2.3 Cơ chế phân quyền RBAC
+RBAC (Role-Based Access Control) là cơ chế kiểm soát truy cập dựa trên vai trò. Thay vì
+cấp quyền riêng lẻ cho từng tài khoản, hệ thống gán cho người dùng một vai trò và xác định các
+thao tác mà vai trò đó được phép thực hiện. Cách tổ chức này giúp chính sách quyền dễ mô tả,
+dễ kiểm tra và hạn chế việc lặp lại các điều kiện phân quyền trong từng chức năng.
+RabbitCV tổ chức người dùng thành bốn vai trò chính:
+•Khách: khi chưa đăng nhập chỉ được truy cập các nội dung công khai.
+•Ứng viên: khi đăng nhập được quản lý CV cá nhân, lưu việc, ứng tuyển và sử dụng các chức
+năng hỗ trợ AI.
+•Doanh nghiệp: khi đăng nhập được tạo và quản lý tin tuyển dụng của mình, xem các hồ sơ
+liên quan đến tin đã đăng và cập nhật trạng thái xử lý ứng tuyển.
+•Quản trị viên: khi đăng nhập được sử dụng các chức năng quản trị người dùng, doanh
+nghiệp và tin tuyển dụng.
+Khi đăng nhập, vai trò được đưa vào thông tin phiên và token JWT. Backend xác minh token
+trước khi xử lý API riêng tư, sau đó kiểm tra vai trò đối với các thao tác đặc quyền. Với dữ liệu
+có phạm vi sở hữu, kiểm tra vai trò được kết hợp với kiểm tra quan hệ giữa người dùng và dữ
+liệu: doanh nghiệp chỉ thao tác trên tin do mình quản lý, ứng viên chỉ chỉnh sửa CV của mình,
+còn quản trị viên có quyền quản trị theo chính sách hệ thống. Vì vậy, RabbitCV sử dụng RBAC
+kết hợp với kiểm tra quyền sở hữu và ngữ cảnh nghiệp vụ, thay vì chỉ dựa vào việc người dùng
+đã đăng nhập.
+2.4 Lựa chọn công nghệ
+Công nghệ Vai trò Lý do trong RabbitCV
+React, React Router Component, state và điều
+hướng.
+Giao diện có nhiều biểu mẫu CV , vùng xem trước,
+cổng theo vai trò và trang được tải lười.
+Vite, Tailwind CSS Phát triển, đóng gói và
+nền tảng giao diện.
+Chia gói mã theo nhóm; thống nhất bố cục, hộp
+thoại, danh sách chọn, menu và phản hồi thao tác.
+Node.js, Express REST API và middle-
+ware.
+Dùng JavaScript xuyên suốt, thuận tiện chia sẻ
+định dạng JSON và xử lý dữ liệu bất đồng bộ.
+MongoDB, Mon-
+goose
+Lưu tài liệu và mô hình
+dữ liệu.
+CV có nhiều mảng lồng nhau; schema và index
+giúp ràng buộc các quy tắc quan trọng.
+Socket.IO Nhắn tin bằng sự kiện. Hỗ trợ room, xác thực khi kết nối và kết nối lại ở
+phía client.
+react-to-print,
+PDF.js
+Xuất và kết xuất CV
+PDF.
+Dùng chung quy tắc in A4 cho CV web và hiển thị
+từng trang PDF tải lên thay vì phụ thuộc trình xem
+gốc.
+Groq,OpenAI SDK Gọi mô hình ngôn ngữ. API tương thích OpenAI và hỗ trợ đầu ra theo
+JSON Schema cho các luồng AI.
+Bảng 2.1: Vai trò và lý do lựa chọn công nghệ
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 5/89\n===== PDF PAGE 16 =====\n2.5 Xây dựng và quản lý giao diện người dùng
+RabbitCV sử dụng React để tổ chức giao diện. Các trang giao diện được chia theo nhóm
+chức năng gồm: trang công khai, trang ứng viên, trang doanh nghiệp và trang quản trị. Những
+thành phần chung như thanh điều hướng, biểu mẫu, hộp xác nhận, thông báo và vùng xem trước
+được tách riêng để hạn chế lặp mã và duy trì cách trình bày thống nhất.
+Thông tin phiên đăng nhập, danh sách tin nhắn và các hộp thoại dùng chung được cung cấp
+cho những trang liên quan thông qua React Context. React Router quản lý đường dẫn và nhóm
+trang của hệ thống [8].
+TanStack Query được sử dụng để quản lý dữ liệu lấy từ máy chủ thông qua khóa truy vấn,
+bộ nhớ đệm, trạng thái tải, trạng thái lỗi và cơ chế làm mới dữ liệu [11]. Việc lưu và tái sử dụng
+dữ liệu theo từng khóa giúp hạn chế các yêu cầu lặp, đồng thời giúp giao diện phản hồi nhanh
+hơn sau thao tác của người dùng.
+Bên cạnh đó, cơ chếlazy loadđược áp dụng cho mã nguồn frontend của các trang lớn thông
+quaReact.lazyvàSuspense. Nhờ đó, mã của một trang chỉ được tải khi người dùng điều
+hướng đến trang đó, góp phần giảm dung lượng phải tải ở lần truy cập đầu tiên.
+React Hook Form kết hợp với Zod để kiểm tra dữ liệu biểu mẫu ở phía trình duyệt, hiển thị
+lỗi theo từng trường và chỉ gửi yêu cầu khi dữ liệu cơ bản hợp lệ. Việc tách dữ liệu máy chủ
+khỏi trạng thái trình bày, đồng thời tách mã nguồn theo từng trang, giúp mã dễ theo dõi, giảm
+yêu cầu không cần thiết và hạn chế tình trạng các trang sử dụng những bản dữ liệu không đồng
+nhất.
+2.6 Socket.IO
+Socket.IO là một thư viện JavaScript cho phép giao tiếp hai chiều (bidirectional), dựa trên
+sự kiện (event-based) và theo thời gian thực (real-time) giữa trình duyệt (Client) và máy chủ
+(Server) với độ trễ cực thấp. Với Socket.IO, Server có thể chủ động đẩy (push) dữ liệu xuống
+Client ngay lập tức khi có dữ liệu mới.
+Trong RabbitCV , Socket.IO được tích hợp chặt chẽ với ứng dụng web để xử lý các tác vụ
+yêu cầu cập nhật ngay lập tức. Khi một người dùng đăng nhập, một kết nối socket được thiết lập
+giữa client và server. Server quản lý các kết nối này bằng cách phân loại chúng vào các "phòng"
+(rooms) riêng biệt để gửi dữ liệu đến chính xác người dùng cần nhận, mà không ảnh hưởng đến
+những người dùng khác.
+Socket.IO trong dự án này chỉ phục vụ tin nhắn trò chuyện theo thời gian thực.
+Thông báo nghiệp vụ không được đẩy qua Socket.IO mà được lấy từ các endpoint thông báo
+bằngfetch; TanStack Query quản lý bộ nhớ đệm, phân trang, trạng thái đã đọc và làm mới số
+thông báo chưa đọc theo chu kỳ 30 giây. Cách tách này giúp phân biệt rõ kênh sự kiện thời gian
+thực với cơ chế đồng bộ dữ liệu định kỳ.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 6/89\n===== PDF PAGE 17 =====\nChương 3
+Giới thiệu các công nghệ đã sử dụng
+3.1 Phát triển giao diện người dùng (Front-end)
+3.1.1 React
+React là thư viện JavaScript mã nguồn mở được sử dụng để xây dựng giao diện người dùng
+theo mô hình thành phần [7]. Thay vì viết toàn bộ giao diện trong một khối lớn, React cho phép
+chia trang thành các component nhỏ như thanh điều hướng, biểu mẫu, danh sách, hộp thoại và
+khu vực xem trước. Mỗi component đảm nhiệm một nhiệm vụ cụ thể, có thể nhận dữ liệu đầu
+vào và được kết hợp với các component khác để hình thành một trang hoàn chỉnh. Cách tổ chức
+này giúp cấu trúc giao diện rõ ràng hơn và phù hợp với những ứng dụng có nhiều khu vực chức
+năng như RabbitCV .
+Các tính năng chính của React bao gồm:
+•Kiến trúc dựa trên component:Giao diện được chia thành các thành phần độc lập, trong
+đó mỗi component quản lý một phần nội dung và hành vi cụ thể. Component có thể được
+kết hợp, tái sử dụng và mở rộng để tạo thành những trang có cấu trúc phức tạp. Cách tổ
+chức này giúp tách biệt trách nhiệm giữa các phần giao diện và làm mã nguồn dễ theo dõi
+hơn.
+•Quản lý dữ liệu của component:React phân biệt dữ liệu được truyền vào và dữ liệu thay
+đổi bên trong component. Các thành phần chính gồm:
+– Props:Là dữ liệu được truyền từ component cha xuống component con. Props giúp
+cùng một component có thể hiển thị nội dung hoặc thực hiện hành vi khác nhau tùy
+theo dữ liệu nhận được.
+– State:Là dữ liệu có thể thay đổi trong quá trình người dùng tương tác. Khi state thay
+đổi, React thực hiện kết xuất lại những phần giao diện liên quan để phản ánh trạng thái
+mới.
+– Luồng dữ liệu một chiều:Dữ liệu thường được truyền từ component cha xuống com-
+ponent con thông qua props. Component con không trực tiếp thay đổi dữ liệu của
+component cha. Cơ chế này giúp xác định nguồn của dữ liệu và theo dõi nguyên nhân
+làm giao diện thay đổi rõ ràng hơn.
+•Cơ chế cập nhật giao diện hiệu quả:Khi props hoặc state thay đổi, React xây dựng lại
+giao diện và so sánh với kết quả trước đó. Quá trình đối chiếu giúp xác định những phần
+cần thay đổi trên DOM thực, nhờ đó tránh cập nhật toàn bộ trang khi chỉ một vùng dữ liệu
+thay đổi. Người dùng có thể tiếp tục tương tác mà không phải tải lại trang sau mỗi thao tác.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 7/89\n===== PDF PAGE 18 =====\n•Hệ thống Hook:là tập hợp các hàm cho phép component dạng hàm sử dụng các khả năng
+của React như lưu trạng thái, đồng bộ với hệ thống bên ngoài, truy cập dữ liệu dùng chung
+và tái sử dụng logic. Hook giúp React trở nên linh hoạt và dễ sử dụng hơn. Một số Hook
+phổ biến gồm:
+–useState:Lưu và cập nhật trạng thái cục bộ của component.
+–useEffect:Thực hiện tác vụ sau khi component được hiển thị hoặc khi dữ liệu phụ
+thuộc thay đổi.
+–useMemovàuseCallback:Lưu lại kết quả tính toán hoặc hàm khi cần thiết, qua đó
+hạn chế việc tạo lại không cần thiết trong một số trường hợp.
+React mang lại một số ưu điểm nổi bật như sau:
+•Khả năng tái sử dụng cao:Một component biểu mẫu, nút thao tác, thẻ việc làm hoặc vùng
+hiển thị CV có thể được sử dụng tại nhiều trang với dữ liệu khác nhau. Điều này giảm mã
+lặp và giúp thay đổi giao diện được thực hiện tập trung.
+•Dễ tổ chức và bảo trì:Việc chia giao diện thành các component có trách nhiệm rõ ràng
+giúp nhà phát triển dễ tìm kiếm, sửa đổi và mở rộng từng chức năng mà ít ảnh hưởng đến
+những phần không liên quan.
+•Giao diện phản hồi nhanh:React chỉ cập nhật những vùng bị ảnh hưởng bởi thay đổi dữ
+liệu, giúp các thao tác như nhập biểu mẫu, mở hộp thoại, lọc danh sách và thay đổi bản xem
+trước diễn ra mà không tải lại toàn bộ trang.
+•Hệ sinh thái phong phú:React có cộng đồng lớn và nhiều thư viện hỗ trợ biểu mẫu, truy
+vấn dữ liệu, trình soạn thảo, hiển thị PDF và các nhu cầu khác của ứng dụng web. Dự án có
+thể lựa chọn công cụ phù hợp thay vì tự xây dựng toàn bộ chức năng từ đầu.
+Trong RabbitCV , React được dùng để xây dựng các trang công khai, khu vực ứng viên, cổng
+doanh nghiệp và khu vực quản trị. Trình biên tập CV tận dụng trạng thái component để phản
+ánh dữ liệu người dùng nhập vào bản xem trước; danh sách việc làm và hồ sơ ứng tuyển cập
+nhật theo dữ liệu nhận từ máy chủ; các hộp thoại và thông báo thay đổi theo thao tác mà không
+tải lại trang. Việc tổ chức giao diện thành component giúp dự án có thể dùng chung các thành
+phần, mở rộng chức năng theo từng khu vực và duy trì trải nghiệm nhất quán trên toàn hệ thống.
+3.1.2 TanStack Query
+TanStack Query là thư viện quản lý dữ liệu máy chủ trong ứng dụng web, giúp đơn giản hóa
+việc lấy dữ liệu (fetching), lưu bộ nhớ đệm (caching), đồng bộ hóa (synchronizing) và cập nhật
+dữ liệu bất đồng bộ trong các ứng dụng web. Trong RabbitCV , TanStack Query giúp các thành
+phần giao diện sử dụng dữ liệu máy chủ theo một cơ chế thống nhất, hạn chế yêu cầu trùng lặp
+và giảm lượng mã xử lý thủ công. Các ưu điểm chính của TanStack Query:
+•Quản lý bộ nhớ đệm:Lưu và dùng chung dữ liệu giữa các thành phần, giúp hạn chế yêu
+cầu API trùng lặp.
+•Quản lý trạng thái yêu cầu:Cung cấp sẵn trạng thái đang tải, thành công, thất bại và đang
+cập nhật dữ liệu.
+•Làm mới và đồng bộ dữ liệu:Cho phép cập nhật đúng nhóm dữ liệu liên quan mà không
+cần tải lại toàn bộ trang.
+•Hỗ trợ phân trang:Giữ nội dung hiện tại trong lúc tải trang tiếp theo, giúp giao diện ổn
+định hơn.
+•Cập nhật lạc quan:Hiển thị trước kết quả thao tác và khôi phục dữ liệu cũ nếu yêu cầu
+thất bại.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 8/89\n===== PDF PAGE 19 =====\n•Giảm mã xử lý thủ công:Hạn chế việc tự xây dựng bộ nhớ đệm, trạng thái tải, xử lý lỗi
+và đồng bộ dữ liệu.
+Sự khác biệt giữa TanStack Query vớifetchvà Axios
+TanStack Query và Axios,fetchlà 2 nhóm giải quyết công việc khác nhau.fetchvà Axios
+thuộc lớp giao tiếp mạng: chúng tạo và gửi yêu cầu HTTP, truyền tham số, phương thức và nội
+dung yêu cầu đến máy chủ, sau đó nhận phản hồi HTTP . Còn TanStack Query thuộc lớp quản
+lý dữ liệu trên giao diện: lưu, theo dõi, quản lý bộ nhớ đệm, xác định dữ liệu và cung cấp trạng
+thái cho component.
+TanStack Query không thể trực tiếp tạo hay gửi yêu cầu HTTP đến máy chủ. Để thực hiện
+điều này, nó cần được cung cấp thông qua các hàm bất đồng bộ trả về Promise. Trong ứng dụng
+sử dụng REST API, hàm này thường dùngfetchhoặc Axios để xác định địa chỉ API, phương
+thức HTTP, tiêu đề, cookie và nội dung yêu cầu; đồng thời nhận, chuyển đổi và kiểm tra phản
+hồi của máy chủ. Sau đó, TanStack Query tiếp nhận kết quả để xử lý, vì vậy,fetchhoặc Axios
+chịu trách nhiệm truyền dữ liệu giữa trình duyệt và máy chủ, còn TanStack Query chịu trách
+nhiệm quản lý dữ liệu trong ứng dụng.
+Ngược lại, chỉ sử dụngfetchhoặc Axios cũng chỉ có thể gửi yêu cầu và trả kết quả nhưng
+lại không tự quản lý bộ nhớ đệm dùng chung cho React, không xác định dữ liệu còn mới hay đã
+cũ, không tự đồng bộ các component đang dùng cùng một nguồn dữ liệu và không tự làm mới
+những nhóm dữ liệu bị ảnh hưởng sau thao tác cập nhật. Do đó, quan hệ giữa chúng là bổ sung:
+fetchhoặc Axios thực hiện việc truyền dữ liệu qua HTTP, còn TanStack Query quản lý dữ liệu
+sau khi yêu cầu được tổ chức trong ứng dụng.
+3.1.3 React Hook Form và Zod
+React Hook Form
+React Hook Form là một thư viện quản lý form nhẹ, nhanh và được sử dụng rộng rãi trong
+cộng đồng React. Nó giúp giảm thiểu lượng code phức tạp, đồng thời cải thiện hiệu năng và khả
+năng mở rộng cho ứng dụng.
+Một vài ưu điểm nổi bật của React Hook Form có thể kể đến như:
+•Hiệu năng cao:Bằng cách tận dụng cơ chế "uncontrolled components", nó giúp hạn chế
+tối đa việc re-render lại toàn bộ dữ liệu mỗi khi người dùng nhập dữ liệu, từ đó giảm thiểu
+lượng code phức tạp và cải thiện hiệu năng.
+•Ít code thủ công hơn:Với việc không cần sử dụng hay tạo ra các state và hàm xử lý riêng
+lẻ cho từng trường dữ liệu, React Hook Form giúp tối ưu hóa quy trình code, giảm thiểu
+code và tránh các lỗi phát sinh từ việc quản lý state thủ công.
+•Hỗ trợ validation mạnh mẽ:React Hook Form có hỗ trợ sẵn các tính năng cơ bản trong
+việc validation, ví dụ như xác thực required, min, max,.... Đồng thời, nó cũng tích hợp mượt
+mà với các thư viện kiểm tra schema hàng đầu như Zod, Yup, Valibot.
+•Hỗ trợ form phức tạp:React Hook Form cung cấp đầy đủ các tính năng cần thiết để xử lý
+các form phức tạp, bao gồm validation, error handling, form submission, và form reset. Nó
+giúp xử lý tốt input động, dữ liệu lồng nhau, form nhiều bước và các giá trị mặc định.
+Zod
+Zod là thư viện khai báo và kiểm tra cấu trúc dữ liệu bằng schema, có thể sử dụng trong cả
+JavaScript và T ypeScript [13]. Nó giúp bảo đảm dữ liệu nhận được có đúng kiểu, đúng định dạng
+và đáp ứng các điều kiện của ứng dụng hay không. Đồng thời, nó giúp xây dựng các schema mô
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 9/89\n===== PDF PAGE 20 =====\ntả format dữ liệu theo định dạng mong muốn, sau đó dùng schema này để kiểm tra dữ liệu thực
+tế. Nếu dữ liệu không khớp với schema, Zod sẽ cho biết lỗi sai ở đâu.
+Zod cũng có một vài ưu điểm đáng chú ý:
+•Kiểm tra dữ liệu khi chương trình đang chạy:Trước đây việc kiểm tra dữ liệu thường
+chỉ được thực hiện khi chương trình đang trong quá trình phát triển. Tuy nhiên khi chương
+trình được triển khai và có người dùng tương tác trực tiếp, việc kiểm tra dữ liệu này trở
+nên khó khăn hơn. Với Zod, nhà phát triển có thể kiểm tra dữ liệu ngay cả khi chương trình
+đang chạy, giúp phát hiện lỗi sớm và tăng trải nghiệm người dùng.
+•Hỗ trợ nhiều kiểu dữ liệu:Zod cung cấp các phương thức để kiểm tra nhiều kiểu dữ liệu
+khác nhau, bao gồmstring,number,boolean,array,object,date,enum, và nhiều hơn
+nữa. Điều này giúp nhà phát triển có thể kiểm tra dữ liệu theo nhiều cách khác nhau, phù
+hợp với nhu cầu sử dụng của chính mình.
+•Có thể chuyển đổi dữ liệu:Zod không chỉ kiểm tra mà còn có thể chuẩn hóa dữ liệu đầu
+vào theo đúng định dạng mà ứng dụng mong muốn.
+•Thông báo lỗi chi tiết:Khi kiểm tra thất bại, Zod trả về các lỗi có cấu trúc rõ ràng, bao
+gồm thông tin về trường bị lỗi, loại lỗi và thông tin lỗi chi tiết. Điều này giúp lớp giao diện
+dễ dàng xác định chính xác trường nào bị lỗi và hiển thị thông báo tương ứng.
+•Hệ sinh thái tích hợp cực kỳ phong phú:Zod được hỗ trợ bởi nhiều thư viện biểu mẫu,
+công cụ xây dựng API, cơ sở dữ liệu, sinh tài liệu và kiểm thử. Khả năng này cho phép
+schema được kết nối hoặc tái sử dụng trong nhiều tầng của ứng dụng, qua đó giảm mã kiểm
+tra trùng lặp và giúp quy tắc dữ liệu nhất quán hơn.
+Lý do kết hợp React Hook Form với Zod
+React Hook Form và Zod đảm nhiệm hai vai trò khác nhau nhưng bổ sung trực tiếp cho
+nhau. React Hook Form quản lý các trường nhập, thu thập giá trị, theo dõi trạng thái biểu mẫu
+và điều phối thao tác gửi; trong khi Zod tập trung mô tả cấu trúc và kiểm tra tính hợp lệ của
+dữ liệu. Hai thư viện được kết nối thông qua zodResolver, giúp kết quả kiểm tra của Zod được
+chuyển thành lỗi theo từng trường mà React Hook Form có thể hiển thị [6]. Sự kết hợp giữa
+React Hook Form và Zod thông quazodResolvermang lại giải pháp quản lý biểu mẫu vừa đạt
+hiệu năng cao, giảm thiểu việc re-render, vừa đảm bảo dữ liệu đầu vào của ứng dụng luôn chính
+xác và đáng tin cậy. RabbitCV tận dụng sự kết hợp này để xử lý các form phức tạp trong ứng
+dụng.
+Việc kết hợp mang lại các lợi ích chính sau:
+•Phân chia trách nhiệm rõ ràng:React Hook Form quản lý trạng thái và tương tác của
+biểu mẫu, còn Zod quản lý quy tắc và cấu trúc dữ liệu. Điều này giúp code không bị lộn
+xộn, dễ dàng quản lý và bảo trì.
+•Phản hồi lỗi chính xác:Lỗi được gắn với đúng trường nhập, giúp người dùng dễ nhận biết
+và sửa dữ liệu. Người dùng nhận thông báo ngay tại trường nhập liệu bị lỗi thay vì đợi gửi
+toàn bộ biểu mẫu rồi mới nhận thông báo.
+•Giảm mã lặp và tăng khả năng bảo trì:Nhà phát triển không phải tạo state, hàm thay đổi
+và câu lệnh kiểm tra riêng cho từng trường. Quy tắc được đọc tập trung trong schema, còn
+mã giao diện tập trung vào hiển thị thông báo lỗi cho người dùng.
+•Thống nhất dữ liệu đầu ra:Hàm xử lý gửi nhận một đối tượng đã vượt qua cùng một bộ
+quy tắc, giúp giảm các trường hợp mỗi vị trí trong giao diện hiểu dữ liệu theo một cách
+khác nhau.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 10/89\n===== PDF PAGE 21 =====\n3.1.4 Tailwind CSS
+Tailwind CSS là framework CSS mã nguồn mở theo hướng tiện ích, giúp xây dựng giao diện
+chỉ bằng cách kết hợp các lớp tiện ích nhỏ [10]. Thay vì viết bằng CSS truyền thống các lập
+trình viên phải tạo tên lớp riêng rồi khai báo các thuộc tính tương ứng trong tệp CSS. Tailwind
+cho phép kết hợp trực tiếp các lớp tiện ích ngay trên phần tử giao diện. Việc sử dụng hệ thống
+lớp tiện ích này giúp RabbitCV dễ dàng duy trì hệ thống khoảng cách, màu sắc và bố cục đáp
+ứng giữa trang công khai, khu vực ứng viên, doanh nghiệp và quản trị.
+Các thành phần tương tác phức tạp được hỗ trợ bởi Radix UI, trong khi Heroicons cung cấp
+bộ biểu tượng có phong cách thống nhất. Radix UI tập trung vào những nguyên mẫu như hộp
+thoại, menu và danh sách chọn, đồng thời hỗ trợ quản lý tiêu điểm, bàn phím và các thuộc tính
+trợ năng. Sonner được dùng để hiển thị thông báo ngắn sau thao tác thành công hoặc thất bại.
+Việc sử dụng các thư viện chuyên biệt giúp giảm lượng mã tự xây dựng cho những hành vi giao
+diện dễ phát sinh lỗi và tạo trải nghiệm nhất quán hơn.
+Những ưu điểm nổi bật có thể kể đến của Tailwind CSS như:
+•Tối ưu CSS đầu ra:Tailwind CSS quét mã nguồn và chỉ tạo các utility class thực sự được
+sử dụng. Khi build production, CSS còn được nén lại, giúp giảm dung lượng tệp, loại bỏ
+CSS dư thừa và cải thiện tốc độ tải trang. Tailwind tạo CSS tĩnh nên không cần JavaScript
+xử lý giao diện lúc chạy.
+•Tăng tốc độ phát triển:Tailwind CSS giúp giảm thời gian phát triển giao diện do có các
+lớp tiện ích có sẵn.
+•Duy trì giao diện nhất quán:Các màu sắc, khoảng cách, cỡ chữ, độ bo góc và bóng đổ
+được lấy từ một hệ thống giá trị chung. Nhờ đó, các thành phần khác nhau có thể duy trì
+cùng ngôn ngữ thiết kế.
+•Dễ dàng bảo trì và mở rộng:Các lớp tiện ích giúp dễ dàng thay đổi hoặc thêm các lớp
+mới mà không ảnh hưởng đến các phần khác của ứng dụng.
+•Hệ sinh thái và công cụ hỗ trợ mạnh mẽ:Tailwind CSS tích hợp tốt với các thư viện
+UI và nhiều framework khác nhau, cho phép xây dựng giao diện phức tạp một cách nhanh
+chóng.
+•Thân thiện với người dùng:Tailwind CSS có cấu trúc rõ ràng, dễ hiểu, giúp lập trình viên
+nhanh chóng làm quen và sử dụng. Đồng thời, Tailwind CSS cũng hỗ trợ nhiều tính năng
+nâng cao như responsive design, dark mode, animation, giúp tạo ra giao diện đẹp và thân
+thiện với người dùng.
+3.1.5 Vite
+Vite là một công cụ phát triển cho ứng dụng web frontend hiện đại, được thiết kế để mang
+đến trải nghiệm phát triển nhanh chóng và hiệu quả, hỗ trợ toàn diện cho React, Vue, Svelte,
+và các framework khác [12]. Trong môi trường phát triển, Vite cung cấp máy chủ dựa trên ES
+Module và cơ chế thay thế mô-đun nhanh, giúp cập nhật phần mã vừa thay đổi mà không phải
+tải lại toàn bộ ứng dụng.
+Vite đảm nhận 2 công việc chính: cung cấp máy chủ phát triển để lập trình viên chạy và
+chỉnh sửa giao diện trên máy tính cá nhân và đóng gói mã nguồn thành các tệp HTML, CSS,
+JavaScript và tài nguyên tĩnh để triển khai trên máy chủ. Trong RabbitCV , React xây dựng giao
+diện, Tailwind CSS định dạng giao diện, còn Vite chịu trách nhiệm chạy môi trường phát triển
+và đóng gói phần frontend.
+Ngoài ra, RabbitCV cũng cấu hình Vite để xử lý các yêu cầu API và kết nối thời gian thực.
+Các yêu cầu được chuyển tiếp đến máy chủ Express thông qua các proxy/apivà/socket.io.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 11/89\n===== PDF PAGE 22 =====\nĐiều này cho phép frontend và backend có thể được phát triển và chạy một cách độc lập, trong
+khi giao diện người dùng vẫn có thể gọi các đường dẫn thống nhất mà không cần phải lo lắng
+về việc thiết lập các cấu hình phức tạp.
+RabbitCV kết hợpReact.lazyvớiSuspenseđể tải lười các trang có kích thước lớn. Mã
+của trang quản trị, cổng doanh nghiệp, quản lý CV hoặc các chức năng chuyên biệt chỉ được
+tải khi người dùng điều hướng đến đường dẫn tương ứng. Trong thời gian chờ,Suspensehiển
+thị trạng thái tải thay vì để giao diện trống. Cách làm này làm giảm lượng JavaScript cần tải và
+phân tích ở lần truy cập đầu tiên, đặc biệt có ích khi một người dùng chỉ sử dụng một nhóm
+chức năng theo vai trò của mình.
+Tải lười không làm giảm tổng lượng mã của toàn bộ hệ thống mà nó thay đổi thời điểm tải
+mã. Tuy nhiên, dự án áp dụng tải lười ở cấp trang và nhóm chức năng lớn, đồng thời gom những
+thư viện có quan hệ thành các gói phù hợp để cân bằng giữa tốc độ khởi động, khả năng lưu
+đệm và độ trễ khi chuyển trang.
+3.2 Phát triển Back-end
+3.2.1 Node.js và Express
+Node.js là nền tảng phát triển các ứng dụng web back-end được viết bằng JavaScript [5].
+Khi một thao tác phải chờ cơ sở dữ liệu, hệ thống tệp hoặc dịch vụ AI, Node.js có thể tiếp tục
+tiếp nhận công việc khác thay vì chặn toàn bộ luồng xử lý. Với việc sử dụng kiến trúc lập trình
+hướng sự kiện không đồng bộ, nó giúp cho các ứng dụng Node.js có thể chạy với hiệu suất cao
+và khả năng mở rộng tốt.
+Express là framework xây dựng máy chủ web trên Node.js, cung cấp cơ chế định tuyến, xử
+lý yêu cầu-phản hồi và các tính năng cần thiết cho ứng dụng web [4]. RabbitCV sử dụng Express
+để tổ chức API theo nhóm tài nguyên và nghiệp vụ, bao gồm tài khoản, CV , việc làm, ứng tuyển,
+trò chuyện, thông báo và trí tuệ nhân tạo. Mỗi đường dẫn có thể gắn các bước xác thực, kiểm tra
+vai trò, giới hạn tốc độ và kiểm tra dữ liệu trước khi gọi hàm xử lý chính.
+Node.js và Express cho phép frontend và backend cùng sử dụng hệ sinh thái JavaScript, nhờ
+đó cách biểu diễn JSON, mô hình bất đồng bộ và công cụ quản lý gói được thống nhất. Express
+có cấu trúc tối giản nên dự án có thể lựa chọn thư viện phù hợp cho cookie, bảo mật, giới hạn
+tốc độ, cơ sở dữ liệu và thời gian thực. Máy chủ HTTP của Express còn được dùng chung với
+Socket.IO, tránh phải vận hành một dịch vụ riêng chỉ để truyền sự kiện trò chuyện.
+Node.js và Express có các đặc điểm phù hợp với phạm vi của đề tài:
+•Ưu điểm:Linh hoạt, có hệ sinh thái lớn và phù hợp với các tác vụ vào/ra.
+•Hạn chế:Vòng lặp sự kiện không phù hợp với công việc tính toán nặng kéo dài trên cùng
+tiến trình, vì một tác vụ đồng bộ lớn có thể làm chậm các yêu cầu khác.
+•Cách áp dụng trong RabbitCV:Hệ thống chủ yếu thực hiện truy vấn dữ liệu và gọi dịch
+vụ bên ngoài; các tác vụ nặng như suy luận mô hình được giao cho nhà cung cấp AI, nên
+mô hình của Node.js phù hợp với phạm vi đề tài.
+3.2.2 Socket.IO
+Socket.IO là một thư viện dành cho các ứng dụng web, mobile để phát triển các ứng dụng
+realtime (thời gian thực). Nó cung cấp một giao diện đơn giản để giao tiếp theo thời gian thực
+giữa trình duyệt và máy chủ [9]. Socket.IO sử dụng rất nhiều các công nghệ realtime như:
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 12/89\n===== PDF PAGE 23 =====\nWebSocket, Flash Socket, IFrame, JSONP polling,.... Nó sẽ tự động chuyển sang WebSocket
+nếu có thể nên việc sử dụng Socket.IO trên trình duyệt cũng là đang sử dụng WebSocket vậy.
+RabbitCV sử dụng Socket.IO cho chức năng trò chuyện thời gian thực giữa ứng viên và
+doanh nghiệp. Sau khi xác thực kết nối, mỗi socket được đưa vào phòng mang định danh người
+dùng. Khi có tin nhắn mới, hệ thống lưu tin nhắn vào cơ sở dữ liệu trước, sau đó phát sự kiện
+đến phòng của người nhận.
+Socket.IO trong RabbitCV không quản lý thông báo tuyển dụng. Thông báo được lấy qua
+REST API bằng fetch và được TanStack Query quản lý, làm mới theo chu kỳ. Socket.IO chỉ
+đóng vai trò thông báo nhanh về tin nhắn mới; lịch sử trò chuyện vẫn được lấy từ cơ sở dữ liệu
+qua API.
+Những ưu điểm nổi bật của Socket.IO:
+•Tự động chuyển đổi giao thức thông minh:Socket.IO có thể lựa chọn sử dụng Web-
+Socket, WebTransport hay HTTP long-polling,.... khác mà không làm gián đoạn trải
+nghiệm người dùng.
+•Tự động phát hiện mất kết nối và kết nối lại:Socket.IO sử dụng cơ chế heartbeat để kiểm
+tra trạng thái kết nối. Khi kết nối bị gián đoạn, máy khách tự thử kết nối lại với khoảng chờ
+tăng dần, hạn chế việc gửi quá nhiều yêu cầu cùng lúc.
+•Khả năng mở rộng nhiều máy chủ:Khi hệ thống phát triển, Socket.IO có thể kết hợp
+các adapter như Redis Adapter để chia sẻ và đồng bộ các sự kiện giữa các server node một
+cách dễ dàng. Điều này rất hữu ích cho các ứng dụng web, mobile cần real-time như chat,
+game,....
+•Hệ sinh thái và hỗ trợ đa nền tảng:Socket.IO cung cấp một hệ sinh thái phong phú với
+nhiều thư viện và công cụ hỗ trợ phát triển ứng dụng real-time. Nó có các thư viện client cho
+web, mobile (iOS, Android) và các framework phổ biến khác như React, Vue, Angular,.....
+giúp việc tích hợp vào ứng dụng trở nên dễ dàng và nhanh chóng.
+3.3 Phát triển cơ sở dữ liệu
+3.3.1 MongoDB
+MongoDB là hệ quản trị cơ sở dữ liệu NoSQL hướng tài liệu [2]. Thay vì tổ chức dữ liệu
+thành bảng và hàng như cơ sở dữ liệu quan hệ, MongoDB lưu mỗi bản ghi dưới dạng một tài
+liệu BSON. BSON có cấu trúc gần với đối tượng JSON nhưng hỗ trợ thêm các kiểu dữ liệu phục
+vụ lưu trữ, chẳng hạn ngày giờ, dữ liệu nhị phân và mã định danhObjectId. Các tài liệu được
+tập hợp trong collection, còn nhiều collection tạo thành một cơ sở dữ liệu. Cách biểu diễn này
+phù hợp với ứng dụng JavaScript vì dữ liệu có thể được chuyển đổi giữa đối tượng ở backend và
+tài liệu trong cơ sở dữ liệu mà không phải ánh xạ qua cấu trúc bảng phức tạp.
+MongoDB cung cấp mô hình dữ liệu linh hoạt: các tài liệu trong cùng một collection không
+bắt buộc phải có toàn bộ trường giống nhau. Tuy nhiên, tính linh hoạt không đồng nghĩa với
+việc dữ liệu không cần thiết kế. Các tài liệu cùng loại vẫn cần duy trì cấu trúc hợp lý để truy
+vấn, kiểm tra và mở rộng ổn định. MongoDB cho phép nhúng đối tượng hoặc mảng vào một
+tài liệu, đồng thời cũng cho phép lưu mã định danh để tham chiếu đến tài liệu thuộc collection
+khác. Hai cách này giúp hệ thống lựa chọn cấu trúc theo vòng đời và cách sử dụng dữ liệu thay
+vì buộc mọi quan hệ phải được biểu diễn theo một hình thức duy nhất.
+Những đặc điểm nổi bật của MongoDB gồm:
+•Mô hình tài liệu gần với dữ liệu ứng dụng:Một tài liệu có thể chứa chuỗi, số, ngày giờ,
+đối tượng con và mảng. Dữ liệu nghiệp vụ vì vậy có thể được biểu diễn gần với cấu trúc mà
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 13/89\n===== PDF PAGE 24 =====\nNode.js tiếp nhận và trả về cho giao diện.
+•Hỗ trợ dữ liệu lồng nhau:Những thông tin thường được đọc và cập nhật cùng nhau có thể
+được đặt trong cùng một tài liệu. Cách tổ chức này giảm nhu cầu thực hiện nhiều truy vấn
+chỉ để dựng lại một đối tượng nghiệp vụ hoàn chỉnh.
+•Truy vấn và tổng hợp dữ liệu:MongoDB cung cấp các thao tác tạo, đọc, cập nhật và xóa,
+đồng thời hỗ trợ lọc, sắp xếp, phân trang và aggregation pipeline để xử lý những yêu cầu
+tổng hợp phức tạp hơn.
+•Hệ thống chỉ mục:Chỉ mục có thể được tạo trên một trường hoặc tổ hợp nhiều trường để
+tăng tốc các truy vấn thường xuyên. Chỉ mục duy nhất còn có thể thực thi những ràng buộc
+không cho phép dữ liệu trùng lặp.
+•Khả năng mở rộng:MongoDB hỗ trợ sao chép dữ liệu để tăng tính sẵn sàng và phân mảnh
+dữ liệu để mở rộng theo chiều ngang. Đây là khả năng của nền tảng khi hệ thống phát triển;
+RabbitCV hiện sử dụng MongoDB trong phạm vi phù hợp với quy mô đồ án và không
+khẳng định đã triển khai các cơ chế mở rộng này.
+Trong RabbitCV , MongoDB lưu tài khoản người dùng, CV , tin tuyển dụng, hồ sơ ứng tuyển,
+tin nhắn, thông báo, trạng thái trò chuyện và thống kê sử dụng AI. Một CV có thể chứa nhiều
+nhóm thông tin như học vấn, kinh nghiệm, kỹ năng, dự án, chứng chỉ và ngôn ngữ; mỗi nhóm
+lại có số lượng phần tử khác nhau giữa các người dùng. Mô hình tài liệu giúp các nhóm dữ liệu
+này được biểu diễn tự nhiên dưới dạng đối tượng và mảng, đồng thời vẫn có thể liên kết CV với
+chủ sở hữu hoặc liên kết hồ sơ ứng tuyển với công việc bằng mã định danh.
+3.3.2 Mongoose
+Mongoose là thư viện mô hình hóa dữ liệu đối tượng dành cho Node.js và MongoDB [1].
+Thư viện tạo một lớp làm việc có cấu trúc giữa mã nguồn backend và cơ sở dữ liệu, cung
+cấp cách khai báo hình dạng tài liệu, kiểu dữ liệu, quy tắc kiểm tra và các thao tác truy vấn.
+Mongoose không phải là cơ sở dữ liệu và không thay thế MongoDB; dữ liệu cuối cùng vẫn được
+lưu, truy vấn và lập chỉ mục bởi MongoDB. Ứng dụng có thể sử dụng MongoDB Driver trực
+tiếp, nhưng Mongoose giúp giảm phần mã lặp khi nhiều nhóm dữ liệu cần tuân theo các quy tắc
+thống nhất.
+Bốn khái niệm chính của Mongoose gồm:
+•Schema:Mô tả các trường dự kiến của một loại tài liệu, kiểu dữ liệu, trường bắt buộc, giá
+trị mặc định, tập giá trị hợp lệ và chỉ mục. Schema cũng có thể chứa phương thức và các
+bước xử lý được thực hiện trong vòng đời tài liệu.
+•Model:Được tạo từ Schema và đại diện cho một collection. Model cung cấp những thao
+tác như tạo tài liệu, tìm kiếm, cập nhật, xóa và tổng hợp dữ liệu.
+•Document:Là một bản ghi cụ thể được tạo hoặc đọc thông qua Model. Document có thể
+được kiểm tra, thay đổi và lưu trở lại MongoDB.
+•Query:Biểu diễn điều kiện và tùy chọn của một thao tác truy vấn. Các phương thức có thể
+được nối tiếp để lọc trường, sắp xếp, giới hạn kết quả, phân trang hoặc lấy thêm tài liệu liên
+quan.
+Mongoose hỗ trợ chuyển đổi dữ liệu về kiểu đã khai báo trước khi thực hiện thao tác. Nếu
+một giá trị không thể chuyển đổi hợp lệ, thư viện phát sinh lỗi thay vì âm thầm lưu dữ liệu sai
+kiểu. Các validator có sẵn nhưrequired,min,maxvàenumgiúp kiểm tra những điều kiện cơ
+bản; dự án cũng có thể định nghĩa validator riêng cho quy tắc đặc thù. Giá trị mặc định và tùy
+chọntimestampsgiúp các Model sử dụng thống nhất trạng thái ban đầu, thời điểm tạo và thời
+điểm cập nhật.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 14/89\n===== PDF PAGE 25 =====\nNhững ưu điểm nổi bật của Mongoose gồm:
+•Tổ chức cấu trúc dữ liệu tập trung:Quy tắc của một nhóm dữ liệu được đặt trong Schema
+tương ứng, giúp nhà phát triển dễ xác định trường nào được lưu và điều kiện nào phải được
+đáp ứng.
+•Giảm mã truy vấn thủ công:Model cung cấp giao diện nhất quán cho các thao tác cơ sở
+dữ liệu, giúp mã xử lý nghiệp vụ dễ đọc hơn so với việc tự xây dựng mọi lệnh ở tầng Driver.
+•Kiểm tra và chuyển đổi dữ liệu:Dữ liệu được kiểm tra và ép kiểu trước khi ghi, qua đó
+phát hiện sớm nhiều lỗi về trường bắt buộc, kiểu dữ liệu hoặc trạng thái không hợp lệ.
+•Hỗ trợ quan hệ tham chiếu:KiểuObjectId, thuộc tínhrefvà cơ chếpopulatehỗ trợ
+lấy dữ liệu liên quan từ collection khác khi nghiệp vụ cần sử dụng.
+•Hỗ trợ bảo trì và mở rộng:Middleware, phương thức dùng chung, trường ảo, chỉ mục và
+tùy chọn chọn trường cho phép đặt những hành vi lặp lại gần với mô hình dữ liệu thay vì
+phân tán ở nhiều vị trí xử lý.
+Trong RabbitCV , Mongoose được sử dụng để quy định các trường bắt buộc, vai trò và trạng
+thái hợp lệ, gán giá trị mặc định, tự động ghi thời gian và mô tả quan hệ giữa các tài liệu. Những
+trường nhạy cảm như mật khẩu và mã PIN được cấu hình không xuất hiện trong truy vấn thông
+thường. Các Model cũng khai báo chỉ mục phục vụ đăng nhập, tra cứu dữ liệu theo người sở
+hữu, theo dõi thông báo và ngăn hồ sơ ứng tuyển trùng. Tuy nhiên, validation của Mongoose chỉ
+bảo vệ các thao tác đi qua Mongoose; các ràng buộc quan trọng vẫn cần chỉ mục hoặc cơ chế
+kiểm tra ở MongoDB và không thay thế kiểm tra nghiệp vụ tại backend.
+3.3.3 Sự kết hợp giữa MongoDB và Mongoose
+MongoDB và Mongoose đảm nhiệm hai tầng khác nhau nhưng bổ sung cho nhau. MongoDB
+chịu trách nhiệm lưu trữ bền vững, thực thi truy vấn, quản lý chỉ mục và trả kết quả. Mongoose
+nằm trong ứng dụng Node.js, tiếp nhận dữ liệu từ nghiệp vụ, áp dụng Schema, chuyển đổi kiểu,
+kiểm tra giá trị rồi sử dụng MongoDB Driver để gửi thao tác đến cơ sở dữ liệu. Kết quả từ
+MongoDB được Mongoose chuyển thành Document hoặc đối tượng để backend tiếp tục xử lý
+và trả về giao diện [2, 1].
+Một thao tác ghi dữ liệu thông thường được thực hiện theo trình tự sau:
+1. Express tiếp nhận yêu cầu và backend kiểm tra phiên đăng nhập, quyền truy cập cùng các
+điều kiện nghiệp vụ.
+2. Dữ liệu hợp lệ về mặt nghiệp vụ được chuyển cho Model Mongoose tương ứng.
+3. Mongoose chuyển đổi kiểu, áp dụng giá trị mặc định và thực hiện validation theo Schema.
+4. MongoDB nhận thao tác ghi, thực thi chỉ mục và các ràng buộc ở tầng cơ sở dữ liệu trước
+khi lưu tài liệu.
+5. Kết quả hoặc lỗi được trả về qua Mongoose để backend tạo phản hồi phù hợp cho giao diện.
+Sự kết hợp này mang lại các lợi ích chính:
+•Kết hợp tính linh hoạt với tính nhất quán:MongoDB cho phép cấu trúc tài liệu thích
+ứng với dữ liệu nghiệp vụ, trong khi Mongoose giúp các tài liệu do RabbitCV tạo ra tuân
+theo hình dạng và quy tắc dự kiến.
+•Phù hợp với hệ sinh thái JavaScript:Dữ liệu được biểu diễn dưới dạng đối tượng từ giao
+diện, qua Express và Mongoose đến MongoDB, giúp giảm số bước chuyển đổi giữa các mô
+hình dữ liệu khác nhau.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 15/89\n===== PDF PAGE 26 =====\n•Giảm mã lặp ở backend:Kiểu dữ liệu, giá trị mặc định, validation, thời gian và thao tác
+truy vấn được cung cấp qua Schema và Model thay vì được xây dựng lại trong từng đường
+dẫn API.
+•Hỗ trợ cả dữ liệu lồng nhau và dữ liệu liên kết:Các thành phần thuộc cùng một CV có
+thể được nhúng trong một tài liệu, còn người dùng, công việc, CV và hồ sơ ứng tuyển có
+thể liên kết bằngObjectIdkhi chúng có vòng đời riêng.
+•Tạo nhiều lớp bảo vệ dữ liệu:Backend kiểm tra nghiệp vụ và quyền sở hữu, Mongoose
+kiểm tra cấu trúc, còn MongoDB thực thi chỉ mục và ràng buộc dữ liệu. Mỗi lớp giải quyết
+một loại lỗi khác nhau và không thay thế lẫn nhau.
+•Tăng khả năng bảo trì:Khi bổ sung trường hoặc trạng thái mới, thay đổi có thể được quản
+lý tập trung tại Model liên quan, sau đó các chức năng sử dụng chung cùng một cách biểu
+diễn dữ liệu.
+Trong RabbitCV , lợi ích của sự kết hợp thể hiện rõ ở dữ liệu CV và hồ sơ ứng tuyển. Nội
+dung CV được biểu diễn bằng các đối tượng và mảng lồng nhau, trong khi quyền sở hữu và quan
+hệ ứng tuyển được biểu diễn bằng mã định danh. Mongoose giúp backend đọc và ghi những cấu
+trúc này bằng Model thống nhất; MongoDB cung cấp nơi lưu trữ, truy vấn và chỉ mục để dữ
+liệu vẫn được duy trì giữa các phiên sử dụng. Nhờ phân chia trách nhiệm rõ ràng, hệ thống vừa
+giữ được sự linh hoạt cần thiết cho nội dung CV , vừa kiểm soát được những trường bắt buộc và
+ràng buộc quan trọng của quy trình tuyển dụng.
+3.3.4 Bố cục A4 và react-to-print
+Các mẫu CV trong RabbitCV được xây dựng bằng các thành phần React và hiển thị dưới
+dạng HTML/CSS. Khu vực nội dung chính của CV được thiết kế theo kích thước khổ giấy A4,
+tương ứng 210 x 297 mm. Các thành phần như thông tin cá nhân, giới thiệu, học vấn, kinh
+nghiệm, kỹ năng và dự án được sắp xếp theo từng mẫu CV , đồng thời sử dụng kích thước chữ,
+khoảng cách và lề phù hợp để bảo đảm nội dung rõ ràng khi xem trên màn hình cũng như khi
+in.
+Để hỗ trợ in và lưu CV dưới dạng PDF, hệ thống sử dụng thư việnreact-to-print. Thư viện
+này nhận tham chiếu đến thành phần React chứa nội dung CV , tạo phiên bản dành cho in và mở
+hộp thoại in có sẵn của trình duyệt. Tại hộp thoại này, người dùng có thể lựa chọn máy in hoặc
+sử dụng chức năng “Lưu dưới dạng PDF” do trình duyệt cung cấp.
+Ưu điểm của phương pháp HTML/CSS là mẫu CV có thể dùng chung cho xem trước, chỉnh
+sửa và xuất PDF. Khi dữ liệu thay đổi, nội dung hiển thị và bản in được cập nhật đồng thời mà
+không cần xây dựng một mẫu PDF riêng ở backend.
+Tuy nhiên, react-to-print không trực tiếp tạo tệp PDF mà chỉ kích hoạt chức năng in của
+trình duyệt nên kết quả in có thể khác nhau giữa các trình duyệt. Nội dung dài còn có thể phát
+sinh ngắt trang không mong muốn.
+3.3.5 PDF.js và hiển thị PDF tải lên
+Ngoài CV được tạo trong hệ thống, RabbitCV cho phép người dùng tải lên CV PDF đã có.
+PDF.js là thư viện đọc và kết xuất tài liệu PDF trong trình duyệt [3]. Thư viện tải tài liệu, xác
+định số trang và vẽ từng trang lên vùng hiển thị. Phần xử lý chính có thể chạy qua worker để
+tránh chặn luồng giao diện khi giải mã nội dung PDF.
+RabbitCV sử dụng PDF.js để cung cấp trải nghiệm xem trước thống nhất thay vì phụ thuộc
+hoàn toàn vào trình đọc PDF tích hợp của từng trình duyệt. Giao diện có thể kiểm soát tỷ lệ, thứ
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 16/89\n===== PDF PAGE 27 =====\ntự trang, trạng thái đang tải và lỗi tài liệu. Người dùng nhờ đó có thể xem lại CV đã tải lên ngay
+trong luồng quản lý hoặc ứng tuyển mà không phải mở một ứng dụng bên ngoài.
+PDF.js có các đặc điểm chính như sau:
+•Ưu điểm:Có khả năng hiển thị đa nền tảng và tích hợp sâu với giao diện web.
+•Hạn chế:Tài liệu nhiều trang hoặc có đồ họa phức tạp tiêu tốn bộ nhớ và thời gian kết xuất;
+worker và tệp thư viện cũng làm tăng kích thước gói frontend.
+•Cách tối ưu trong RabbitCV:Nhóm PDF được tách thành gói riêng và chỉ được tải khi
+người dùng mở chức năng liên quan.
+PDF tải lên là tài liệu gần như hoàn chỉnh, khác với CV có cấu trúc mà hệ thống có thể chỉnh
+sửa từng mục. RabbitCV phân biệt hai loại để chọn đúng cách hiển thị, cập nhật và sử dụng. Sự
+phân biệt này cũng tránh áp dụng nhầm thao tác chỉnh sửa cấu trúc cho một tệp chỉ có thể xem
+hoặc thay thế.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 17/89\n===== PDF PAGE 28 =====\nChương 4
+Phân tích và thiết kế hệ thống
+4.1 Phân tích vai trò người dùng
+RabbitCV có bốn vai trò người dùng chính:
+•Khách:chỉ truy cập tài nguyên công khai.
+•Ứng viên:là tác nhân trung tâm của đề tài vì trực tiếp tạo CV , nhận gợi ý AI và dùng CV
+để ứng tuyển.
+•Doanh nghiệp:tạo tin, tiếp nhận hồ sơ và trao đổi với ứng viên.
+•Quản trị viên:giám sát dữ liệu và thực hiện các thao tác đặc quyền trong phạm vi backend
+đã triển khai.
+4.2 Yêu cầu chức năng
+Y êu cầu chức năng của hệ thống RabbitCV được xác định dựa trên các nhóm đối tượng
+tương tác với hệ thống. Do mỗi đối tượng có phạm vi sử dụng và quyền hạn khác nhau, các yêu
+cầu được phân nhóm theo bốn đối tượng chính gồm: khách, ứng viên, doanh nghiệp và quản trị
+viên. Cách phân nhóm này giúp làm rõ chức năng mà từng đối tượng được phép thực hiện, đồng
+thời làm cơ sở cho việc xây dựng ma trận phân quyền, thiết kế luồng nghiệp vụ và kiểm thử hệ
+thống
+4.2.1 Đối với người dùng chưa đăng nhập (guest)
+Người dùng chưa đăng nhập (guest) có thể quan sát và sử dụng được những chức năng cơ
+bản mà không cần đăng nhập:
+•Xem danh sách công việc
+•Tìm kiếm công việc
+•Xem chi tiết công việc
+•Tạo tài khoản
+•Đăng nhập
+4.2.2 Đối với các ứng viên (employee)
+Sau khi đăng nhập, các ứng viên (employee) sẽ có quyền truy cập vào các chức năng sâu
+hơn và đầy đủ hơn:
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 18/89\n===== PDF PAGE 29 =====\n•Quản lý hồ sơ cá nhân
+•Tạo CV bằng các template có sẵn
+•Viết và review CV bằng AI
+•Luyện tập phỏng vấn với AI
+•Ứng tuyển vào tin tuyển dụng (sử dụng CV đã tạo hoặc file PDF)
+•Lưu các tin tuyển dụng lại để xem sau
+•Giao tiếp với doanh nghiệp qua chat
+4.2.3 Đối với các doanh nghiệp (company)
+Sau khi đăng nhập, các doanh nghiệp (company) sẽ có quyền truy cập vào các chức năng:
+•Quản lý thông tin doanh nghiệp
+•Quản lý tin tuyển dụng
+•Quản lý danh sách ứng viên
+•Giao tiếp với ứng viên qua chat
+4.2.4 Đối với quản trị viên (administrator)
+Sau khi đăng nhập, quản trị viên (administrator) sẽ có quyền truy cập vào các chức năng:
+•Quản lý người dùng
+•Quản lý doanh nghiệp
+•Quản lý tin tuyển dụng
+4.3 Yêu cầu phi chức năng
+•Dữ liệu hệ thống được thiết kế sao cho thuận tiện cho việc bảo trì và nâng cấp
+•Tính riêng tư và bảo mật: Thông tin cá nhân, lịch sử làm việc, CV , thông báo và tin nhắn
+được bảo mật, chỉ được chia sẻ theo cơ chế và sự cho phép của người dùng
+•Khả năng truy xuất nguồn gốc: Hệ thống ghi lại lịch sử, phiên bản và trạng thái của các tác
+vụ (tạo CV , AI, ứng tuyển) để dễ dàng kiểm tra và tái lập khi cần
+•Toàn vẹn dữ liệu: Không cho phép ứng tuyển trùng; không cho ứng tuyển vào tin đã đóng,
+hết hạn hoặc bị xóa; lưu jobSnapshot để bảo toàn lịch sử.
+•Các thành phần giao diện được chia tách rõ ràng (Tạo CV , Ứng tuyển, Chat, Admin) giúp
+dễ dàng mở rộng từng phần
+•Ứng viên có thể tạo nhiều CV , tạo nhiều mẫu CV (template) và chọn CV cụ thể để ứng
+tuyển
+•Doanh nghiệp có thể quản lý nhiều tin tuyển dụng cùng lúc, nhiều trạng thái ứng tuyển
+•Hệ thống có thể dễ dàng mở rộng để hỗ trợ nhiều mẫu CV (template) hơn trong tương lai
+•Cấu trúc dữ liệu CV linh hoạt, dễ dàng bổ sung các mục mới (ví dụ: chứng chỉ, dự án cá
+nhân)
+4.4 Lược đồ usecase cho toàn bộ hệ thống
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 19/89\n===== PDF PAGE 30 =====\nH Ệ  TH Ố NG RABBITCV
+Ứ NG VIÊN DOANH NGHI Ệ P QU Ả N TR Ị  VIÊN
+Ứ ng viên
+Doanh nghi ệ p
+Qu ả n tr ị  viên
+Qu ả n lý h ồ  s ơ  tài kho ả n
+Qu ả n lý CV
+Tìm ki ế m và xem vi ệ c làm
+L ư u / b ỏ  l ư u vi ệ c làm Ứ ng tuy ể n
+<extend>
+Ch ọ n CV
+Theo dõi tr ạ ng thái h ồ  s ơ
+ứ ng tuy ể n
+Nh ắ n tin và qu ả n lý thông báo
+Qu ả n lý h ồ  s ơ  công ty
+Qu ả n lý tin tuy ể n d ụ ng
+Xem và l ọ c danh sách ứ ng viên
+Xem CV ứ ng viên
+C ậ p nh ậ t tr ạ ng thái h ồ  s ơ
+ứ ng tuy ể n
+<include>
+Đăng nh ậ p
+Đăng xu ấ t
+Xem th ố ng kê t ổ ng quan
+Qu ả n lý ng ườ i dùng
+Qu ả n lý tin tuy ể n d ụ ng
+X ử  lý báo cáo
+Xem nh ậ t ký h ệ  th ố ng
+T ạ o, xem, thêm, 
+xóa và s ử a Xu ấ t PDF T ạ o, xóa và s ử a L ư u b ả n nháp
+T ả i CV PDF t ừ  máy
+tính lên
+Đăng ký
+Hình 4.1: Lược đồ usecase cho toàn bộ hệ thống
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 20/89\n===== PDF PAGE 31 =====\n4.5 Đặc tả usecase
+4.5.1 Quản lý CV
+H Ệ  TH Ố NG RABBITCV
+Ứ ng viên D ị ch v ụ  AI
+Đăng nh ậ p
+Qu ả n lý CV
+Xem tr ướ c / t ả i CV
+Đi ề n CV b ằ ng AI
+Review CV
+Luy ệ n ph ỏ ng v ấ n AI
+<<extend>>
+<<extend>>
+<<extend>>
+Hình 4.2: Lược đồ usecase quản lý CV
+Usecase ID CV-1.1
+Tên use case Đăng nhập
+Đối tượng Người dùng
+Mô tả Cho phép người dùng đăng nhập vào hệ thống
+Tiền điều kiện 1. Người dùng chưa đăng nhập vào hệ thống.
+2. Người dùng đã đăng ký tài khoản và có thông tin trong hệ thống.
+Hậu điều kiện Người dùng đăng nhập thành công
+Luồng thực hiện
+chính
+1. Người dùng nhấn vào nút Đăng nhập
+2. Hệ thống chuyển sang trang đăng nhập
+3. Người dùng nhập thông tin tài khoản và mật khẩu
+4. Hệ thống xác thực thông tin tài khoản
+5. Người dùng đăng nhập thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Tài khoản hoặc mật khẩu không chính xác
+E2. Tài khoản đã bị khóa
+E3. Hệ thống đang bảo trì
+Bảng 4.1: Use case CV-1.1: Đăng nhập
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 21/89\n===== PDF PAGE 32 =====\nUsecase ID CV-1.2
+Tên use case Đăng ký
+Đối tượng Người dùng
+Mô tả Cho phép người dùng đăng ký tài khoản vào hệ thống
+Tiền điều kiện Người dùng chưa đăng nhập vào hệ thống.
+Hậu điều kiện Người dùng đăng ký thành công
+Luồng thực hiện
+chính
+1. Người dùng nhấn vào nút Đăng ký
+2. Hệ thống chuyển sang trang đăng ký
+3. Người dùng nhập thông tin tài khoản, mật khẩu, xác nhận mật khẩu, email,
+số điện thoại và chọn vai trò (Ứng viên/Doanh nghiệp)
+4. Hệ thống xác thực thông tin tài khoản
+5. Người dùng đăng ký thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Thông tin tài khoản hoặc mật khẩu không hợp lệ
+E2. Tài khoản đã tồn tại
+E3. Hệ thống đang bảo trì
+Bảng 4.2: Use case CV-1.2: Đăng ký
+Usecase ID CV-1.3
+Tên use case Đăng xuất
+Đối tượng Người dùng
+Mô tả Cho phép người dùng đăng xuất khỏi hệ thống
+Tiền điều kiện Người dùng đã đăng nhập vào hệ thống.
+Hậu điều kiện Người dùng đăng xuất thành công
+Luồng thực hiện
+chính
+1. Người dùng nhấn vào nút Đăng xuất
+2. Hệ thống hủy phiên đăng nhập và chuyển hướng về trang chủ
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.3: Use case CV-1.3: Đăng xuất
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 22/89\n===== PDF PAGE 33 =====\nUsecase ID CV-1.4
+Tên use case Quản lý thông tin tài khoản
+Đối tượng Người dùng
+Mô tả Cho phép người dùng quản lý thông tin tài khoản
+Tiền điều kiện Người dùng đã đăng nhập vào hệ thống.
+Hậu điều kiện Người dùng cập nhật thông tin tài khoản thành công
+Luồng thực hiện
+chính
+1. Người dùng nhấn vào icon người dùng
+2. Dropdown hiển thị các tùy chọn: Hồ sơ của tôi, Việc làm của tôi, Cài đặt và
+Đăng xuất
+3. Người dùng nhấn vào "Hồ sơ của tôi"
+4. Hệ thống chuyển sang trang hồ sơ cá nhân
+5. Người dùng cập nhật thông tin tài khoản
+6. Hệ thống lưu thông tin tài khoản và hiển thị thông báo thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.4: Use case CV-1.4: Quản lý thông tin tài khoản
+Usecase ID CV-1.5
+Tên use case Quản lý CV
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên quản lý CV của mình
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang dashboard
+Hậu điều kiện Ứng viên tạo và lưu CV thành công
+Luồng thực hiện
+chính
+1. Ứng viên nhấn vào tab Tạo CV
+2. Hệ thống hiển thị danh sách các mẫu CV
+3. Ứng viên lựa chọn mẫu CV
+4. Hệ thống hiển thị trang điền thông tin theo mẫu CV đã chọn
+5. Ứng viên điền thông tin vào các mục theo yêu cầu
+6. Ứng viên nhấn nút Lưu và hiển thị thông báo lưu CV thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+E2. Người dùng chưa ấn nút Lưu CV
+Bảng 4.5: Use case CV-1.5: Quản lý CV
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 23/89\n===== PDF PAGE 34 =====\nUsecase ID CV-1.6
+Tên use case Tải CV
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên tải CV của mình
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang danh sách các CV
+3. Ứng viên đã tạo ít nhất 1 CV
+Hậu điều kiện Ứng viên tải CV thành công
+Luồng thực hiện
+chính
+Tải PDF từ màn hình danh sách CV
+1. Ứng viên lựa chọn CV mà mình muốn tải
+2. Ứng viên nhấn nút “Tải PDF”
+3. Hệ thống xử lý và gửi file CV về cho người dùng
+4. Hệ thống hiển thị thông báo tải CV thành công
+Luồng thực hiện
+phụ
+Tải PDF từ màn hình chỉnh sửa
+1. Ứng viên lựa chọn CV mà mình muốn tải
+2. Ứng viên bấm vào nút "Chỉnh sửa" ở cuối hàng CV
+3. Hệ thống chuyển sang trang CV với nội dung CV đã được lưu trước đó
+4. Ứng viên chỉnh sửa và bấm nút "Tải PDF"
+5. Hệ thống xử lý và gửi file CV về cho người dùng
+6. Hệ thống hiển thị thông báo tải CV thành công
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.6: Use case CV-1.6: Tải CV
+Usecase ID CV-1.7
+Tên use case Điền CV bằng AI
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên điền CV bằng AI
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang điền thông tin CV
+Hậu điều kiện Ứng viên điền CV bằng AI thành công
+Luồng thực hiện
+chính
+1. Ứng viên nhấn vào nút “Điền CV bằng AI”
+2. Hệ thống hiển thị trang CV mới với những nội dung AI đã được điền vào
+CV
+3. Ứng viên kiểm tra và chỉnh sửa nội dung CV nếu cần thiết
+4. Ứng viên nhấn nút “Lưu”
+5. Hệ thông lưu thông tin CV vào hệ thống và hiển thị thông báo lưu CV thành
+công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+E2. Người dùng chưa ấn nút Lưu CV
+Bảng 4.7: Use case CV-1.7: Điền CV bằng AI
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 24/89\n===== PDF PAGE 35 =====\nUsecase ID CV-1.8
+Tên use case Review CV bằng AI
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên review CV bằng AI
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang điền thông tin CV
+Hậu điều kiện Ứng viên điền CV bằng AI thành công
+Luồng thực hiện
+chính
+1. Ứng viên nhấn vào nút “Review CV”
+2. Hệ thống hiển thị bảng điểm CV và các lỗi cần sửa trong CV
+3. Ứng viên kiểm tra và chỉnh sửa nội dung CV nếu cần thiết
+4. Ứng viên nhấn nút “Đóng” hoặc "Review lại" để xem lại điểm CV
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.8: Use case CV-1.8: Review CV bằng AI
+Usecase ID CV-1.9
+Tên use case Phỏng vấn với AI
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên luyện tập phỏng vấn với AI
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang dashboard
+Hậu điều kiện Ứng viên điền CV bằng AI thành công
+Luồng thực hiện
+chính
+1. Ứng viên nhấn vào nút “Phỏng vấn với AI”
+2. Hệ thống hiển thị trang lựa chọn các cấp độ, hình thức và số lượng câu hỏi
+3. Ứng viên lựa chọn các yêu cầu theo mong muốn và ấn nút “Bắt đầu phỏng
+vấn”
+4. Hệ thống bắt đầu tạo câu hỏi và yêu cầu ứng viên trả lời từng câu hỏi
+5. Sau khi ứng viên trả lời xong, hệ thống sẽ hiển thị đánh giá câu trả lời và
+gợi ý cải thiện
+6. Sau khi hoàn tất trả lời tất cả câu hỏi, hệ thống lưu kết quả phỏng vấn vào
+lịch sử phỏng vấn của ứng viên
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.9: Use case CV-1.9: Phỏng vấn với AI
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 25/89\n===== PDF PAGE 36 =====\n4.5.2 Tìm việc và ứng tuyển việc làm
+H Ệ  TH Ố NG RABBITCV
+Ứ ng viên Doanh nghi ệ p
+<<extend>>
+Tìm, l ọ c và xem đ ơ n ứ ng tuy ể n L ư u / b ỏ  l ư u đ ơ n ứ ng tuy ể n
+Ứ ng tuy ể n
+Ch ọ n CV đã l ư u
+Theo dõi tr ạ ng thái h ồ  s ơ
+Nh ậ n thông báo
+<<extend>>
+<<extend>>
+<<include>>
+T ả i/xu ấ t CV PDF c ủ a ứ ng viên
+<<extend>> T ả i CV PDF t ừ  máy tính lên
+Qu ả n lý bài đăng tuy ể n d ụ ng
+<<include>>
+C ậ p nh ậ t tr ạ ng thái h ồ  s ơ  c ủ a ứ ng viên
+<<extend>>
+T ạ o, s ử a và xóa bài đăng tuy ể n d ụ ng
+Hình 4.3: Lược đồ usecase tìm việc và ứng tuyển việc làm
+Usecase ID CV-2.1
+Tên use case Tìm kiếm việc làm
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên tìm kiếm việc làm
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang "Tìm kiếm việc làm"
+Hậu điều kiện Ứng viên tìm thấy việc làm phù hợp với yêu cầu
+Luồng thực hiện
+chính
+1. Ứng viên điền thông tin tìm kiếm và nhấn nút “Tìm kiếm việc làm”
+2. Hệ thống hiển thị danh sách các công việc theo nội dung tìm kiếm
+3. Ứng viên chọn một công việc và xem chi tiết công việc
+Luồng thực hiện
+phụ
+1. Ứng viên điền thông tin tìm kiếm và ấn bộ lọc chọn địa điểm, cấp bậc, mức
+lương, kinh nghiệm phù hợp với yêu cầu
+2. Ứng viên ấn nút "Tìm kiếm"
+3. Hệ thống hiển thị danh sách các công việc phù hợp với yêu cầu trong bộ lọc
+của ứng viên
+4. Ứng viên chọn một công việc và xem chi tiết công việc
+Lỗi E1. Hệ thống đang bảo trì
+E2. Ứng viên chưa nhập nội dung tìm kiếm
+E3. Không tìm thấy công việc phù hợp với yêu cầu của ứng viên
+Bảng 4.10: Use case CV-2.1: Tìm kiếm việc làm
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 26/89\n===== PDF PAGE 37 =====\nUsecase ID CV-2.2
+Tên use case Ứng tuyển việc làm
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên ứng tuyển việc làm
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang "Chi tiết công việc"
+Hậu điều kiện Ứng viên ứng tuyển thành công
+Luồng thực hiện
+chính
+1. Ứng viên lựa chọn CV đã tạo để ứng tuyển
+2. Ứng viên bấm vào nút "Ứng tuyển bằng CV đã tạo"
+3. Hệ thống gửi CV đến nhà tuyển dụng và hiển thị thông báo ứng tuyển thành
+công
+Luồng thực hiện
+phụ
+1. Ứng viên bấm vào nút "Tải CV PDF từ máy"
+2. Ứng viên lựa chọn CV mà mình muốn sử dụng và tải lên CV PDF
+3. Hệ thống hiển thị thông tin của CV
+4. Ứng viên bấm vào nút "Ứng tuyển bằng CV vừa tải lên"
+5. Hệ thống gửi CV đến nhà tuyển dụng và hiển thị thông báo ứng tuyển thành
+công
+Lỗi E1. Hệ thống đang bảo trì
+E2. Ứng viên chưa chọn CV để ứng tuyển
+E3. CV tải lên không hợp lệ
+E4. CV tải lên bị lỗi
+Bảng 4.11: Use case CV-2.2: Ứng tuyển việc làm
+Usecase ID CV-2.3
+Tên use case Theo dõi trạng thái ứng tuyển
+Đối tượng Ứng viên
+Mô tả Cho phép ứng viên theo dõi trạng thái ứng tuyển công việc
+Tiền điều kiện 1. Ứng viên đã đăng nhập vào hệ thống.
+2. Ứng viên đang ở trang dashboard
+Hậu điều kiện Ứng viên theo dõi trạng thái ứng tuyển thành công
+Luồng thực hiện
+chính
+1. Ứng viên bấm vào nút "Công việc của tôi"
+2. Hệ thống hiển thị danh sách công việc mà ứng viên đã ứng tuyển
+3. Ứng viên xem trạng thái ứng tuyển của từng công việc
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+E2. Ứng viên chưa ứng tuyển bất kỳ công việc nào
+Bảng 4.12: Use case CV-2.3: Theo dõi trạng thái ứng tuyển công việc
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 27/89\n===== PDF PAGE 38 =====\n4.5.3 Giao tiếp và thông báo
+H Ệ  TH Ố NG RABBITCV
+Ứ ng viên Doanh nghi ệ p
+Xem danh sách h ộ i tho ạ i
+G ử i và nh ậ n tin nh ắ n
+theo th ờ i gian th ự c
+<<extend>>
+Đánh d ấ u đã đ ọ c
+Ẩ n cu ộ c trò chuy ệ n
+Xem thông báo
+Đánh d ấ u/xóa thông báo
+<<extend>>
+<<extend>>
+Hình 4.4: Lược đồ usecase giao tiếp và thông báo
+Usecase ID CV-3.1
+Tên use case Nhắn tin trao đổi trực tiếp
+Đối tượng Ứng viên, Doanh nghiệp
+Mô tả Cho phép ứng viên và doanh nghiệp trò chuyện, trao đổi thông tin công việc
+hoặc hẹn lịch phỏng vấn theo thời gian thực
+Tiền điều kiện 1. Người dùng đã đăng nhập vào hệ thống.
+2. Cuộc hội thoại đã được tạo (từ hồ sơ ứng tuyển hoặc danh sách tin nhắn)
+Hậu điều kiện Tin nhắn được lưu vào cơ sở dữ liệu và hiển thị tức thời đến cả hai phía
+Luồng thực hiện
+chính
+1. Người dùng nhấn biểu tượng tin nhắn hoặc chọn nút "Nhắn tin" từ hồ sơ
+ứng tuyển
+2. Hệ thống tải danh sách hội thoại và hiển thị lịch sử tin nhắn của phòng chat
+đã chọn
+3. Người dùng nhập nội dung văn bản vào ô soạn thảo và nhấn nút "Gửi"
+4. Hệ thống kiểm tra quyền hợp lệ, lưu tin nhắn và phát sự kiện mới qua
+Socket.IO
+5. Giao diện phòng chat của hai bên cập nhật và hiển thị tin nhắn mới ngay lập
+tức
+Luồng thực hiện
+phụ
+1. Người dùng chọn ẩn một cuộc hội thoại trong danh sách
+2. Hệ thống cập nhật trạng thái ẩn cuộc trò chuyện của người dùng hiện tại
+Lỗi E1. Hệ thống đang bảo trì hoặc mất kết nối máy chủ
+E2. Nội dung tin nhắn trống hoặc phiên đăng nhập hết hạn
+Bảng 4.13: Use case CV-3.1: Nhắn tin trao đổi trực tiếp
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 28/89\n===== PDF PAGE 39 =====\nUsecase ID CV-3.2
+Tên use case Xem và quản lý thông báo
+Đối tượng Ứng viên, Doanh nghiệp
+Mô tả Cho phép người dùng nhận, theo dõi và quản lý các thông báo tự động từ hệ
+thống (kết quả nộp đơn, ứng viên mới, cập nhật tuyển dụng)
+Tiền điều kiện Người dùng đã đăng nhập vào hệ thống
+Hậu điều kiện Người dùng nắm bắt được thông tin cập nhật; thông báo được đánh dấu là đã
+đọc
+Luồng thực hiện
+chính
+1. Người dùng nhấn vào biểu tượng chuông thông báo trên thanh điều hướng
+2. Hệ thống hiển thị danh sách thông báo mới nhất kèm chỉ báo số lượng chưa
+đọc
+3. Người dùng nhấn chọn một thông báo cụ thể
+4. Hệ thống cập nhật thông báo sang "Đã đọc" và điều hướng tới trang tương
+ứng
+Luồng thực hiện
+phụ
+1. Người dùng nhấn nút "Đánh dấu tất cả đã đọc"
+2. Hệ thống cập nhật toàn bộ danh sách thông báo sang trạng thái đã đọc
+Lỗi E1. Hệ thống đang bảo trì hoặc mất kết nối mạng
+E2. Nội dung liên kết trong thông báo không còn khả dụng
+Bảng 4.14: Use case CV-3.2: Xem và quản lý thông báo
+4.5.4 Quản lý bài đăng tuyển dụng
+H Ệ  TH Ố NG RABBITCV
+Doanh nghi ệ p
+Ứ ng viên
+Qu ả n lý h ồ  s ơ  công ty
+Qu ả n lý tin tuy ể n d ụ ng
+L ư u nháp
+Xem, tìm và l ọ c ứ ng viên Xem CV / h ồ  s ơ  ứ ng viên
+C ậ p nh ậ t tr ạ ng thái h ồ  s ơ  c ủ a ứ ng viên
+Nh ắ n tin
+Nh ậ n thông báo
+<<extend>>
+<<extend>>
+<<include>>
+<<extend>> T ạ o, xóa và s ử a
+Hình 4.5: Lược đồ usecase quản lý thông tin doanh nghiệp
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 29/89\n===== PDF PAGE 40 =====\nUsecase ID CV-4.1
+Tên use case Quản lý bài đăng tuyển dụng
+Đối tượng Nhà tuyển dụng
+Mô tả Cho phép nhà tuyển dụng quản lý bài đăng tuyển dụng
+Tiền điều kiện 1. Nhà tuyển dụng đã đăng nhập vào hệ thống.
+2. Nhà tuyển dụng đang ở trang dashboard
+Hậu điều kiện Nhà tuyển dụng quản lý bài đăng tuyển dụng thành công
+Luồng thực hiện
+chính
+1. Nhà tuyển dụng nhấn vào nút "Đăng tin tuyển dụng"
+2. Hệ thống chuyển sang trang đăng tin tuyển dụng mới
+3. Nhà tuyển dụng nhập các thông tin cần thiết vào bài đăng tuyển dụng và
+nhấn nút "Đăng tuyển"
+4. Hệ thống kiểm tra thông tin bài đăng tuyển dụng
+5. Hệ thống lưu bài đăng và thông báo đăng tin tuyển dụng thành công
+Luồng thực hiện
+phụ
+1. Nhà tuyển dụng nhấn vào nút "Quản lý tuyển dụng"
+2. Hệ thống hiển thị danh sách các bài đăng tuyển dụng
+3. Nhà tuyển dụng chọn bài đăng tuyển dụng muốn quản lý
+4. Hệ thống hiển thị chi tiết bài đăng tuyển dụng
+5. Nhà tuyển dụng có thể sửa bài đăng, xem thông tin ứng tuyển
+6. Nhà tuyển dụng cập nhật bài đăng và hiển thị thông báo thành công
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.15: Use case CV-4.1: Quản lý bài đăng tuyển dụng
+Usecase ID CV-4.2
+Tên use case Cập nhật trạng thái hồ sơ ứng tuyển
+Đối tượng Nhà tuyển dụng
+Mô tả Cho phép nhà tuyển dụng cập nhật trạng thái hồ sơ ứng tuyển
+Tiền điều kiện 1. Nhà tuyển dụng đã đăng nhập vào hệ thống.
+2. Nhà tuyển dụng đang ở trang dashboard
+Hậu điều kiện Nhà tuyển dụng cập nhật trạng thái hồ sơ ứng tuyển thành công
+Luồng thực hiện
+chính
+1. Nhà tuyển dụng nhấn vào nút "Duyệt ứng viên"
+2. Hệ thống hiển thị danh sách các ứng viên
+3. Nhà tuyển dụng chọn một ứng viên để cập nhật trạng thái
+4. Nhà tuyển dụng lựa chọn trạng thái ứng tuyển
+5. Hệ thống cập nhật trạng thái ứng tuyển và thông báo thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.16: Use case CV-4.2: Quản lý bài đăng tuyển dụng
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 30/89\n===== PDF PAGE 41 =====\nUsecase ID CV-4.3
+Tên use case Quản lý hồ sơ công ty
+Đối tượng Doanh nghiệp (Nhà tuyển dụng)
+Mô tả Cho phép doanh nghiệp xem, cập nhật và hoàn thiện thông tin thương hiệu
+công ty
+Tiền điều kiện 1. Doanh nghiệp đã đăng nhập vào hệ thống.
+2. Doanh nghiệp đang ở trang Company Dashboard
+Hậu điều kiện Thông tin hồ sơ công ty được cập nhật trong cơ sở dữ liệu và hiển thị đồng bộ
+trên các bài đăng tuyển dụng
+Luồng thực hiện
+chính
+1. Doanh nghiệp chọn mục "Hồ sơ công ty" trên thanh điều hướng hoặc menu
+quản trị
+2. Hệ thống hiển thị biểu mẫu chứa thông tin hiện tại của doanh nghiệp (Tên
+công ty, logo, website, quy mô nhân sự, địa chỉ trụ sở, bài giới thiệu)
+3. Doanh nghiệp chỉnh sửa các trường thông tin cần thiết và/hoặc tải lên logo
+mới
+4. Doanh nghiệp nhấn nút "Lưu thay đổi"
+5. Hệ thống kiểm tra tính hợp lệ của dữ liệu (định dạng URL, ảnh logo, các
+trường bắt buộc)
+6. Hệ thống lưu dữ liệu cập nhật vào cơ sở dữ liệu và hiển thị thông báo "Cập
+nhật hồ sơ công ty thành công"
+Luồng thực hiện
+phụ
+1. Doanh nghiệp nhấn nút "Xem trang công khai"
+2. Hệ thống điều hướng và hiển thị giao diện trang thông tin công ty dưới góc
+nhìn của ứng viên
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.17: Use case CV-4.3: Quản lý hồ sơ công ty
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 31/89\n===== PDF PAGE 42 =====\n4.5.5 Quản trị viên
+H Ệ  TH Ố NG RABBITCV
+Qu ả n tr ị  viên
+Đăng nh ậ p qu ả n tr ị
+Xem th ố ng kê t ổ ng quan Xem s ứ c kh ỏ e h ệ  th ố ng
+Qu ả n lý ng ườ i dùng
+Xác minh / qu ả n lý doanh nghi ệ p
+Ki ể m duy ệ t tin tuy ể n d ụ ng
+Khóa / xóa tài kho ả n
+Ẩ n / hi ệ n / xóa tin
+<<extend>>
+<<extend>>
+<<extend>>
+Hình 4.6: Lược đồ usecase phân hệ Quản trị viên
+Usecase ID CV-5.1
+Tên use case Xem thống kê tổng quan
+Đối tượng Quản trị viên
+Mô tả Cho phép quản trị viên xem các chỉ số thống kê về hoạt động toàn bộ hệ
+thống và giám sát trạng thái vận hành của hệ thống
+Tiền điều kiện 1. Quản trị viên đã đăng nhập thành công vào hệ thống.
+2. Quản trị viên đang ở giao diện trang quản trị.
+Hậu điều kiện Quản trị viên nắm bắt được số liệu thống kê tổng hợp, biểu đồ xu hướng và
+trạng thái hoạt động thực tế của các dịch vụ cốt lõi
+Luồng thực hiện
+chính
+1. Quản trị viên chọn mục "Tổng quan"
+2. Hệ thống truy vấn cơ sở dữ liệu và hiển thị các chỉ số thống kê, biểu đồ trực
+quan hóa số liệu
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+Bảng 4.18: Use case CV-5.1: Xem thống kê tổng quan
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 32/89\n===== PDF PAGE 43 =====\nUsecase ID CV-5.2
+Tên use case Quản lý người dùng
+Đối tượng Quản trị viên
+Mô tả Cho phép quản trị viên xem danh sách người dùng và thực hiện khóa hoặc mở
+khóa tài khoản người dùng
+Tiền điều kiện 1. Quản trị viên đã đăng nhập thành công vào hệ thống.
+2. Quản trị viên đang ở giao diện quản trị hệ thống.
+Hậu điều kiện Cập nhật trạng thái hoạt động của người dùng thành công
+Luồng thực hiện
+chính
+1. Quản trị viên chọn mục "Quản lý người dùng"
+2. Hệ thống hiển thị danh sách người dùng
+3. Quản trị viên chọn tài khoản người dùng cần xử lý và chọn thao tác "Khóa
+tài khoản" (hoặc "Mở khóa tài khoản")
+4. Hệ thống cập nhật trạng thái tài khoản người dùng và hiển thị thông báo
+thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+E2. Không tìm thấy thông tin tài khoản người dùng yêu cầu
+Bảng 4.19: Use case CV-5.2: Quản lý người dùng
+Usecase ID CV-5.3
+Tên use case Quản lý doanh nghiệp
+Đối tượng Quản trị viên
+Mô tả Cho phép quản trị viên xem danh sách doanh nghiệp và thực hiện khóa hoặc
+mở khóa tài khoản doanh nghiệp
+Tiền điều kiện 1. Quản trị viên đã đăng nhập thành công vào hệ thống.
+2. Quản trị viên đang ở giao diện quản lý doanh nghiệp.
+Hậu điều kiện Cập nhật trạng thái hoạt động của doanh nghiệp thành công
+Luồng thực hiện
+chính
+1. Quản trị viên chọn mục "Quản lý doanh nghiệp"
+2. Hệ thống hiển thị danh sách các doanh nghiệp
+3. Quản trị viên chọn doanh nghiệp cần xử lý và chọn thao tác "Khóa tài
+khoản" (hoặc "Mở khóa tài khoản")
+4. Hệ thống cập nhật trạng thái tài khoản doanh nghiệp thành "Đã khóa" (ngăn
+đăng nhập/đăng tin) hoặc "Hoạt động", sau đó hiển thị thông báo thành công
+Luồng thực hiện
+phụ
+Không có
+Lỗi E1. Hệ thống đang bảo trì
+E2. Không tìm thấy thông tin doanh nghiệp yêu cầu
+Bảng 4.20: Use case CV-5.3: Quản lý doanh nghiệp
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 33/89\n===== PDF PAGE 44 =====\n4.6 Activity diagram (Lược đồ hoạt động):
+4.6.1 Đăng ký, đăng nhập và quên mật khẩu:
+Ng ườ i dùng / UI API / Service
+Nh ậ p thông tin đăng ký T ạ o tài kho ả n User
+Nh ậ p tài kho ả n/m ậ t kh ẩ u
+Ch ư a
+Có
+D ữ  li ệ u h ợ p l ệ ?
+Không
+Có
+Đăng ký xong
+Thông tin h ợ p l ệ ?
+Không
+Có
+Đã có tài kho ả n?
+Quên m ậ t kh ẩ u?
+Hi ể n th ị  trang dashboard
+Không
+Có
+Thông tin chu ẩ n xác?
+Nh ậ p meil/s ố  đi ệ n tho ạ i
+Không
+Có Nh ậ p m ậ t kh ẩ u m ở i
+Hi ể n th ị  trang dashboard
+Hình 4.7: Lược đồ hoạt động: Đăng ký, đăng nhập và quên mật khẩu
+Sơ đồ trong Hình 4.7 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng đăng ký,
+đăng nhập và quên mật khẩu. Các bước xử lý bao gồm:
+•Đăng ký:Khi người dùng chọn chức năng đăng ký, hệ thống hiển thị form đăng ký. Sau
+khi người dùng nhập thông tin đăng ký, hệ thống xác thực thông tin đăng ký. Nếu thông
+tin đăng ký hợp lệ, hệ thống lưu thông tin vào cơ sở dữ liệu và hiển thị thông báo đăng ký
+thành công
+•Đăng nhập:Khi người dùng chọn chức năng đăng nhập, hệ thống hiển thị form đăng nhập.
+Sau khi người dùng nhập thông tin đăng nhập, hệ thống xác thực thông tin đăng nhập. Nếu
+thông tin đăng nhập hợp lệ, hệ thống hiển thị thông báo đăng nhập thành công
+•Quên mật khẩu:Khi người dùng chọn chức năng quên mật khẩu, hệ thống hiển thị form
+quên mật khẩu. Sau khi người dùng nhập thông tin quên mật khẩu, hệ thống xác thực thông
+tin quên mật khẩu. Nếu thông tin quên mật khẩu hợp lệ, hệ thống gửi email xác thực đến
+email của người dùng và hiển thị thông báo quên mật khẩu thành công
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 34/89\n===== PDF PAGE 45 =====\n4.6.2 Quản lý CV:
+Ng ườ i dùng / UI API / Service
+M ở  th ư  vi ệ n CV
+Ch ọ n m ẫ u CV và kh ở i t ạ o CV
+Hi ể n th ị  form đi ề n thông tin
+L ư u CV
+T ạ o m ớ i/ch ỉ nh s ử a?
+T ạ o m ớ i
+Ch ỉ nh s ử a T ả i Resume mà ng ườ i dùng đã ch ọ n
+D ữ  li ệ u h ợ p l ệ ?Nh ậ p n ộ i dung và xem tr ướ c
+Không
+Có
+Xác nh ậ n?
+Xóa CVKhông
+Có
+Hình 4.8: Lược đồ hoạt động: Quản lý CV
+Sơ đồ trong Hình 4.8 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng quản
+lý CV bao gồm: Tạo mới CV , chỉnh sửa CV và Xóa CV . Nếu người dùng chọn chức năng tạo
+mới CV , hệ thống sẽ yêu cầu người dùng chọn mẫu CV trước khi hiển thị giao diện tạo mới CV .
+Sau khi người dùng nhập thông tin tạo mới CV , hệ thống sẽ lưu thông tin vào cơ sở dữ liệu và
+hiển thị thông báo tạo mới CV thành công. Đối với chức năng chỉnh sửa CV , hệ thống sẽ hiển
+thị giao diện chỉnh sửa CV với nội dung tùy theo CV mà người dùng muốn chỉnh sửa. Sau khi
+người dùng chỉnh sửa thông tin, hệ thống sẽ cập nhật thông tin vào cơ sở dữ liệu và hiển thị
+thông báo chỉnh sửa CV thành công. Chức năng xóa CV được hiển thị ở ngoài trang quản lý CV
+giúp người dùng có thể xóa CV một cách nhanh chóng.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 35/89\n===== PDF PAGE 46 =====\n4.6.3 Tìm kiếm việc làm:
+Ng ườ i dùng / UI API / Service
+Tìm/l ọ c Job
+L ự a ch ọ n 1 công vi ệ c
+Hi ể n th ị  danh sách công vi ệ cPhù
+h ợ p?
+Không
+Có
+Ứ ng tuy ể n?
+Hi ể n th ị  thông tin chi ti ế t
+Không Có
+Đã ứ ng tuy ể n r ồ i
+PDF/CV đã l ư u
+N ộ p CV
+PDF CV đã l ư u
+T ả i file PDF t ừ  máy
+L ự a ch ọ n CV đã t ạ o trên
+trang web
+Hình 4.9: Lược đồ hoạt động: Tìm kiếm việc làm
+Biểu đồ trong Hình 4.9 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng tìm
+kiếm việc làm bao gồm: Tìm kiếm việc làm và lọc tin tuyển dụng. Khi người dùng chọn chức
+năng tìm kiếm việc làm, hệ thống sẽ hiển thị giao diện tìm kiếm việc làm. Hệ thống hỗ trợ đa
+dạng các bộ lọc như chức danh, mức lương, địa điểm, kinh nghiệm, ... để người dùng có thể tìm
+kiếm công việc phù hợp với nhu cầu. Người dùng có thể sử dụng lọc để lọc ra công việc phù
+hợp với nhu cầu nếu cần. Sau khi người dùng tìm kiếm việc làm, hệ thống sẽ hiển thị danh sách
+công việc theo tiêu chí lọc (nếu có). Nếu hệ thống không tìm thấy công việc phù hợp với nhu
+cầu của người dùng, hệ thống sẽ hiển thị thông báo không tìm thấy công việc phù hợp với nhu
+cầu.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 36/89\n===== PDF PAGE 47 =====\n4.6.4 Quản lý tin tuyển dụng:
+Ng ườ i dùng / UI API / Service
+Company đăng nh ậ p M ở  Company Dashboard T ạ o Job Draft/Active
+Ch ỉ nh s ử a n ộ i dung
+Gia h ạ n / m ở  l ạ i
+Xóa tin tuy ể n d ụ ng
+Ch ọ n thao tác T ạ o
+S ử a
+Gia h ạ n
+Xóa
+L ư u tin tuy ể n d ụ ng
+Hình 4.10: Lược đồ hoạt động: Quản lý tin tuyển dụng
+Sơ đồ trong Hình 4.10 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng quản
+lý tin tuyển dụng bao gồm:
+•Tạo mới tin tuyển dụng:Khi doanh nghiệp chọn chức năng tạo mới tin tuyển dụng, hệ
+thống hiển thị giao diện tạo mới tin tuyển dụng. Sau khi doanh nghiệp nhập thông tin, hệ
+thống tiến hành kiểm tra tính hợp lệ của dữ liệu. Doanh nghiệp có thể lựa chọn lưu nháp
+(Draft) nếu chưa hoàn thiện nội dung hoặc cần chỉnh sửa lại sau; khi đã điền đầy đủ thông
+tin và muốn công khai, doanh nghiệp chọn đăng tuyển chính thức (Active). Hệ thống sẽ lưu
+thông tin tương ứng vào cơ sở dữ liệu và hiển thị thông báo tạo mới tin tuyển dụng thành
+công.
+•Chỉnh sửa tin tuyển dụng:Khi doanh nghiệp chọn chức năng chỉnh sửa tin tuyển dụng,
+hệ thống sẽ hiển thị giao diện chỉnh sửa tin tuyển dụng với nội dung tùy theo tin tuyển dụng
+mà doanh nghiệp muốn chỉnh sửa. Sau khi doanh nghiệp chỉnh sửa thông tin, hệ thống sẽ
+cập nhật thông tin vào cơ sở dữ liệu và hiển thị thông báo chỉnh sửa tin tuyển dụng thành
+công.
+•Gia hạn / mở lại tin tuyển dụng:Khi doanh nghiệp chọn chức năng gia hạn hoặc mở lại
+tin tuyển dụng, hệ thống sẽ cập nhật lại thời gian hết hạn và trạng thái hoạt động của tin
+trong cơ sở dữ liệu, đồng thời hiển thị thông báo cập nhật thành công.
+•Xóa tin tuyển dụng:Khi doanh nghiệp chọn chức năng xóa tin tuyển dụng, hệ thống sẽ
+hiển thị thông báo xác nhận xóa tin tuyển dụng. Nếu doanh nghiệp xác nhận xóa tin tuyển
+dụng, hệ thống sẽ xóa tin tuyển dụng khỏi cơ sở dữ liệu và hiển thị thông báo xóa tin tuyển
+dụng thành công.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 37/89\n===== PDF PAGE 48 =====\n4.6.5 Cập nhật trạng thái hồ sơ ứng tuyển:
+Ng ườ i dùng / UI API / Service
+Tìm/l ọ c danh sách h ồ  s ơ Xem CV và h ồ  s ơ  ứ ng viên Đang xem xét
+Ph ỏ ng v ấ n
+Đ ồ ng ý
+T ừ  ch ố i
+L ư u tr ạ ng thái + Notification
+Đ ồ ng b ộ  d ữ  liêu
+Ch ọ n tr ạ ng thái
+ứ ng tuy ể n C ầ n xem thêm
+Ph ỏ ng v ấ n
+Đ ạ t
+Không phù h ợ p
+Hình 4.11: Lược đồ hoạt động: Cập nhật trạng thái hồ sơ ứng tuyển
+Biểu đồ trong Hình 4.11 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng cập
+nhật trạng thái hồ sơ ứng tuyển của doanh nghiệp. Khi doanh nghiệp muốn xem và cập nhật
+trạng thái hồ sơ ứng tuyển của ứng viên, hệ thống sẽ hiển thị danh sách các hồ sơ ứng tuyển và
+cho phép doanh nghiệp cập nhật trạng thái. Sau khi doanh nghiệp cập nhật trạng thái hồ sơ ứng
+tuyển, hệ thống sẽ ghi nhận trạng thái hồ sơ ứng tuyển và gửi thông báo cho ứng viên. Các trạng
+thái hồ sơ bao gồm:Đang xem xét,Phỏng vấn,Đồng ývàTừ chối.
+4.6.6 Phỏng vấn với AI:
+Ng ườ i dùng / UI API / Service
+Nh ậ p v ị  trí/c ấ p đ ộ /s ố  câu AI t ạ o danh sách câu h ỏ i Ứ ng viên tr ả  l ờ i AI ch ấ m đi ể m và ph ả n h ồ i
+AI t ổ ng k ế t bu ổ i luy ệ n
+D ữ  li ệ u h ợ p l ệ ?
+Không
+Có
+Đ ủ  s ố  câu?
+Ch ư a
+Đ ủ
+Hình 4.12: Lược đồ hoạt động: Phỏng vấn với AI
+Biểu đồ trong Hình 4.12 thể hiện quy trình xử lý của hệ thống khi thực hiện chức năng
+phỏng vấn với AI. Trước khi phỏng vấn với AI, người dùng cần chọn vị trí ứng tuyển, cấp độ,
+hình thức và số lượng câu hỏi để AI có thể tạo danh sách câu hỏi phỏng vấn phù hợp với yêu cầu
+của người dùng. Mỗi khi người dùng trả lời một câu hỏi, hệ thống sẽ ghi nhận câu trả lời và gửi
+cho AI đánh giá. Sau khi trả lời hết số lượng câu hỏi theo yêu cầu, hệ thống sẽ hiển thị tổng kết
+quả phỏng vấn, bao gồm điểm số tổng thể, điểm số từng kỹ năng và nhận xét chi tiết cho từng
+câu hỏi. Người dùng có thể xem lại toàn bộ quá trình trả lời và đánh giá để có thể cải thiện khả
+năng phỏng vấn của chính mình.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 38/89\n===== PDF PAGE 49 =====\n4.6.7 Quản trị viên:
+Ng ườ i dùng / UI API / Service Database / External
+Admin đăng nh ậ p
+L ự a ch ọ n hành đ ộ ng
+Xem stats/health Ban ho ặ c xóa User
+Xác minh/reject
+Company
+Ẩ n/hi ệ n/xóa Job
+C ậ p nh ậ t MongoDB
+Hình 4.13: Lược đồ hoạt động: Quản trị viên
+Sơ đồ trong Hình 4.13 thể hiện quy trình xử lý của hệ thống đối với các tác vụ thuộc phân
+hệ Quản trị viên (Administrator):
+•Đăng nhập và giám sát hệ thống:Quản trị viên tiến hành đăng nhập vào hệ thống bằng
+tài khoản đặc quyền. Sau khi hệ thống xác thực thành công, quản trị viên truy cập vào bảng
+điều khiển quản trị để xem các thông số thống kê tổng quan (stats) về số lượng người dùng,
+doanh nghiệp, tin tuyển dụng, cũng như theo dõi tình trạng hoạt động và sức khỏe của hệ
+thống (health check).
+•Từ giao diện quản trị, quản trị viên lựa chọn thực hiện một trong các thao tác nghiệp vụ cần
+thiết:
+– Quản lý người dùng (Ban hoặc xóa User):Quản trị viên tra cứu danh sách người
+dùng và thực hiện thao tác khóa tài khoản (ban) hoặc xóa tài khoản đối với những
+người dùng vi phạm điều khoản dịch vụ.
+– Kiểm duyệt doanh nghiệp (Xác minh / reject Company):Quản trị viên thẩm định
+thông tin và hồ sơ pháp lý của doanh nghiệp đăng ký mới nhằm xác minh tính hợp lệ
+hoặc từ chối phê duyệt (reject) nếu hồ sơ có dấu hiệu giả mạo.
+– Quản lý tin tuyển dụng (Ẩn / hiện / xóa Job):Quản trị viên kiểm duyệt các bài đăng
+việc làm trên hệ thống; có thể chủ động ẩn tin tuyển dụng vi phạm, khôi phục hiển thị
+(hiện) hoặc xóa hoàn toàn tin tuyển dụng không phù hợp khỏi hệ thống.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 39/89\n===== PDF PAGE 50 =====\n4.7 Lược đồ tuần tự (Sequence diagram):
+4.7.1 Đăng ký, đăng nhập:
+loop
+break [Đăng ký thành công]
+loop 
+break [Đăng nh ậ p thành công]
+Tìm tài kho ả n theo username
+Tr ả  v ề  k ế t qu ả  tìm ki ế m
+G ử i yêu c ầ u đăng nh ậ p
+Nh ậ p thông tin đăng nh ậ p
+Ng ườ i dùng React Auth UI AuthContext Express API MongoDB
+Nh ậ p thông tin đăng ký
+G ử i yêu c ầ u đăng ký
+POST /api/register
+[Đăng ký thành công]
+POST /api/login
+[Đăng nh ậ p th ấ t b ạ i]
+[Đăng nh ậ p thành công]
+Ki ể m tra username/email
+Tr ả  v ề  k ế t qu ả  th ấ t b ạ i
+alt
+HTTP 400 — Tài kho ả n ho ặ c m ậ t kh ẩ u không chính xác
+Hi ể n th ị  thông báo l ỗ i
+Yêu c ầ u nh ậ p l ạ i thông tin
+HTTP 200 — Đăng nh ậ p thành công + user
+C ậ p nh ậ t tr ạ ng thái đăng nh ậ p
+Chuy ể n đ ế n trang chính
+alt [Đăng ký th ấ t b ạ i]
+Hi ể n th ị  thông báo l ỗ i
+Yêu c ầ u s ử a và g ử i l ạ i thông tin
+HTTP 400 — Tài kho ả n ho ặ c email đã t ồ n t ạ i
+Hi ể n th ị  thông báo thành công
+L ư u tài kho ả n m ớ i
+Tài kho ả n đ ượ c t ạ o thành công
+HTTP 201 — Đăng ký thành công
+C ậ p nh ậ t k ế t qu ả  đăng ký
+Hình 4.14: Lược đồ tuần tự: Đăng ký, đăng nhập
+Biểu đồ tuần tự trong Hình 4.14 thể hiện rõ quy trình xử lý của hoạt động đăng nhập và đăng
+ký. Để đăng nhập, người dùng được yêu cầu nhập tên đăng nhập (hoặc email) và mật khẩu. Hệ
+thống sau đó sẽ sử dụng thông tin đã nhập để tiến hành xác thực; nếu xác thực thành công, hệ
+thống sẽ hiển thị giao diện trang chính tương ứng trong phiên làm việc của người dùng. Đối với
+hoạt động đăng ký, hệ thống yêu cầu người dùng cung cấp các thông tin bắt buộc, bao gồm tên,
+mật khẩu và một địa chỉ email hợp lệ. Toàn bộ dữ liệu người dùng trong quá trình đăng ký được
+mã hóa để đảm bảo an toàn và bảo mật.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 40/89\n===== PDF PAGE 51 =====\n4.7.2 Quản lý CV:
+Ứ ng viên CV Editor Resume API MongoDB
+T ạ o m ớ i ho ặ c m ở  CV
+GET /api/resume/:id (n ế u ch ỉ nh s ử a)
+Tìm Resume theo _id + userId
+K ế t qu ả  d ữ  li ệ u
+D ữ  li ệ u, n ộ i dung c ủ a CV
+Nh ậ p n ộ i dung và ch ọ n template ho ặ c ch ỉ nh s ử a
+POST /api/resume
+T ạ o/c ậ p nh ậ t Resume
+L ư u CV thành công
+Hi ể n th ị  n ộ i dung
+Xác nh ậ n l ư u CV thành công
+Thông báo đã l ư u/ch ỉ nh s ử a CV thành công
+Hình 4.15: Lược đồ tuần tự: Quản lý CV
+Biểu đồ tuần tự trong Hình 4.15 thể hiện quy trình khi ứng viên xem, chỉnh sửa hoặc tạo
+mới CV:
+•Tạo mới:Khi ứng viên chọn tạo CV mới, hệ thống sẽ hiển thị giao diện trống cho phép
+ứng viên nhập thông tin. Khi ứng viên điền đầy đủ thông tin, chọn mẫu CV và nhấn lưu, hệ
+thống sẽ tiến hành tạo CV mới trong cơ sở dữ liệu MongoDB. Sau khi tạo thành công, hệ
+thống hiển thị thông báo lưu thành công cho ứng viên.
+•Mở CV:Khi ứng viên chọn mở một CV đã có, hệ thống sẽ truy vấn cơ sở dữ liệu để tìm
+đúng CV thuộc về tài khoản của ứng viên. Khi tìm thấy, hệ thống tải dữ liệu và hiển thị nội
+dung CV lên giao diện soạn thảo.
+•Lưu hoặc chỉnh sửa CV:Ứng viên điền thông tin, chọn mẫu CV và nhấn lưu. Hệ thống
+nhận dữ liệu, tiến hành tạo mới hoặc cập nhật thông tin vào cơ sở dữ liệu MongoDB, sau
+đó thông báo lưu thành công cho ứng viên.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 41/89\n===== PDF PAGE 52 =====\n4.7.3 Phỏng vấn với AI:
+Ứ ng viên React AI UI AI Router Groq API
+L ự a ch ọ n s ố  l ượ ng câu h ỏ i
+POST /api/ai/interview/turn
+G ử i yêu c ầ u t ạ o danh sách câu h ỏ i
+Tr ả  v ề  danh sách câu h ỏ i
+Tr ả  v ề  n ộ i dung câu h ỏ i đ ầ u tiên
+Hi ể n th ị  câu h ỏ i đ ầ u tiên
+loop Tr ả  l ờ i câu h ỏ i
+Nh ậ p và g ử i câu tr ả  l ờ i
+POST /api/ai/interview/turn
+G ử i l ị ch s ử  ph ỏ ng v ấ n và câu tr ả  l ờ i đ ể  t ạ o ph ả n h ồ i
+Tr ả  v ề  nh ậ n xét, câu h ỏ i ti ế p theo và tr ạ ng thái hoàn thành
+alt Ch ư a hoàn thành ph ỏ ng v ấ n
+Hoàn thành ph ỏ ng v ấ n
+feedback + câu h ỏ i ti ế p theo
+Hi ể n th ị  ph ả n h ồ i và câu h ỏ i ti ế p theo
+feedback + đánh giá t ổ ng k ế t
+Hi ể n th ị  đánh giá t ổ ng k ế t
+Hình 4.16: Lược đồ tuần tự: Phỏng vấn với AI
+Biểu đồ tuần tự trong Hình 4.16 thể hiện quy trình luyện tập phỏng vấn giữa ứng viên và AI
+qua các bước:
+•Bắt đầu phỏng vấn:Ứng viên chọn số lượng câu hỏi và vị trí ứng tuyển. Hệ thống gửi yêu
+cầu đến dịch vụ AI để tạo danh sách câu hỏi phù hợp, sau đó hiển thị câu hỏi đầu tiên cho
+ứng viên.
+•Trả lời câu hỏi:Với mỗi câu hỏi, ứng viên nhập và gửi câu trả lời. Hệ thống chuyển câu
+trả lời cùng lịch sử phỏng vấn đến AI để nhận xét và đưa ra câu hỏi tiếp theo.
+•Kết thúc và đánh giá:Khi ứng viên trả lời hết số lượng câu hỏi đã chọn, hệ thống nhận
+xét câu trả lời cuối cùng và hiển thị bảng đánh giá tổng kết toàn diện (điểm số, nhận xét chi
+tiết) để ứng viên xem lại và cải thiện kỹ năng.
+4.7.4 Ứng tuyển công việc:
+Ứng tuyển công việc bằng CV đã lưu
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 42/89\n===== PDF PAGE 53 =====\nỨ ng viên Job Detail Jobs API MongoDB
+Ch ọ n CV đã l ư u đ ể  ứ ng tuy ể n
+POST /api/jobs/apply 
+Ki ể m tra tình tr ạ ng h ồ  s ơ  ứ ng tuy ể n và ứ ng viên
+Tr ả  v ề  k ế t qu ả
+Thông báo n ộ p CV thành công
+alt B ạ n đã n ộ p cho công vi ệ c này r ồ i
+N ộ p thành công
+HTTP 409 - Đã n ộ p CV cho công vi ệ c này r ồ i
+Thông báo n ộ p CV th ấ t b ạ i
+N ộ p thành công - HTTP 201
+Hình 4.17: Lược đồ tuần tự: Ứng tuyển công việc
+Biểu đồ trong Hình 4.17 thể hiện quy trình ứng tuyển bằng CV có sẵn trên hệ thống. Ứng
+viên chọn bản CV muốn nộp và xác nhận ứng tuyển. Hệ thống kiểm tra trong cơ sở dữ liệu xem
+ứng viên đã nộp cho công việc này chưa. Nếu đã nộp trước đó, hệ thống thông báo nộp thất bại
+(đã ứng tuyển). Nếu chưa, hệ thống lưu hồ sơ ứng tuyển mới vào cơ sở dữ liệu và thông báo nộp
+CV thành công.
+Ứng tuyển công việc bằng CV PDF
+Ứ ng viên Job Detail Upload/Application API PDF validate MongoDB
+Ch ọ n t ệ p PDF và ứ ng tuy ể n
+POST /api/jobs/apply-file
+Ki ể m tra đ ị nh d ạ ng,n ộ i dung và dung l ượ ng c ủ a file PDF
+alt PDF không h ợ p l ệ
+Đã n ộ p CV cho công vi ệ c này
+N ộ p CV thành công
+ki ể m tra không đ ạ t yêu c ầ u
+File PDF không h ợ p l ệ
+Thông báo ứ ng tuy ể n th ấ tt b ạ i
+Ki ể m tra tình tr ạ ng h ồ  s ơ  và ứ ng tuy ể n
+Đã t ồ n t ạ i
+B ạ n đã n ộ p CV cho công vi ệ c này
+Thông báo B ạ n đã ứ ng tuy ể n cho công vi ệ c này r ồ i
+Ki ể m tra tình tr ạ ng h ồ  s ơ  và ứ ng tuy ể n
+N ộ p CV thành công
+N ộ p CV và ứ ng tuy ể n thành công
+Thông báo ứ ng tuy ể n thành công.
+Hình 4.18: Lược đồ tuần tự: Ứng tuyển công việc bằng CV PDF
+Biểu đồ trong Hình 4.18 thể hiện quy trình nộp hồ sơ bằng tệp PDF tải lên từ máy tính. Ứng
+viên chọn tệp PDF và nhấn nộp. Hệ thống tiến hành kiểm tra định dạng và dung lượng của tệp.
+Nếu tệp không hợp lệ, hệ thống báo lỗi ngay. Nếu tệp hợp lệ, hệ thống tiếp tục kiểm tra trạng
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 43/89\n===== PDF PAGE 54 =====\nthái nộp đơn: nếu đã nộp thì báo trùng, còn nếu chưa từng nộp thì lưu tệp, ghi nhận hồ sơ ứng
+tuyển vào cơ sở dữ liệu và thông báo ứng tuyển thành công.
+4.7.5 Quản lý tin ứng tuyển:
+Doanh nghi ệ p Company Dashboard Jobs API MongoDB
+T ạ o ho ặ c ch ỉ nh s ử a tin tuy ể n d ụ ng
+POST /api/jobs ho ặ c PUT /api/jobs/:id
+T ạ o/c ậ p nh ậ t tin ứ ng tuy ể n
+L ư u tin ứ ng tuy ể n
+T ạ o/c ậ p nh ậ t tin ứ ng tuy ể n
+Đóng/gia h ạ n/xóa tin ứ ng tuy ể n
+PUT ho ặ c DELETE /api/jobs/:id
+C ậ p nh ậ t tr ạ ng thái tin ứ ng tuy ể n
+C ậ p nh ậ t tr ạ ng thái tin ứ ng tuy ể n
+C ậ p nh ậ t tin ứ ng tuy ể n
+Thông báo c ậ p nh ậ t tin ứ ng tuy ể n thành công
+L ư u tr ạ ng thái m ớ i c ủ a tin ứ ng tuy ể n 
+Hình 4.19: Lược đồ tuần tự: Quản lý tin ứng tuyển
+Biểu đồ tuần tự trong Hình 4.19 thể hiện quy trình quản lý tin tuyển dụng của doanh nghiệp:
+•Tạo hoặc chỉnh sửa tin tuyển dụng:Doanh nghiệp nhập thông tin bài đăng mới hoặc cập
+nhật tin đã có. Hệ thống tiếp nhận, kiểm tra dữ liệu và lưu vào cơ sở dữ liệu, sau đó thông
+báo cập nhật thành công cho doanh nghiệp.
+•Đóng, gia hạn hoặc xóa tin:Doanh nghiệp có thể chọn đóng tin (khi đã tuyển đủ), gia hạn
+thời gian nhận hồ sơ hoặc xóa tin tuyển dụng. Hệ thống cập nhật trạng thái mới hoặc xóa
+bài đăng tương ứng trong cơ sở dữ liệu, sau đó cập nhật lại danh sách trên bảng điều khiển.
+4.7.6 Chat và thông báo:
+Nhắn tin theo thời gian thực
+Ng ườ i g ử i React Client A Express API MongoDB Socket.IO React Client B
+G ử i n ộ i dung/hình ả nh
+POST /api/messages
+L ư u Message
+Message có _id
+g ử i tin nh ắ n t ớ i ng ườ i nh ậ n
+Tin nh ắ n m ớ i
+L ư u n ộ i dung tin nh ắ n thành công
+G ử i tin nh ắ n thành công
+Hình 4.20: Lược đồ tuần tự: Nhắn tin theo thời gian thực
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 44/89\n===== PDF PAGE 55 =====\nBiểu đồ tuần tự trong Hình 4.20 thể hiện quy trình nhắn tin trao đổi trực tiếp giữa ứng viên
+và doanh nghiệp theo thời gian thực:
+•Gửi tin nhắn:Người dùng nhập nội dung văn bản hoặc chọn hình ảnh và nhấn nút gửi. Hệ
+thống tiếp nhận thông tin tin nhắn để kiểm tra tính hợp lệ và gửi.
+•Lưu trữ và chuyển tiếp:Ngay sau khi nhận được yêu cầu, hệ thống lưu bản ghi tin nhắn
+mới vào cơ sở dữ liệu, đồng thời sử dụng Socket.IO để chuyển tiếp tức thời tin nhắn đến
+người nhận. Hệ thống thông báo gửi tin nhắn thành công về cho người gửi, đồng thời cập
+nhật nội dung tin nhắn mới lên giao diện chat.
+Thông báo
+Ng ườ i dùng TanStack Query Notification API MongoDB
+GET /api/notifications/unread-count m ỗ i 30s
+Đ ế m s ố  thông báo ch ư a đ ọ c
+S ố  thông báo ch ư a đ ọ c
+S ố  l ượ ng ch ư a đ ọ c
+M ở  danh sách thông báo
+GET /api/notifications
+Tìm và s ắ p x ế p thông báo theo th ờ i gian 
+Danh sách thông báo
+Notifications
+Đánh d ấ u đ ọ c / t ấ t c ả  / xóa
+Update/Delete v ớ i recipient hi ệ n t ạ i
+K ế t qu ả  + cache refetch
+M ở  dashboard
+Hi ể n th ị  s ố  l ượ ng thông báo ch ư a đ ọ c
+Notifications
+Hình 4.21: Lược đồ tuần tự: Thông báo
+Biểu đồ tuần tự trong Hình 4.21 thể hiện quy trình hiển thị, quản lý và xử lý thông báo của
+người dùng:
+•Kiểm tra thông báo chưa đọc:Khi người dùng mở ứng dụng, hệ thống tự động kiểm tra
+định kỳ mỗi 30 giây để đếm số lượng thông báo mới chưa đọc và cập nhật số lượng này lên
+biểu tượng chuông thông báo.
+•Xem danh sách thông báo:Khi người dùng bấm vào biểu tượng chuông, hệ thống truy
+vấn cơ sở dữ liệu để lấy danh sách thông báo, sắp xếp theo thời gian sớm nhất và hiển thị
+chi tiết cho người dùng.
+•Cập nhật trạng thái thông báo:Khi người dùng bấm xem một thông báo cụ thể hoặc
+chọn đánh dấu tất cả đã đọc, hệ thống sẽ cập nhật lại trạng thái thông báo trong cơ sở dữ
+liệu và hiển thị lại giao diện.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 45/89\n===== PDF PAGE 56 =====\n4.7.7 Quản trị viên:
+Qu ả n tr ị  viên Admin UI Admin API MongoDB Notification Service
+M ở  dashboard qu ả n tr ị
+GET /api/admin/stats
+Aggregate users/jobs/applications
+Th ố ng kê
+Dashboard data
+Ban/xóa user, xác minh company, ẩ n/xóa Job
+PUT/DELETE /api/admin/...
+C ậ p nh ậ t đúng tài nguyên
+T ạ o thông báo n ế u nghi ệ p v ụ  yêu c ầ u
+K ế t qu ả  thao tác
+Refetch danh sách
+Hình 4.22: Lược đồ tuần tự: Quản trị viên
+Biểu đồ tuần tự trong Hình 4.22 thể hiện các quy trình thực hiện công việc của quản trị viên:
+•Xem thống kê hệ thống:Khi quản trị viên truy cập bảng điều khiển quản trị, hệ thống tự
+động tổng hợp các số liệu từ cơ sở dữ liệu về người dùng, tin tuyển dụng và hồ sơ ứng tuyển
+để hiển thị các biểu đồ thống kê trực quan.
+•Quản lý người dùng và doanh nghiệp:Quản trị viên tra cứu danh sách để thực hiện các
+thao tác như khóa hoặc mở khóa tài khoản người dùng vi phạm, xác minh hoặc từ chối
+thông tin đăng ký của doanh nghiệp. Hệ thống sẽ cập nhật trạng thái tương ứng vào cơ sở
+dữ liệu.
+•Kiểm duyệt tin tuyển dụng:Quản trị viên kiểm tra các bài đăng tuyển dụng trên hệ thống,
+có thể ẩn hoặc xóa những tin vi phạm tiêu chuẩn để đảm bảo an toàn thông tin cho ứng
+viên.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 46/89\n===== PDF PAGE 57 =====\n4.8 Thiết kế cơ sở dữ liệu:
+4.8.1 Lược đồ thực thể ERD:
+Hình 4.23: Lược đồ thực thể - mối quan hệ (ERD)
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 47/89\n===== PDF PAGE 58 =====\nDựa trên lược đồ ERD (Hình 4.23), hệ thống vận hành thông qua sự tương tác và luân chuyển
+dữ liệu giữa các nhóm thực thể chính như sau:
+•Quản lý danh tính và phân quyền người dùng:Mọi đối tượng khi đăng ký vào hệ thống
+đều được khởi tạo một tài khoản người dùng cơ sở. Tùy thuộc vào mục đích sử dụng, hệ
+thống phân tách vai trò thành ba nhóm độc lập:
+–Ứng viên:Sử dụng tài khoản cá nhân để tạo, chỉnh sửa và quản lý CV; tìm kiếm cơ hội
+việc làm, gửi hồ sơ ứng tuyển tới doanh nghiệp và lưu trữ các tin tuyển dụng.
+–Doanh nghiệp:Doanh nghiệp có thể đăng tải và quản lý tin tuyển dụng, tìm kiếm ứng
+viên và xử lý hồ sơ ứng tuyển.
+–Quản trị viên:Theo dõi và giám sát tình trạng sức khỏe của hệ thống, xử lý các tài
+khoản vi phạm, đồng thời kiểm duyệt tin tuyển dụng không phù hợp.
+•Quy trình quản lý hồ sơ và tuyển dụng:Đây chính là luồng dữ liệu trung tâm của nền
+tảng. Ứng viên chủ động tạo và quản lý nhiều bản CV theo các mẫu thiết kế khác nhau
+nhằm phù hợp với từng định hướng công việc. Còn doanh nghiệp sẽ tạo lập và quản lý các
+tin tuyển dụng qua các trạng thái từ bản nháp đến khi được phát hành. Khi ứng viên nộp hồ
+sơ vào một vị trí, một đơn ứng tuyển sẽ được tạo ra để liên kết giữa ứng viên và tin tuyển
+dụng đó. Doanh nghiệp sẽ tiếp nhận đơn, có thể trực tiếp xem hoặc tải nội dung CV , sau đó
+cập nhật kết quả đánh giá theo từng giai đoạn từ lúc tiếp nhận, phỏng vấn đến khi đưa ra
+quyết định cuối cùng.
+4.8.2 Lược đồ quan hệ:
+Hình 4.24: Lược đồ quan hệ
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 48/89\n===== PDF PAGE 59 =====\nTừ mô hình quan niệm ERD, hệ thống được chuyển đổi sang lược đồ cơ sở dữ liệu quan hệ
+(Hình 4.24) ở mức logic. Các bảng và mối liên kết logic trong cơ sở dữ liệu được tổ chức theo
+các nhóm chức năng chính:
+•Cấu trúc tài khoản và phân cấp người dùng:BảngUSERđóng vai trò là bảng trung tâm
+lưu trữ thông tin tài khoản chung. Mối quan hệ kế thừa từ ERD được chuyển đổi thành các
+bảng chuyên biệt:
+–BảngADMINvàEMPLOYEEsử dụng chính khóa định danh người dùng vừa làm khóa
+chính, vừa làm khóa ngoại tham chiếu trực tiếp về bảngUSER, đảm bảo tính duy nhất
+và nhất quán theo từng vai trò.
+–BảngCOMPANYlưu trữ thông tin hồ sơ doanh nghiệp và liên kết với tài khoản người
+dùng đại diện thông qua khóa ngoại tham chiếu đếnUSER.
+•Quản lý hồ sơ và quy trình ứng tuyển:
+–BảngRESUMEliên kết với bảngUSER, cho phép mỗi ứng viên lưu trữ và quản lý độc lập
+nhiều bản CV với các định dạng mẫu khác nhau.
+–BảngJOBđại diện cho tin tuyển dụng, được liên kết trực tiếp vớiCOMPANYđể xác định
+doanh nghiệp đăng tuyển và theo dõi trạng thái bài đăng.
+–BảngAPPLICATIONđóng vai trò là bảng liên kết giữaUSER(ứng viên) vàJOB(tin
+tuyển dụng). Bảng này lưu vết thời điểm ứng tuyển cùng trạng thái xét duyệt hồ sơ qua
+từng vòng tuyển dụng.
+–BảngRESUME_ACCESSghi nhận nhật ký truy cập (xem hoặc tải xuống CV) của từng
+doanh nghiệp đối với từng hồ sơ ứng viên, hỗ trợ theo dõi lượt quan tâm và đảm bảo
+tính minh bạch, bảo mật dữ liệu.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 49/89\n===== PDF PAGE 60 =====\nChương 5
+Triển khai hệ thống
+5.1 Tổ chức mã nguồn và phạm vi triển khai
+RabbitCV được triển khai theo kiến trúc web client–server. Mã nguồn được tổ chức thành
+các phần chính sau:
+•Frontend:nằm trong thư mụcsrc, bao gồm page, component, context, hook và utility.
+•Backend:nằm trong thư mụcserver, bao gồm Express entry point, model Mongoose,
+route AI, service AI, utility kiểm tra dữ liệu và tác vụ định kỳ.
+•Giao tiếp giữa hai phần:chủ yếu sử dụng REST API; riêng thông điệp chat được phát
+thêm qua Socket.IO sau khi server lưu dữ liệu thành công.
+5.2 Ứng viên
+5.2.1 Trang chào mừng:
+Hình 5.1: Giao diện chào mừng của RabbitCV
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 50/89\n===== PDF PAGE 61 =====\nTrang chào mừng (Hình 5.1) là giao diện tiếp cận đầu tiên dành cho người dùng chưa đăng
+nhập, giúp giới thiệu định vị sản phẩm và điều hướng nhanh vào các chức năng của RabbitCV .
+Trang chào mừng cung cấp menu truy cập nhanh đến các trang công khai (Tìm việc làm,Tạo
+CV,Bảng xếp hạng,Tin tức,Phỏng vấn AI) cùng cụm nútĐăng ký / Đăng nhập.
+5.2.2 Đăng ký:
+Hình 5.2: Giao diện đăng ký tài khoản của RabbitCV
+Giao diện đăng ký (Hình 5.2) cho phép người dùng mới tạo tài khoản và phân quyền vai trò
+trên hệ thống. Giao diện gồm các trường nhập liệu tên đăng nhập, email, mật khẩu và xác nhận
+mật khẩu (tích hợp nút ẩn/hiện mật khẩu). Hỗ trợ hai đối tượng người dùng riêng biệt làỨng
+viênvàDoanh nghiệp, giúp hệ thống kích hoạt luồng nghiệp vụ tương ứng ngay sau khi tạo tài
+khoản. Y êu cầu người dùng đồng ý Điều khoản sử dụng và Chính sách bảo mật trước khi nhấn
+nút kích hoạt“Đăng ký tài khoản”.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 51/89\n===== PDF PAGE 62 =====\n5.2.3 Đăng nhập:
+Hình 5.3: Giao diện đăng nhập tài khoản của RabbitCV
+Giao diện đăng nhập (Hình 5.3) hỗ trợ xác thực người dùng an toàn và nhanh chóng vào hệ
+thống. Giao diện gồm các trường nhập tên đăng nhập và mật khẩu, thiết kế tối giản đặt tại trung
+tâm màn hình nhằm giảm thiểu xao nhãng. Bên cạnh đó, tùy chọn“Ghi nhớ đăng nhập”giúp
+lưu phiên đăng nhập thông qua cookie trên trình duyệt để duy trì trạng thái xác thực cho các lần
+truy cập sau.
+5.2.4 Trang chủ:
+Hình 5.4: Giao diện trang chủ của RabbitCV
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 52/89\n===== PDF PAGE 63 =====\nTrang chủ sau khi đăng nhập (Hình 5.4) đóng vai trò là bảng điều khiển tổng quan dành cho
+ứng viên. Thanh navigation hiển thị các mục chính của hệ thống gồmTìm việc làm,Bảng xếp
+hạng CV,Phỏng vấn AIgiúp người dùng dễ dàng di chuyển giữa các trang. Cột bên phải hiển
+thị thông tin hồ sơ tóm tắt, cùng danh sách các tính năng bổ trợ.
+5.2.5 Tìm kiếm công việc:
+Trang tìm kiếm công việc:
+Hình 5.5: Giao diện tìm kiếm công việc của RabbitCV
+Trang tìm kiếm việc làm (Hình 5.5) hỗ trợ ứng viên tìm kiếm và chọn lọc cơ hội nghề nghiệp
+theo nhu cầu. Thanh tìm kiếm cho phép tra cứu theo từ khóa, chức danh hoặc tên công ty, kết
+hợp bộ lọc nâng cao và tùy chọn sắp xếp tin mới nhất. Danh sách công việc hiển thị dưới dạng
+thẻ thông tin trực quan gồm tên vị trí, công ty, địa điểm, mức lương, thẻ kỹ năng và nút lưu tin
+việc làm để xem lại.
+Trang chi tiết công việc:
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 53/89\n===== PDF PAGE 64 =====\nHình 5.6: Giao diện chi tiết công việc của RabbitCV
+Trang chi tiết công việc (Hình 5.6) cung cấp đầy đủ thông tin về vị trí tuyển dụng gồm mức
+lương, hạn nộp, mô tả công việc, yêu cầu và quyền lợi ứng viên. Cột bên phải tích hợp khung
+ứng tuyển cho phép nộp hồ sơ bằng CV đã lưu hoặc tải lên tệp PDF từ máy tính. Ngoài ra, người
+dùng có thể lưu lại tin tuyển dụng hoặc bắt đầu trò chuyện để trao đổi với doanh nghiệp.
+Lựa chọn CV để ứng tuyển
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 54/89\n===== PDF PAGE 65 =====\nHình 5.7: Giao diện lựa chọn CV để ứng tuyển của RabbitCV
+Hộp thoại lựa chọn CV (Hình 5.7) cho phép ứng viên nhanh chóng lựa chọn bản CV phù
+hợp từ danh sách đã lưu hoặc tải tệp PDF trực tiếp từ máy tính (giới hạn dung lượng 5 MB, tỷ lệ
+A4) trước khi xác nhận nộp hồ sơ.
+5.2.6 Quản lý CV:
+Trang danh sách CV
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 55/89\n===== PDF PAGE 66 =====\nHình 5.8: Giao diện danh sách CV của RabbitCV
+Trang quản lý danh sách CV (Hình 5.8) hỗ trợ theo dõi toàn bộ hồ sơ của người dùng. Các
+CV được hiển thị dưới dạng thẻ trực quan gồm tên gọi, vị trí ứng tuyển, thời gian cập nhật gần
+nhất và mẫu CV sử dụng. Ở ngoài có những nút chức năng như: Tạo CV mới, chỉnh sửa CV ,
+tải xuống CV , đổi tên CV và xóa CV . Khi người dùng lựa chọn nút chỉnh sửa CV , hệ thống sẽ
+chuyển sang trang chỉnh sửa CV tương ứng với CV được chọn.
+Trang chỉnh sửa CV
+Hình 5.9: Trang chỉnh sửa nội dung CV của RabbitCV
+Trang chỉnh sửa CV (Hình 5.9) là nơi ứng viên tạo mới hoặc chỉnh sửa CV của mình. Trang
+được chia thành ba khu vực chính:
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 56/89\n===== PDF PAGE 67 =====\n•Khu vực điền nội dung: Là khu vực chứa các thông tin cơ bản của CV bao gồm: thông
+tin cá nhân, tiểu sử, kinh nghiệm làm việc, học vấn, kỹ năng, dự án,v.v.. Người dùng có thể
+thêm các mục mới tùy ý hoặc xóa các mục không muốn sử dụng. Ngoài ra, người dùng có
+thể sử dụng các công cụ trợ lý AI để viết mới, viết lại hoặc cải thiện nội dung CV .
+•Khu vực xem trước CV: Là khu vực xem trước CV tức thì theo định dạng trang in A4
+chuẩn mực.
+•Khu vực lựa chọn mẫu: Là khu vực chứa các mẫu CV để người dùng lựa chọn. Hệ thống
+sẽ cập nhật kiểu dáng, mẫu CV ngay lập tức mỗi khi lựa chọn 1 mẫu CV mới.
+5.2.7 Trang bảng xếp hạng:
+Hình 5.10: Trang bảng xếp hạng của RabbitCV
+Trang bảng xếp hạng (Hình 5.10) cung cấp các số liệu thống kê và xu hướng nổi bật hàng
+tuần trên nền tảng RabbitCV . Nó giúp thống kê số lượng công ty nổi bật, mẫu CV thịnh hành và
+các bài viết tuyển dụng mới nhất trong tuần. Nó cũng vinh danh top các nhà tuyển dụng được
+đánh giá cao nhất kèm điểm đánh giá sao và quy mô quan tâm. Ngoài ra, trang còn hiển thị top
+các mẫu hồ sơ được người dùng lựa chọn nhiều nhất theo số lượt xem và lượt sử dụng thực tế.
+5.2.8 Trang tin tức:
+Trang danh sách tin tức
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 57/89\n===== PDF PAGE 68 =====\nHình 5.11: Trang tin tức của RabbitCV
+Trang tin tức (Hình 5.11) đóng vai trò là chuyên trang chia sẻ kiến thức và cẩm nang nghề
+nghiệp. Nó có bố cục nội dung rõ ràng gồm bài viết tiêu điểm, bài viết mới nhất và bài viết được
+đọc nhiều nhất. Các danh mục bài viết bao gồm: Thị trường việc làm, Hướng dẫn viết CV , Kỹ
+năng phỏng vấn và Phát triển nghề nghiệp.
+Trang chi tiết tin tức
+Hình 5.12: Trang chi tiết tin tức của RabbitCV
+Trang chi tiết bài viết (Hình 5.12) được thiết kế tối ưu cho trải nghiệm đọc tài liệu: hiển thị
+hình ảnh đại diện, tiêu đề, thời gian đọc ước tính, nội dung phân đoạn rõ ràng kèm trích dẫn nổi
+bật; đồng thời tích hợp thanh mục lục điều hướng nhanh và danh sách bài viết liên quan ở cột
+bên phải.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 58/89\n===== PDF PAGE 69 =====\n5.2.9 Phỏng vấn AI:
+Trang phỏng vấn với AI
+Hình 5.13: Trang phỏng vấn AI của RabbitCV
+Trang phỏng vấn AI (Hình 5.13) cung cấp tính năng luyện tập phỏng vấn với AI. Người
+dùng có thể lựa chọn vị trí phỏng vấn và bắt đầu phỏng vấn. Ngoài ra, người dùng có thể sử
+dụng các công cụ trợ lý AI để viết mới, viết lại hoặc cải thiện nội dung CV .
+Trang nhắn tin phỏng vấn
+Hình 5.14: Trang nhắn tin phỏng vấn của RabbitCV
+Trang nhắn tin phỏng vấn (Hình 5.14) là nơi ứng viên trò chuyện với AI, được AI đặt câu
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 59/89\n===== PDF PAGE 70 =====\nhỏi và đưa ra lời khuyên cho ứng viên. Mỗi khi ứng viên gửi 1 tin nhắn trả lời, AI sẽ gửi lại 1
+tin nhắn câu hỏi tiếp theo kèm theo nhận xét cho câu trả lời của ứng viên. Ứng viên nếu muốn
+phỏng vấn lại, có thể chọn nút "Phỏng vấn lại" để bắt đầu lại.
+5.2.10 Trang cá nhân:
+Hình 5.15: Trang cá nhân của RabbitCV
+Trang cá nhân (Hình 5.15) là nơi ứng viên quản lý thông tin tài khoản và thiết lập hồ sơ ứng
+tuyển. Giao diện bao gồm menu cài đặt ở cột bên trái và khu vực cập nhật chi tiết ở bên phải,
+cho phép ứng viên theo dõi mức độ hoàn thiện hồ sơ, chỉnh sửa thông tin liên hệ cơ bản, đồng
+thời thêm mới hoặc cập nhật các mục học vấn, kinh nghiệm làm việc và hoạt động tham gia.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 60/89\n===== PDF PAGE 71 =====\n5.3 Doanh nghiệp
+5.3.1 Trang tổng quan:
+Hình 5.16: Giao diện tổng quan của doanh nghiệp
+Trang tổng quan (Hình 5.16) đóng vai trò là bảng điều khiển trung tâm giúp nhà tuyển dụng
+nắm bắt nhanh tình hình tuyển dụng. Giao diện hiển thị các chỉ số thống kê quan trọng gồm tin
+đang tuyển, tổng số ứng viên, lịch phỏng vấn trong tuần và số lượng hồ sơ chờ duyệt. Ngoài ra,
+trang còn tích hợp biểu đồ tổng quan tuyển dụng và danh sách ứng viên mới nộp gần đây, hỗ trợ
+truy cập nhanh vào CV hoặc trang cá nhân của ứng viên.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 61/89\n===== PDF PAGE 72 =====\n5.3.2 Hồ sơ doanh nghiệp:
+Hình 5.17: Giao diện quản lý hồ sơ doanh nghiệp
+Trang hồ sơ doanh nghiệp (Hình 5.17) cho phép nhà tuyển dụng thiết lập và cập nhật thông
+tin thương hiệu hiển thị với ứng viên. Cột bên trái là biểu mẫu cập nhật ảnh bìa, biểu trưng, tên
+công ty, website, quy mô, lĩnh vực hoạt động, địa chỉ và thông tin giới thiệu. Cột bên phải cung
+cấp khung xem trước trực tiếp theo thời gian thực giúp doanh nghiệp kiểm tra trực quan diện
+mạo hồ sơ trước khi lưu thay đổi.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 62/89\n===== PDF PAGE 73 =====\n5.3.3 Đăng tin tuyển dụng:
+Hình 5.18: Giao diện đăng tin tuyển dụng mới
+Trang đăng việc làm mới (Hình 5.18) hỗ trợ nhà tuyển dụng tạo mới tin tuyển dụng một cách
+thuận tiện. Biểu mẫu bao gồm hai phần: thông tin cơ bản (tên công việc, mức lương, địa điểm,
+hình thức, kinh nghiệm, học vấn, mô hình làm việc, hạn nhận hồ sơ) và nội dung chi tiết (mô tả
+công việc, yêu cầu ứng viên, quyền lợi). Doanh nghiệp có thể lựa chọn lưu bản nháp hoặc đăng
+tuyển trực tiếp lên hệ thống.
+5.3.4 Quản lý tuyển dụng:
+Hình 5.19: Giao diện quản lý tin tuyển dụng
+Trang quản lý tuyển dụng (Hình 5.19) giúp doanh nghiệp theo dõi toàn diện các vị trí tuyển
+dụng theo từng trạng thái: đang tuyển, bản nháp và đã đóng. Danh sách công việc hiển thị chi
+tiết tên vị trí, địa điểm, ngày đăng và số lượng hồ sơ ứng tuyển nhận được. Nhà tuyển dụng có
+thể thao tác nhanh với công tắc bật/tắt nhận hồ sơ, chỉnh sửa bài đăng hoặc xóa tin tuyển dụng.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 63/89\n===== PDF PAGE 74 =====\n5.3.5 Duyệt ứng viên:
+Hình 5.20: Giao diện duyệt hồ sơ ứng viên
+Trang duyệt ứng viên (Hình 5.20) là nơi nhà tuyển dụng sàng lọc và đánh giá hồ sơ của các
+ứng viên ứng tuyển. Hệ thống cung cấp công cụ tìm kiếm theo từ khóa và bộ lọc theo từng công
+việc cụ thể. Cho phép nhà tuyển dụng xem nhanh bản CV , trang cá nhân và cập nhật trạng thái
+ứng tuyển.
+5.3.6 Nhắn tin tuyển dụng:
+Hình 5.21: Giao diện nhắn tin trao đổi với ứng viên
+Giao diện nhắn tin (Hình 5.21) cung cấp kênh trao đổi trực tiếp hai chiều theo thời gian thực
+giữa doanh nghiệp và ứng viên. Khung hội thoại trung tâm hỗ trợ gửi văn bản, hình ảnh đính
+kèm và theo dõi trạng thái hoạt động. Cột bên phải tóm tắt thông tin liên hệ, học vấn của ứng
+viên đang trò chuyện kèm nút xem hồ sơ nhanh giúp nhà tuyển dụng thuận tiện trao đổi và sắp
+xếp lịch phỏng vấn.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 64/89\n===== PDF PAGE 75 =====\n5.4 Quản trị viên
+5.4.1 Trang tổng quan:
+Hình 5.22: Giao diện tổng quan hệ thống dành cho quản trị viên
+Trang tổng quan (Hình 5.22) cung cấp cái nhìn toàn diện về hoạt động của toàn bộ nền tảng
+RabbitCV theo thời gian thực. Giao diện làm nổi bật 4 chỉ số thống kê quan trọng gồm tổng
+người dùng, công ty đối tác, việc làm đang mở và số lượng hồ sơ ứng tuyển. Ngoài ra, bảng
+danh sách phía dưới giúp quản trị viên theo dõi nhanh các người dùng mới tham gia cùng vai
+trò và trạng thái hoạt động của họ.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 65/89\n===== PDF PAGE 76 =====\n5.4.2 Quản lý người dùng:
+Hình 5.23: Giao diện quản lý người dùng của quản trị viên
+Trang quản lý người dùng (Hình 5.23) cho phép quản trị viên giám sát toàn bộ tài khoản
+thành viên trên hệ thống. Giao diện tích hợp thanh tìm kiếm theo tên hoặc email, kết hợp bộ lọc
+phân loại theo vai trò (Ứng viên, Doanh nghiệp) và trạng thái tài khoản. Danh sách người dùng
+hiển thị trực quan kèm theo menu thao tác nhanh cho phép quản trị viên xem thông tin chi tiết,
+khóa hoặc mở khóa tài khoản khi có vi phạm.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 66/89\n===== PDF PAGE 77 =====\n5.4.3 Quản lý việc làm và tuyển dụng:
+Hình 5.24: Giao diện quản lý việc làm và tuyển dụng của quản trị viên
+Trang quản lý việc làm (Hình 5.24) hỗ trợ kiểm duyệt và theo dõi các tin đăng tuyển dụng
+của tất cả doanh nghiệp trên nền tảng. Quản trị viên có thể tìm kiếm theo tiêu đề công việc hoặc
+tên công ty, đồng thời lọc theo trạng thái đang tuyển hoặc đã đóng. Tại mỗi tin tuyển dụng, hệ
+thống cung cấp các nút thao tác nhanh để ẩn/hiện tin bài hoặc xóa bỏ các bài đăng vi phạm quy
+định tuyển dụng.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 67/89\n===== PDF PAGE 78 =====\n5.4.4 Quản lý doanh nghiệp:
+Hình 5.25: Giao diện quản lý doanh nghiệp của quản trị viên
+Trang quản lý doanh nghiệp (Hình 5.25) là nơi thẩm định và giám sát các tài khoản nhà
+tuyển dụng. Quản trị viên có thể theo dõi danh sách doanh nghiệp kèm lĩnh vực hoạt động, quy
+mô nhân viên, số tin tuyển dụng đang mở và trạng thái xác minh. Hệ thống hỗ trợ nút thao tác
+nhanh giúp quản trị viên khóa tài khoản doanh nghiệp vi phạm hoặc thực hiện quy trình phê
+duyệt tính hợp lệ của doanh nghiệp mới.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 68/89\n===== PDF PAGE 79 =====\nChương 6
+MÔ-ĐUN TRÍ TUỆ NHÂN TẠO
+Chương này trình bày mô-đun trí tuệ nhân tạo đang được triển khai trong RabbitCV . Mô-đun
+AI hiện hỗ trợ ba chức năng chính: review và chấm điểm lại toàn bộ CV , hỗ trợ viết CV và luyện
+tập phỏng vấn với AI. AI chỉ đóng vai trò hỗ trợ, giúp tăng tốc quá trình tạo CV , giúp người
+dùng tìm được việc làm phù hợp. Trong quá trình này, người dùng vẫn là chủ thể kiểm tra, chỉnh
+sửa và quyết định có lưu nội dung hay không.
+6.1 Mục tiêu và nguyên tắc sử dụng
+Mục tiêu của mô-đun là giảm thời gian người dùng phải tự review hoặc viết mới nội dung,
+đồng thời cung cấp phản hồi có cấu trúc để người dùng dễ hiểu, dễ áp dụng. Việc tích hợp AI
+được thiết kế theo các nguyên tắc sau:
+•Giảm thiểu dữ liệu gửi ra ngoài:Hệ thống chỉ chuyển những trường dữ liệu cần thiết. Đối
+với thông tin nhạy cảm như thông tin cá nhân, mô-đun rà soát CV chỉ gửi trạng thái đã có
+hoặc còn thiếu thông tin, thay vì gửi trực tiếp họ tên, email, số điện thoại và địa chỉ.
+•Đầu ra có cấu trúc:Phản hồi của mô hình phải tuân theo JSON Schema đã định nghĩa
+trước, giúp backend và giao diện xử lý dữ liệu theo cùng một định dạng.
+•Kiểm soát lỗi và tài nguyên:Mọi yêu cầu đều đi qua xác thực, giới hạn tần suất, hạn mức
+sử dụng hằng ngày, thời gian chờ tối đa và cơ chế chuẩn hóa lỗi.
+•Minh bạch về giới hạn:Kết quả AI có thể chưa chính xác hoặc chưa phù hợp với hoàn
+cảnh thực tế. Người dùng cần đọc lại nội dung trước khi lưu hoặc sử dụng trong hồ sơ chính
+thức.
+6.2 Các thành phần xử lý của mô-đun AI
+6.2.1 Kiểm tra và làm sạch dữ liệu đầu vào
+Các tuyến AI được đặt sau middleware xác thực JWT, vì vậy người dùng phải đăng nhập
+trước khi gửi yêu cầu. Mỗi tuyến tiếp tục kiểm tra dữ liệu bắt buộc, quyền sở hữu CV khi có mã
+CV và điều kiện tối thiểu để thực hiện tác vụ. Ví dụ, hệ thống từ chối rà soát một CV hoàn toàn
+trống hoặc bắt đầu buổi phỏng vấn khi chưa có vị trí mục tiêu.
+Trước khi dữ liệu được gửi đến mô hình, các hàm sanitizer thực hiện những công việc chính
+sau:
+•loại bỏ thẻ HTML,script,style, khoảng trắng dư thừa và giới hạn độ dài chuỗi;
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 69/89\n===== PDF PAGE 80 =====\n•giới hạn số phần tử trong các danh sách để tránh prompt quá lớn;
+•loại bỏ chuỗi có dấu hiệu là mã thực thi trong những trường không được phép chứa mã;
+•chuẩn hóa vai trò, cấp độ, loại phỏng vấn và số lượng câu hỏi;
+•chỉ giữ tối đa 26 tin nhắn gần nhất trong ngữ cảnh phỏng vấn, mỗi tin nhắn được giới hạn
+độ dài;
+•thay thông tin liên hệ chi tiết bằng các giá trị biểu thị mức độ đầy đủ khi rà soát CV .
+Sanitizer không bảo đảm loại bỏ mọi hình thức tấn công bằng câu lệnh ẩn, nhưng giúp giảm
+lượng dữ liệu nhạy cảm, hạn chế nội dung bất thường và làm cho đầu vào ổn định hơn trước khi
+gọi mô hình.
+6.2.2 Cấu hình và kết nối dịch vụ AI
+Backend sử dụng Groq API như một thư viện máy khách để gửi yêu cầu đến endpoint
+tương thích OpenAI của Groq. Nhà cung cấp được cấu hình thực tế là Groq, thông qua địa chỉ
+https://api.groq.com/openai/v1; mô hình mặc định làopenai/gpt-oss-120b.
+Tham số Giá trị mặc định Ý nghĩa
+AI_ENABLED Bật Cho phép quản trị môi trường tắt toàn
+bộ chức năng AI khi cần.
+GROQ_MODEL openai/gpt-oss-120b Xác định mô hình được gọi thông qua
+Groq API.
+AI_DAIL Y_LIMIT 100 yêu cầu/người
+dùng/ngày
+Giới hạn số bản ghi sử dụng được tạo
+trong ngày cho một tài khoản.
+Bảng 6.1: Cấu hình vận hành chính của mô-đun AI
+6.3 Các chức năng AI đã triển khai
+Các API hiện có của mô-đun được liệt kê trong Bảng 6.2. Ngoài API kiểm tra trạng thái, hệ
+thống chỉ cung cấp ba API nghiệp vụ tương ứng với ba chức năng đang xuất hiện trên giao diện.
+Phương thức Đường dẫn Mục đích
+GET /api/ai/status Kiểm tra mô-đun AI có hoạt động hay
+không.
+POST /api/ai/resume/review Gửi dữ liệu CV về để AI review và đánh
+giá. AI sẽ trả về điểm số, điểm mạnh,
+điểm yếu và điểm cần cải thiện.
+POST /api/ai/resume/fill Gửi nội dung CV hiện tại để AI đề xuất
+nội dung cho các trường còn thiếu.
+POST /api/ai/interview/turn Xử lý từng lượt trong buổi luyện phỏng
+vấn, bao gồm bắt đầu phiên, nhận câu trả
+lời của người dùng, tạo câu hỏi tiếp theo,
+nhận xét câu trả lời hoặc kết thúc và tổng
+kết buổi phỏng vấn.
+Bảng 6.2: Danh sách API của mô-đun AI
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 70/89\n===== PDF PAGE 81 =====\n6.3.1 Review nội dung CV
+Chức năng review giúp người dùng nhìn nhận CV theo nhiều khía cạnh thay vì chỉ kiểm tra
+lỗi chính tả. CV được tải lên dưới dạng tệp PDF không được dùng trực tiếp cho luồng này; chức
+năng làm việc với dữ liệu CV có cấu trúc.
+Kết quả được chia thành các nhóm rõ ràng:
+•Điểm tổng quan:một giá trị từ 0 đến 100 giúp người dùng có cái nhìn nhanh về mức độ
+hoàn thiện của CV .
+•Điểm theo tiêu chí:gồm nội dung, độ rõ ràng, mức độ thể hiện tác động, độ đầy đủ và khả
+năng phù hợp với hệ thống sàng lọc hồ sơ.
+•Điểm mạnh:chỉ ra những nội dung đang được trình bày tốt để người dùng tiếp tục duy trì.
+•Nội dung cần cải thiện:mỗi nhận xét xác định phần liên quan, vấn đề, cách sửa và mức
+độ ưu tiên.
+•Các phần còn thiếu:liệt kê những nhóm thông tin quan trọng chưa được bổ sung.
+Mô hình được yêu cầu không suy diễn thông tin nhạy cảm và không bịa thêm thành tích.
+Backend còn loại bỏ các nhận xét không có căn cứ về email, số điện thoại hoặc địa chỉ nếu dữ
+liệu kiểm tra cho thấy người dùng đã điền các trường đó. Kết quả chỉ được hiển thị để tham
+khảo, không tự động thay đổi CV .
+6.3.2 Gợi ý hoàn thiện CV
+Chức năng gợi ý hoàn thiện CV hỗ trợ người dùng hoàn thiện nhanh biểu mẫu khi nhiều
+trường còn trống. Đầu vào bao gồm CV hiện tại và ngữ cảnh nghề nghiệp như vị trí công việc,
+lĩnh vực hoặc thông tin hồ sơ có liên quan. Hệ thống yêu cầu tối thiểu phải có ngữ cảnh nghề
+nghiệp; nếu chưa có, giao diện đề nghị người dùng nhập vị trí công việc trước khi gọi AI.
+Đầu ra có thể chứa phần giới thiệu, kỹ năng, kinh nghiệm, học vấn, ngôn ngữ, chứng chỉ,
+dự án, giải thưởng và sở thích. Để giảm nguy cơ tạo dữ liệu sai, prompt yêu cầu giữ nguyên sự
+kiện đã có, chỉ điền phần còn thiếu và sử dụng nội dung mang tính gợi ý khi không có đủ căn
+cứ. Sau khi nhận kết quả, backend tiếp tục làm sạch văn bản, chuẩn hóa định dạng ngày.
+Khi hợp nhất kết quả vào biểu mẫu, hệ thống tuân theo các quy tắc sau:
+•Không ghi đè nội dung vào phần người dùng đã nhập.
+•Ưu tiên điền các trường còn trống trong những mục đã tồn tại.
+•Chỉ thêm bản ghi gợi ý khi cả nhóm nội dung tương ứng chưa có dữ liệu.
+•Giữ kết quả ở trạng thái biểu mẫu và yêu cầu người dùng đọc lại trước khi bấm lưu.
+AI có thể giúp tạo bản nháp và giảm thao tác nhập liệu, nhưng không trực tiếp ghi dữ liệu
+vào cơ sở dữ liệu. Quyết định lưu cuối cùng vẫn thuộc về người dùng.
+6.3.3 Luyện tập phỏng vấn
+Chức năng mô phỏng luyện tập phỏng vấn với AI là một tính năng của ứng dụng, giúp người
+dùng luyện tập phỏng vấn với AI. Mô phỏng bao gồm nhiều vòng trao đổi giữa nhà tuyển dụng
+và ứng viên. Trước khi bắt đầu, người dùng cần cung cấp các thông tin cần thiết, bao gồm vị
+trí ứng tuyển, cấp độ kinh nghiệm, loại phỏng vấn và số lượng câu hỏi mong muốn. Hệ thống
+backend sẽ chuẩn hóa các thông tin này trước khi gửi cho mô hình AI. Cụ thể, cấp độ kinh
+nghiệm được chuyển đổi thành một trong các cấp độ: Fresher (mới tốt nghiệp), Junior (kinh
+nghiệm 1-2 năm), Mid-level (kinh nghiệm 2-5 năm) hoặc Senior (trên 5 năm). Loại phỏng vấn
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 71/89\n===== PDF PAGE 82 =====\nđược chuyển đổi thành một trong các loại: Tổng quan, Hành vi, Kiến thức chuyên môn hoặc Kết
+hợp. Số lượng câu hỏi được giới hạn 5, 8 hoặc 12 câu hỏi.
+Một phiên phỏng vấn diễn ra qua ba hành động chính:
+•Bắt đầu:mô hình AI tạo ra câu hỏi đầu tiên dựa trên các thông tin đã được lựa chọn.
+•Trả lời:hệ thống gửi câu trả lời mới nhất cùng phần lịch sử cần thiết để mô hình AI nhận
+xét và tạo câu hỏi tiếp theo.
+•Kết thúc:phiên phỏng vấn được dừng lại theo yêu cầu hoặc khi đã đạt số lượng câu hỏi;
+mô hình AI trả về phần tổng kết cuối cùng.
+Phản hồi của mỗi lượt gồm nội dung trả lời của mô hình AI, số thứ tự câu hỏi, trạng thái
+hoàn thành và nhận xét về điểm mạnh, điểm cần cải thiện. Khi kết thúc, người dùng nhận điểm
+tổng quan, danh sách ưu điểm, hạn chế và điểm cần cải thiện. Lịch sử phỏng vấn hiện chỉ được
+lưu trong trạng thái của phiên đang mở, không được ghi vào cơ sở dữ liệu. Cách làm này đơn
+giản, giảm dữ liệu lưu trữ, tuy nhiên cách này sẽ khiến người dùng mất lịch sử khi tải lại trang
+hoặc đóng phiên.
+6.4 Kiểm soát dữ liệu, an toàn và lỗi
+6.4.1 Xác thực và phân quyền
+Các chức năng sử dụng trí tuệ nhân tạo đều cần người dùng đăng nhập và đúng với vai trò
+ứng viên mới có thể sử dụng được. Backend sẽ kiểm tra tính hợp lệ của phiên đăng nhập rồi mới
+tiếp nhận yêu cầu.
+Đối với chức năng review CV bằng mã định danh, backend sẽ kiểm tra mã CV có hợp lệ,
+CV có thuộc tài khoản đang đăng nhập và có phải CV được tạo trực tiếp trên RabbitCV hay
+không. Những CV được tạo từ tệp PDF tải lên không được sử dụng cho chức năng review này
+vì hệ thống không có dữ liệu cấu trúc cần thiết để gửi đến mô hình AI.
+Đối với chức năng luyện phỏng vấn,RoleAccessGuardchỉ cho phép vai trò ứng viên truy
+cập. Tài khoản doanh nghiệp và quản trị viên sẽ được chuyển sang trang khu vực tương ứng.
+6.4.2 Bảo vệ dữ liệu đầu vào
+Nhằm bảo đảm an toàn thông tin và giảm thiểu rủi ro khi gửi dữ liệu sang dịch vụ AI của
+bên thứ ba, hệ thống áp dụng kết hợp hai nguyên tắc chính: giảm thiểu dữ liệu và làm sạch dữ
+liệu.
+Đối với các chức năng review và gợi ý hoàn thiện CV , hệ thống không gửi trực tiếp các thông
+tin liên lạc nhạy cảm như họ tên, số điện thoại, email và địa chỉ cụ thể đến mô hình AI. Thay
+vào đó chỉ chuyển đổi và truyền đi trạng thái biểu thị mức độ đầy đủ của các thông tin này. Bên
+cạnh đó, các nội dung người dùng nhập đều được bộ sanitizer lọc bỏ các thẻ HTML, script, style
+và các chuỗi có dấu hiệu chứa mã thực thi nhằm ngăn chặn nguy cơ tấn công chèn câu lệnh ẩn.
+Đối với chức năng luyện tập phỏng vấn, hệ thống chỉ gửi tối đa 26 tin nhắn. Giới hạn này
+bao gồm 12 cặp câu hỏi - trả lời và 2 tin nhắn mở đầu và kết thúc buổi phỏng vấn. Cơ chế này
+giúp kiểm soát lượng token tiêu thụ và nội dung giao tiếp.
+6.4.3 Kiểm soát đầu ra
+Để đảm bảo dữ liệu phản hồi từ AI luôn đồng nhất và không làm phát sinh lỗi khi hiển thị
+trên giao diện, hệ thống yêu cầu mô hình trả về kết quả tuân theo cấu trúc JSON Schema đã
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 72/89\n===== PDF PAGE 83 =====\nđược định nghĩa trước cho từng chức năng. Cách làm này giúp loại bỏ việc phải phân tích văn
+bản tự do và bảo đảm các trường thông tin luôn đúng kiểu dữ liệu mong đợi.
+Sau khi nhận kết quả từ mô hình, backend tiếp tục thực hiện bước làm sạch và kiểm tra tính
+hợp lệ của dữ liệu đầu ra:
+•Review CV:Ép các trường điểm số nằm trong khoảng hợp lệ từ 0 đến 100, giới hạn số
+lượng mục điểm mạnh và nội dung cần cải thiện.
+•Gợi ý hoàn thiện CV:Chuẩn hóa định dạng ngày tháng, chỉ chấp nhận các liên kết hợp lệ.
+•Luyện phỏng vấn:Đảm bảo cấu trúc phản hồi của từng lượt gồm đầy đủ câu hỏi tiếp theo,
+nhận xét câu trả lời và trạng thái kết thúc.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 73/89\n===== PDF PAGE 84 =====\nChương 7
+Kiểm thử và đánh giá
+Chương này trình bày cách kiểm thử và đánh giá RabbitCV dựa trên các mục tiêu đã xác
+định ở Chương 1. Việc đánh giá kết hợp kiểm tra mã nguồn, kiểm thử logic tự động, kiểm thử
+giao diện bằng trình duyệt và kiểm thử thủ công. Mỗi kết quả được trình bày kèm phạm vi của
+bằng chứng để tránh suy rộng từ một bài kiểm thử đơn lẻ thành kết luận cho toàn bộ hệ thống.
+7.1 Công cụ kiểm thử
+Các công cụ được lựa chọn phù hợp với hệ sinh thái JavaScript của dự án. Mỗi công cụ đảm
+nhận một phạm vi riêng: Node Test Runner kiểm tra các quy tắc có thể tách biệt, Playwright
+kiểm tra hành vi giao diện trên trình duyệt, DevTools hỗ trợ quan sát trực tiếp, còn ESLint và
+Vite Build kiểm tra mã nguồn và khả năng đóng gói.
+7.1.1 Node Test Runner
+Node Test Runner là công cụ kiểm thử được tích hợp trong Node.js thông qua mô-đun
+node:test, kết hợp vớinode:assert/strictđể so sánh kết quả thực tế và kết quả mong đợi.
+Công cụ hỗ trợ ES Modules nên có thể dùng trực tiếp với cấu trúc mã nguồn của RabbitCV mà
+không cần thêm một khung kiểm thử khác.
+Trong dự án, Node Test Runner thực thi 13 tệp với 43 ca kiểm thử. Các ca này gồm hai nhóm
+chính: kiểm thử hàm độc lập, chẳng hạn chuẩn hóa ngày tháng và kiểm tra PDF; và kiểm tra ở
+mức mã nguồn, chẳng hạn xác nhận route có middleware, giao diện dùng hook in chung hoặc
+đặc tả OpenAPI có khai báo xác thực. Vì chuỗi kiểm thử không khởi động MongoDB thật, kết
+quả không được xem là kiểm thử tích hợp cơ sở dữ liệu toàn hệ thống.
+7.1.2 Playwright
+Playwright là công cụ tự động hóa trình duyệt, cho phép mô phỏng thao tác mở trang, nhập
+biểu mẫu, nhấn nút và kiểm tra nội dung hiển thị. RabbitCV sử dụng Playwright Test để chạy
+sáu kịch bản trên Chromium, tập trung vào trang chào mừng, kiểm tra biểu mẫu đăng nhập, điều
+hướng theo ba vai trò và ngăn ứng viên truy cập trang quản trị.
+Các kịch bản hiện tại sử dụngpage.route()để mô phỏng phản hồi API. Cách làm này
+giúp kiểm thử giao diện ổn định và không phụ thuộc dữ liệu đang có trong MongoDB, nhưng
+chưa kiểm tra được toàn bộ chuỗi trình duyệt–backend–cơ sở dữ liệu. Vì vậy, trong chương này
+chúng được gọi là kiểm thử giao diện trình duyệt với API mô phỏng, thay vì dùng kết quả đó để
+khẳng định toàn bộ backend đã được kiểm thử đầu cuối.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 74/89\n===== PDF PAGE 85 =====\n7.1.3 Bộ công cụ DevTools và kiểm thử hiển thị khổ in A4
+Chrome Developer Tools hỗ trợ quan sát DOM, kích thước phần tử, thuộc tính CSS, yêu cầu
+mạng và dữ liệu trao đổi qua WebSocket. Công cụ được sử dụng bổ trợ cho những đặc điểm khó
+đánh giá hoàn toàn bằng kiểm thử logic:
+•Chế độ mô phỏng CSS Print Media giúp kiểm tra quy tắc@page, ngắt trang và phần nội
+dung được hiển thị trong bản xem trước khi in.
+•Công cụ kiểm tra phần tử giúp đối chiếu kích thước lớp.cv-wrappervới khổ A4210×
+297mm.
+•Tab Network hỗ trợ theo dõi yêu cầu HTTP và các khung dữ liệu Socket.IO trong quá trình
+kiểm tra thủ công chức năng nhắn tin.
+•Việc xem trước khi in trên trình duyệt được dùng để phát hiện trang trắng, phần tử bị tràn
+hoặc nội dung bị ngắt không phù hợp.
+DevTools cung cấp bằng chứng quan sát tại thời điểm kiểm tra. Kết quả này cần được ghi
+kèm trình duyệt, dữ liệu đầu vào và ảnh chụp nếu được sử dụng làm bằng chứng nghiệm thu.
+7.2 Tổ chức kiểm thử hệ thống
+7.2.1 Mục tiêu kiểm thử
+Quá trình kiểm thử RabbitCV hướng đến các mục tiêu sau:
+•Kiểm tra chức năng cốt lõi:xác minh các quy tắc liên quan đến CV , tìm việc, ứng tuyển,
+phân quyền, nhắn tin và mô-đun AI.
+•Bảo toàn dữ liệu:kiểm tra trạng thái công việc, lịch sử ứng tuyển, trạng thái đọc và dữ liệu
+ẩn theo từng người dùng.
+•Kiểm soát dữ liệu đầu vào:từ chối PDF sai định dạng hoặc vượt quá 5 MB và làm sạch
+nội dung có khả năng thực thi.
+•Kiểm tra hiển thị tài liệu:xác nhận CV tạo trên hệ thống sử dụng kích thước A4 và có
+quy tắc phục vụ in ấn.
+•Kiểm soát mô-đun AI:kiểm tra cấu trúc yêu cầu, dữ liệu gửi đi, giới hạn kết quả và cơ
+chế chỉ áp dụng nội dung sau khi người dùng xác nhận.
+•Đánh giá khả năng đóng gói:bảo đảm mã nguồn vượt qua kiểm tra tĩnh và có thể tạo bản
+build frontend.
+7.3 Kết quả kiểm thử hệ thống
+7.3.1 Node Test Runner
+Bộ kiểm thử logic của RabbitCV được triển khai 13 tệp với tổng cộng 41 ca kiểm thử độc
+lập, thực thi thông qua lệnhnpm test. Kết quả ghi nhận toàn bộ 41/41 ca kiểm thử hoàn tất thành
+công. Bảng 7.1 tổng hợp danh mục 13 tệp kiểm thử cùng kết quả chi tiết.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 75/89\n===== PDF PAGE 86 =====\nTệp kiểm thử Số ca Trọng tâm kiểm thử Kết quả
+a4Layout.test.js 3 Kiểm tra CV đúng kích thước A4, chức
+năng tải PDF và cách hiển thị CV PDF
+đã tải lên.
+3/3 Đạt
+pdfValidation.test.js 3 Kiểm tra tệp tải lên đúng file PDF,
+không vượt quá dung lượng 5MB.
+3/3 Đạt
+dateInput.test.js 5 Chuẩn hóa định dạng ngày tháng đầu
+vào, xử lý mốc thời gian học vấn/kinh
+nghiệm và trạng thái đang diễn ra.
+5/5 Đạt
+companyUi.test.js 3 Kiểm tra dữ liệu giao diện chi tiết việc
+làm, bài đăng và hồ sơ doanh nghiệp.
+3/3 Đạt
+jobAvailability.test.js 3 Kiểm tra trạng thái hoạt động của tin
+tuyển dụng: đã xóa, đang hoạt động hoặc
+đã hết hạn.
+3/3 Đạt
+jobDeadlineUi.test.js 3 Kiểm tra cách hiển thị hạn nộp hồ sơ, số
+ngày còn lại và khóa nút ứng tuyển khi
+tin đã hết hạn.
+3/3 Đạt
+readStatusPersistence.test.js 2 Kiểm tra trạng thái đã đọc của thông báo
+và tin nhắn không mất khi tải lại trang.
+2/2 Đạt
+richTextSanitizer.test.js 3 Bảo toàn các thẻ HTML định dạng an
+toàn, loại bỏ mã độc hại (XSS).
+3/3 Đạt
+aiDataSanitizer.test.js 5 Lọc thông tin liên hệ nhạy cảm (email,
+số điện thoại) và làm sạch văn bản trước
+khi gửi đến AI.
+5/5 Đạt
+resumeAiFill.test.js 4 Kiểm tra AI bổ sung nội dung CV an
+toàn, không ghi đè dữ liệu đã có.
+4/4 Đạt
+aiIntegration.test.js 4 Kiểm tra kết nối và các chức năng AI
+vẫn hoạt động tốt.
+4/4 Đạt
+interviewDataSanitizer.test.js 3 kiểm tra dữ liệu gửi vào và nhận về từ
+chức năng phỏng vấn AI được làm sạch,
+chuẩn hóa thang điểm đánh giá.
+3/3 Đạt
+Tổng cộng 41 Mười hai tệp kiểm thử tự động hoàn
+tất.
+41/41 Đạt
+Bảng 7.1: Danh mục và kết quả bộ kiểm thử Node Test Runner
+Dựa trên mục tiêu kiểm chứng, 12 tệp kiểm thử (với 41 ca kiểm thử) được phân thành ba
+nhóm trọng tâm chính:
+1.Nhóm kiểm soát an toàn và tính năng AI (5 tệp):Bao gồm các bài kiểm thử trong
+aiDataSanitizer.test.js,richTextSanitizer.test.js,resumeAiFill.test.js,aiIntegration.test.jsvà
+interviewDataSanitizer.test.js. Bộ lọcaiDataSanitizergiúp loại bỏ thông tin liên hệ nhạy
+cảm (email, số điện thoại, địa chỉ) trước khi gửi sang mô hình AI nhằm bảo vệ quyền riêng
+tư của ứng viên; bộ lọcrichTextSanitizerloại bỏ triệt để mã độc XSS trong nội dung văn
+bản;resumeAiFillkiểm tra cơ chế bổ sung kỹ năng gợi ý vào CV một cách an toàn mà
+không ghi đè dữ liệu người dùng đã có; đồng thời kiểm tra luồng kết nối, làm sạch phản hồi
+và chuẩn hóa thang điểm đánh giá trong chức năng luyện tập phỏng vấn AI.
+2.Nhóm kiểm thử hiển thị và xử lý tệp tin (3 tệp):Bao gồm các tệpa4Layout.test.js,
+pdfValidation.test.jsvàdateInput.test.js. Các bài kiểm thử xác minh tệp PDF tải lên tuân
+thủ đúng định dạng A4 và dung lượng không vượt quá 5 MB; xác nhận khung bao đáp ứng
+chuẩn kích thước khổ in A4 (210×297mm), áp dụng quy tắc ngắt trang và kết xuất PDF
+tải lên trực tiếp trên canvas bằng PDF.js; đồng thời chuẩn hóa định dạng ngày tháng đầu
+vào cho các mốc thời gian học vấn, kinh nghiệm và xử lý trạng thái công việc hiện tại.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 76/89\n===== PDF PAGE 87 =====\n3.Nhóm quy tắc nghiệp vụ và giao diện người dùng (4 tệp):Tập hợp 4 tệp kiểm thử
+gồmjobAvailability.test.js,jobDeadlineUi.test.js,companyUi.test.jsvàreadStatusPersis-
+tence.test.js. Các bài kiểm thử kiểm tra thuật toán phân loại và hiển thị trạng thái tin tuyển
+dụng (tin đã xóa, tin đang hoạt động hoặc đã hết hạn), hiển thị số ngày còn lại và tự động
+khóa tính năng nộp đơn khi tin hết hạn; đồng thời đảm bảo trạng thái đã đọc của tin nhắn
+và thông báo được lưu trữ bền vững, không bị mất khi người dùng tải lại trang.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 77/89\n===== PDF PAGE 88 =====\nHình 7.1: Kết quả Node Test Runner
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 78/89\n===== PDF PAGE 89 =====\nKết quả thực thi minh họa tại Hình 7.1 cho thấy bộ kiểm thử tự động Node Test Runner đã
+chạy đạt 41/41 ca kiểm thử thành công, không ghi nhận bất kỳ trường hợp lỗi hay bị bỏ qua. Với
+tổng thời gian thực thi chỉ khoảng 440 ms trên toàn bộ 12 tệp kiểm thử, việc khai thác trình chạy
+kiểm thử tích hợp sẵn trong Node.js đã tối ưu hóa vượt bậc tốc độ phản hồi so với các khung
+kiểm thử truyền thống, tạo điều kiện thuận lợi cho chu trình phản hồi nhanh trong quá trình phát
+triển mã nguồn.
+Nhìn chung, các ca kiểm thử của Node Test Runner vận hành trong môi trường bộ nhớ cô
+lập với dữ liệu giả lập, đóng vai trò như một chốt chặn kiểm soát vững chắc cho toàn bộ các hàm
+thuật toán độc lập và cấu trúc dữ liệu nền tảng trước khi hệ thống được đưa vào kiểm thử tương
+tác trên trình duyệt thực tế.
+7.3.2 Playwright
+Để kiểm chứng hành vi của ứng dụng trên môi trường trình duyệt thực tế, hệ thống sử dụng
+khung kiểm thử tự động hóaPlaywright Testđiều khiển trình duyệt Chromium. Kiểm thử tập
+trung vào thẩm định luồng tương tác của người dùng, cơ chế xác thực biểu mẫu và tính toàn vẹn
+của hệ thống phân quyền điều hướng theo vai trò. Toàn bộ 6/6 kịch bản đều hoàn tất thành công
+(Bảng 7.2).
+Kịch bản kiểm thử Dữ liệu kiểm thử Kết quả thực tế Đánh giá
+Kiểm tra trang chào mừng Truy cập trang chủ, phiên
+người dùng vãng lai chưa xác
+thực.
+Hiển thị đúng tiêu đề giới
+thiệu và các nút điều
+hướng.
+Đạt
+Xác thực biểu mẫu đăng
+nhập rỗng
+Bỏ trống tài khoản và mật
+khẩu, kích hoạt nút "Đăng
+nhập".
+Xuất hiện 2 cảnh báo lỗi
+tương ứng bên dưới 2 ô
+nhập liệu.
+Đạt
+Đăng nhập vai trò Ứng
+viên
+Đăng nhập bằng tài khoản ứng
+viên.
+Chuyển hướng đến
+/MainMenuthành công.
+Đạt
+Đăng nhập vai trò Doanh
+nghiệp
+Đăng nhập bằng tài khoản
+doanh nghiệp.
+Chuyển hướng đến
+/CompanyDashboard
+thành công.
+Đạt
+Đăng nhập vai trò Quản
+trị viên
+Đăng nhập bằng tài khoản
+quản trị viên.
+Chuyển hướng đến
+/adminthành công.
+Đạt
+Chặn ứng viên truy cập
+cổng quản trị
+Tài khoản ứng viên, gửi yêu
+cầu truy cập trực tiếp URL
+quản trị.
+BịRoleAccessGuard
+chặn và điều hướng về
+/MainMenu.
+Đạt
+Bảng 7.2: Kết quả kiểm thử giao diện và phân quyền bằng Playwright
+Các cơ chế trọng yếu được kiểm chứng qua Playwright bao gồm:
+•Phân luồng đăng nhập đa vai trò:Giao diện React Router DOM phản hồi chính xác với
+thông tin phân quyền trả về từ API xác thực, tự động điều hướng người dùng đến đúng bảng
+điều khiển nghiệp vụ tương ứng với vai trò đã đăng ký.
+•Bảo vệ phân quyền (RoleAccessGuard):Kịch bản kiểm thử xác nhận cơ chế bảo vệ cổng
+quản trị hoạt động hiệu quả. Khi tài khoản có vai trò Ứng viên/Doanh nghiệp cố ý truy cập
+trái phép vào đường dẫn/admin, bộ định tuyến sẽ lập tức phát hiện sự không tương thích
+về quyền hạn, từ đó ngăn chặn việc kết xuất giao diện quản trị và tự động điều hướng người
+dùng về trang chủ.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 79/89\n===== PDF PAGE 90 =====\n•Kiểm soát biểu mẫu:Biểu mẫu đăng nhập xử lý lỗi ngay tại giao diện người dùng, ngăn
+chặn việc gửi yêu cầu lên máy chủ khi thiếu dữ liệu đầu vào cần thiết.
+7.3.3 Kết quả thực thi Playwright
+Toàn bộ 6 kịch bản kiểm thử được thực thi tự động trên môi trường Chromium không đầu
+với sự cô lập hoàn toàn giữa các phiên làm việc. Các báo cáo chi tiết từ giao diện báo cáo HTML
+của Playwright (Playwright HTML Reporter) được trình bày như sau:
+Hình 7.2: Báo cáo tổng quan kết quả thực thi 6 kịch bản Playwright
+Hình 7.2 là báo cáo tổng quan sau khi thực thi toàn bộ 6 kịch bản kiểm thử. Kết quả ghi
+nhận toàn bộ 6/6 kịch bản đạt trạng thái thành công (Passed 6,Failed 0,Flaky 0,Skipped 0) với
+tổng thời gian thực thi toàn bộ luồng kiểm thử là 5.8 giây. Trình kiểm thử tận dụng cơ chế chạy
+song song đa tiến trình, cho phép rút ngắn thời gian phản hồi kiểm thử giao diện mà vẫn bảo
+đảm độ tin cậy của từng ca kiểm thử.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 80/89\n===== PDF PAGE 91 =====\nKịch bản 1: Kiểm tra trang chào mừng
+Hình 7.3: Chi tiết thực thi kịch bản kiểm tra trang chào mừng
+Kịch bản này thẩm định trang chào mừng dành cho người dùng vãng lai trước khi đăng nhập
+(Hình 7.3). Trình kiểm thử điều hướng trực tiếp đến đường dẫn gốc (/), sau đó kiểm tra sự hiện
+diện của tiêu đề chính“Chào mừng bạn đến với RabbitCV”cùng các nút chức năng“Tạo CV
+ngay”và“Xem việc làm”. Kết quả kiểm tra trạng thái hiển thị hoàn tất, xác nhận giao diện kết
+xuất đúng cấu trúc mà không xảy ra lỗi gián đoạn.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 81/89\n===== PDF PAGE 92 =====\nKịch bản 2: Xác thực biểu mẫu đăng nhập rỗng
+Hình 7.4: Chi tiết thực thi kịch bản xác thực biểu mẫu đăng nhập rỗng
+Kịch bản tập trung kiểm chứng cơ chế xác thực dữ liệu đầu vào tại biểu mẫu đăng nhập ở
+phía trình duyệt (Hình 7.4). Khi người dùng nhấn nút“Đăng nhập”mà không nhập thông tin
+tài khoản hoặc mật khẩu, bộ định tuyến xử lý logic của biểu mẫu, kiểm tra tính hợp lệ và hiển
+thị lập tức hai thông báo lỗi tương ứng:“Vui lòng nhập tên đăng nhập.”và“Vui lòng nhập mật
+khẩu.”. Thời gian kiểm tra các nhãn thông báo lỗi chỉ mất dưới 60 ms, chứng minh khả năng
+phản hồi tức thời của giao diện.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 82/89\n===== PDF PAGE 93 =====\nKịch bản 3: Đăng nhập vai trò Ứng viên
+Hình 7.5: Chi tiết thực thi kịch bản đăng nhập vai trò Ứng viên
+Kịch bản kiểm tra luồng đăng nhập và phân quyền điều hướng dành cho đối tượng người
+tìm việc (Hình 7.5). Trình kiểm thử tự động điền tài khoản và mật khẩu của ứng viên vào biểu
+mẫu. Sau khi nhận phản hồi xác thực thành công, hệ thống lập tức chuyển hướng URL sang
+/MainMenuvà hiển thị giao diện dashboard của ứng viên.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 83/89\n===== PDF PAGE 94 =====\nKịch bản 4: Đăng nhập vai trò Doanh nghiệp
+Hình 7.6: Chi tiết thực thi kịch bản đăng nhập vai trò Doanh nghiệp
+Kịch bản kiểm tra tính phân luồng đối với tài khoản nhà tuyển dụng (company) (Hình 7.6).
+Trình kiểm thử tự động điền tài khoản và mật khẩu của doanh nghiệp được cung cấp trước vào
+biểu mẫu đăng nhập. Kết quả điều hướng chuyển chính xác về cổng quản trị doanh nghiệp tại
+đường dẫn/CompanyDashboard, xác nhận hệ thống kích hoạt đúng giao diện dành riêng cho
+doanh nghiệp.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 84/89\n===== PDF PAGE 95 =====\nKịch bản 5: Đăng nhập vai trò Quản trị viên
+Hình 7.7: Chi tiết thực thi kịch bản đăng nhập vai trò Quản trị viên
+Kịch bản xác minh thẩm quyền điều hướng cao nhất vào bảng quản trị hệ thống (Hình 7.7).
+Trình kiểm thử tự động điền tài khoản và mật khẩu của quản trị viên được cung cấp trước vào
+biểu mẫu đăng nhập. Với tài khoản quản trị viên được đăng nhập thành công, Playwright ghi
+nhận việc chuyển hướng thành công đến cổng/adminvà kiểm tra sự xuất hiện của các thẻ thống
+kê“Tổng người dùng”. Quá trình xác thực URL và kết xuất giao diện thống kê chỉ mất 93 ms
+và 346 ms, bảo đảm trải nghiệm đăng nhập nhanh chóng và bảo mật.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 85/89\n===== PDF PAGE 96 =====\nKịch bản 6: Chặn ứng viên truy cập cổng quản trị
+Hình 7.8: Chi tiết thực thi kịch bản chặn ứng viên truy cập cổng quản trị
+Kịch bản đóng vai trò then chốt trong việc kiểm tra an toàn phân quyền phía máy khách
+thông qua cơ chếRoleAccessGuard(Hình 7.8). Trong kịch bản này, trình duyệt được thiết lập
+phiên đăng nhập sẵn với vai trò Ứng viên, nhưng cố tình điều hướng trực tiếp đến đường dẫn
+quản trị nhạy cảm (/admin). Bộ bảo vệ định tuyếnRoleAccessGuardngay lập tức chặn đứng
+hành vi truy cập trái phép này, từ chối kết xuất các thành phần quản trị và điều hướng an toàn
+người dùng trở về trang chủ (/MainMenu). Điều này khẳng định tính vững chắc của hàng rào
+bảo vệ phân quyền trên giao diện người dùng.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 86/89\n===== PDF PAGE 97 =====\nChương 8
+Kết luận và hướng phát triển
+Chương này tổng hợp những kết quả chính của RabbitCV , các hạn chế còn tồn tại và định
+hướng phát triển tiếp theo. Nội dung chỉ ghi nhận những chức năng đã có trong mã nguồn và
+các kết quả đã được kiểm tra.
+8.1 Kết quả đạt được
+Sau quá trình phân tích, thiết kế và triển khai, đồ án đã xây dựng được một ứng dụng web
+hỗ trợ tạo CV và thực hiện các hoạt động tuyển dụng liên quan. Các kết quả chính gồm:
+•Tạo và quản lý CV:Người dùng có thể tạo CV từ dữ liệu có cấu trúc, chỉnh sửa nội dung,
+lựa chọn mẫu trình bày, xem trước theo khổ A4, in hoặc tải CV dưới dạng PDF.
+•Tiếp nhận CV PDF:Hệ thống kiểm tra định dạng và giới hạn dung lượng tệp trước khi tải
+lên, hỗ trợ hiển thị tài liệu nhiều trang và không gửi dữ liệu PDF trong các truy vấn danh
+sách khi không cần thiết.
+•Hỗ trợ tuyển dụng:Ứng viên có thể tìm kiếm, lưu và ứng tuyển công việc; doanh nghiệp
+có thể quản lý tin tuyển dụng, tiếp nhận hồ sơ và cập nhật trạng thái ứng tuyển. Thông tin
+công việc tại thời điểm ứng tuyển được lưu lại để duy trì ngữ cảnh lịch sử, đồng thời hệ
+thống ngăn một ứng viên nộp trùng vào cùng một công việc.
+•Quản lý và phân quyền:Hệ thống cung cấp chức năng phù hợp cho ứng viên, doanh
+nghiệp và quản trị viên; các tài nguyên quan trọng được kiểm tra dựa trên danh tính, vai trò
+và quyền sở hữu dữ liệu.
+•Trao đổi theo thời gian thực:Chức năng trò chuyện và thông báo được triển khai bằng
+Socket.IO, hỗ trợ cập nhật sự kiện theo thời gian thực, lưu trạng thái đã đọc và trạng thái ẩn
+riêng cho từng người dùng.
+•Hỗ trợ bằng trí tuệ nhân tạo:Module AI cung cấp ba nhóm chức năng gồm rà soát CV ,
+gợi ý bổ sung nội dung CV và luyện tập phỏng vấn. Dữ liệu đầu vào, cấu trúc đầu ra, hạn
+mức sử dụng và thời gian chờ được kiểm soát; người dùng vẫn là người quyết định việc áp
+dụng nội dung do AI đề xuất.
+•Kiểm tra hệ thống:Tại thời điểm đánh giá, 43 trường hợp kiểm thử phía máy chủ đều đạt,
+6 kịch bản kiểm thử giao diện với API mô phỏng đều hoàn thành, đồng thời quá trình kiểm
+tra mã nguồn và tạo bản triển khai phía giao diện không phát sinh lỗi.
+Bên cạnh các kết quả đạt được, hệ thống vẫn còn một số hạn chế:
+•Chất lượng ngữ nghĩa của nội dung do AI tạo ra chưa được đánh giá bằng bộ dữ liệu chuẩn
+hoặc bởi nhóm chuyên gia độc lập; phạm vi AI hiện chỉ tập trung vào ba luồng chức năng
+đã nêu.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 87/89\n===== PDF PAGE 98 =====\n•Việc kiểm tra quyền truy cập ở phía máy chủ chưa hoàn toàn đồng nhất giữa tất cả các
+luồng nghiệp vụ.
+•Cách lưu tệp PDF trực tiếp trong dữ liệu và mô hình triển khai hiện tại chưa phù hợp khi số
+lượng người dùng, kết nối thời gian thực hoặc tác vụ nền tăng cao.
+•Hệ thống chưa có kiểm thử toàn trình trên trình duyệt kết nối với máy chủ và cơ sở dữ liệu
+thật, kiểm thử tải chuyên sâu, kiểm thử bảo mật độc lập và cơ chế lưu lịch sử luyện phỏng
+vấn lâu dài.
+Nhìn chung, đồ án đã hoàn thành các chức năng cốt lõi theo phạm vi triển khai và tạo được
+một nguyên mẫu có thể sử dụng. Tuy nhiên, những kết quả kiểm thử hiện tại mới xác nhận hành
+vi đã định nghĩa, chưa đủ để khẳng định hệ thống sẵn sàng vận hành ở quy mô thực tế.
+8.2 Hướng phát triển
+Từ các hạn chế trên, RabbitCV có thể được tiếp tục phát triển theo các hướng sau:
+•Hoàn thiện cơ chế phân quyền ở phía máy chủ, tăng cường quản lý thông tin bí mật và bổ
+sung kiểm thử tích hợp cho các luồng có dữ liệu riêng tư.
+•Chuyển tệp PDF sang dịch vụ lưu trữ đối tượng hoặc cơ chế lưu tệp chuyên dụng; bổ sung
+hàng đợi, thử lại khi lỗi, nhật ký giám sát và hạ tầng ổn định hơn cho các tác vụ nền và kết
+nối thời gian thực.
+•Cho phép người dùng chủ động lưu lịch sử luyện phỏng vấn, đồng thời tiếp tục cải thiện
+khả năng hiển thị trên nhiều kích thước màn hình, khả năng tiếp cận và tính tương thích
+giữa các trình duyệt.
+•Xây dựng bộ tiêu chí đánh giá chất lượng AI, kết hợp đánh giá tự động với nhận xét của
+người dùng hoặc chuyên gia; tách lớp nhà cung cấp mô hình để thuận tiện thay đổi và so
+sánh dịch vụ khi cần.
+•Bổ sung quy trình tích hợp và triển khai liên tục, sao lưu và khôi phục dữ liệu, nhật ký kiểm
+toán, kiểm thử tải và kiểm thử bảo mật trước khi đưa hệ thống vào môi trường vận hành
+thực tế.
+8.3 Kết luận
+RabbitCV đã hình thành một quy trình tương đối hoàn chỉnh, kết nối việc tạo và quản lý
+CV , trình bày CV theo khổ A4, xử lý CV PDF, tìm kiếm và ứng tuyển công việc, quản lý tuyển
+dụng, trò chuyện, thông báo và ba chức năng hỗ trợ bằng AI trong cùng một hệ thống.
+Kết quả của đồ án cho thấy AI có thể hỗ trợ người dùng trong quá trình chuẩn bị hồ sơ và
+luyện tập phỏng vấn khi được đặt trong một quy trình có kiểm soát. Với nền tảng hiện có, hệ
+thống có thể tiếp tục được hoàn thiện về bảo mật, khả năng mở rộng, chất lượng AI và mức độ
+kiểm thử để tiến gần hơn đến điều kiện triển khai thực tế.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 88/89\n===== PDF PAGE 99 =====\nTài liệu tham khảo
+[1] Automattic. Mongoose Documentation. https://mongoosejs.com/docs/, 2026. Truy cập
+tháng 08/2026.
+[2] MongoDB, Inc. MongoDB Manual: Data Modeling. https://www.mongodb.com/docs/
+manual/data-modeling/, 2026. Truy cập tháng 08/2026.
+[3] Mozilla. PDF.js Documentation. https://mozilla.github.io/pdf.js/, 2026. Truy cập tháng
+08/2026.
+[4] OpenJS Foundation. Express Documentation. https://expressjs.com/, 2026. Truy cập
+tháng 08/2026.
+[5] OpenJS Foundation. Node.js Documentation. https://nodejs.org/docs/latest/api/, 2026.
+Truy cập tháng 08/2026.
+[6] React Hook Form. React Hook Form Resolvers. https://github.com/react-hook-form/
+resolvers, 2026. Truy cập tháng 08/2026.
+[7] React Team. React Documentation. https://react.dev/, 2026. Truy cập tháng 08/2026.
+[8] Remix Software. React Router Documentation. https://reactrouter.com/, 2026. Truy cập
+tháng 08/2026.
+[9] Socket.IO. Socket.IO Documentation. https://socket.io/docs/v4/, 2026. Truy cập tháng
+08/2026.
+[10] Tailwind Labs. Tailwind CSS Documentation. https://tailwindcss.com/docs, 2026. Truy
+cập tháng 08/2026.
+[11] TanStack. TanStack Query Documentation: Overview. https://tanstack.com/query/latest/
+docs/framework/react/overview, 2026. Truy cập tháng 08/2026.
+[12] Vite Team. Vite Guide. https://vite.dev/guide/, 2026. Truy cập tháng 08/2026.
+[13] Zod. Zod Documentation. https://zod.dev/, 2026. Truy cập tháng 08/2026.
+Báo cáo đồ án tốt nghiệp (CO4337) – Năm học 2023 – 2024 Trang 89/89

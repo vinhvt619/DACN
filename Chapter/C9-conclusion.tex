@@ -1,0 +1,69 @@
+% !TEX root = ../main.tex
+\chapter{Kết luận và hướng phát triển}
+
+\section{Kết quả đạt được}
+
+Sau quá trình nghiên cứu, phân tích, thiết kế và triển khai thực nghiệm, đồ án đã hoàn thành mục tiêu xây dựng nền tảng web \textbf{RabbitCV} hỗ trợ tạo lập CV chuyên nghiệp kết hợp với cổng thông tin tuyển dụng và trợ lý Trí tuệ nhân tạo. Những kết quả trọng tâm đạt được bao gồm:
+
+\begin{itemize}
+    \item \textbf{Soạn thảo, sắp xếp bố cục và kết xuất CV chuẩn in ấn:} Cung cấp công cụ tạo lập CV dựa trên dữ liệu cấu trúc hóa, hỗ trợ kéo-thả (\textit{Drag-and-Drop}) linh hoạt để sắp xếp thứ tự và di chuyển các khối nội dung giữa các cột và vùng bố cục, đảm bảo tỷ lệ khung hiển thị chuẩn khổ A4 ($210 \times 297$~mm). Hệ thống tích hợp cơ chế xuất bản PDF trực tiếp phía trình duyệt với độ sắc nét cao.
+    
+    \item \textbf{Tiếp nhận và hiển thị CV PDF sẵn có:} Tích hợp bộ tiền kiểm tra tệp tin chặt chẽ về định dạng và dung lượng tối đa (5~MB); thư viện PDF.js kết xuất tài liệu trực tiếp trên Canvas, khắc phục triệt để lỗi tràn khung và không phụ thuộc vào trình xem mặc định của trình duyệt.
+    
+    \item \textbf{Cổng thông tin tuyển dụng đa chiều:} Xây dựng hoàn chỉnh luồng nghiệp vụ tìm kiếm, bộ lọc việc làm đa tiêu chí và quy trình ứng tuyển dành cho ứng viên. Doanh nghiệp được cung cấp bảng điều khiển quản lý tin đăng, theo dõi trạng thái hồ sơ ứng viên.
+
+    \item \textbf{Tương tác thời gian thực và thông báo đa kênh:} Thiết lập kênh trao đổi tin nhắn trực tiếp giữa ứng viên và nhà tuyển dụng thông qua WebSocket (Socket.IO). Triển khai cơ chế đồng bộ và lưu trữ bền vững trạng thái đã đọc tin nhắn, thông báo riêng biệt cho từng người dùng.
+
+    \item \textbf{Tích hợp mô-đun AI có kiểm soát:} Tích hợp thành công mô hình ngôn ngữ lớn (Groq LLM API) với ba luồng nghiệp vụ chính: đánh giá chất lượng CV, gợi ý hoàn thiện nội dung và mô phỏng phỏng vấn. Quá trình xử lý được bảo vệ nghiêm ngặt bằng cơ chế khử định danh thông tin cá nhân, lọc mã độc XSS, kiểm soát định dạng dữ liệu đầu ra và giới hạn hạn mức truy vấn an toàn.
+
+    \item \textbf{Đảm bảo chất lượng qua kiểm thử tự động:} Hệ thống được thẩm định toàn diện với 100\% tỷ lệ hoàn thành thành công trong các bộ kiểm thử độc lập, bao gồm 43/43 ca kiểm thử logic với Node Test Runner và toàn bộ 26/26 ca kiểm thử luồng người dùng thực tế thuộc 5 tệp kịch bản với Playwright Test.
+\end{itemize}
+
+\section{Hạn chế của đề tài}
+
+Bên cạnh những kết quả tích cực đã đạt được, hệ thống vẫn tồn tại một số hạn chế nhất định do giới hạn về mặt thời gian và nguồn lực nghiên cứu:
+
+\begin{itemize}
+    \item \textbf{Phạm vi xử lý của mô-đun AI:} Các tính năng AI hiện tại hoạt động phụ thuộc vào dịch vụ điện toán đám mây bên thứ ba (Groq API qua Internet), chưa tích hợp mô hình nhúng ngữ nghĩa để tự động chấm điểm độ tương thích giữa CV và tin tuyển dụng.
+    
+    \item \textbf{Khả năng tùy biến bố cục nâng cao và ngắt trang tự động:} Mặc dù đã hỗ trợ kéo-thả sắp xếp các khối nội dung giữa các vùng bố cục, hệ thống chưa hỗ trợ kéo-thả tự do theo tọa độ bất kỳ; đồng thời chưa có cơ chế tự động tính toán chia tách và ngắt trang thông minh khi nội dung CV vượt quá độ dài một trang A4.
+
+    \item \textbf{Kiến trúc phân tán và khả năng chịu tải:} Hệ thống hiện được triển khai trên máy chủ nguyên khối (Monolith); các kết nối WebSocket của Socket.IO vận hành trên một tiến trình duy nhất, chưa có bộ điều phối trung gian để sẵn sàng mở rộng quy mô khi lượng người dùng trực tuyến đồng thời tăng cao.
+
+    \item \textbf{Các phương thức xác thực và bảo mật nâng cao:} Hệ thống hiện hỗ trợ đăng nhập qua tài khoản cục bộ được băm mật khẩu bằng bcrypt và cookie JWT, chưa mở rộng sang các giao thức xác thực hiện đại như OAuth 2.0 (Google, LinkedIn) hay xác thực đa yếu tố (2FA).
+\end{itemize}
+
+\section{Hướng phát triển trong tương lai}
+
+Dựa trên các hạn chế đã nhận diện, RabbitCV được định hướng tiếp tục hoàn thiện và phát triển theo các nhóm mục tiêu chiến lược sau:
+
+\begin{enumerate}
+    \item \textbf{Nâng cấp tính năng soạn thảo và cá nhân hóa trải nghiệm người dùng:}
+    \begin{itemize}
+        \item Nâng cấp trình biên tập CV hỗ trợ kéo-thả tự do đa chiều và tùy biến kích thước, căn lề từng khối nội dung trực tiếp trên bản xem trước.
+        \item Bổ sung cơ chế tự động tính toán ngắt trang A4 thông minh khi văn bản kéo dài sang trang 2 hoặc trang 3.
+        \item Hỗ trợ chuyển đổi giao diện sáng/tối và đa ngôn ngữ giao diện (Tiếng Việt, Tiếng Anh).
+        \item Mở rộng khả năng xuất CV ra định dạng Microsoft Word (.docx) và tạo liên kết công khai cho hồ sơ ứng viên.
+    \end{itemize}
+
+    \item \textbf{Nâng cao năng lực của mô-đun Trí tuệ nhân tạo (AI):}
+    \begin{itemize}
+        \item Triển khai tính năng trích xuất thông tin tự động từ CV PDF có sẵn: Ứng dụng công nghệ OCR kết hợp LLM để nhận diện và tự động điền các trường học vấn, kinh nghiệm từ file PDF tải lên vào biểu mẫu chỉnh sửa.
+        \item Xây dựng cơ chế chấm điểm và gợi ý việc làm.
+    \end{itemize}
+
+    \item \textbf{Mở rộng dịch vụ hỗ trợ quy trình tuyển dụng:}
+    \begin{itemize}
+        \item Tích hợp tính năng đặt lịch phỏng vấn trực tiếp trên nền tảng và đồng bộ lịch tự động với Google Calendar.
+        \item Mở rộng kênh liên lạc: Tích hợp dịch vụ gửi email thông báo tự động hoặc tin nhắn Zalo khi hồ sơ có cập nhật trạng thái mới.
+    \end{itemize}
+
+    \item \textbf{Tối ưu hóa kiến trúc, hiệu năng và hạ tầng phân tán:}
+    \begin{itemize}
+        \item Tích hợp Redis Adapter cho Socket.IO để hỗ trợ cân bằng tải nhiều máy chủ, đồng thời lưu trữ thông tin trạng thái hoạt động và thông báo đang soạn tin.
+        \item Bổ sung cổng xác thực bên ngoài thông qua Google OAuth 2.0 và xác thực bảo mật hai bước (2FA).
+        \item Nghiên cứu đóng gói và phát triển phiên bản ứng dụng di động (Mobile App) trên nền tảng React Native để tối ưu hóa khả năng tiếp cận người dùng.
+    \end{itemize}
+\end{enumerate}
+
+Những định hướng trên sẽ là kim chỉ nam quan trọng giúp RabbitCV ngày càng hoàn thiện, chuyển dịch từ một ứng dụng đồ án thực nghiệm trở thành một sản phẩm công nghệ hoàn chỉnh, đáp ứng trọn vẹn nhu cầu thực tiễn của thị trường tuyển dụng lao động số.

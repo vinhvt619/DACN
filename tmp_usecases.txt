@@ -1,0 +1,235 @@
+﻿
+> Chapter\C4-system-design.tex:132:    \item Dữ liệu hệ thống được thiết kế sao cho thuận tiện cho việc bảo trì và 
+nâng cấp
+  Chapter\C4-system-design.tex:133:    \item Tính riêng tư và bảo mật: Thông tin cá nhân, lịch sử làm việc, CV, thông 
+báo và tin nhắn được bảo mật, chỉ được chia sẻ theo cơ chế và sự cho phép của người dùng
+  Chapter\C4-system-design.tex:134:    \item Khả năng truy xuất nguồn gốc: Hệ thống ghi lại lịch sử, phiên bản và 
+trạng thái của các tác vụ (tạo CV, AI, ứng tuyển) để dễ dàng kiểm tra và tái lập khi cần
+> Chapter\C4-system-design.tex:183:        Usecase ID& CV-1.1 \\ \hline
+  Chapter\C4-system-design.tex:184:
+> Chapter\C4-system-design.tex:185:        Tên use case & Đăng nhập \\ \hline
+  Chapter\C4-system-design.tex:186:
+  Chapter\C4-system-design.tex:187:        Đối tượng & Người dùng \\ \hline
+> Chapter\C4-system-design.tex:212:        Lỗi
+  Chapter\C4-system-design.tex:213:        & E1. Tài khoản hoặc mật khẩu không chính xác\\
+  Chapter\C4-system-design.tex:214:        & E2. Tài khoản đã bị khóa\\
+> Chapter\C4-system-design.tex:215:        & E3. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:216:        \hline
+  Chapter\C4-system-design.tex:217:
+> Chapter\C4-system-design.tex:233:        Usecase ID& CV-1.2 \\ \hline
+  Chapter\C4-system-design.tex:234:
+> Chapter\C4-system-design.tex:235:        Tên use case & Đăng ký \\ \hline
+  Chapter\C4-system-design.tex:236:
+  Chapter\C4-system-design.tex:237:        Đối tượng & Người dùng \\ \hline
+> Chapter\C4-system-design.tex:261:        Lỗi
+  Chapter\C4-system-design.tex:262:        & E1. Thông tin tài khoản hoặc mật khẩu không hợp lệ\\
+  Chapter\C4-system-design.tex:263:        & E2. Tài khoản đã tồn tại\\
+> Chapter\C4-system-design.tex:264:        & E3. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:265:        \hline
+  Chapter\C4-system-design.tex:266:
+> Chapter\C4-system-design.tex:281:        Usecase ID& CV-1.3 \\ \hline
+  Chapter\C4-system-design.tex:282:
+> Chapter\C4-system-design.tex:283:        Tên use case & Đăng xuất \\ \hline
+  Chapter\C4-system-design.tex:284:
+  Chapter\C4-system-design.tex:285:        Đối tượng & Người dùng \\ \hline
+> Chapter\C4-system-design.tex:306:        Lỗi
+> Chapter\C4-system-design.tex:307:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:308:        \hline
+  Chapter\C4-system-design.tex:309:
+> Chapter\C4-system-design.tex:325:        Usecase ID& CV-1.4 \\ \hline
+  Chapter\C4-system-design.tex:326:
+> Chapter\C4-system-design.tex:327:        Tên use case & Quản lý thông tin tài khoản \\ \hline
+  Chapter\C4-system-design.tex:328:
+  Chapter\C4-system-design.tex:329:        Đối tượng & Người dùng \\ \hline
+> Chapter\C4-system-design.tex:354:        Lỗi
+> Chapter\C4-system-design.tex:355:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:356:        \hline
+  Chapter\C4-system-design.tex:357:
+> Chapter\C4-system-design.tex:374:        Usecase ID& CV-1.5 \\ \hline
+  Chapter\C4-system-design.tex:375:
+> Chapter\C4-system-design.tex:376:        Tên use case & Quản lý CV\\ \hline
+  Chapter\C4-system-design.tex:377:
+  Chapter\C4-system-design.tex:378:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:405:        Lỗi
+> Chapter\C4-system-design.tex:406:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:407:        &E2. Người dùng chưa ấn nút Lưu CV\\
+  Chapter\C4-system-design.tex:408:        \hline
+> Chapter\C4-system-design.tex:424:        Usecase ID& CV-1.6 \\ \hline
+  Chapter\C4-system-design.tex:425:
+> Chapter\C4-system-design.tex:426:        Tên use case & Tải CV\\ \hline
+  Chapter\C4-system-design.tex:427:
+  Chapter\C4-system-design.tex:428:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:465:        Lỗi
+> Chapter\C4-system-design.tex:466:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:467:        \hline
+  Chapter\C4-system-design.tex:468:
+> Chapter\C4-system-design.tex:483:        Usecase ID& CV-1.7 \\ \hline
+  Chapter\C4-system-design.tex:484:
+> Chapter\C4-system-design.tex:485:        Tên use case & Điền CV bằng AI\\ \hline
+  Chapter\C4-system-design.tex:486:
+  Chapter\C4-system-design.tex:487:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:514:        Lỗi
+> Chapter\C4-system-design.tex:515:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:516:        & E2. Người dùng chưa ấn nút Lưu CV\\
+  Chapter\C4-system-design.tex:517:        
+> Chapter\C4-system-design.tex:534:        Usecase ID& CV-1.8 \\ \hline
+  Chapter\C4-system-design.tex:535:
+> Chapter\C4-system-design.tex:536:        Tên use case & Review CV bằng AI\\ \hline
+  Chapter\C4-system-design.tex:537:
+  Chapter\C4-system-design.tex:538:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:554:            2.\ Hệ thống hiển thị bảng điểm CV và các lỗi cần sửa trong CV\\
+  Chapter\C4-system-design.tex:555:            3.\ Ứng viên kiểm tra và chỉnh sửa nội dung CV nếu cần thiết\\
+  Chapter\C4-system-design.tex:556:            4.\ Ứng viên nhấn nút “Đóng” hoặc "Review lại" để xem lại điểm CV
+> Chapter\C4-system-design.tex:564:        Lỗi
+> Chapter\C4-system-design.tex:565:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:566:        
+  Chapter\C4-system-design.tex:567:        \hline
+> Chapter\C4-system-design.tex:584:        Usecase ID& CV-1.9 \\ \hline
+  Chapter\C4-system-design.tex:585:
+> Chapter\C4-system-design.tex:586:        Tên use case & Phỏng vấn với AI\\ \hline
+  Chapter\C4-system-design.tex:587:
+  Chapter\C4-system-design.tex:588:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:616:        Lỗi
+> Chapter\C4-system-design.tex:617:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:618:        
+  Chapter\C4-system-design.tex:619:        \hline
+> Chapter\C4-system-design.tex:650:        Usecase ID& CV-2.1 \\ \hline
+  Chapter\C4-system-design.tex:651:
+> Chapter\C4-system-design.tex:652:        Tên use case & Tìm kiếm việc làm\\ \hline
+  Chapter\C4-system-design.tex:653:
+  Chapter\C4-system-design.tex:654:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:685:        Lỗi
+> Chapter\C4-system-design.tex:686:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:687:        & E2. Ứng viên chưa nhập nội dung tìm kiếm\\
+> Chapter\C4-system-design.tex:688:        & E3. Không tìm thấy công việc phù hợp với yêu cầu của ứng viên\\
+  Chapter\C4-system-design.tex:689:        \hline
+  Chapter\C4-system-design.tex:690:
+> Chapter\C4-system-design.tex:706:        Usecase ID& CV-2.2 \\ \hline
+  Chapter\C4-system-design.tex:707:
+> Chapter\C4-system-design.tex:708:        Tên use case & Ứng tuyển việc làm\\ \hline
+  Chapter\C4-system-design.tex:709:
+  Chapter\C4-system-design.tex:710:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:742:        Lỗi
+> Chapter\C4-system-design.tex:743:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:744:        & E2. Ứng viên chưa chọn CV để ứng tuyển\\
+> Chapter\C4-system-design.tex:745:        & E3. CV tải lên không hợp lệ\\
+> Chapter\C4-system-design.tex:746:        & E4. CV tải lên bị lỗi\\
+  Chapter\C4-system-design.tex:747:        \hline
+  Chapter\C4-system-design.tex:748:
+> Chapter\C4-system-design.tex:763:        Usecase ID& CV-2.3 \\ \hline
+  Chapter\C4-system-design.tex:764:
+> Chapter\C4-system-design.tex:765:        Tên use case & Theo dõi trạng thái ứng tuyển\\ \hline
+  Chapter\C4-system-design.tex:766:
+  Chapter\C4-system-design.tex:767:        Đối tượng & Ứng viên \\ \hline
+> Chapter\C4-system-design.tex:792:        Lỗi
+> Chapter\C4-system-design.tex:793:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:794:        & E2. Ứng viên chưa ứng tuyển bất kỳ công việc nào\\
+  Chapter\C4-system-design.tex:795:        
+> Chapter\C4-system-design.tex:825:        Usecase ID & CV-3.1 \\ \hline
+  Chapter\C4-system-design.tex:826:
+> Chapter\C4-system-design.tex:827:        Tên use case & Nhắn tin trao đổi trực tiếp \\ \hline
+  Chapter\C4-system-design.tex:828:
+  Chapter\C4-system-design.tex:829:        Đối tượng & Ứng viên, Doanh nghiệp \\ \hline
+> Chapter\C4-system-design.tex:859:        Lỗi &
+  Chapter\C4-system-design.tex:860:        \parbox[t]{\hsize}{
+> Chapter\C4-system-design.tex:861:            E1. Hệ thống đang bảo trì hoặc mất kết nối máy chủ\\
+  Chapter\C4-system-design.tex:862:            E2. Nội dung tin nhắn trống hoặc phiên đăng nhập hết hạn
+  Chapter\C4-system-design.tex:863:        }\\
+> Chapter\C4-system-design.tex:880:        Usecase ID & CV-3.2 \\ \hline
+  Chapter\C4-system-design.tex:881:
+> Chapter\C4-system-design.tex:882:        Tên use case & Xem và quản lý thông báo \\ \hline
+  Chapter\C4-system-design.tex:883:
+  Chapter\C4-system-design.tex:884:        Đối tượng & Ứng viên, Doanh nghiệp \\ \hline
+> Chapter\C4-system-design.tex:908:        Lỗi &
+  Chapter\C4-system-design.tex:909:        \parbox[t]{\hsize}{
+> Chapter\C4-system-design.tex:910:            E1. Hệ thống đang bảo trì hoặc mất kết nối mạng\\
+  Chapter\C4-system-design.tex:911:            E2. Nội dung liên kết trong thông báo không còn khả dụng
+  Chapter\C4-system-design.tex:912:        }\\
+> Chapter\C4-system-design.tex:945:        Usecase ID& CV-4.1 \\ \hline
+  Chapter\C4-system-design.tex:946:
+> Chapter\C4-system-design.tex:947:        Tên use case & Quản lý bài đăng tuyển dụng\\ \hline
+  Chapter\C4-system-design.tex:948:
+  Chapter\C4-system-design.tex:949:        Đối tượng & Nhà tuyển dụng \\ \hline
+> Chapter\C4-system-design.tex:984:        Lỗi
+> Chapter\C4-system-design.tex:985:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:986:        
+  Chapter\C4-system-design.tex:987:        \hline
+> Chapter\C4-system-design.tex:1003:        Usecase ID& CV-4.2 \\ \hline
+  Chapter\C4-system-design.tex:1004:
+> Chapter\C4-system-design.tex:1005:        Tên use case & Cập nhật trạng thái hồ sơ ứng tuyển\\ \hline
+  Chapter\C4-system-design.tex:1006:
+  Chapter\C4-system-design.tex:1007:        Đối tượng & Nhà tuyển dụng \\ \hline
+> Chapter\C4-system-design.tex:1034:        Lỗi
+> Chapter\C4-system-design.tex:1035:        & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:1036:        
+  Chapter\C4-system-design.tex:1037:        \hline
+> Chapter\C4-system-design.tex:1054:        Usecase ID & CV-4.3 \\ \hline
+  Chapter\C4-system-design.tex:1055:
+> Chapter\C4-system-design.tex:1056:        Tên use case & Quản lý hồ sơ công ty \\ \hline
+  Chapter\C4-system-design.tex:1057:
+  Chapter\C4-system-design.tex:1058:        Đối tượng & Doanh nghiệp (Nhà tuyển dụng) \\ \hline
+> Chapter\C4-system-design.tex:1089:        Lỗi &
+  Chapter\C4-system-design.tex:1090:        \parbox[t]{\hsize}{
+> Chapter\C4-system-design.tex:1091:            E1. Hệ thống đang bảo trì \\
+  Chapter\C4-system-design.tex:1092:        }\\
+  Chapter\C4-system-design.tex:1093:        \hline
+> Chapter\C4-system-design.tex:1123:        Usecase ID & CV-5.1 \\ \hline
+  Chapter\C4-system-design.tex:1124:
+> Chapter\C4-system-design.tex:1125:        Tên use case & Xem thống kê tổng quan \\ \hline
+  Chapter\C4-system-design.tex:1126:
+  Chapter\C4-system-design.tex:1127:        Đối tượng & Quản trị viên \\ \hline
+> Chapter\C4-system-design.tex:1150:        Lỗi & E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:1151:        \hline
+  Chapter\C4-system-design.tex:1152:
+> Chapter\C4-system-design.tex:1167:        Usecase ID & CV-5.2 \\ \hline
+  Chapter\C4-system-design.tex:1168:
+> Chapter\C4-system-design.tex:1169:        Tên use case & Quản lý người dùng \\ \hline
+  Chapter\C4-system-design.tex:1170:
+  Chapter\C4-system-design.tex:1171:        Đối tượng & Quản trị viên \\ \hline
+> Chapter\C4-system-design.tex:1196:        Lỗi &
+  Chapter\C4-system-design.tex:1197:        \parbox[t]{\hsize}{
+> Chapter\C4-system-design.tex:1198:            E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:1199:            E2. Không tìm thấy thông tin tài khoản người dùng yêu cầu
+  Chapter\C4-system-design.tex:1200:        }\\
+> Chapter\C4-system-design.tex:1217:        Usecase ID & CV-5.3 \\ \hline
+  Chapter\C4-system-design.tex:1218:
+> Chapter\C4-system-design.tex:1219:        Tên use case & Quản lý doanh nghiệp \\ \hline
+  Chapter\C4-system-design.tex:1220:
+  Chapter\C4-system-design.tex:1221:        Đối tượng & Quản trị viên \\ \hline
+> Chapter\C4-system-design.tex:1246:        Lỗi &
+  Chapter\C4-system-design.tex:1247:        \parbox[t]{\hsize}{
+> Chapter\C4-system-design.tex:1248:            E1. Hệ thống đang bảo trì\\
+  Chapter\C4-system-design.tex:1249:            E2. Không tìm thấy thông tin doanh nghiệp yêu cầu
+  Chapter\C4-system-design.tex:1250:        }\\
+> Chapter\C4-system-design.tex:1484:Biểu đồ trong Hình \ref{fig:sequence-diagram-cv-pdf} thể hiện quy trình nộp hồ sơ 
+bằng tệp PDF tải lên từ máy tính. Ứng viên chọn tệp PDF và nhấn nộp. Hệ thống tiến hành kiểm tra định dạng và dung 
+lượng của tệp. Nếu tệp không hợp lệ, hệ thống báo lỗi ngay. Nếu tệp hợp lệ, hệ thống tiếp tục kiểm tra trạng thái nộp 
+đơn: nếu đã nộp thì báo trùng, còn nếu chưa từng nộp thì lưu tệp, ghi nhận hồ sơ ứng tuyển vào cơ sở dữ liệu và thông 
+báo ứng tuyển thành công.
+  Chapter\C4-system-design.tex:1485:
+  Chapter\C4-system-design.tex:1486:\subsection{Quản lý tin ứng tuyển:}
+> Chapter\C4-system-design.tex:1656:%         NFR-UX-01 & Khả dụng & Kết quả AI chỉ là gợi ý, có trạng thái chờ/lỗi và 
+không tự ghi đè nội dung khi người dùng chưa xác nhận. \\ \hline
+  Chapter\C4-system-design.tex:1657:%     \end{tabularx}
+  Chapter\C4-system-design.tex:1658:%     \caption{Yêu cầu phi chức năng có tiêu chí kiểm chứng}
+> Chapter\C4-system-design.tex:1728:%         Dữ liệu giao diện & QueryClient, SavedJobsContext, useNotifications, 
+form schema. & Cache dữ liệu máy chủ, polling, cập nhật lạc quan, khôi phục khi lỗi và kiểm tra biểu mẫu. \\ \hline
+  Chapter\C4-system-design.tex:1729:%         CV & ResumeForm, ResumePreview, Resume model. & Dữ liệu CV, template, 
+preview A4, in PDF, CV upload và quyền sở hữu. \\ \hline
+  Chapter\C4-system-design.tex:1730:%         AI & aiRoutes, aiService, aiSchemas, sanitizer, AiUsage. & Chuẩn hóa 
+input, quota, gọi model, kiểm tra schema, lọc output và thống kê. \\ \hline
+> Chapter\C4-system-design.tex:1788:% AiUsage lưu user, feature, model, hash đầu vào, trạng thái, token, độ trễ và mã 
+lỗi. Dữ liệu này hỗ trợ quota và quan sát kỹ thuật mà không cần lưu nguyên prompt hoặc toàn bộ CV. Hash không được 
+dùng như cơ chế ẩn danh tuyệt đối; hệ thống vẫn cần hạn chế quyền truy cập collection thống kê.
+  Chapter\C4-system-design.tex:1789:
+  Chapter\C4-system-design.tex:1790:% \section{Các quy trình nghiệp vụ chính}
+> Chapter\C4-system-design.tex:1872:% Backend còn tập trung nhiều route trong một file; PDF và ảnh chat dạng data URL 
+làm tài liệu MongoDB lớn; notification dùng polling; Socket.IO trên môi trường serverless chưa phải kiến trúc phù hợp 
+cho tải lớn. Tác vụ theo lịch chưa có kiểm thử về gọi đồng thời, retry và quan sát lỗi. Mã nguồn vẫn có khóa JWT dự 
+phòng và cơ chế tạo tài khoản quản trị phục vụ trình diễn; chúng phải bị vô hiệu hóa hoặc bắt buộc cấu hình ở 
+production. Đặc biệt, API gửi/ẩn chat chưa kiểm tra đầy đủ người gọi có thuộc phòng và API AI chưa chặn theo vai trò 
+ứng viên. Phần AI còn phụ thuộc nhà cung cấp và model cấu hình, trong khi chất lượng ngữ nghĩa chưa có bộ dữ liệu chấm 
+độc lập. Các hạn chế này được chuyển thành mục kiểm thử hoặc hướng phát triển thay vì được mô tả như chức năng đã hoàn 
+tất.
+
+

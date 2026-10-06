@@ -1,7 +1,12 @@
 % !TEX root = main.tex
 % Template tham khảo: https://github.com/thanhhungqb/thesis-template
+\ifdefined\ignoreprimitiveerror
+  \ignoreprimitiveerror=1
+\fi
 \documentclass[12pt,a4paper,oneside]{book}
-
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{pdflscape}
 \usepackage[utf8]{vietnam}
 \usepackage{array}
 \usepackage{underscore}
@@ -13,8 +18,8 @@
 \usepackage{float}
 \usepackage{flafter}
 \usepackage{stfloats}
-\usepackage{tabularx}
 \usepackage{longtable}
+\setlength{\LTcapwidth}{\textwidth}
 \usepackage{booktabs}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
 
@@ -22,14 +27,19 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \renewcommand{\arraystretch}{1.12}
 \setlength{\emergencystretch}{2em}
+\raggedbottom
+
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{xurl}
 \urlstyle{same}
+\providecommand{\xurl}[1]{\url{#1}}
 
 \crname{BÁO CÁO ĐỒ ÁN TỐT NGHIỆP}
 \title{Xây dựng trang web hỗ trợ viết CV có tích hợp AI}
 \cstuname{SVTH: Nguyễn Thành Vinh - 2053592}
 \csCouncil{Khoa học máy tính}
 \csSupervise{ThS. Mai Đức Trung}
-\csReviewer{KS. Nguyễn Minh Tâm}
+\csReviewer{ThS. Nguyễn Minh Tâm}
 \cttime{08/2026}
 
 \thesislayout
@@ -81,11 +91,11 @@ Khoa Khoa học và Kỹ thuật Máy tính
 
 \begin{abstract}
 
-  Xu thế sử dụng trí tuệ nhân tạo (AI) trong các ứng dụng phần mềm đã và đang dần ngày càng trở nên phổ biến hơn trong những năm gần đây. Trong vòng 4 năm kể từ ngày phát hành chính thức, AI đã có những bước tiến vượt bậc. 4 năm trước, không ai nghĩ AI có thể thay thế con người. 4 năm sau, AI đã có thể thay thế con người trong nhiều lĩnh vực, từ những việc đơn giản như trả lời câu hỏi, viết email, đến những việc phức tạp như phân tích dữ liệu, đưa ra quyết định, sáng tạo nội dung.
+  Trong thị trường lao động hiện nay, vị trí của ứng viên phụ thuộc nhiều vào chất lượng của CV. Một CV được viết tốt có thể giúp ứng viên nổi bật hơn so với các ứng viên khác, trong khi một CV được viết kém có thể khiến ứng viên bị loại ngay từ vòng đầu tiên. CV chính là yếu tố quyết định cơ hội tiếp cận việc làm của ứng viên. Tuy nhiên, việc tạo ra một bản CV hoàn chỉnh và chuyên nghiệp là một quá trình không hề đơn giản, đặc biệt là đối với các sinh viên mới tốt nghiệp hoặc những người mới tham gia thị trường lao động. Quá trình này bao gồm nhiều công đoạn phức tạp như suy nghĩ và chọn lọc các thông tin, sử dụng các thuật ngữ nghề nghiệp chuẩn xác, sắp xếp các thông tin, bố cục và định dạng sao cho vừa vặn trong một trang giấy mà không bị rối mắt. Bên cạnh đó, nhiều ứng viên còn lúng túng khi không biết CV của mình còn thiếu sót những gì và chưa có sự chuẩn bị kỹ lưỡng trước các câu hỏi phỏng vấn thực tế.
+  
+  Nhằm hỗ trợ ứng viên tháo gỡ những khó khăn này, sự phát triển nhanh chóng của các mô hình ngôn ngữ lớn (LLM) trong những năm gần đây đã mở ra tiềm năng to lớn trong việc hỗ trợ người dùng tạo lập hồ sơ và chuẩn bị tuyển dụng. Tuy nhiên, việc ứng dụng AI cần đi kèm cơ chế kiểm soát nghiêm ngặt về quyền riêng tư và tính toàn vẹn dữ liệu. Nắm bắt được xu thế này, đồ án tập trung xây dựng trang web RabbitCV -- ứng dụng hỗ trợ người dùng tạo, quản lý và trình bày CV chuẩn khổ A4; đồng thời tích hợp AI để review, cải thiện nội dung CV và mô phỏng luyện tập phỏng vấn.
 
-  Đồ án tập trung xây dựng trang web RabbitCV, một ứng dụng web hỗ trợ người dùng tạo, quản lý và trình bày CV theo khổ A4; đồng thời tích hợp trí tuệ nhân tạo để hỗ trợ viết và cải thiện phần giới thiệu, rà soát nội dung, gợi ý bổ sung các mục còn thiếu, đánh giá mức độ phù hợp giữa CV và vị trí việc làm, cũng như luyện tập phỏng vấn.
-
-  Giao diện được xây dựng bằng React, Vite và Tailwind CSS; máy chủ sử dụng Node.js, Express và MongoDB/Mongoose. REST API xử lý phần lớn nghiệp vụ, JWT trong cookie HTTP-only duy trì phiên đăng nhập, Socket.IO hỗ trợ nhắn tin, node-cron cập nhật tin hết hạn và PDF.js hiển thị CV PDF theo từng trang. Nhóm chức năng AI gọi Groq qua API tương thích OpenAI, sử dụng JSON Schema cho đầu ra có cấu trúc, đồng thời áp dụng xác thực, giới hạn tần suất, quota, timeout và làm sạch dữ liệu trước và sau khi gọi mô hình.
+  % Về mặt kỹ thuật, hệ thống được phát triển trên nền tảng công nghệ web hiện đại với giao diện React, Vite, Tailwind CSS và máy chủ backend sử dụng Node.js, Express cùng cơ sở dữ liệu MongoDB. Ứng dụng tích hợp Socket.IO cho tính năng trò chuyện trực tiếp giữa ứng viên và nhà tuyển dụng, kết hợp JWT trong Cookie HTTP-only nhằm bảo đảm an toàn cho phiên đăng nhập. Đặc biệt, việc tích hợp mô-đun AI được thiết kế với các cơ chế kiểm soát nghiêm ngặt: bảo vệ dữ liệu cá nhân nhạy cảm, ngăn chặn các câu lệnh bất thường và ràng buộc cấu trúc đầu ra bằng JSON Schema, bảo đảm người dùng luôn là chủ thể quyết định cuối cùng đối với hồ sơ của mình. Kết quả thực hiện của đồ án mang lại một giải pháp tuyển dụng khép kín, thiết thực và có tính ứng dụng cao, giúp người tìm việc nâng cao đáng kể sự tự tin và năng lực cạnh tranh trong thị trường lao động.
 
 \end{abstract}
 
@@ -109,15 +119,16 @@ Khoa Khoa học và Kỹ thuật Máy tính
 \small
 \tableofcontents
 \endgroup
-\clearpage
-% \listoftables
 \renewcommand{\listfigurename}{DANH SÁCH CÁC HÌNH VẼ}
 \listoffigures
+\clearpage
+\renewcommand{\listtablename}{DANH SÁCH BẢNG BIỂU}
+\listoftables
 \clearpage
 
 \mainmatter
 \newcommand{\setreportfooter}{%
-  \fancyfoot[L]{\fontsize{8}{9}\selectfont\textbf{Báo cáo đồ án tốt nghiệp (CO4337) -- Năm học 2023 -- 2024}}%
+  \fancyfoot[L]{\fontsize{8}{9}\selectfont\textbf{Báo cáo đồ án tốt nghiệp (CO4337) -- Năm học 2025 -- 2026}}%
   \fancyfoot[R]{\fontsize{8}{9}\selectfont\textbf{Trang \thepage/\pageref{LastPage}}}%
 }
 
@@ -136,16 +147,22 @@ Khoa Khoa học và Kỹ thuật Máy tính
 \pagestyle{fancy}
 
 \input{Chapter/C1-overview}
-\input{Chapter/C2-theory}
-\input{Chapter/C3-technologies}
-\input{Chapter/C4-system-design}
-\input{Chapter/C5-system-implementation}
-\input{Chapter/C6-ai-module}
-\input{Chapter/C7-testing-evaluation}
-\input{Chapter/C8-conclusion}
+\input{Chapter/C2-related-systems}
+\input{Chapter/C3-theory}
+\input{Chapter/C4-technologies}
+\input{Chapter/C5-system-design}
+\input{Chapter/C6-system-implementation}
+\input{Chapter/C7-ai-module}
+\input{Chapter/C8-testing-evaluation}
+\input{Chapter/C9-conclusion}
 
+\begingroup
+\sloppy
+\raggedright
 \bibliographystyle{plain}
+\nocite{*}
 \bibliography{refs}
+\endgroup
 
 \appendix
 \input{Chapter/Appendix}

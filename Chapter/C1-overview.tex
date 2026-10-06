@@ -3,96 +3,79 @@
 
 \section{Bối cảnh và lý do chọn đề tài}
 
-CV là điểm tiếp xúc đầu tiên giữa nhiều ứng viên và nhà tuyển dụng. Một CV có bố cục rõ ràng, nội dung nhất quán và tập trung vào năng lực liên quan sẽ giúp người đọc nhanh chóng xác định được mức độ phù hợp ban đầu.
+CV là tài liệu giới thiệu thông tin nghề nghiệp, kinh nghiệm và kỹ năng của ứng viên trong quá trình tìm việc. Một CV có bố cục rõ ràng và nội dung phù hợp với vị trí ứng tuyển giúp nhà tuyển dụng tiếp cận những thông tin cần thiết để xem xét hồ sơ. Vì vậy, việc xây dựng CV không chỉ là lựa chọn mẫu trình bày mà còn bao gồm tổ chức thông tin và diễn đạt năng lực của ứng viên.
 
-Tuy nhiên, đối với người mới tham gia thị trường lao động, họ thường gặp ba khó khăn chính: thiếu kinh nghiệm trong việc tổ chức thông tin, chưa biết cách diễn đạt kinh nghiệm theo ngôn ngữ nghề nghiệp và chưa biết điều chỉnh CV theo vị trí mục tiêu.
+Đối với người mới tham gia thị trường lao động, việc lựa chọn nội dung, mô tả kinh nghiệm và điều chỉnh CV theo vị trí mục tiêu có thể gặp khó khăn. Sau khi hoàn thiện CV, ứng viên còn cần tìm kiếm công việc, gửi hồ sơ, theo dõi trạng thái ứng tuyển và trao đổi với doanh nghiệp. Nếu các thao tác này được thực hiện trên những công cụ riêng biệt, người dùng phải tự quản lý thông tin giữa nhiều nơi. Từ đó, đề tài đặt ra nhu cầu xây dựng một nền tảng liên kết quá trình chuẩn bị CV với các hoạt động ứng tuyển liên quan.
 
-Bên cạnh đó, một thực tế đáng quan ngại là nhiều ứng viên vẫn đang sử dụng các phiên bản CV cũ kỹ, thiếu chuyên nghiệp và không tuân thủ các tiêu chuẩn hiện đại, điều này làm giảm đáng kể cơ hội của họ trong thị trường lao động đầy cạnh tranh.
+Mô hình ngôn ngữ lớn có thể được tích hợp để đưa ra nhận xét về nội dung CV, gợi ý cách diễn đạt và mô phỏng câu hỏi phỏng vấn. Tuy nhiên, phản hồi của mô hình có thể chứa thông tin không chính xác hoặc không phù hợp với trải nghiệm thực tế của người dùng. Việc sử dụng AI vì vậy cần đi kèm kiểm soát dữ liệu đầu vào, kiểm tra đầu ra và cơ chế để người dùng xem xét trước khi áp dụng, thay vì tự động coi mọi đề xuất là nội dung đúng.
 
-Các công cụ AI có thể hỗ trợ người dùng viết lại, tóm tắt và phân tích nội dung. Tuy nhiên, nội dung do mô hình tạo ra có thể chưa chính xác, vì vậy người dùng cần kiểm tra trước khi sử dụng. Bên cạnh đó, nếu thông tin nhạy cảm được đưa vào hệ thống mà không có biện pháp kiểm soát phù hợp, dữ liệu có nguy cơ bị sử dụng ngoài mục đích ban đầu. Do đó, việc tích hợp mô hình ngôn ngữ không đơn thuần là gửi yêu cầu và nhận kết quả, mà còn phải kiểm soát dữ liệu đầu vào, chuẩn hóa đầu ra và quản lý quyền truy cập. Người dùng vẫn là người xem xét và đưa ra quyết định cuối cùng đối với nội dung do AI đề xuất. Cách tiếp cận này phù hợp với các nguyên tắc quản lý rủi ro AI về tính minh bạch, khả năng kiểm tra và vai trò trung tâm của con người \cite{nistairmf}.
+Trên cơ sở đó, đồ án xây dựng RabbitCV, một ứng dụng web hỗ trợ tạo và quản lý CV, tìm kiếm việc làm và ứng tuyển có tích hợp AI. Trọng tâm của đề tài là hỗ trợ ứng viên chuẩn bị và sử dụng CV; các chức năng dành cho doanh nghiệp, quản trị viên, nhắn tin và thông báo phục vụ quy trình tuyển dụng trong cùng hệ thống. AI đóng vai trò trợ lý, không thay thế quyết định của ứng viên hoặc nhà tuyển dụng.
 
-Từ nhu cầu trên, đề tài lựa chọn xây dựng trang web RabbitCV -- ứng dụng web hỗ trợ tạo CV và tìm kiếm việc làm có tích hợp AI. Tạo và cải thiện CV chính là trọng tâm; các chức năng tìm việc, ứng tuyển, doanh nghiệp, thông báo và nhắn tin tạo ra bối cảnh thực tế để người dùng sử dụng CV sau khi hoàn thành.
-% \section{Phát biểu bài toán}
+\section{Phát biểu bài toán}
 
-% Hệ thống cần hỗ trợ một người dùng đi từ dữ liệu nghề nghiệp thô đến một CV có thể xem, chỉnh sửa và in theo khổ A4. Người dùng phải chủ động kiểm soát nội dung do AI gợi ý; AI không được tự tạo các sự kiện cá nhân cụ thể rồi ghi trực tiếp vào hồ sơ. Khi CV được dùng để ứng tuyển, hệ thống cần bảo đảm quyền sở hữu, trạng thái công việc, giới hạn tệp PDF và tính duy nhất của hồ sơ ứng tuyển.
+Bài toán đặt ra là xây dựng một hệ thống tiếp nhận thông tin nghề nghiệp do người dùng cung cấp, hỗ trợ tổ chức thông tin thành CV có thể chỉnh sửa, lưu, xem trước và in theo bố cục A4. Bên cạnh CV được tạo trên hệ thống, ứng viên cần có khả năng sử dụng tệp CV PDF từ thiết bị để ứng tuyển. Các công cụ AI cung cấp nhận xét, đề xuất bổ sung nội dung và môi trường luyện tập phỏng vấn, trong khi người dùng vẫn kiểm tra và quyết định nội dung được sử dụng.
 
-% Ở phía doanh nghiệp, hệ thống cần cung cấp khả năng đăng tin, tiếp nhận hồ sơ, xem CV trong phạm vi công việc liên quan và cập nhật trạng thái. Các thay đổi quan trọng phải được phản ánh đến ứng viên qua thông báo. Chat cần phản hồi gần thời gian thực; thông báo chưa đọc hiện được đồng bộ qua API định kỳ và được ghi nhận như một giới hạn triển khai.
+Ở phía tuyển dụng, hệ thống cần liên kết ứng viên, CV và tin tuyển dụng trong từng hồ sơ ứng tuyển. Doanh nghiệp có thể đăng tin, tiếp nhận hồ sơ và cập nhật trạng thái; ứng viên có thể theo dõi tiến trình và trao đổi với doanh nghiệp. Việc quản lý dữ liệu cần xét đến danh tính người dùng, vai trò, quyền sở hữu tài nguyên, tình trạng tin tuyển dụng và trường hợp ứng tuyển trùng lặp. Ngoài các liên kết này, hệ thống cần lưu phiên bản CV đã nộp và thông tin công việc tại thời điểm ứng tuyển. Nhờ đó, việc ứng viên chỉnh sửa CV hoặc doanh nghiệp thay đổi tin ứng tuyển về sau không làm mất nội dung và ngữ cảnh của hồ sơ đã tiếp nhận.
+
+Đầu ra là một ứng dụng web kết nối các thao tác chuẩn bị CV, ứng tuyển và quản lý tuyển dụng, cùng tài liệu phân tích, thiết kế, hiện thực và kiểm thử. Kết quả cần được đối chiếu với các chức năng đã triển khai và phạm vi kiểm thử, không chỉ dựa trên hình ảnh giao diện.
 
 \section{Mục tiêu của đề tài}
 
-Mục tiêu tổng quát là xây dựng một trang web có thể vận hành để hỗ trợ người dùng tạo CV và các thao tác tuyển dụng liên quan, trong đó AI sẽ đóng vai trò trợ lý hỗ trợ người dùng và không thay thế quyết định của họ. Các mục tiêu cụ thể gồm:
+Mục tiêu tổng quát là xây dựng ứng dụng RabbitCV hỗ trợ quy trình từ chuẩn bị CV đến ứng tuyển và theo dõi hồ sơ, đồng thời tích hợp AI ở vai trò hỗ trợ người dùng. Các mục tiêu cụ thể gồm:
 
 \begin{enumerate}
-    \item Xây dựng giao diện và quy trình tạo, chỉnh sửa, lưu, xem trước và in CV theo tỷ lệ A4.
-    \item Hỗ trợ tải lên CV định dạng PDF, chỉ chấp nhận dữ liệu PDF hợp lệ và giới hạn kích thước giải mã ở 5 MB.
-    \item Tích hợp AI viết mới, cải thiện hoặc rút gọn tiểu sử; review CV; gợi ý điền mục còn thiếu; chấm mức độ phù hợp với công việc; và tập luyện phỏng vấn với AI.
-    \item Cung cấp tìm kiếm, lưu tin, ứng tuyển bằng CV đã lưu hoặc PDF, theo dõi trạng thái và duy trì lịch sử khi tin bị đóng hoặc xóa.
-    \item Tổ chức quyền truy cập cho khách, ứng viên, doanh nghiệp và quản trị viên; kiểm tra vai trò và quyền sở hữu ở backend.
-    \item Hỗ trợ chat bằng Socket.IO, lưu trạng thái đọc theo từng người dùng và quản lý thông báo.
+    \item Cung cấp chức năng tạo, chỉnh sửa, kéo-thả sắp xếp bố cục, lưu và xem trước CV theo mẫu; hỗ trợ in hoặc lưu thành PDF thông qua chức năng in của trình duyệt với bố cục A4.
+    \item Hỗ trợ sử dụng CV PDF tải lên từ thiết bị; kiểm tra định dạng dữ liệu, dấu hiệu nhận diện PDF và dung lượng tối đa 5 MB sau giải mã trước khi lưu.
+    \item Tích hợp ba chức năng AI: rà soát nội dung CV, gợi ý hoàn thiện nội dung và luyện tập phỏng vấn theo vị trí mục tiêu. Các đề xuất bổ sung CV được hiển thị để người dùng xem xét trước khi lưu.
+    \item Cung cấp tìm kiếm, lưu tin và ứng tuyển bằng CV đã lưu hoặc CV PDF tải lên; hỗ trợ doanh nghiệp quản lý tin, tiếp nhận hồ sơ và cập nhật trạng thái. Lưu bản chụp CV và thông tin công việc cho hồ sơ ứng tuyển mới để duy trì nội dung đã nộp và phục vụ theo dõi lịch sử.
+    \item Tổ chức chức năng cho khách chưa đăng nhập, ứng viên, doanh nghiệp và quản trị viên; xây dựng cơ chế xác thực, kiểm tra vai trò và quyền sở hữu cho các nghiệp vụ quản lý dữ liệu.
+    \item Hỗ trợ nhắn tin và thông báo thời gian thực qua Socket.IO, quản lý trạng thái đọc theo từng người dùng. Kết hợp việc nhận sự kiện với truy vấn API định kỳ để cập nhật lại dữ liệu thông báo.
 \end{enumerate}
 
-% \section{Phạm vi đề tài}
+Các mục tiêu trên là cơ sở xác định yêu cầu và lựa chọn kịch bản kiểm thử ở các chương sau. Mức độ đáp ứng được đánh giá trong phạm vi phiên bản hiện thực và bằng chứng kiểm thử được trình bày, không đồng nghĩa với việc hệ thống đã đáp ứng mọi điều kiện vận hành thực tế.
 
-% \begin{table}[H]
-%     \centering
-%     \small
-%     \begin{tabularx}{\textwidth}{|p{0.20\textwidth}|Y|Y|} \hline
-%         \textbf{Nhóm} & \textbf{Trong phạm vi} & \textbf{Ngoài phạm vi hiện tại} \\ \hline
-%         CV & CV cấu trúc, nhiều mẫu, preview, in A4, PDF upload và PDF.js. & Ký số CV, nhập CV từ DOC/DOCX và đồng bộ hồ sơ từ nền tảng bên thứ ba. \\ \hline
-%         AI & Viết tiểu sử, review, fill, chấm CV--Job và luyện phỏng vấn có kiểm soát. & Tự động quyết định tuyển dụng, huấn luyện mô hình riêng và cam kết kết quả AI luôn đúng. \\ \hline
-%         Tuyển dụng & Tìm, lưu, đăng và quản lý tin; ứng tuyển; trạng thái hồ sơ; snapshot lịch sử. & Thanh toán, ký hợp đồng điện tử và đồng bộ lịch phỏng vấn với lịch ngoài. \\ \hline
-%         Giao tiếp & Chat gần thời gian thực, trạng thái đọc, ẩn room và thông báo qua API. & Gọi video, email/SMS production và notification đa vùng. \\ \hline
-%         Xác minh & Đăng ký, đăng nhập, JWT và phân quyền cơ bản. & Xác minh số điện thoại, đăng nhập Google và định danh qua dịch vụ bên thứ ba. \\ \hline
-%         Triển khai & Chạy, kiểm thử và trình diễn trên môi trường phát triển; build frontend production. & Cam kết SLA, cân bằng tải, hàng đợi, giám sát phân tán và kiểm toán bảo mật doanh nghiệp. \\ \hline
-%     \end{tabularx}
-%     \caption{Phạm vi triển khai của đề tài}
-%     \label{tab:project-scope}
-% \end{table}
+\section{Phạm vi đề tài}
+
+Đề tài tập trung vào ứng dụng web với bốn nhóm sử dụng: khách chưa đăng nhập, ứng viên, doanh nghiệp và quản trị viên. Phạm vi nghiệp vụ bao gồm quản lý hồ sơ và CV, tìm kiếm và lưu tin tuyển dụng, nộp hồ sơ ứng tuyển, quản lý tin và trạng thái hồ sơ, nhắn tin, thông báo và các chức năng quản trị liên quan. CV tạo trên hệ thống được lưu dưới dạng dữ liệu có cấu trúc để chỉnh sửa và trình bày theo mẫu; CV PDF tải lên được dùng để xem và ứng tuyển, không được tự động chuyển thành các trường dữ liệu có thể chỉnh sửa.
+
+Phạm vi AI gồm rà soát CV có cấu trúc, gợi ý nội dung và luyện tập phỏng vấn thông qua API của mô hình có sẵn. Đồ án không huấn luyện mô hình riêng, không tự động quyết định tuyển dụng và không cam kết mọi phản hồi đều chính xác. Nội dung phỏng vấn được quản lý trong phiên sử dụng; việc lưu và khôi phục lịch sử phỏng vấn từ cơ sở dữ liệu chưa thuộc phạm vi hiện thực hiện tại.
+
+Đối với hồ sơ ứng tuyển mới, hệ thống lưu bản chụp CV và thông tin công việc tại thời điểm nộp đơn. Bản chụp CV được lưu độc lập với CV gốc, nên việc ứng viên chỉnh sửa hoặc xóa CV trong khu vực quản lý cá nhân không làm thay đổi nội dung đã nộp. Với hồ sơ cũ chưa có bản chụp, hệ thống chỉ có thể lưu phiên bản CV còn tồn tại khi xử lý bổ sung; không thể khẳng định đó là phiên bản ở thời điểm ứng tuyển ban đầu.
+
+Đối với PDF tải lên, hệ thống kiểm tra phần mở rộng tệp, định dạng dữ liệu Base64, dấu hiệu nhận diện PDF và dung lượng tối đa 5~MB sau giải mã. Các kiểm tra này không xác minh đầy đủ cấu trúc, nội dung hay độ an toàn của tệp, cũng không xác nhận PDF có khổ giấy A4. Bố cục A4 thuộc chức năng trình bày và in CV được tạo trên hệ thống, không phải điều kiện áp dụng cho mọi CV tải lên.
 
 \section{Đối tượng sử dụng}
 
-Khách xem nội dung công khai, danh sách và chi tiết công việc. Ứng viên quản lý hồ sơ, tạo hoặc tải CV, dùng công cụ AI, tìm và lưu việc, ứng tuyển, theo dõi trạng thái, nhận thông báo và nhắn tin. Doanh nghiệp quản lý thông tin công ty, tạo và điều chỉnh tin, tiếp nhận hồ sơ, xem CV có liên quan, cập nhật trạng thái và trao đổi với ứng viên. Quản trị viên theo dõi số liệu, quản lý người dùng, doanh nghiệp và tin tuyển dụng.
+Khách chưa đăng nhập có thể xem nội dung công khai, tìm kiếm và xem chi tiết tin tuyển dụng. Đây là nhóm truy cập hệ thống mà chưa có phiên đăng nhập, không phải một vai trò tài khoản được lưu trong cơ sở dữ liệu.
 
-% \section{Phương pháp thực hiện}
+Ứng viên sử dụng RabbitCV để quản lý hồ sơ cá nhân, tạo hoặc tải lên CV, sử dụng các công cụ hỗ trợ AI, tìm kiếm và lưu công việc, gửi hồ sơ ứng tuyển và theo dõi trạng thái. Ứng viên cũng có thể nhận thông báo và trao đổi với doanh nghiệp thông qua chức năng nhắn tin.
 
-% Đồ án được thực hiện theo quy trình lặp. Mỗi vòng bắt đầu bằng việc xác định luồng nghiệp vụ, đối chiếu giao diện và API, sau đó triển khai model, route, component và kiểm thử liên quan. Các lỗi phát hiện ở giao diện được truy ngược đến nguồn dữ liệu, vòng đời state hoặc quyền truy cập thay vì chỉ sửa biểu hiện trực quan.
+Doanh nghiệp quản lý thông tin công ty và các tin tuyển dụng của mình, tiếp nhận hồ sơ, xem CV liên quan, cập nhật trạng thái xét duyệt và trao đổi với ứng viên.
 
-% Việc đánh giá kết hợp bốn lớp: ESLint cho chất lượng mã, Node Test Runner cho quy tắc có thể tự động hóa, Vite build cho khả năng đóng gói và kiểm thử thủ công cho luồng nhiều vai trò. Đối với AI, phạm vi tự động tập trung vào xác thực route, làm sạch dữ liệu, schema đầu ra và hành vi không tự ghi đè; đánh giá chất lượng ngữ nghĩa được tách thành một quy trình có tiêu chí rõ ràng và không được suy diễn khi chưa có bộ dữ liệu chấm độc lập.
+Quản trị viên thực hiện các chức năng quản lý người dùng, doanh nghiệp và tin tuyển dụng trong phạm vi công cụ quản trị đã xây dựng.
 
-\section{Kết quả và giá trị đạt được}
+\section{Kết quả thực hiện}
 
-Đề tài tạo ra một nguyên mẫu thống nhất giữa soạn CV và bối cảnh tuyển dụng. Những điểm kỹ thuật có giá trị gồm:
+Đồ án đã hiện thực ứng dụng RabbitCV với các nhóm chức năng quản lý CV, tìm việc và ứng tuyển, quản lý tuyển dụng phía doanh nghiệp, nhắn tin, thông báo và quản trị. Đối với CV có cấu trúc, người dùng có thể chỉnh sửa nội dung, kéo-thả sắp xếp bố cục, lựa chọn mẫu, xem trước và sử dụng chức năng in của trình duyệt để lưu thành PDF. Hệ thống cũng hỗ trợ CV PDF tải lên để ứng tuyển.
 
-\begin{itemize}
-    \item Phân biệt CV được tạo trực tiếp trên hệ thống với CV PDF tải lên bằng một trường đánh dấu loại CV; đồng thời chỉ trả về các thông tin cần thiết khi hiển thị danh sách CV, còn nội dung PDF đầy đủ được tải khi người dùng mở hoặc xem CV cụ thể.
-    \item Lưu bản chụp thông tin việc làm tại thời điểm ứng tuyển cùng hồ sơ ứng tuyển, giúp duy trì ngữ cảnh lịch sử ngay cả khi tin tuyển dụng bị xóa.
-    \item Thiết lập ràng buộc duy nhất cho mỗi cặp ứng viên và tin tuyển dụng, qua đó ngăn ngừa việc gửi hồ sơ trùng lặp ngay tại tầng cơ sở dữ liệu.
-    \item Lưu trạng thái đã đọc và trạng thái ẩn của cuộc trò chuyện riêng cho từng người dùng thay vì xóa dữ liệu dùng chung.
-    \item Xây dựng năm nhóm chức năng AI với kiểm soát đầu vào, đầu ra, giới hạn hạn mức và tần suất sử dụng, kiểm soát thời gian xử lý và thống kê mức độ sử dụng.
-\end{itemize}
+Trong quy trình ứng tuyển, hồ sơ được liên kết với ứng viên, tin tuyển dụng và CV. Các hồ sơ mới lưu bản chụp CV và thông tin công việc tại thời điểm nộp; bản CV đã nộp không bị thay đổi bởi thao tác sửa hoặc xóa CV gốc. Việc xử lý hồ sơ cũ chưa có bản chụp tuân theo giới hạn đã nêu trong phạm vi đề tài. Ràng buộc duy nhất giữa ứng viên và tin tuyển dụng được thiết lập ở tầng cơ sở dữ liệu để ngăn chặn nộp hồ sơ trùng lặp. Nhắn tin và thông báo được cập nhật thông qua Socket.IO; riêng dữ liệu thông báo còn được truy vấn lại qua API định kỳ. Trạng thái đọc và ẩn cuộc trò chuyện được quản lý riêng cho từng người dùng.
+
+Ba chức năng AI đã được tích hợp để rà soát CV, hỗ trợ hoàn thiện nội dung và luyện tập phỏng vấn. Quá trình gọi mô hình có xử lý dữ liệu đầu vào, kiểm tra cấu trúc đầu ra, giới hạn tần suất, hạn mức sử dụng và thời gian chờ. Các cơ chế này hỗ trợ quản lý việc sử dụng dịch vụ, nhưng không đủ để khẳng định chất lượng ngữ nghĩa của mọi phản hồi hoặc loại bỏ hoàn toàn rủi ro về dữ liệu.
+
+Đóng góp của đồ án nằm ở việc hiện thực một quy trình liên kết từ chuẩn bị CV đến ứng tuyển, duy trì phiên bản CV đã nộp và tích hợp ba công cụ hỗ trợ AI có cơ chế kiểm soát đầu vào, đầu ra và thao tác lưu của người dùng. Đây là đóng góp về phân tích, thiết kế và tích hợp phần mềm trong phạm vi nguyên mẫu, không phải việc phát triển một mô hình AI mới. Báo cáo cũng chưa có cơ sở để khẳng định RabbitCV làm tăng tỷ lệ được tuyển dụng hoặc có chất lượng vượt trội so với các nền tảng đang vận hành.
 
 \section{Cấu trúc báo cáo}
 
-Báo cáo được tổ chức thành tám chương và một phần phụ lục. Nội dung, trọng tâm và điểm nổi bật của từng phần được trình bày như sau:
+Báo cáo gồm chín chương, được tổ chức từ xác định bài toán đến khảo sát, phân tích, hiện thực và đánh giá:
 
 \begin{itemize}
-    \item \textbf{Chương 1 -- Tổng quan đề tài:} Trình bày bối cảnh và lý do lựa chọn đề tài, mục tiêu xây dựng hệ thống, các nhóm người dùng, kết quả đạt được và giá trị của sản phẩm. Chương này xác định vai trò hỗ trợ của AI, trong đó người dùng vẫn kiểm tra và quyết định cuối cùng đối với nội dung được đề xuất.
-
-    \item \textbf{Chương 2 -- Cơ sở lý thuyết:} Trình bày các kiến thức nền tảng liên quan đến kiến trúc ứng dụng web, tổ chức hệ thống, quản lý dữ liệu, xác thực, phân quyền, giao tiếp theo thời gian thực, xử lý PDF và mô hình ngôn ngữ.
-
-    \item \textbf{Chương 3 -- Giới thiệu các công nghệ đã sử dụng:} Giới thiệu các công nghệ được dùng để phát triển giao diện, máy chủ, cơ sở dữ liệu, trí tuệ nhân tạo, xử lý PDF, đồng bộ dữ liệu, bảo mật, kiểm thử và triển khai RabbitCV.
-
-    \item \textbf{Chương 4 -- Phân tích và thiết kế hệ thống:} Chuyển các mục tiêu của đề tài thành các nhóm tác nhân, yêu cầu chức năng, yêu cầu phi chức năng, ma trận phân quyền, kiến trúc tổng thể, thiết kế dữ liệu và các quy trình nghiệp vụ chính. Chương này nhấn mạnh mối liên hệ giữa yêu cầu, quyền truy cập, dữ liệu và ranh giới bảo mật trong từng luồng sử dụng.
-
-    \item \textbf{Chương 5 -- Triển khai hệ thống:} Trình bày quá trình hiện thực các chức năng chính gồm xác thực, tạo và quản lý CV, xuất CV, tìm việc, ứng tuyển, quản lý phía doanh nghiệp, nhắn tin và thông báo.
-
-    \item \textbf{Chương 6 -- Mô-đun trí tuệ nhân tạo:} Giải thích kiến trúc mô-đun AI, năm chức năng đã triển khai, quy trình xử lý yêu cầu, kiểm soát dữ liệu, thống kê sử dụng, giới hạn hiện tại và vai trò quyết định cuối cùng của người dùng.
-
-    \item \textbf{Chương 7 -- Kiểm thử và đánh giá:} Trình bày môi trường đánh giá, khả năng tái lập, kết quả kiểm tra tự động và thủ công, danh mục kiểm thử, truy vết yêu cầu và các kịch bản kiểm thử thủ công. Chương có điểm nhấn là phân biệt rõ bằng chứng kiểm thử nghiệp vụ, kiểm tra kỹ thuật và đánh giá riêng cho chức năng AI.
-
-    \item \textbf{Chương 8 -- Kết luận và hướng phát triển:} Đối chiếu kết quả thực hiện với các mục tiêu ban đầu, tổng hợp đóng góp kỹ thuật, bài học kinh nghiệm, hạn chế hiện tại và lộ trình phát triển. Điểm nổi bật của chương là nêu rõ những giới hạn chưa được kiểm chứng, đặc biệt đối với chất lượng ngữ nghĩa của kết quả AI.
-
-    \item \textbf{Phụ lục -- Thông tin tái lập và danh mục kỹ thuật:} Cung cấp quy trình tái lập kiểm tra, các biến môi trường, danh mục giao tiếp của hệ thống, những nguyên tắc bảo toàn dữ liệu, tiêu chí đánh giá chất lượng AI và danh sách kiểm tra trước khi nộp báo cáo.
+    \item \textbf{Chương 1 -- Tổng quan đề tài:} Trình bày bối cảnh, bài toán, mục tiêu, phạm vi, đối tượng sử dụng và kết quả thực hiện.
+    \item \textbf{Chương 2 -- Các hệ thống liên quan:} Khảo sát TopCV và LinkedIn, so sánh các chức năng liên quan và rút ra định hướng xây dựng RabbitCV.
+    \item \textbf{Chương 3 -- Cơ sở lý thuyết:} Trình bày kiến trúc hệ thống, cơ chế phân quyền RBAC, mô hình dữ liệu hướng tài liệu, giao tiếp thời gian thực và mô hình ngôn ngữ lớn.
+    \item \textbf{Chương 4 -- Giới thiệu các công nghệ đã sử dụng:} Giới thiệu các công nghệ phát triển giao diện, máy chủ, cơ sở dữ liệu và xử lý CV PDF.
+    \item \textbf{Chương 5 -- Phân tích và thiết kế hệ thống:} Trình bày các tác nhân, yêu cầu, đặc tả use case, các lược đồ nghiệp vụ, kiến trúc và thiết kế dữ liệu.
+    \item \textbf{Chương 6 -- Triển khai hệ thống:} Trình bày tổ chức mã nguồn và các chức năng đã hiện thực cho ứng viên, doanh nghiệp và quản trị viên.
+    \item \textbf{Chương 7 -- Mô-đun trí tuệ nhân tạo:} Trình bày ba chức năng AI, nguyên tắc sử dụng và các biện pháp kiểm soát dữ liệu, đầu ra và lỗi.
+    \item \textbf{Chương 8 -- Kiểm thử và đánh giá:} Trình bày công cụ, kịch bản, kết quả và bằng chứng kiểm thử với Node Test Runner và Playwright, đồng thời nêu phạm vi và giới hạn của việc đánh giá.
+    \item \textbf{Chương 9 -- Kết luận và hướng phát triển:} Tổng hợp kết quả đạt được, những hạn chế và các hướng hoàn thiện hệ thống.
 \end{itemize}
-
-Nhìn tổng thể, báo cáo được xây dựng theo mạch từ bối cảnh và mục tiêu, đến cơ sở lý thuyết, công nghệ sử dụng, phân tích thiết kế, triển khai, mô-đun AI, kiểm thử và kết luận. Cách tổ chức này giúp người đọc theo dõi được quá trình chuyển đổi từ yêu cầu ban đầu thành hệ thống, đồng thời đối chiếu được kết quả với các bằng chứng kiểm tra tương ứng.

@@ -1,0 +1,121 @@
+% !TEX root = ../main.tex
+\chapter{Các hệ thống liên quan}
+\label{chap:related-systems}
+
+\section{TopCV}
+\label{sec:survey-topcv}
+
+\subsection{Giới thiệu và các chức năng liên quan}
+
+TopCV là nền tảng hỗ trợ tạo CV và kết nối ứng viên với doanh nghiệp tại Việt Nam. Phía ứng viên có thể tạo CV từ mẫu, tải CV lên, tìm kiếm việc làm, lưu tin và xem các công việc đã ứng tuyển. Việc đặt công cụ tạo CV và khu vực tìm việc trên cùng nền tảng giúp người dùng tiếp tục sử dụng hồ sơ sau khi hoàn thành nội dung.
+
+Phía doanh nghiệp, TopCV cung cấp chức năng đăng tin, tiếp nhận và quản lý hồ sơ. Công cụ CV Scoring sử dụng AI để đối chiếu CV với yêu cầu tuyển dụng, phân loại mức độ phù hợp và cung cấp nhận xét theo tiêu chí. Khả năng sử dụng phụ thuộc vào vị trí chuyên môn, gói dịch vụ và sự đồng ý của ứng viên. Công cụ này hướng đến hỗ trợ nhà tuyển dụng sàng lọc hồ sơ, khác với mục tiêu hỗ trợ ứng viên hoàn thiện nội dung trong RabbitCV.
+
+TopCV hỗ trợ trao đổi qua TopConnect. Nhà tuyển dụng có thể mở cuộc trò chuyện từ hồ sơ ứng viên; việc chủ động mở chat có thể sử dụng Credit Point, trong khi chat với ứng viên đã chủ động ứng tuyển không cần Credit theo hướng dẫn của nền tảng. Đây là điểm tham khảo cho việc kết nối quản lý hồ sơ với trao đổi trực tiếp.
+
+Ngoài ra, TopCV cung cấp bộ câu hỏi phỏng vấn và hướng dẫn trả lời để ứng viên tham khảo khi chuẩn bị tìm việc.
+
+\subsection{Ưu điểm}
+
+Từ các chức năng được mô tả, ưu điểm của TopCV đối với bài toán đồ án là liên kết công cụ tạo CV với tìm việc và ứng tuyển. Ứng viên có thể chuẩn bị và sử dụng hồ sơ trên cùng nền tảng; doanh nghiệp có khu vực tiếp nhận hồ sơ và trao đổi riêng. Cách tổ chức này là cơ sở tham khảo cho việc phân chia chức năng giữa hai phía trong RabbitCV.
+
+Các mẫu CV và nội dung hướng dẫn bằng tiếng Việt phù hợp với định hướng người dùng trong nước của đồ án. Khu vực quản lý CV, tin đã lưu và công việc đã ứng tuyển cũng gợi ý cách tổ chức thao tác để ứng viên tiếp tục theo dõi sau khi nộp hồ sơ. Đây là nhận xét về sự phù hợp của chức năng, không phải kết quả đo lường mức độ hài lòng hoặc hiệu quả tuyển dụng.
+
+\subsection{Những điểm cần cân nhắc đối với bài toán đề tài}
+
+Khi đối chiếu với phạm vi RabbitCV, cần phân biệt các chức năng đã được xác nhận với những nội dung chưa đủ thông tin:
+
+\begin{itemize}
+    \item \textbf{Khác biệt về mục tiêu hỗ trợ AI:} CV Scoring phục vụ đánh giá hồ sơ phía nhà tuyển dụng. Tài liệu khảo sát chưa xác nhận một luồng gợi ý điền các mục CV còn thiếu trực tiếp cho ứng viên; vì vậy không thể đồng nhất công cụ này với chức năng hỗ trợ hoàn thiện CV của RabbitCV.
+    \item \textbf{Phân biệt tài liệu phỏng vấn với mô phỏng tương tác:} Bộ câu hỏi và hướng dẫn trả lời đã được xác nhận, nhưng phiên phỏng vấn AI nhiều lượt chưa được xác nhận trong phạm vi tài liệu khảo sát. Điều này không đủ để kết luận toàn bộ nền tảng không có chức năng tương tự.
+    \item \textbf{Điều kiện sử dụng dịch vụ:} Một số chức năng AI và việc chủ động mở chat chịu điều kiện về gói dịch vụ hoặc Credit. Khi đối chiếu cần xét đúng trường hợp sử dụng, không xem mọi thao tác của ứng viên và doanh nghiệp đều phải trả phí.
+\end{itemize}
+
+\section{LinkedIn}
+\label{sec:survey-linkedin}
+
+\subsection{Giới thiệu và các chức năng liên quan}
+
+LinkedIn kết hợp hồ sơ nghề nghiệp, mạng lưới kết nối và hoạt động tuyển dụng. Hồ sơ trực tuyến lưu các thông tin như kinh nghiệm, học vấn và kỹ năng của người dùng. Chức năng lưu hồ sơ thành PDF được hướng dẫn cho máy tính, với yêu cầu hồ sơ và thiết lập ngôn ngữ bằng tiếng Anh; chức năng này có thể chưa khả dụng với mọi thành viên và không được cung cấp trên ứng dụng di động.
+
+Ứng viên có thể tìm kiếm công việc và tạo thông báo theo tiêu chí đã chọn, nhận hằng ngày hoặc hằng tuần qua email và thông báo trong ứng dụng. LinkedIn cũng đề xuất công việc từ hồ sơ và các lựa chọn về chức danh, địa điểm, hình thức làm việc hoặc loại hình việc làm. Nhóm đề xuất công việc mà ứng viên có khả năng nổi bật hơn dành cho tài khoản Premium.
+
+Khi ứng tuyển, người dùng có thể gặp hai luồng khác nhau tùy thiết lập của nhà tuyển dụng. Với \textit{Easy Apply}, hồ sơ được nộp trực tiếp trong LinkedIn. Với nút \textit{Apply}, người dùng được chuyển đến trang của doanh nghiệp hoặc cổng việc làm khác để tiếp tục. Vì vậy, không phải mọi hồ sơ đều được tiếp nhận hoàn toàn trong cùng nền tảng.
+
+Phía tuyển dụng có thể quản lý tin đã đăng, xem và lọc danh sách ứng viên từ trang Jobs. Các sản phẩm Recruiter và Recruiter Lite cung cấp hộp thư để tổ chức và quản lý trao đổi với ứng viên; đây là công cụ dành cho tài khoản có đăng ký dịch vụ tương ứng.
+
+Đối với nội dung hồ sơ, \textit{Profile Writing Assistance} cung cấp đề xuất cho phần tiêu đề nghề nghiệp, giới thiệu và kinh nghiệm. Người dùng có thể chỉnh sửa đề xuất trước khi lưu. Tài liệu cho biết chức năng chỉ khả dụng với một nhóm người đăng ký Premium, không phải toàn bộ tài khoản.
+
+LinkedIn còn cung cấp \textit{AI interview prep}: tạo câu hỏi theo mô tả công việc, tương tác với câu trả lời của người dùng và tổng hợp nhận xét sau phiên luyện tập. Người dùng có thể trả lời bằng giọng nói hoặc nhập văn bản. Theo tài liệu chính thức, tính năng đang được triển khai dần bằng tiếng Anh cho người đăng ký Premium và có thể chưa khả dụng với từng tài khoản.
+
+\subsection{Ưu điểm}
+
+Điểm mạnh của LinkedIn là kết hợp hồ sơ nghề nghiệp với mạng lưới kết nối. Thông tin về kinh nghiệm, học vấn, kỹ năng và hoạt động chuyên môn được duy trì trên một hồ sơ có thể tiếp tục sử dụng khi tìm việc hoặc trao đổi với nhà tuyển dụng. Cách tiếp cận này giúp hồ sơ không chỉ tồn tại như một tệp CV được gửi tại một thời điểm, mà còn đóng vai trò là danh tính nghề nghiệp có thể cập nhật lâu dài.
+
+Hệ thống thông báo và đề xuất công việc giúp người dùng theo dõi cơ hội mới dựa trên hồ sơ và nhu cầu đã khai báo. Đối với doanh nghiệp, việc đăng tin, xem ứng viên và liên hệ thông qua cùng mạng lưới nghề nghiệp tạo điều kiện tìm kiếm cả ứng viên chủ động lẫn những người đang mở cơ hội nghề nghiệp.
+
+\subsection{Những điểm cần cân nhắc đối với bài toán đề tài}
+
+LinkedIn có nhiều chức năng phù hợp để tham khảo, nhưng việc áp dụng cho bài toán RabbitCV cần xét đến các khác biệt sau:
+
+\begin{itemize}
+    \item \textbf{Hồ sơ nghề nghiệp khác với trình chỉnh sửa CV theo mẫu:} Chức năng lưu PDF từ hồ sơ không đồng nghĩa với một luồng chọn mẫu và chỉnh sửa bố cục CV như RabbitCV. Các điều kiện về thiết bị, ngôn ngữ và khả năng truy cập cần được xét khi sử dụng chức năng này.
+    \item \textbf{Công cụ hỗ trợ phụ thuộc điều kiện truy cập:} Đề xuất biên soạn hồ sơ dành cho một nhóm tài khoản Premium; AI phỏng vấn cũng yêu cầu Premium và đang triển khai bằng tiếng Anh. Vì vậy, khả năng tiếp cận các chức năng này phụ thuộc loại tài khoản và phạm vi triển khai.
+    \item \textbf{Luồng ứng tuyển có thể đi qua hệ thống ngoài:} Khi dùng nút \textit{Apply}, ứng viên phải tiếp tục thao tác tại nền tảng khác. Trong trường hợp đó, việc tiếp nhận và xử lý hồ sơ còn phụ thuộc hệ thống của doanh nghiệp, khác với phạm vi quản lý hồ sơ trực tiếp trong RabbitCV.
+    \item \textbf{Công cụ tuyển dụng có điều kiện dịch vụ:} Hộp thư Recruiter thuộc sản phẩm chuyên biệt. Việc so sánh cần phân biệt công cụ này với các hình thức nhắn tin thông thường, thay vì quy mọi hoạt động trao đổi thành một hạn chế chung.
+\end{itemize}
+\section{So sánh TopCV, LinkedIn và RabbitCV}
+\label{sec:comparison-with-my-system}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.18\textwidth}|>{\raggedright\arraybackslash}p{0.24\textwidth}|>{\raggedright\arraybackslash}p{0.24\textwidth}|>{\raggedright\arraybackslash}p{0.24\textwidth}|}
+    \caption{So sánh TopCV, LinkedIn và RabbitCV}
+    \label{tab:system-comparison}\\
+    \hline
+    \textbf{Tiêu chí} & \textbf{TopCV} & \textbf{LinkedIn} & \textbf{RabbitCV} \\\hline
+    \endfirsthead
+    \multicolumn{4}{c}{\textit{Bảng~\ref{tab:system-comparison} (tiếp theo)}}\\
+    \hline
+    \textbf{Tiêu chí} & \textbf{TopCV} & \textbf{LinkedIn} & \textbf{RabbitCV} \\\hline
+    \endhead
+    \endfoot
+    \endlastfoot
+    Định hướng hệ thống & Tạo CV, kết nối ứng viên--doanh nghiệp tại Việt Nam. & Hồ sơ nghề nghiệp, mạng lưới kết nối và tuyển dụng. & Quản lý CV, tuyển dụng và ba chức năng AI hỗ trợ ứng viên trong phạm vi đồ án. \\\hline
+    Tạo và chỉnh sửa CV & Tạo và chỉnh sửa CV theo mẫu. & Xây dựng hồ sơ trực tuyến; không phải trình chỉnh sửa CV theo mẫu. & Nhập nội dung theo mục, chọn mẫu, chỉnh sửa bố cục. \\\hline
+    Hỗ trợ CV PDF & Tải CV lên để chỉnh sửa và ứng tuyển. & Lưu hồ sơ thành PDF trên máy tính; có điều kiện truy cập. & Xem trước A4, in/lưu PDF qua trình duyệt; nhận PDF tải lên. \\\hline
+    Tìm kiếm việc làm & Tìm kiếm, lưu tin, theo dõi đã ứng tuyển. & Tìm kiếm, đề xuất và thông báo việc làm theo tiêu chí. & Tìm kiếm việc làm theo từ khóa, bộ lọc, sắp xếp; lưu tin tuyển dụng. \\\hline
+    Chức năng doanh nghiệp & Đăng tin, tiếp nhận và quản lý hồ sơ. & Đăng tin, lọc ứng viên; Recruiter thuộc dịch vụ riêng. & Đăng tin, lọc hồ sơ, sáu trạng thái xử lý; kiểm soát phê duyệt. \\\hline
+    Rà soát hồ sơ bằng AI & CV Scoring chỉ hỗ trợ cho doanh nghiệp sử dụng dịch vụ. & Không có & Rà soát CV có cấu trúc; trả điểm, điểm mạnh, vấn đề và gợi ý. \\\hline
+    Gợi ý viết nội dung bằng AI & Không có hỗ trợ. & Profile Writing Assistance; dành cho một nhóm Premium. & Gợi ý bổ sung mục còn thiếu và kỹ năng; người dùng duyệt trước khi lưu. \\\hline
+    Luyện tập phỏng vấn & Trang danh sách câu hỏi và hướng dẫn trả lời. & AI interview prep nhiều lượt; tiếng Anh, yêu cầu Premium. & Phỏng vấn AI nhiều lượt theo vị trí và cấp độ; có phản hồi và tổng kết. \\\hline
+    Trao đổi trực tiếp & TopConnect; chủ động mở chat có thể dùng Credit. & Nhắn tin; hộp thư. & Nhắn tin và thông báo thời gian thực qua Socket.IO. \\\hline
+\end{longtable}
+\endgroup
+
+Qua bảng so sánh, có thể nhận thấy RabbitCV có một số điểm khác biệt so với TopCV và LinkedIn:
+
+\begin{itemize}
+    \item \textbf{Ba chức năng AI mở cho mọi ứng viên:} TopCV giới hạn CV Scoring trong dịch vụ dành cho doanh nghiệp, còn LinkedIn yêu cầu gói Premium và chỉ hỗ trợ tiếng Anh cho phần luyện phỏng vấn. RabbitCV cung cấp cả ba chức năng -- rà soát CV, gợi ý nội dung và luyện phỏng vấn nhiều lượt -- cho tất cả ứng viên đã đăng ký, không phân biệt gói dịch vụ.
+    \item \textbf{Nhắn tin thời gian thực không rào cản:} TopCV yêu cầu Credit khi doanh nghiệp chủ động nhắn tin qua TopConnect, LinkedIn đặt hộp thư Recruiter trong dịch vụ có đăng ký. RabbitCV sử dụng Socket.IO để cung cấp nhắn tin và thông báo thời gian thực cho cả hai phía mà không yêu cầu chi phí bổ sung.
+    \item \textbf{Quy trình xử lý hồ sơ rõ ràng:} RabbitCV cung cấp sáu trạng thái xử lý hồ sơ ứng tuyển (Chờ xử lý, Đang xem xét, Phỏng vấn, Đã đề nghị và Đã từ chối), giúp doanh nghiệp theo dõi tiến trình và ứng viên nắm được tình trạng hồ sơ của mình.
+\end{itemize}
+
+Tuy nhiên, RabbitCV cũng còn các giới hạn so với hai nền tảng thương mại: chưa trích xuất nội dung PDF thành dữ liệu có cấu trúc để chỉnh sửa hoặc phân tích bằng AI, chưa lưu lịch sử phiên phỏng vấn để xem lại, và chưa được đánh giá trên quy mô người dùng thực tế. Kết quả so sánh nhằm làm rõ những đặc điểm RabbitCV đã hiện thực trong phạm vi đồ án, không chứng minh chất lượng AI, hiệu năng hay hiệu quả tuyển dụng cao hơn hai nền tảng đã hoạt động trên thị trường.
+
+% \section{Định hướng xây dựng RabbitCV}
+
+% Từ hai hệ thống được khảo sát, RabbitCV lựa chọn các yêu cầu phù hợp với phạm vi đồ án:
+% \begin{itemize}
+%     \item \textbf{Quản lý CV theo cấu trúc:} ứng viên nhập nội dung theo từng mục, lựa chọn mẫu, xem trước và sử dụng chức năng in của trình duyệt để in hoặc lưu PDF theo bố cục A4.
+%     \item \textbf{Tái sử dụng hồ sơ:} CV có cấu trúc đã lưu có thể tiếp tục chỉnh sửa, dùng để ứng tuyển hoặc làm dữ liệu đầu vào cho các chức năng AI. CV PDF tải lên được dùng để xem và ứng tuyển, không tự động chuyển thành nội dung có thể chỉnh sửa.
+%     \item \textbf{Hỗ trợ hai cách nộp hồ sơ:} ứng viên có thể chọn CV đã lưu, bao gồm CV có cấu trúc hoặc PDF đã tải lên, hay nộp tệp PDF mới từ thiết bị.
+%     \item \textbf{Duy trì nội dung đã nộp:} lưu bản chụp CV và thông tin công việc khi tạo hồ sơ ứng tuyển mới để hạn chế việc thay đổi dữ liệu gốc làm mất ngữ cảnh lịch sử.
+%     \item \textbf{Phân chia vai trò tuyển dụng:} doanh nghiệp đăng tin, tiếp nhận hồ sơ và cập nhật trạng thái; ứng viên theo dõi các công việc đã nộp.
+%     \item \textbf{Trao đổi và thông báo:} hệ thống cung cấp nhắn tin và thông báo theo thời gian thực để hỗ trợ quá trình liên hệ sau khi ứng tuyển.
+%     \item \textbf{AI giữ vai trò hỗ trợ:} AI nhận xét, đề xuất nội dung còn thiếu và tổ chức phiên luyện phỏng vấn; người dùng kiểm tra kết quả trước khi lưu hoặc sử dụng. Kiểm tra cấu trúc đầu ra không thay thế việc xác minh tính đúng đắn của nội dung.
+% \end{itemize}
+
+% RabbitCV không hướng đến thay thế quy mô tuyển dụng của TopCV hoặc mạng lưới nghề nghiệp của LinkedIn. Đóng góp của đồ án tập trung vào việc hiện thực một quy trình khép kín trong phạm vi nguyên mẫu: tạo và quản lý CV, hỗ trợ nội dung bằng AI, tìm việc, ứng tuyển, xử lý hồ sơ và trao đổi giữa hai phía. Các chức năng này cần được kiểm chứng bằng những tình huống thử nghiệm cụ thể thay vì chỉ dựa trên việc nền tảng khác đã cung cấp chức năng tương tự.
